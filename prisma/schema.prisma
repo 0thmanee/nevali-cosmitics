@@ -1,0 +1,568 @@
+// OrigineMaroc — Prisma schema
+// Better Auth (user, session, account, verification) + Organization plugin + app models
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── App enums (user) ───────────────────────────────────────────────────────
+enum UserRole {
+  partner
+  superadmin
+  buyer
+}
+
+enum UserStatus {
+  disabled  // pending admin approval (partners)
+  enabled   // can access partner or buyer app
+}
+
+// ─── Better Auth (core) ─────────────────────────────────────────────────────
+model User {
+  id               String     @id @default(cuid())
+  name             String
+  email            String     @unique
+  emailVerified    Boolean    @default(true)
+  image            String?
+  role             UserRole   @default(partner)
+  status           UserStatus @default(disabled) // first user set enabled + superadmin
+  profileCompleted Boolean    @default(false)     // onboarding done (partners); buyers set true at signup
+  /// Set to `artisan` after partner self-serve register; `buyer` after buyer register (see postRegisterKind).
+  signupSource       String?
+  /// Optional JSON: { "muteRfqThreadEmail"?: boolean } — suppress thread emails; in-app alerts still created.
+  notificationPrefs Json?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  sessions         Session[]
+  accounts         Account[]
+  members          Member[]
+  profile          Profile?
+  buyerRfqs        Rfq[]      @relation("BuyerRfqs")
+  savedLists       SavedList[]
+  notifications    UserNotification[]
+
+  @@map("user")
+}
+
+/// Lightweight in-app alerts (e.g. new RFQ thread message). Not a full notification product.
+model UserNotification {
+  id           String    @id @default(cuid())
+  userId       String
+  kind         String    // RFQ_THREAD_MESSAGE
+  title        String
+  body         String    @db.Text
+  linkHref     String?
+  /// When set, bulk mark-read for this RFQ thread in the inbox.
+  contextRfqId String?
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@index([userId, contextRfqId])
+  @@map("user_notification")
+}
+
+/// Coalesces RFQ thread notification emails per recipient key within a time window.
+model RfqThreadEmailThrottle {
+  rfqId         String
+  recipientKey  String // buyer user id OR "org:" + organizationId
+  pendingCount  Int      @default(0)
+  lastSentAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@id([rfqId, recipientKey])
+  @@map("rfq_thread_email_throttle")
+}
+
+// Onboarding / partner profile (filled after email verification)
+model Profile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName          String
+  lastName           String
+  phone              String
+  entityType         String   // Individual Producer | Cooperative | Company / SARL | Association
+  entityName         String
+  registrationNumber String?
+  region             String
+  city               String
+  yearEstablished    String?
+  website            String?
+  categories         Json     // string[] product category labels
+  annualCapacity     String?
+  exportExperience   String?
+  agreeTerms         Boolean  @default(true)
+  agreeMarketing     Boolean  @default(false)
+  profileImage       String?  // Supabase Storage public URL (bucket: origine-maroc)
+  /// Shown on the public producer page (buyers)
+  publicTagline      String?
+  businessDescription String? @db.Text
+  exportMarkets      String?
+  valuesHighlight    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("profile")
+}
+
+model Session {
+  id                     String   @id @default(cuid())
+  expiresAt              DateTime
+  token                  String   @unique
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  ipAddress              String?
+  userAgent              String?
+  userId                 String
+  activeOrganizationId   String?  // organization plugin: current tenant
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+// ─── Better Auth Organization plugin (multi-tenant) ───────────────────────────
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  members   Member[]
+  invitations Invitation[]
+  // App tenant-scoped relations (add as we create models)
+  products          Product[]
+  certifications    Certification[]
+  trainingEnrollments TrainingEnrollment[]
+  rfqs              Rfq[]
+  contracts         Contract[]
+  supportTickets    SupportTicket[]
+  shopOrderLines    ShopOrderLine[]
+
+  @@map("organization")
+}
+
+model Member {
+  id             String       @id @default(cuid())
+  organizationId String
+  userId         String
+  role           String       // owner | admin | member (or custom)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@map("member")
+}
+
+model Invitation {
+  id             String       @id @default(cuid())
+  organizationId String
+  email          String
+  role           String
+  status         String       // pending | accepted | rejected | cancelled
+  expiresAt      DateTime
+  createdAt      DateTime?    @default(now())
+  updatedAt      DateTime?    @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("invitation")
+}
+
+// ─── Catalog checkout (public cart → shop order) ────────────────────────────────
+enum ProductPaymentOption {
+  CARD
+  COD
+  BOTH
+}
+
+enum CheckoutPaymentMethod {
+  CARD
+  COD
+}
+
+// ─── App models (tenant-scoped: organizationId = tenant) ──────────────────────
+/// Sellable SKU under one catalog product.
+model ProductVariant {
+  id               String           @id @default(cuid())
+  productId        String
+  name             String
+  unit             String           @default("item")
+  minOrderQuantity Int              @default(1)
+  minOrderNote     String?
+  price            Decimal          @db.Decimal(12, 2)
+  quantityOnHand   Int              @default(0)
+  inStock          Boolean          @default(true)
+  sortOrder        Int              @default(0)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  product          Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
+  images           ProductImage[]
+  shopOrderLines   ShopOrderLine[]
+
+  @@index([productId])
+  @@map("product_variant")
+}
+
+model Product {
+  id               String                 @id @default(cuid())
+  organizationId   String
+  name             String
+  category         String
+  description      String?                @db.Text
+  status           String                 @default("PENDING") // PENDING | APPROVED | REJECTED
+  rejectionReason  String?                // set by admin when rejecting
+  moq              String?                // minimum order quantity (legacy; mirrored on default variant)
+  capacity         String?
+  /// Set when a product is approved; applies to all variants for checkout payment rules.
+  paymentOption    ProductPaymentOption?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  organization     Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  variants         ProductVariant[]
+  images           ProductImage[]
+  certifications   Certification[]
+  savedInLists     SavedListProduct[]
+
+  @@index([organizationId])
+  @@index([status])
+  @@map("product")
+}
+
+model ProductImage {
+  id        String          @id @default(cuid())
+  productId String
+  variantId String?
+  url       String
+  sortOrder Int             @default(0)
+  createdAt DateTime        @default(now())
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([productId])
+  @@index([variantId])
+  @@map("product_image")
+}
+
+/// Guest checkout order from the public catalog (cart).
+model ShopOrder {
+  id            String                 @id @default(cuid())
+  buyerName     String
+  buyerEmail    String
+  buyerPhone    String?
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  postalCode    String
+  country       String
+  paymentMethod CheckoutPaymentMethod
+  /// PENDING_PAYMENT = card, awaiting Stripe; CONFIRMED = paid (card) or placed (COD); CANCELLED = abandoned.
+  status        String                 @default("PENDING") // PENDING_PAYMENT | CONFIRMED | CANCELLED
+  notes         String?                @db.Text
+  stripeCheckoutSessionId String?     @unique
+  stripePaymentIntentId   String?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  lines         ShopOrderLine[]
+
+  @@map("shop_order")
+}
+
+model ShopOrderLine {
+  id               String           @id @default(cuid())
+  orderId          String
+  productId        String
+  productVariantId String?
+  variantName      String?
+  organizationId   String
+  productName      String
+  unitPrice        Decimal          @db.Decimal(12, 2)
+  quantity         Int
+  order            ShopOrder        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  organization     Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  productVariant   ProductVariant?  @relation(fields: [productVariantId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([organizationId])
+  @@index([productId])
+  @@index([productVariantId])
+  @@map("shop_order_line")
+}
+
+// Certifications: documents uploaded by partner (Supabase); can be global or linked to a product.
+// Admin approves/rejects each certification separately from product approval.
+model Certification {
+  id               String    @id @default(cuid())
+  organizationId   String
+  productId        String?   // null = global (partner-level) certification
+  name             String    // e.g. "ISO 22000 Certificate", "Audit Report"
+  fileUrl          String    // Supabase Storage public URL
+  status           String    @default("PENDING") // PENDING | APPROVED | REJECTED
+  rejectionReason  String?
+  reviewedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  product          Product?     @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([productId])
+  @@index([status])
+  @@map("certification")
+}
+
+// ─── Training (admin-created programs; partners enroll and track progress) ─────
+model TrainingProgram {
+  id            String    @id @default(cuid())
+  name          String
+  description   String?
+  provider      String    @default("OrigineMaroc Academy")
+  category      String    // e.g. Export & Trade, Market Access
+  durationLabel String?   // e.g. "10 modules · ~6 hours"
+  level         String    // BEGINNER | INTERMEDIATE | ADVANCED
+  status        String    @default("DRAFT") // DRAFT | PUBLISHED
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  modules       TrainingModule[]
+  media         TrainingProgramMedia[]
+  enrollments   TrainingEnrollment[]
+
+  @@index([status])
+  @@map("training_program")
+}
+
+model TrainingModule {
+  id          String    @id @default(cuid())
+  programId   String
+  title       String
+  sortOrder   Int       @default(0)
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  program     TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+  media       TrainingProgramMedia[]
+
+  @@index([programId])
+  @@map("training_module")
+}
+
+// Media attached to a program (program-level) or to a module (moduleId set).
+// Supports video, PDF, images — stored in Supabase via upload type trainingProgramMedia.
+model TrainingProgramMedia {
+  id        String   @id @default(cuid())
+  programId String
+  moduleId   String?  // null = program-level media
+  fileUrl   String
+  mediaType String   // VIDEO | PDF | IMAGE
+  title     String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  program   TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+  module    TrainingModule? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@index([programId])
+  @@index([moduleId])
+  @@map("training_program_media")
+}
+
+model TrainingEnrollment {
+  id               String    @id @default(cuid())
+  organizationId   String
+  programId       String
+  status          String    @default("NOT_STARTED") // NOT_STARTED | IN_PROGRESS | COMPLETED
+  progress        Int       @default(0) // 0-100
+  modulesCompleted Int      @default(0)
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  program         TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, programId])
+  @@index([organizationId])
+  @@index([programId])
+  @@map("training_enrollment")
+}
+
+// ─── Buyer saved lists (wishlists; one user, many named lists) ────────────────
+model SavedList {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     SavedListProduct[]
+
+  @@index([userId])
+  @@map("saved_list")
+}
+
+model SavedListProduct {
+  id          String    @id @default(cuid())
+  savedListId String
+  productId   String
+  createdAt   DateTime  @default(now())
+  savedList   SavedList @relation(fields: [savedListId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([savedListId, productId])
+  @@index([productId])
+  @@map("saved_list_product")
+}
+
+// ─── RFQs & Contracts (producer org = seller) ─────────────────────────────────
+model Rfq {
+  id                String    @id @default(cuid())
+  organizationId    String
+  /// Logged-in buyer account when inquiry was submitted while signed in (optional).
+  buyerUserId       String?
+  buyerName         String
+  buyerLocation     String?
+  product           String    // product description
+  quantity          String    // e.g. "500 L", "10 kg"
+  message           String?   @db.Text
+  status            String    @default("NEW") // NEW | QUOTED | NEGOTIATING | DECLINED
+  estimatedValue    String?   // e.g. "~€14,200"
+  deadlineAt        DateTime?
+  /// When status is NEGOTIATING: who may post the next thread message (turn-based negotiation).
+  negotiationTurn   String?   // BUYER | PARTNER
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  buyerUser         User?     @relation("BuyerRfqs", fields: [buyerUserId], references: [id], onDelete: SetNull)
+  messages          RfqMessage[]
+
+  @@index([organizationId])
+  @@index([buyerUserId])
+  @@index([status])
+  @@map("rfq")
+}
+
+/// In-thread negotiation / clarification messages on an RFQ (buyer or partner).
+model RfqMessage {
+  id             String                 @id @default(cuid())
+  rfqId          String
+  authorUserId   String
+  authorRole     String                 // BUYER | PARTNER
+  body           String                 @db.Text
+  createdAt      DateTime               @default(now())
+  rfq            Rfq                    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  attachments    RfqMessageAttachment[]
+
+  @@index([rfqId])
+  @@index([authorUserId, createdAt])
+  @@map("rfq_message")
+}
+
+model RfqMessageAttachment {
+  id           String    @id @default(cuid())
+  rfqMessageId String
+  url          String
+  fileName     String?
+  mimeType     String?
+  sizeBytes    Int?
+  createdAt    DateTime  @default(now())
+  rfqMessage   RfqMessage @relation(fields: [rfqMessageId], references: [id], onDelete: Cascade)
+
+  @@index([rfqMessageId])
+  @@map("rfq_message_attachment")
+}
+
+model Contract {
+  id                  String    @id @default(cuid())
+  organizationId      String
+  rfqId               String?   // optional link to originating RFQ
+  buyerName           String
+  buyerLocation       String?
+  product             String
+  quantityLabel       String    // e.g. "500 L / month"
+  valueLabel          String    // e.g. "€14,200 / month"
+  valueCents          Int?      // optional: for revenue aggregation (YTD sum)
+  status              String    @default("ACTIVE") // ACTIVE | COMPLETED
+  startedAt           DateTime
+  expiresAt           DateTime
+  progress            Int       @default(0) // 0-100
+  deliveriesTotal     Int       @default(0)
+  deliveriesCompleted Int       @default(0)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([status])
+  @@map("contract")
+}
+
+// ─── Support (producer org opens tickets) ────────────────────────────────────
+model SupportTicket {
+  id             String   @id @default(cuid())
+  organizationId String
+  subject        String
+  category       String   // Certification, Products, Account, Export, Payments, Technical, Other
+  priority       String   @default("MEDIUM") // LOW | MEDIUM | HIGH
+  status         String   @default("OPEN") // OPEN | IN_REVIEW | RESOLVED
+  message        String   @db.Text // initial message
+  adminNotes     String?  @db.Text // internal notes (admin only)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  statusEvents   SupportTicketStatusEvent[]
+
+  @@index([organizationId])
+  @@index([status])
+  @@map("support_ticket")
+}
+
+model SupportTicketStatusEvent {
+  id             String       @id @default(cuid())
+  supportTicketId String
+  status         String       // OPEN | IN_REVIEW | RESOLVED
+  userId         String?      // admin who changed (optional)
+  createdAt      DateTime     @default(now())
+  supportTicket  SupportTicket @relation(fields: [supportTicketId], references: [id], onDelete: Cascade)
+
+  @@index([supportTicketId])
+  @@map("support_ticket_status_event")
+}

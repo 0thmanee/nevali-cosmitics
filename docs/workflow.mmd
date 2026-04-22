@@ -1,0 +1,67 @@
+%% OrigineMaroc — Single workflow diagram (platform, roles, validation, support, end-to-end)
+
+flowchart TB
+  subgraph Value["Value propositions"]
+    V1[Accès direct aux marchés internationaux]
+    V2[Contrats B2B et ventes premium]
+  end
+
+  subgraph SuperAdmin["Role 1: SuperAdmin"]
+    UM[User & Partner Mgmt]
+    QC[Quality & Certification]
+    AR[Analytics & Reporting]
+    TP[Training & Programs]
+    B2B[B2B Contract Oversight]
+    UM --> UM1[Create / Edit / Deactivate Partners]
+    UM --> UM2[Assign roles & permissions]
+    QC --> QC1[Approve / Reject certifications]
+    QC --> QC2[Track compliance & expiry]
+    TP --> TP1[Create programs]
+    TP --> TP2[Assign to partners]
+    B2B --> B2B1[Approve contracts]
+    B2B --> B2B2[Platform commissions]
+  end
+
+  subgraph Partner["Role 2: Partner / Cooperative"]
+    R[Register & profile]
+    UPLOAD[Upload docs & product details]
+    PV[Pending Validation]
+    L[List products]
+    RFQ[Receive RFQs]
+    CONT[Contracts]
+    R --> UPLOAD
+    UPLOAD --> PV
+  end
+
+  subgraph Validation["Validation outcome"]
+    CERT[Certified → visible to buyers]
+    REJ[Rejected → feedback to Partner]
+  end
+
+  subgraph Support["Technical & legal support"]
+    TICKET[Partner submits ticket]
+    ASSIGN[System assigns to support]
+    UPDATE[Team updates → Partner notified]
+    TICKET --> ASSIGN --> UPDATE
+  end
+
+  subgraph Buyer["International Buyer"]
+    B[Browse certified products]
+    R2[Submit RFQ]
+    N[Negotiate]
+    CO[Contract & orders]
+    B --> R2 --> N --> CO
+  end
+
+  PV --> QC1
+  QC1 -->|Approve| CERT
+  QC1 -->|Reject| REJ
+  REJ -.->|resubmit| UPLOAD
+  CERT --> L
+  L --> B
+  RFQ --> N
+  N --> CONT
+  CONT --> B2B1
+  B2B1 --> CO
+  TP2 -.-> R
+  TICKET -.-> Partner

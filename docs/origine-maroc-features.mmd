@@ -1,0 +1,156 @@
+%% OrigineMaroc — Feature map: integrated vs roadmap
+%% Render: GitHub / Mermaid Live Editor / VS Code Mermaid / npx @mermaid-js/mermaid-cli -i docs/origine-maroc-features.mmd -o out.svg
+
+flowchart TB
+  %% ========== LEGEND ==========
+  subgraph LEGEND[" "]
+    direction LR
+    L1["✅ Integrated in codebase"]
+    L2["🔜 Planned / competitive gap"]
+    style L1 fill:#1A4731,stroke:#4ADE80,color:#fafaf7
+    style L2 fill:#7c2d12,stroke:#fb923c,color:#fffaf5
+  end
+
+  %% ========== PUBLIC ==========
+  subgraph PUB["🌐 Public marketing site"]
+    direction TB
+    P1["Landing & brand narrative"]
+    P2["Sections: Trust · Features · FAQ · Ecosystem · etc."]
+    P3["Public navigation & CTAs to auth"]
+  end
+
+  %% ========== AUTH & ACCESS ==========
+  subgraph AUTH["🔐 Authentication & access"]
+    direction TB
+    A1["Register / Login (Better Auth)"]
+    A2["Email verification"]
+    A3["Session + Organization plugin (tenant)"]
+    A4["Roles: partner · superadmin"]
+    A5["Pending approval gate (disabled → enabled)"]
+    A6["Onboarding: profile form → organization + Member"]
+  end
+
+  %% ========== PARTNER PORTAL ==========
+  subgraph PROD["🌿 Partner portal `/producer`"]
+    direction TB
+    subgraph PD["Dashboard & layout"]
+      PD1["Dashboard overview + stats (RFQs, support, products)"]
+      PD2["Sidebar nav · org context · Add Product → `/products/new`"]
+      PD3["Header: notifications placeholder · Log out"]
+      PD4["Logo → home `/`"]
+    end
+    subgraph PP["Profile"]
+      PP1["Profile view + edit"]
+      PP2["Partner status card · certificate download `/api/certificate`"]
+      PP3["Documents card → live certifications list + link to Certification page"]
+    end
+    subgraph PPR["Products"]
+      PPR1["List · create · detail · edit"]
+      PPR2["Images upload (Supabase)"]
+      PPR3["Certifications per product (upload PDF/image)"]
+    end
+    subgraph PCERT["Certification hub"]
+      PC1["Global org certifications"]
+      PC2["Standards grid · certified products table"]
+    end
+    subgraph PTR["Training"]
+      PT1["Program catalog · enrollment · progress"]
+      PT2["Program detail (modules, media consumption)"]
+    end
+    subgraph PCOM["Commercial"]
+      PCOM1["RFQs list · status"]
+      PCOM2["Contracts list · progress · deliveries"]
+    end
+    subgraph PSUP["Support"]
+      PS1["Tickets: create · list · thread"]
+    end
+  end
+
+  %% ========== ADMIN ==========
+  subgraph ADM["⚙️ Admin `/admin`"]
+    direction TB
+    subgraph AD0["Scope & layout"]
+      AD01["Organization filter `?org=slug` · All orgs"]
+      AD02["Nav badges scoped by org"]
+      AD03["Superadmin badge · user block · Log out · Logo → home"]
+    end
+    subgraph AD1["Operations"]
+      AD11["Dashboard overview + quick actions (org-aware)"]
+      AD12["Partners: paginated list · approve · edit · delete · detail"]
+      AD13["Products: list · tabs · approve / reject · detail"]
+      AD14["Certifications: list · approve / reject"]
+      AD15["Training: CRUD programs · modules · media"]
+      AD16["Support: tickets · status · admin notes · history"]
+      AD17["Contracts & RFQs: lists · cancel RFQ · complete contract"]
+    end
+  end
+
+  %% ========== API & DATA ==========
+  subgraph API["📡 Server actions & APIs"]
+    direction TB
+    AP1["Products · Certifications · Partners"]
+    AP2["Training · Contracts / RFQs · Support"]
+    AP3["Profile · Dashboard stats · Admin (orgs, nav stats)"]
+    AP4["Media upload route · Certificate PDF route"]
+    AP5["Auth handler `[...all]`"]
+  end
+
+  %% ========== DATA LAYER ==========
+  subgraph DATA["🗄️ Data & storage"]
+    direction TB
+    D1["PostgreSQL + Prisma"]
+    D2["Models: User · Profile · Organization · Member · Invitation"]
+    D3["Product · ProductImage · Certification"]
+    D4["TrainingProgram · Module · Media · Enrollment"]
+    D5["Rfq · Contract · SupportTicket + StatusEvent"]
+    D6["Supabase Storage (images, certs, training media)"]
+  end
+
+  %% ========== ROADMAP ==========
+  subgraph FUT["🔜 To add / beat competitors"]
+    direction TB
+    F1["Dedicated buyer portal & discovery (today: RFQ/contract as records)"]
+    F2["Payments: escrow · milestones · invoicing (Stripe Connect / partner)"]
+    F3["KYC/KYB & third-party inspection hooks (SGS/BV-style)"]
+    F4["Public verify: QR / lot ID → approved certs + trace metadata"]
+    F5["Deep traceability: batch, harvest, IoT hooks, blockchain audit optional"]
+    F6["Notifications: in-app + email (replace header bell placeholder)"]
+    F7["i18n · market pricing intel · AI translation"]
+    F8["Institutional tie-ins: Foodex missions · ePhyto readiness UX"]
+    F9["Mobile / PWA · offline-first producer workflows"]
+  end
+
+  %% ---- styling: integrated (green family) ----
+  classDef integrated fill:#1A4731,stroke:#4ADE80,stroke-width:2px,color:#fafaf7
+  classDef integratedSub fill:#0f2418,stroke:#2d5a40,stroke-width:1px,color:#e8ede9
+  classDef integratedLight fill:#edf4ef,stroke:#1A4731,stroke-width:1px,color:#1c3a28
+  classDef roadmap fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#fffaf5
+  classDef roadmapSub fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#431407
+
+  class P1,P2,P3,A1,A2,A3,A4,A5,A6 integrated
+  class PD1,PD2,PD3,PD4,PP1,PP2,PP3,PPR1,PPR2,PPR3,PC1,PC2,PT1,PT2,PCOM1,PCOM2,PS1 integrated
+  class AD01,AD02,AD03,AD11,AD12,AD13,AD14,AD15,AD16,AD17 integrated
+  class AP1,AP2,AP3,AP4,AP5 integrated
+  class D1,D2,D3,D4,D5,D6 integrated
+
+  class F1,F2,F3,F4,F5,F6,F7,F8,F9 roadmap
+
+  style PUB fill:#f0fdf4,stroke:#166534
+  style AUTH fill:#ecfdf5,stroke:#15803d
+  style PROD fill:#f0fdf4,stroke:#166534
+  style ADM fill:#ecfdf5,stroke:#15803d
+  style API fill:#f8fafc,stroke:#334155
+  style DATA fill:#f1f5f9,stroke:#475569
+  style FUT fill:#fff7ed,stroke:#c2410c
+  style LEGEND fill:#fafaf7,stroke:#d4d4d8
+
+  %% Relationships (lightweight — shows stack flow)
+  PUB --> AUTH
+  AUTH --> PROD
+  AUTH --> ADM
+  PROD --> API
+  ADM --> API
+  API --> DATA
+  FUT -.->|"extends"| API
+  FUT -.->|"extends"| PROD
+  FUT -.->|"extends"| ADM

@@ -1,0 +1,95 @@
+"use client";
+
+import Link from "next/link";
+import { signOut } from "~/lib/auth-client";
+
+const NEXT_STEPS = [
+  { n: "1", label: "Profile review", detail: "1–2 business days" },
+  { n: "2", label: "Account activation", detail: "Same day as approval" },
+  { n: "3", label: "Access granted", detail: "Full Artisan Portal" },
+];
+
+export function PendingApprovalContent() {
+  return (
+    <div className="w-full max-w-2xl flex flex-col gap-10">
+      {/* Heading */}
+      <div>
+        <div className="flex items-center gap-3 mb-4">
+          {/* Clock icon */}
+          <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+            style={{ background: "rgba(123,31,10,0.08)", border: "1px solid rgba(123,31,10,0.18)" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="#7B1F0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+          </div>
+          <span className="font-sans text-xs font-bold tracking-[0.18em] uppercase text-text-muted">
+            Application submitted
+          </span>
+        </div>
+
+        <h1 className="font-serif font-bold text-text-dark leading-[1.0] mb-3"
+          style={{ fontSize: "clamp(32px, 4vw, 44px)" }}>
+          Your profile is<br />under review.
+        </h1>
+        <p className="font-sans text-base text-text-muted leading-relaxed">
+          A CraftHouse admin will review your account and enable access to the Artisan Portal. You&apos;ll receive access once approved.
+        </p>
+      </div>
+
+      {/* What happens next */}
+      <div>
+        <p className="font-sans text-xs font-bold tracking-[0.18em] uppercase text-text-muted mb-4">
+          What happens next
+        </p>
+        <div className="flex items-start gap-0">
+          {NEXT_STEPS.map((s, i) => (
+            <div key={s.n} className="flex items-start gap-0 flex-1">
+              <div className="flex flex-col items-center">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center font-sans font-bold text-xs shrink-0"
+                  style={{ background: "rgba(123,31,10,0.08)", color: "#7B1F0A", border: "1px solid rgba(123,31,10,0.18)" }}>
+                  {s.n}
+                </div>
+                {i < NEXT_STEPS.length - 1 && (
+                  <div className="w-full h-px mt-3.5 hidden" />
+                )}
+              </div>
+              <div className="flex-1 pl-3 pr-6">
+                <p className="font-sans text-sm font-semibold text-text-dark">{s.label}</p>
+                <p className="font-sans text-xs text-text-muted mt-0.5">{s.detail}</p>
+              </div>
+              {i < NEXT_STEPS.length - 1 && (
+                <div className="self-center w-6 h-px shrink-0 mr-2" style={{ background: "#d0c4b0" }} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="h-px w-full" style={{ background: "#e0d4c4" }} />
+
+      {/* Actions */}
+      <div className="flex items-center justify-between">
+        <p className="font-sans text-sm text-text-muted">
+          Questions?{" "}
+          <Link href="mailto:support@crafthouse.ma" className="hover:underline" style={{ color: "#7B1F0A" }}>
+            Contact support
+          </Link>
+        </p>
+        <div className="flex items-center gap-4">
+          <button type="button" onClick={() => signOut()}
+            className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
+            Sign out
+          </button>
+          <Link href="/"
+            className="font-sans font-semibold text-sm text-white px-5 py-2.5 rounded-sm transition-colors"
+            style={{ background: "#7B1F0A" }}>
+            Back to homepage
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

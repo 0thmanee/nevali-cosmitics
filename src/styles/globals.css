@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+	/* Fonts */
+	--font-sans: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+	--font-serif: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+	--font-display: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+	--font-body: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+	/* Color palette — CraftHouse */
+	--color-primary: #7A2915;
+	--color-primary-dark: #3d1409;
+	--color-primary-darker: #1a0805;
+	--color-primary-light: #a33520;
+	--color-forest-dark: var(--color-primary-darker);
+	--color-forest-mid: var(--color-primary-dark);
+	--color-forest-card: #2e0f07;
+	--color-forest-light: var(--color-primary);
+	--color-cream: #faf5ee;
+	--color-cream-dark: #f0e8dc;
+	--color-secondary: #D87708;
+	--color-gold: #D87708;
+	--color-gold-light: #e8920f;
+	--color-text-dark: #270d06;
+	--color-text-muted: #7a3020;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--color-cream);
+	color: var(--color-text-dark);
+}
