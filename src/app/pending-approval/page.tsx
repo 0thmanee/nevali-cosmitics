@@ -14,7 +14,7 @@ export default async function PendingApprovalPage() {
       {/* Top bar */}
       <div className="flex items-center justify-between px-8 py-5" style={{ borderBottom: "1px solid #e0d4c4" }}>
         <Link href="/" className="font-display font-bold uppercase text-[16px] tracking-wide text-text-dark">
-          CraftHouse
+          nevali
         </Link>
         <span className="font-sans text-[11px] font-bold tracking-[0.16em] uppercase px-3 py-1 rounded-full"
           style={{ background: "rgba(200,112,32,0.1)", color: "#C87020", border: "1px solid rgba(200,112,32,0.25)" }}>

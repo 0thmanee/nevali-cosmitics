@@ -5,7 +5,6 @@ import {
   DashboardStats,
   DashboardProductList,
   TrainingProgressCard,
-  RecentRFQsCard,
 } from "~/features/artisan/components/dashboard";
 
 export default async function ProducerDashboard() {
@@ -30,7 +29,6 @@ export default async function ProducerDashboard() {
           <DashboardProductList />
           <div className="flex flex-col gap-4">
             <TrainingProgressCard />
-            <RecentRFQsCard />
           </div>
         </div>
       </div>

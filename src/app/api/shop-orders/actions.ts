@@ -1,5 +1,6 @@
 "use server";
 
+import { getSession } from "~/app/api/auth/actions";
 import { completeShopOrderAfterStripePayment } from "~/lib/complete-shop-order-payment";
 import {
 	notifyOrganizationsOfShopOrder,
@@ -22,7 +23,20 @@ export async function submitShopOrder(raw: unknown) {
 		);
 	}
 
+	const session = await getSession();
+	const sessionEmail = session?.user?.email?.trim().toLowerCase() ?? "";
+	const sessionRole = (session?.user as { role?: string } | undefined)?.role;
+	const formEmail = parsed.buyerEmail.trim().toLowerCase();
+	const buyerUserId =
+		session?.user?.id &&
+		sessionRole === "buyer" &&
+		sessionEmail !== "" &&
+		sessionEmail === formEmail
+			? session.user.id
+			: null;
+
 	const result = await createShopOrderFromCheckout({
+		buyerUserId,
 		buyerName: parsed.buyerName,
 		buyerEmail: parsed.buyerEmail,
 		buyerPhone: parsed.buyerPhone,

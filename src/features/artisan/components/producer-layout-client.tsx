@@ -88,14 +88,6 @@ function IconSupport() {
   );
 }
 
-function IconContracts() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 2L3 5v4c0 2.8 2 5.1 5 5.9 3-0.8 5-3.1 5-5.9V5L8 2z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function IconNotifications() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -119,7 +111,6 @@ const ICONS: Record<string, (active: boolean) => React.ReactNode> = {
   "/artisan/training": () => <IconTraining />,
   "/artisan/support": () => <IconSupport />,
   "/artisan/notifications": () => <IconNotifications />,
-  "/artisan/contracts": () => <IconContracts />,
 };
 
 /** @deprecated Use UserDisplay from profile schema. */
@@ -141,7 +132,6 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
   const { data: dashboardStats } = useArtisanDashboardStats();
   const { data: unreadAlerts = 0 } = useUnreadNotificationCount();
 
-  const openRfqs = dashboardStats?.openRfqs ?? 0;
   const openSupportTickets = dashboardStats?.openSupportTickets ?? 0;
   const subtitle = PAGE_SUBTITLE[pathname] ?? PAGE_SUBTITLE["/artisan"];
   const firstName = profile?.firstName ?? user.name.split(/\s+/)[0] ?? null;
@@ -169,9 +159,9 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
           <div className="flex items-center gap-2.5">
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/logo-white.svg" alt="CraftHouse" className="h-8 w-auto block" />
+              <img src="/assets/logo-white.svg" alt="nevali" className="h-8 w-auto block" />
               <span className="block uppercase font-sans font-semibold text-[9px] tracking-[0.1em] text-[#C9913D] mt-[3px]">
-                Artisan Portal
+                Brand portal
               </span>
             </div>
           </div>
@@ -184,13 +174,11 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
               (item.href !== "/artisan" && pathname.startsWith(item.href + "/"));
             const Icon = ICONS[item.href] ?? (() => <IconDashboard active={false} />);
             const badge =
-              item.href === "/artisan/contracts"
-                ? openRfqs
-                : item.href === "/artisan/support"
-                  ? openSupportTickets
-                  : item.href === "/artisan/notifications"
-                    ? unreadAlerts
-                    : null;
+              item.href === "/artisan/support"
+                ? openSupportTickets
+                : item.href === "/artisan/notifications"
+                  ? unreadAlerts
+                  : null;
             const showBadge = badge !== null && badge > 0;
             return (
               <Link

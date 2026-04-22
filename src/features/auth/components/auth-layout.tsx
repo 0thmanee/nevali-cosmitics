@@ -41,7 +41,7 @@ export function AuthLayout({
         <div className="relative z-10">
           <Link href="/" className="flex flex-col gap-0.5 mb-14">
             <span className="font-display font-bold text-white text-[22px] uppercase tracking-wide leading-none">
-              CraftHouse
+              nevali
             </span>
             <span className="font-sans text-[9px] font-semibold tracking-[0.22em] text-white/40 uppercase mt-1">
               Artisan Portal
@@ -87,7 +87,7 @@ export function AuthLayout({
               ))}
             </div>
             <p className="font-serif italic text-[13px] text-white/75 leading-relaxed">
-              &ldquo;Within 6 months of joining CraftHouse, we signed our first contract with a French retailer.&rdquo;
+              &ldquo;Within weeks of listing on nevali, shoppers in Europe were reordering our argan serum—finally under our own label.&rdquo;
             </p>
             <p className="font-sans text-[11px] text-white/40 mt-3">— Fatima O., Beni Ourain Collective</p>
           </div>
@@ -99,7 +99,7 @@ export function AuthLayout({
         {/* Top bar */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-cream-dark shrink-0">
           <Link href="/" className="lg:hidden font-display font-bold uppercase text-[18px] tracking-wide text-text-dark">
-            CraftHouse
+            nevali
           </Link>
           <div className="hidden lg:block" />
           <span className="font-sans text-[13px] text-text-muted">

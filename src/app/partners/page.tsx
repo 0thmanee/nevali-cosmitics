@@ -6,7 +6,7 @@ import PartnersClient from "./PartnersClient";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 
 export const metadata = {
-  title: "Partners — CraftHouse",
+  title: "Partners — nevali",
   description:
     "Explore our network of certified Moroccan cooperatives and producers — each rigorously audited for quality, traceability, and export compliance.",
 };

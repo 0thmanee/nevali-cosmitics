@@ -13,7 +13,7 @@ export default async function Navbar() {
     <nav className="w-full bg-cream border-b border-cream-dark fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto w-full px-6 h-[56px] flex items-center justify-between">
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/assets/logo.svg" alt="CraftHouse" className="h-8 w-auto" />
+          <img src="/assets/logo.svg" alt="nevali" className="h-8 w-auto" />
         </Link>
 
         <NavLinks />

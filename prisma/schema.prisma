@@ -21,6 +21,26 @@ enum UserStatus {
   enabled   // can access partner or buyer app
 }
 
+// ─── Cosmetics-specific enums ───────────────────────────────────────────────
+enum ProductCategory {
+  SKINCARE
+  MAKEUP
+  HAIRCARE
+  BODY_CARE
+  FRAGRANCE
+  TOOLS_ACCESSORIES
+  SUPPLEMENTS
+  OTHER
+}
+
+enum ReviewRating {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+}
+
 // ─── Better Auth (core) ─────────────────────────────────────────────────────
 model User {
   id               String     @id @default(cuid())
@@ -41,43 +61,27 @@ model User {
   accounts         Account[]
   members          Member[]
   profile          Profile?
-  buyerRfqs        Rfq[]      @relation("BuyerRfqs")
   savedLists       SavedList[]
   notifications    UserNotification[]
+  shopOrders       ShopOrder[]
 
   @@map("user")
 }
 
-/// Lightweight in-app alerts (e.g. new RFQ thread message). Not a full notification product.
+/// Lightweight in-app alerts (e.g. order status updates).
 model UserNotification {
   id           String    @id @default(cuid())
   userId       String
-  kind         String    // RFQ_THREAD_MESSAGE
+  kind         String    // ORDER_STATUS, PROMOTION, etc.
   title        String
   body         String    @db.Text
   linkHref     String?
-  /// When set, bulk mark-read for this RFQ thread in the inbox.
-  contextRfqId String?
   readAt       DateTime?
   createdAt    DateTime  @default(now())
   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt])
-  @@index([userId, contextRfqId])
   @@map("user_notification")
-}
-
-/// Coalesces RFQ thread notification emails per recipient key within a time window.
-model RfqThreadEmailThrottle {
-  rfqId         String
-  recipientKey  String // buyer user id OR "org:" + organizationId
-  pendingCount  Int      @default(0)
-  lastSentAt    DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@id([rfqId, recipientKey])
-  @@map("rfq_thread_email_throttle")
 }
 
 // Onboarding / partner profile (filled after email verification)
@@ -172,8 +176,6 @@ model Organization {
   products          Product[]
   certifications    Certification[]
   trainingEnrollments TrainingEnrollment[]
-  rfqs              Rfq[]
-  contracts         Contract[]
   supportTickets    SupportTicket[]
   shopOrderLines    ShopOrderLine[]
 
@@ -247,8 +249,11 @@ model Product {
   id               String                 @id @default(cuid())
   organizationId   String
   name             String
-  category         String
+  category         String                 // kept as string for backward compatibility
+  cosmeticsCategory ProductCategory?      // new typed category for cosmetics
   description      String?                @db.Text
+  ingredients      String?                @db.Text // comma-separated or list format
+  skinTypes        String?                // JSON array or comma-separated: OILY, DRY, COMBINATION, SENSITIVE, NORMAL
   status           String                 @default("PENDING") // PENDING | APPROVED | REJECTED
   rejectionReason  String?                // set by admin when rejecting
   moq              String?                // minimum order quantity (legacy; mirrored on default variant)
@@ -262,8 +267,11 @@ model Product {
   images           ProductImage[]
   certifications   Certification[]
   savedInLists     SavedListProduct[]
+  batches          ProductBatch[]
+  reviews          ProductReview[]
 
   @@index([organizationId])
+  @@index([cosmeticsCategory])
   @@index([status])
   @@map("product")
 }
@@ -286,6 +294,9 @@ model ProductImage {
 /// Guest checkout order from the public catalog (cart).
 model ShopOrder {
   id            String                 @id @default(cuid())
+  /// Set when checkout is completed by a signed-in buyer (email must match form).
+  buyerUserId   String?
+  buyerUser     User?                  @relation(fields: [buyerUserId], references: [id], onDelete: SetNull)
   buyerName     String
   buyerEmail    String
   buyerPhone    String?
@@ -304,6 +315,7 @@ model ShopOrder {
   updatedAt     DateTime               @updatedAt
   lines         ShopOrderLine[]
 
+  @@index([buyerUserId])
   @@map("shop_order")
 }
 
@@ -348,6 +360,49 @@ model Certification {
   @@index([productId])
   @@index([status])
   @@map("certification")
+}
+
+// ─── Batch/Lot tracking (cosmetics specific) ────────────────────────────────
+model ProductBatch {
+  id               String    @id @default(cuid())
+  productId        String
+  batchNumber      String    // e.g. "LOT-2026-04-001"
+  expirationDate   DateTime?
+  manufacturingDate DateTime?
+  quantityProduced Int       @default(0) // units produced
+  quantityAvailable Int      @default(0) // units still available
+  status           String    @default("ACTIVE") // ACTIVE | DEPLETED | EXPIRED | RECALLED
+  notes            String?   @db.Text // Internal notes for tracking
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  product          Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, batchNumber])
+  @@index([productId])
+  @@index([status])
+  @@index([expirationDate])
+  @@map("product_batch")
+}
+
+// ─── Product reviews & ratings ─────────────────────────────────────────────
+model ProductReview {
+  id               String    @id @default(cuid())
+  productId        String
+  buyerName        String    // guest name if no account
+  buyerEmail       String?   // optional buyer email
+  rating           ReviewRating
+  title            String    // e.g. "Amazing texture!"
+  body             String?   @db.Text
+  isVerifiedPurchase Boolean  @default(false)
+  helpfulCount     Int       @default(0) // thumbs up count
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  product          Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([rating])
+  @@index([createdAt])
+  @@map("product_review")
 }
 
 // ─── Training (admin-created programs; partners enroll and track progress) ─────
@@ -450,89 +505,6 @@ model SavedListProduct {
   @@unique([savedListId, productId])
   @@index([productId])
   @@map("saved_list_product")
-}
-
-// ─── RFQs & Contracts (producer org = seller) ─────────────────────────────────
-model Rfq {
-  id                String    @id @default(cuid())
-  organizationId    String
-  /// Logged-in buyer account when inquiry was submitted while signed in (optional).
-  buyerUserId       String?
-  buyerName         String
-  buyerLocation     String?
-  product           String    // product description
-  quantity          String    // e.g. "500 L", "10 kg"
-  message           String?   @db.Text
-  status            String    @default("NEW") // NEW | QUOTED | NEGOTIATING | DECLINED
-  estimatedValue    String?   // e.g. "~€14,200"
-  deadlineAt        DateTime?
-  /// When status is NEGOTIATING: who may post the next thread message (turn-based negotiation).
-  negotiationTurn   String?   // BUYER | PARTNER
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  buyerUser         User?     @relation("BuyerRfqs", fields: [buyerUserId], references: [id], onDelete: SetNull)
-  messages          RfqMessage[]
-
-  @@index([organizationId])
-  @@index([buyerUserId])
-  @@index([status])
-  @@map("rfq")
-}
-
-/// In-thread negotiation / clarification messages on an RFQ (buyer or partner).
-model RfqMessage {
-  id             String                 @id @default(cuid())
-  rfqId          String
-  authorUserId   String
-  authorRole     String                 // BUYER | PARTNER
-  body           String                 @db.Text
-  createdAt      DateTime               @default(now())
-  rfq            Rfq                    @relation(fields: [rfqId], references: [id], onDelete: Cascade)
-  attachments    RfqMessageAttachment[]
-
-  @@index([rfqId])
-  @@index([authorUserId, createdAt])
-  @@map("rfq_message")
-}
-
-model RfqMessageAttachment {
-  id           String    @id @default(cuid())
-  rfqMessageId String
-  url          String
-  fileName     String?
-  mimeType     String?
-  sizeBytes    Int?
-  createdAt    DateTime  @default(now())
-  rfqMessage   RfqMessage @relation(fields: [rfqMessageId], references: [id], onDelete: Cascade)
-
-  @@index([rfqMessageId])
-  @@map("rfq_message_attachment")
-}
-
-model Contract {
-  id                  String    @id @default(cuid())
-  organizationId      String
-  rfqId               String?   // optional link to originating RFQ
-  buyerName           String
-  buyerLocation       String?
-  product             String
-  quantityLabel       String    // e.g. "500 L / month"
-  valueLabel          String    // e.g. "€14,200 / month"
-  valueCents          Int?      // optional: for revenue aggregation (YTD sum)
-  status              String    @default("ACTIVE") // ACTIVE | COMPLETED
-  startedAt           DateTime
-  expiresAt           DateTime
-  progress            Int       @default(0) // 0-100
-  deliveriesTotal     Int       @default(0)
-  deliveriesCompleted Int       @default(0)
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  @@index([organizationId])
-  @@index([status])
-  @@map("contract")
 }
 
 // ─── Support (producer org opens tickets) ────────────────────────────────────

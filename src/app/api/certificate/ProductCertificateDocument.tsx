@@ -57,7 +57,7 @@ export function ProductCertificateDocument({ data }: { data: ProductCertificateD
       <Page size="A4" style={styles.page}>
         <View style={styles.border} />
         <View style={styles.header}>
-          <Text style={styles.logo}>CraftHouse</Text>
+          <Text style={styles.logo}>nevali</Text>
           <Text style={styles.tagline}>From Moroccan Soil to Global Markets</Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>Certified Product</Text>
@@ -65,7 +65,7 @@ export function ProductCertificateDocument({ data }: { data: ProductCertificateD
         </View>
         <Text style={styles.title}>Product Certification</Text>
         <Text style={styles.subtitle}>
-          This certifies that the following product listing has been approved and certified on the CraftHouse platform.
+          This certifies that the following cosmetics listing has been approved on the nevali marketplace.
         </Text>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Product</Text>
@@ -87,8 +87,8 @@ export function ProductCertificateDocument({ data }: { data: ProductCertificateD
           </View>
         </View>
         <View style={styles.footer}>
-          <Text style={styles.footerLeft}>CraftHouse · Casablanca, Morocco</Text>
-          <Text style={styles.footerRight}>Document generated from crafthouse platform</Text>
+          <Text style={styles.footerLeft}>nevali · Casablanca, Morocco</Text>
+          <Text style={styles.footerRight}>Document generated from nevali-cosmetics platform</Text>
         </View>
       </Page>
     </Document>

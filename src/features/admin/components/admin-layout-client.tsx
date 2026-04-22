@@ -86,14 +86,6 @@ function IconSupport() {
   );
 }
 
-function IconContracts() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 2L3 5v4c0 2.8 2 5.1 5 5.9 3-0.8 5-3.1 5-5.9V5L8 2z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function IconAnalytics() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -112,7 +104,6 @@ const ICONS: Record<string, (active: boolean) => React.ReactNode> = {
   "/admin/certifications": () => <IconCertifications />,
   "/admin/training": () => <IconTraining />,
   "/admin/support": () => <IconSupport />,
-  "/admin/contracts": () => <IconContracts />,
 };
 
 import type { UserDisplay } from "~/app/api/profile/schemas/profile.schema";
@@ -174,7 +165,7 @@ export function AdminLayoutClient({ user, children }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/logo-white.svg"
-                alt="CraftHouse"
+                alt="nevali"
                 className="h-8 w-auto block"
               />
               <span className="block uppercase font-sans font-semibold text-xs tracking-[0.1em] text-secondary mt-[3px]">
@@ -272,5 +263,5 @@ export function AdminLayoutClient({ user, children }: Props) {
 
 
 
-// Seeded superadmin: admin@crafthouse.local (see prisma/seed.ts)
+// Seeded superadmin: admin@nevali-cosmetics.local (see prisma/seed.ts)
 // Password123!

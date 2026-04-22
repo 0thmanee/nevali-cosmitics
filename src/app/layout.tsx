@@ -5,9 +5,9 @@ import { Oswald, Space_Grotesk } from "next/font/google";
 import { QueryProvider } from "~/components/providers/query-provider";
 
 export const metadata: Metadata = {
-  title: "CraftHouse — Moroccan Artisan Marketplace",
+  title: "nevali — Bio Moroccan cosmetics, direct from brands",
   description:
-    "Certified Moroccan craft directly from verified artisans and cooperatives to global buyers.",
+    "Discover original Moroccan cosmetics: clean formulas, botanical oils, and heritage rituals—curated from verified local brands with transparent checkout.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

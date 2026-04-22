@@ -53,11 +53,6 @@ const CONFIG: Record<UploadMediaType, UploadTypeConfig> = {
     maxSizeBytes: TRAINING_MEDIA_MAX_BYTES,
     pathStrategy: "unique",
   },
-  rfqMessageAttachments: {
-    allowedMimeTypes: [...PDF_MIMES, ...DEFAULT_MIMES],
-    maxSizeBytes: DEFAULT_MAX_BYTES,
-    pathStrategy: "unique",
-  },
 };
 
 const IMAGE_EXTS = ["jpeg", "jpg", "png", "webp"];
@@ -70,7 +65,7 @@ function buildPath(type: UploadMediaType, userId: string, suggestedName: string)
   const rawExt = suggestedName.split(".").pop()?.toLowerCase() || "jpg";
   const config = CONFIG[type];
   const allowedExts =
-    type === "certificationDocuments" || type === "rfqMessageAttachments"
+    type === "certificationDocuments"
       ? DOC_EXTS
     : type === "trainingProgramMedia" ? TRAINING_EXTS
     : IMAGE_EXTS;
@@ -78,7 +73,7 @@ function buildPath(type: UploadMediaType, userId: string, suggestedName: string)
     ? rawExt
     : type === "trainingProgramMedia"
       ? "mp4"
-      : type === "certificationDocuments" || type === "rfqMessageAttachments"
+      : type === "certificationDocuments"
         ? "pdf"
         : "jpg";
   if (config.pathStrategy === "single") {

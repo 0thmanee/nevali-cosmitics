@@ -1,7 +1,10 @@
 "use server";
 
 import { getSession, redirectNonSuperadminHome } from "~/app/api/auth/actions";
-import { listShopOrdersForAdminRepo } from "./repo/shop-orders.repo";
+import {
+	getShopOrderAnalyticsForAdminRepo,
+	listShopOrdersForAdminRepo,
+} from "./repo/shop-orders.repo";
 
 async function requireSuperadmin() {
   const session = await getSession();
@@ -15,4 +18,11 @@ async function requireSuperadmin() {
 export async function listShopOrdersForAdmin(organizationId?: string | null) {
   await requireSuperadmin();
   return listShopOrdersForAdminRepo({ organizationId: organizationId ?? undefined });
+}
+
+export async function getAdminShopOrderAnalytics(organizationId?: string | null) {
+  await requireSuperadmin();
+  return getShopOrderAnalyticsForAdminRepo({
+    organizationId: organizationId ?? undefined,
+  });
 }

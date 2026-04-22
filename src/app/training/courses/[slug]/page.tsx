@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const course = COURSES.find((c) => c.slug === slug && c.free);
   if (!course) return {};
-  return { title: `${course.i18n.en.title} — CraftHouse Training` };
+  return { title: `${course.i18n.en.title} — nevali Training` };
 }
 
 export default async function CoursePage({ params }: Props) {

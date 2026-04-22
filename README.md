@@ -1,4 +1,4 @@
-# CraftHouse
+# nevaliCosmetics
 
 B2B-style marketplace for Moroccan crafts: verified **partners** (artisans / cooperatives) manage products, certifications, training, support, and RFQs; **buyers** can register, browse, and track product inquiries; **superadmins** review and operate the platform. Public visitors browse approved products and partner profiles.
 

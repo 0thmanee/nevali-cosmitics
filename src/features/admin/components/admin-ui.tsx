@@ -1,6 +1,6 @@
 /**
  * Shared admin UI primitives — keeps all pages visually consistent.
- * All components are flat/angular (no border-radius) matching the CraftHouse design system.
+ * All components are flat/angular (no border-radius) matching the nevali design system.
  */
 import React from "react";
 

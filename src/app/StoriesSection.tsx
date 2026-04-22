@@ -1,18 +1,18 @@
 const STORIES = [
   {
-    title: "How Moroccan Pottery Meets International Quality Standards",
+    title: "How Moroccan labs document INCI lists for EU-conscious shoppers",
     date: "March 10, 2027",
-    tag: "Craft & Export",
+    tag: "Compliance",
     color: "linear-gradient(135deg, #1A7080 0%, #0D5060 60%, #2A9090 100%)",
   },
   {
-    title: "Workshop Training for Artisans",
+    title: "Micro-learning for beauty founders on nevali",
     date: "March 10, 2027",
     tag: "Education",
     color: "linear-gradient(135deg, #5A3010 0%, #7A4820 60%, #9A6830 100%)",
   },
   {
-    title: "Women Weavers of the Atlas: A Cooperative Success Story",
+    title: "Argan cooperatives meet modern serum science",
     date: "March 10, 2027",
     tag: "Community",
     color: "linear-gradient(135deg, #8B2D1E 0%, #C04830 50%, #A03820 100%)",
@@ -33,10 +33,10 @@ export default function StoriesSection() {
               className="font-display font-bold uppercase text-text-dark"
               style={{ fontSize: "clamp(26px, 2.8vw, 36px)", letterSpacing: "0.06em" }}
             >
-              Stories &amp; Craftsmanship
+              Stories &amp; formulation
             </h2>
             <p className="font-sans text-base text-text-muted mt-2 max-w-md leading-relaxed">
-              Articles, guides, and artisan stories that celebrate Moroccan heritage and support sustainable craftsmanship.
+              Notes from Moroccan beauty labs—ingredient spotlights, founder journeys, and how we keep the marketplace bio-minded.
             </p>
           </div>
           <a

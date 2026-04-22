@@ -1,6 +1,6 @@
 # OrigineMaroc — Architecture & Best Practices
 
-> **Reality check (CraftHouse repo):** This file kept the historical **OrigineMaroc** title as generic guidance. The shipping app is **CraftHouse** (`/artisan`, `/buyer`, `/admin`). Prefer searching `src/app/api/**` and `*.repo.ts` over treating the directory tree below as exact.
+> **Reality check (nevaliCosmetics repo):** This file kept the historical **OrigineMaroc** title as generic guidance. The shipping app is **nevaliCosmetics** (`/artisan`, `/buyer`, `/admin`). Prefer searching `src/app/api/**` and `*.repo.ts` over treating the directory tree below as exact.
 
 This document describes the recommended structure and practices for the Next.js app: project layout, resource organization (repo, API, schemas, hooks), Prisma + PostgreSQL, multi-tenancy, and Better Auth.
 

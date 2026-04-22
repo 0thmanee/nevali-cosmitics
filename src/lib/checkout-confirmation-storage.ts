@@ -1,4 +1,4 @@
-const STORAGE_KEY = "crafthouse:lastCheckout";
+const STORAGE_KEY = "nevali-cosmetics:lastCheckout";
 
 export type LastCheckoutConfirmationPayload = {
   orderId: string;

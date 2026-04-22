@@ -57,13 +57,12 @@ export default async function CollectionsSection() {
 						className="font-display font-bold uppercase leading-[1.0] text-text-dark"
 						style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-0.01em" }}
 					>
-						Explore Our Craft
+						From Moroccan labs
 						<br />
-						Collections
+						to your shelf
 					</h2>
 					<p className="max-w-md font-sans text-base leading-relaxed text-text-muted">
-						Live listings from the catalog — each tile opens the product page for
-						moq, partner details, and inquiries.
+						Live picks from the catalog—tap through for ingredients, brand story, variants, and guest-friendly checkout.
 					</p>
 				</div>
 

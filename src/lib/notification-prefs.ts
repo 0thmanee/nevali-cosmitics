@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 
 export type NotificationPrefs = {
-	muteRfqThreadEmail?: boolean;
+	muteOrderEmails?: boolean;
 };
 
 export function parseNotificationPrefs(
@@ -12,15 +12,15 @@ export function parseNotificationPrefs(
 	}
 	const o = value as Record<string, unknown>;
 	return {
-		muteRfqThreadEmail:
-			typeof o.muteRfqThreadEmail === "boolean"
-				? o.muteRfqThreadEmail
+		muteOrderEmails:
+			typeof o.muteOrderEmails === "boolean"
+				? o.muteOrderEmails
 				: undefined,
 	};
 }
 
-export function userMuteRfqThreadEmail(
+export function userMuteOrderEmails(
 	prefs: Prisma.JsonValue | null | undefined,
 ): boolean {
-	return parseNotificationPrefs(prefs).muteRfqThreadEmail === true;
+	return parseNotificationPrefs(prefs).muteOrderEmails === true;
 }

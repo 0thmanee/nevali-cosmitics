@@ -10,11 +10,11 @@ export default function NewFutureSection() {
             className="font-display font-bold uppercase leading-[1.0] text-text-dark"
             style={{ fontSize: "clamp(32px, 5vw, 44px)", letterSpacing: "-0.01em" }}
           >
-            A New Future<br />for Moroccan<br />Craftsmanship
+            Moroccan beauty,<br />made traceable<br />and modern
           </h2>
           <p className="font-sans text-sm leading-relaxed text-text-muted max-w-sm">
-            We bring Moroccan artisans to the world. Through an ethical and structured marketplace, we ensure fair trade,
-            premium quality, and long-term sustainability — from local workshops to international customers.
+            We spotlight independent labs and cooperatives that formulate with local botanicals—argan, rose,
+            ghassoul, and beyond—while giving shoppers a calm, certified path from discovery to delivery.
           </p>
           <div className="mt-1">
             <a
@@ -33,7 +33,7 @@ export default function NewFutureSection() {
           <div className="rounded-sm overflow-hidden relative h-48 sm:h-64 lg:h-[340px]">
             <Image
               src="https://images.unsplash.com/photo-1669542873085-c46ebc6f1014?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.1.0"
-              alt="Moroccan medina building with traditional textiles"
+              alt="Moroccan botanical skincare textures"
               fill
               className="object-cover object-center"
             />
@@ -44,7 +44,7 @@ export default function NewFutureSection() {
           <div className="rounded-sm overflow-hidden relative h-48 sm:h-64 lg:h-[340px]">
             <Image
               src="https://images.unsplash.com/photo-1530021853947-7d73da7acb70?q=80&w=800&auto=format&fit=crop"
-              alt="Moroccan craftsmanship scene"
+              alt="Natural Moroccan cosmetics studio"
               fill
               className="object-cover object-center"
             />

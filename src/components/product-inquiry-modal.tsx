@@ -26,8 +26,11 @@ type Props = {
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-const DEFAULT_INQUIRY_BILLING =
-	"This sends a sourcing inquiry to the artisan. CraftHouse does not run card checkout or shipping settlement—commercial terms are agreed with the producer unless you add payments later.";
+const OOS_INQUIRY_BILLING =
+	"This item is not available for cart checkout right now. Your message goes to the brand by email—no account required.";
+
+const B2B_QUOTE_BILLING =
+	"Optional wholesale request to the brand by email. For immediate purchase, use Add to cart and guest checkout instead—no sign-in required.";
 
 function marketplaceBillingNote(): string | undefined {
 	const raw = process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE?.trim();
@@ -253,7 +256,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							</div>
 
 							<p className="font-sans text-[11px] text-text-muted leading-relaxed">
-								{DEFAULT_INQUIRY_BILLING}
+								{isB2B ? B2B_QUOTE_BILLING : OOS_INQUIRY_BILLING}
 								{billingExtra ? ` ${billingExtra}` : ""}
 							</p>
 

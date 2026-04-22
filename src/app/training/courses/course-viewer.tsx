@@ -155,10 +155,10 @@ export function CourseViewer({ course }: { course: Course }) {
               </p>
               <p className="font-sans text-sm text-text-muted">
                 {lang === "ar"
-                  ? "تشارك مع CraftHouse للوصول إلى المنهج الكامل وعرض منتجاتك في الأسواق العالمية."
+                  ? "تشارك مع nevali للوصول إلى المنهج الكامل وعرض منتجاتك في الأسواق العالمية."
                   : lang === "fr"
-                  ? "Rejoignez CraftHouse pour accéder à tout le curriculum et lister vos produits sur les marchés mondiaux."
-                  : "Partner with CraftHouse to unlock the full curriculum and list your products globally."}
+                  ? "Rejoignez nevali pour accéder à tout le curriculum et lister vos produits sur les marchés mondiaux."
+                  : "Partner with nevali to unlock the full curriculum and list your products globally."}
               </p>
             </div>
             <Link href="/auth/register"

@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 
-// Platform theme (CraftHouse)
+// Platform theme (nevali)
 const colors = {
   primary: "#1a0500",
   primaryLight: "#2a0f05",
@@ -143,7 +143,7 @@ export function PartnerCertificateDocument({ data }: { data: CertificateData }) 
       <Page size="A4" style={styles.page}>
         <View style={styles.border} />
         <View style={styles.header}>
-          <Text style={styles.logo}>CraftHouse</Text>
+          <Text style={styles.logo}>nevali</Text>
           <Text style={styles.tagline}>From Moroccan Soil to Global Markets</Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>Verified Partner</Text>
@@ -152,7 +152,7 @@ export function PartnerCertificateDocument({ data }: { data: CertificateData }) 
 
         <Text style={styles.title}>Partner Certificate</Text>
         <Text style={styles.subtitle}>
-          This certifies that the following is a registered partner of the CraftHouse platform.
+          This certifies that the following is a registered Moroccan cosmetics partner on the nevali marketplace.
         </Text>
 
         <View style={styles.card}>
@@ -186,8 +186,8 @@ export function PartnerCertificateDocument({ data }: { data: CertificateData }) 
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerLeft}>CraftHouse · Casablanca, Morocco</Text>
-          <Text style={styles.footerRight}>Document generated from crafthouse platform</Text>
+          <Text style={styles.footerLeft}>nevali · Casablanca, Morocco</Text>
+          <Text style={styles.footerRight}>Document generated from nevali-cosmetics platform</Text>
         </View>
       </Page>
     </Document>

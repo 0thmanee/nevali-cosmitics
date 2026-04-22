@@ -725,40 +725,72 @@ export async function listApprovedProductsForPublicRepo(limit = 8) {
   );
 }
 
-/** Homepage featured craft tabs: first approved listing per slot (keyword match on category + name). */
+/** Homepage featured category tabs: first approved listing per slot (keyword match on category + name). */
 const FEATURED_HOME_CATEGORY_SPECS = [
   {
-    id: "carpets",
-    keywords: ["carpet", "zrabd", "tapis", "rug", "berber"],
-  },
-  {
-    id: "pottery",
+    id: "argan-oils",
     keywords: [
-      "pottery",
-      "ceramic",
-      "céramique",
-      "ceramique",
-      "faience",
-      "faïence",
-      "tile",
-      "zellige",
+      "argan",
+      "amlou",
+      "oil",
+      "huile",
+      "prickly",
+      "barbary",
+      "figue de barbarie",
+      "botanical oil",
     ],
   },
   {
-    id: "leather",
-    keywords: ["leather", "cuir", "babouche", "tannery"],
+    id: "skincare",
+    keywords: [
+      "cream",
+      "crème",
+      "serum",
+      "sérum",
+      "face",
+      "visage",
+      "skincare",
+      "moistur",
+      "spf",
+      "mask",
+      "masque",
+      "lotion",
+    ],
   },
   {
-    id: "lanterns",
-    keywords: ["lantern", "lumière", "luminaire", "brass lamp", "metalwork"],
+    id: "hammam-body",
+    keywords: [
+      "ghassoul",
+      "rassoul",
+      "soap",
+      "savon",
+      "beldi",
+      "black soap",
+      "hammam",
+      "scrub",
+      "gant",
+      "kessa",
+      "body",
+      "corps",
+    ],
   },
   {
-    id: "thuya",
-    keywords: ["thuya", "thuja", "marquetry", "essaouira", "wood box"],
-  },
-  {
-    id: "caftans",
-    keywords: ["caftan", "kaftan", "broderie", "embroidery", "brocade"],
+    id: "hair-fragrance",
+    keywords: [
+      "hair",
+      "cheveux",
+      "shampoo",
+      "shampoing",
+      "conditioner",
+      "après-shampooing",
+      "parfum",
+      "fragrance",
+      "eau de",
+      "oud",
+      "rose water",
+      "eau de rose",
+      "jasmine",
+    ],
   },
 ] as const;
 

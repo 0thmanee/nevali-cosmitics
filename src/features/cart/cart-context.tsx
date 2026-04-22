@@ -11,7 +11,7 @@ import React, {
 import type { CartLine } from "./cart-types";
 import { cartLineKey } from "./cart-types";
 
-const STORAGE_KEY = "crafthouse-cart-v2";
+const STORAGE_KEY = "nevali-cosmetics-cart-v2";
 
 type CartContextValue = {
   lines: CartLine[];

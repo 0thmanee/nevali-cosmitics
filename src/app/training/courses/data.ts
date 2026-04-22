@@ -379,10 +379,10 @@ Retail buyers require a GS1 EAN-13 barcode on each product unit. To get barcodes
 3. Print barcodes on your hang tags or adhesive labels
 
 **Traceability tags**
-CraftHouse provides a digital certificate for verified artisans that buyers can link to your products — a significant competitive advantage over mass-produced alternatives.
+nevali provides a digital certificate for verified artisans that buyers can link to your products — a significant competitive advantage over mass-produced alternatives.
 
 **QR codes**
-Add a QR code linking to your CraftHouse artisan profile. This lets end consumers discover your story and craft process. Buyers love this — it adds perceived value without adding cost.`,
+Add a QR code linking to your nevali artisan profile. This lets end consumers discover your story and craft process. Buyers love this — it adds perceived value without adding cost.`,
           },
         ],
       },
@@ -460,10 +460,10 @@ Les acheteurs retail exigent un code-barres GS1 EAN-13 sur chaque unité produit
 3. Imprimez les codes-barres sur vos étiquettes suspendues ou vos autocollants
 
 **Étiquettes de traçabilité**
-CraftHouse fournit un certificat numérique aux artisans vérifiés que les acheteurs peuvent associer à vos produits — un avantage concurrentiel majeur face aux produits de masse.
+nevali fournit un certificat numérique aux artisans vérifiés que les acheteurs peuvent associer à vos produits — un avantage concurrentiel majeur face aux produits de masse.
 
 **QR codes**
-Ajoutez un QR code renvoyant vers votre profil artisan CraftHouse. Les consommateurs finaux peuvent ainsi découvrir votre histoire et votre processus. Les acheteurs adorent cela — cela ajoute de la valeur perçue sans coût supplémentaire.`,
+Ajoutez un QR code renvoyant vers votre profil artisan nevali. Les consommateurs finaux peuvent ainsi découvrir votre histoire et votre processus. Les acheteurs adorent cela — cela ajoute de la valeur perçue sans coût supplémentaire.`,
           },
         ],
       },
@@ -541,10 +541,10 @@ Ajoutez un QR code renvoyant vers votre profil artisan CraftHouse. Les consommat
 3. اطبع الباركود على بطاقات التعليق أو الملصقات
 
 **وسوم التتبع**
-توفر CraftHouse شهادة رقمية للحرفيين الموثقين يمكن للمشترين ربطها بمنتجاتك — ميزة تنافسية كبيرة مقارنة بالمنتجات المصنّعة بكميات كبيرة.
+توفر nevali شهادة رقمية للحرفيين الموثقين يمكن للمشترين ربطها بمنتجاتك — ميزة تنافسية كبيرة مقارنة بالمنتجات المصنّعة بكميات كبيرة.
 
 **رموز QR**
-أضف رمز QR يُحيل إلى ملفك الحرفي على CraftHouse. يتيح ذلك للمستهلكين النهائيين اكتشاف قصتك وأسلوب عملك. المشترون يحبون هذا — يضيف قيمة مدركة دون تكلفة إضافية.`,
+أضف رمز QR يُحيل إلى ملفك الحرفي على nevali. يتيح ذلك للمستهلكين النهائيين اكتشاف قصتك وأسلوب عملك. المشترون يحبون هذا — يضيف قيمة مدركة دون تكلفة إضافية.`,
           },
         ],
       },
@@ -555,8 +555,8 @@ Ajoutez un QR code renvoyant vers votre profil artisan CraftHouse. Les consommat
 export const FREE_COURSES = COURSES.filter((c) => c.free);
 
 export const LOCKED_COURSES_DATA = [
-  { slug: "eu-compliance-labelling", duration: "1h 10min", level: "Intermediate", title: "EU Compliance & Labelling Requirements", description: "A deep dive into REACH, GPSR, and textile labelling regulations. Know exactly what buyers in France, Germany, and the UK require before placing orders." },
-  { slug: "pricing-strategy-global-buyers", duration: "55 min", level: "Intermediate", title: "Pricing Strategy for Global Buyers", description: "How to calculate export pricing, understand Incoterms, negotiate margins, and present competitive quotes without underselling your craft." },
-  { slug: "responding-to-rfqs", duration: "40 min", level: "Intermediate", title: "Responding to RFQs through CraftHouse", description: "Master the CraftHouse workspace — how to read buyer RFQs, submit compelling proposals, and follow up professionally to close deals." },
-  { slug: "artisan-profile-brand-story", duration: "1h 20min", level: "Advanced", title: "Building Your Artisan Profile & Brand Story", description: "Turn your heritage and craft process into a buyer-facing story. Covers photography, certifications display, and copywriting for your CraftHouse profile." },
+  { slug: "eu-compliance-labelling", duration: "1h 10min", level: "Intermediate", title: "EU Compliance & Labelling Requirements", description: "REACH, GPSR, and cosmetics labelling basics for Moroccan brands exporting to France, Germany, and the UK—claims, INCI, and responsible documentation." },
+  { slug: "pricing-strategy-global-buyers", duration: "55 min", level: "Intermediate", title: "Pricing Strategy for Global Buyers", description: "How to price finished cosmetics for export, understand Incoterms, and protect margin when selling direct or through nevali checkout." },
+  { slug: "responding-to-rfqs", duration: "40 min", level: "Intermediate", title: "Fulfilling catalog orders on nevali", description: "Operate the partner workspace—read COD vs card rules, confirm stock, communicate shipping timelines, and keep buyers informed after checkout." },
+  { slug: "artisan-profile-brand-story", duration: "1h 20min", level: "Advanced", title: "Building your public brand & product story", description: "Turn heritage, formulation notes, and rituals into PDP copy buyers trust—photography, certifications, and tone for Moroccan cosmetics." },
 ];

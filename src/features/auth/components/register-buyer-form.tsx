@@ -102,7 +102,7 @@ export function RegisterBuyerForm() {
               )}
             </div>
             <span className="font-sans text-[13px] text-text-muted leading-relaxed">
-              I agree to the CraftHouse Terms of Service and Privacy Policy{" "}
+              I agree to the nevali Terms of Service and Privacy Policy{" "}
               <span style={{ color: "#7B1F0A" }}>*</span>
             </span>
           </label>

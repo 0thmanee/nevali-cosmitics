@@ -11,7 +11,6 @@ export const PRODUCER_NAV_ITEMS = [
   { label: "Training", href: "/artisan/training", badge: null },
   { label: "Support", href: "/artisan/support", badge: null },
   { label: "Alerts", href: "/artisan/notifications", badge: null },
-  { label: "Contracts & RFQs", href: "/artisan/contracts", badge: null },
 ] as const;
 
 export const PAGE_SUBTITLE: Record<string, string> = {
@@ -23,10 +22,9 @@ export const PAGE_SUBTITLE: Record<string, string> = {
   "/artisan/products/new": "Fill in product details — images and certifications can be added after saving",
   "/artisan/certification": "Track your certification status and documents",
   "/artisan/training": "Continue your export readiness programs",
-  "/artisan/support": "Get help from the CraftHouse team",
+  "/artisan/support": "Get help from the nevali team",
   "/artisan/notifications":
-    "In-app notices for buyer thread activity (not a full messaging product).",
-  "/artisan/contracts": "Manage buyer requests and active contracts",
+    "In-app notices for orders and platform updates.",
 };
 
 export function getPageTitle(pathname: string, firstName?: string | null): string {
@@ -51,8 +49,6 @@ export function getPageTitle(pathname: string, firstName?: string | null): strin
       return "Support";
     case "/artisan/notifications":
       return "Alerts";
-    case "/artisan/contracts":
-      return "Contracts & RFQs";
     default:
       return "Dashboard";
   }

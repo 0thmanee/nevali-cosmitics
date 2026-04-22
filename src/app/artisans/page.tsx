@@ -4,9 +4,9 @@ import Navbar from "~/app/Navbar";
 import PartnersClient from "~/app/partners/PartnersClient";
 
 export const metadata = {
-	title: "Artisans — CraftHouse",
+	title: "Moroccan beauty brands — nevali",
 	description:
-		"Browse verified Moroccan artisans and cooperatives on CraftHouse — certified profiles, traceable crafts, and export-ready partners.",
+		"Meet the verified Moroccan cosmetics makers behind nevali—bio-minded formulas, transparent sourcing, and stories rooted in terroir.",
 };
 
 export default async function ArtisansDirectoryPage() {
@@ -22,25 +22,25 @@ export default async function ArtisansDirectoryPage() {
 					<div className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10">
 						<span>Home</span>
 						<span>/</span>
-						<span className="text-white/70">Artisans</span>
+						<span className="text-white/70">Brands</span>
 					</div>
 
 					<div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
 						<div>
 							<p className="font-sans text-xs tracking-[0.2em] uppercase text-secondary mb-5">
-								Verified artisans — Moroccan crafts
+								Verified Moroccan cosmetics makers
 							</p>
 							<h1
 								className="font-serif font-bold uppercase text-white leading-[1.0]"
 								style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
 							>
-								The people<br />behind every<br />verified product
+								The makers<br />behind every<br />bio-minded SKU
 							</h1>
 						</div>
 
 						<div className="md:max-w-xs shrink-0 flex flex-col gap-6">
 							<p className="font-sans text-white/60 leading-relaxed text-sm">
-								Explore our network of certified Moroccan cooperatives and artisans — each rigorously audited for quality, traceability, and export compliance.
+								Independent labs, cooperatives, and founder-led houses—each reviewed for formulation integrity, documentation, and the ability to ship beautiful Moroccan cosmetics with confidence.
 							</p>
 							<div className="flex gap-8">
 								{[

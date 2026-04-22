@@ -18,14 +18,14 @@ export async function generateMetadata({
   const { id } = await params;
   const partner = await getPublicPartner(id);
   if (!partner?.profile) {
-    return { title: "Artisan — CraftHouse" };
+    return { title: "Brand — nevali" };
   }
   const { profile } = partner;
   return {
-    title: `${profile.entityName} — Artisans — CraftHouse`,
+    title: `${profile.entityName} — Brands — nevali`,
     description:
       profile.publicTagline?.trim() ||
-      `Verified CraftHouse artisan in ${profile.city}, ${profile.region}. Browse approved listings and certifications.`,
+      `Verified nevali cosmetics brand in ${profile.city}, ${profile.region}. Browse approved listings and certifications.`,
   };
 }
 

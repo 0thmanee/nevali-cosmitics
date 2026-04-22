@@ -140,21 +140,20 @@ function IconGrid() {
   );
 }
 
-function IconRFQ() {
+function IconShoppingBag() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
-        d="M3 4h14M3 8h10M3 12h6"
+        d="M5 7h10v11H5V7z"
         stroke="#C8963C"
         strokeWidth="1.6"
-        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
-        d="M13 13l2 2 4-4"
+        d="M8 7V5a2 2 0 0 1 4 0v2"
         stroke="#C8963C"
         strokeWidth="1.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
     </svg>
   );
@@ -297,7 +296,7 @@ const pillars = [
         cardBorder: "#FAF5EE",
         dark: false,
         title: "Traceability & QR Verification",
-        desc: "Every product linked to artisan, region, harvest batch, and certification ID — real-time verifiable by buyers.",
+        desc: "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify.",
         tags: [
           {
             label: "QR SCANNABLE",
@@ -347,7 +346,7 @@ const pillars = [
     ],
   },
   {
-    label: "PILLAR 2 — MARKET ACCESS",
+    label: "PILLAR 2 — MARKETPLACE ACCESS",
     pillarIcon: <IconPillar2 />,
     pillarIconBg: "#F5EDD6",
     cards: [
@@ -357,11 +356,11 @@ const pillars = [
         cardBg: "#FAFAF7",
         cardBorder: "#F0E6CC",
         dark: false,
-        title: "Product Listings",
-        desc: "1,800+ certified Moroccan products across 12+ categories — argan, saffron, honey, ceramics, textiles, and more.",
+        title: "Product listings",
+        desc: "Skincare, hair, body, fragrance, and ritual care—organized by category with photos, INCI-style ingredients, and variant pricing in MAD.",
         tags: [
           {
-            label: "1,800+ PRODUCTS",
+            label: "COSMETICS FOCUS",
             style: {
               background: "#F5EDD6",
               color: "#C8963C",
@@ -371,16 +370,16 @@ const pillars = [
         ],
       },
       {
-        icon: <IconRFQ />,
+        icon: <IconShoppingBag />,
         iconBg: "#F5EDD6",
         cardBg: "#FAFAF7",
         cardBorder: "#F0E6CC",
         dark: false,
-        title: "RFQ System",
-        desc: "Buyers submit structured requests for quotation directly to certified artisans. Producers respond with pricing and capacity.",
+        title: "Guest checkout & cart",
+        desc: "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment.",
         tags: [
           {
-            label: "DIRECT NEGOTIATION",
+            label: "NO LOGIN REQUIRED",
             style: {
               background: "#F5EDD6",
               color: "#C8963C",
@@ -395,11 +394,11 @@ const pillars = [
         cardBg: "#1a0500",
         cardBorder: "#7b2d1e",
         dark: true,
-        title: "Buyer-Artisan Matching",
-        desc: "Smart matching connects international buyers with the right certified suppliers based on product category, region, and capacity.",
+        title: "Brand discovery",
+        desc: "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes.",
         tags: [
           {
-            label: "SMART MATCHING",
+            label: "CURATED DIRECTORY",
             style: {
               background: "rgba(201,145,61,0.2)",
               color: "#E8B84B",
@@ -421,8 +420,8 @@ const pillars = [
         cardBg: "#FAFAF7",
         cardBorder: "#FAF5EE",
         dark: false,
-        title: "Training Programs",
-        desc: "Upskilling programs for producers: export standards, packaging, quality documentation, and market readiness.",
+        title: "Training programs",
+        desc: "Micro-learning for beauty founders: EU-style labelling, stability basics, packaging photography, and export readiness for cosmetics.",
         tags: [
           {
             label: "PROGRESS TRACKING",
@@ -440,8 +439,8 @@ const pillars = [
         cardBg: "#FAFAF7",
         cardBorder: "#FAF5EE",
         dark: false,
-        title: "Legal & Export Guidance",
-        desc: "Legal templates, export documentation guides, and a ticket-based support system from Open → Resolved lifecycle.",
+        title: "Legal & export guidance",
+        desc: "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request.",
         tags: [
           {
             label: "REAL-TIME STATUS",
@@ -459,8 +458,8 @@ const pillars = [
         cardBg: "#FAFAF7",
         cardBorder: "#FAF5EE",
         dark: false,
-        title: "Analytics & Reporting",
-        desc: "Exportable dashboards for investors, grants, and audits. Track engagement, RFQ performance, and compliance in real time.",
+        title: "Analytics & reporting",
+        desc: "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.",
         tags: [
           {
             label: "EXPORT PDF / XLS",
@@ -494,12 +493,12 @@ export default function FeaturesSection() {
             <h2 className="font-serif font-bold text-text-dark text-4xl md:text-5xl leading-tight">
               Three pillars for
               <br />
-              export success
+              Moroccan beauty
             </h2>
           </div>
           <p className="font-sans text-text-muted text-lg leading-relaxed max-w-[340px] lg:text-right lg:pt-14">
-            Trust, market access, and growth enablement — everything Moroccan
-            artisans and global buyers need in one platform.
+            Compliance, catalog reach, and founder education—everything nevali bundles so bio-minded
+            Moroccan cosmetics can shine at home and abroad.
           </p>
         </div>
 

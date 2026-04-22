@@ -8,94 +8,56 @@ import { formatPriceMad } from "~/lib/format-price";
 
 const CATEGORIES = [
   {
-    id: "carpets",
-    tab: "Carpets (Zrabd)",
-    title: "Moroccan Carpets (Zrabd)",
-    desc: "Moroccan carpets, known as Zrabd, are among the most iconic expressions of Moroccan craftsmanship. Handwoven in rural villages and mountain regions, each carpet reflects ancestral Berber traditions through unique symbols, patterns, and natural colors.",
+    id: "argan-oils",
+    tab: "Argan & oils",
+    title: "Argan & botanical oils",
+    desc: "Cold-pressed argan, prickly pear, and nutrient-dense carrier oils anchor Moroccan beauty rituals. nevali partners document sourcing so you know the orchard, the press, and the story behind every bottle.",
     details: [
-      { label: "Origin", value: "Moroccan villages" },
-      { label: "Materials", value: "100% Natural Wool" },
-      { label: "Style", value: "Berber geometric symbolism" },
-      { label: "Each piece", value: "Unique and handmade" },
+      { label: "Signature", value: "Terroir-driven lipid profiles" },
+      { label: "Focus", value: "Face, body & hair nutrition" },
+      { label: "Values", value: "Cooperative + lab partnerships" },
+      { label: "On platform", value: "Traceable listings & reviews" },
     ],
     color: "linear-gradient(135deg, #8B2D1E 0%, #C04830 40%, #A03820 70%)",
-    bgImage: "/carpet.png",
-    staticOnly: true,
   },
   {
-    id: "pottery",
-    tab: "Pottery & Ceramics",
-    title: "Moroccan Pottery & Ceramics",
-    desc: "From the kilns of Fez and Safi, Moroccan ceramics combine ancient glazing techniques with vibrant geometric motifs. Each piece is hand-thrown, painted, and fired by master potters carrying on centuries of tradition.",
+    id: "skincare",
+    tab: "Clean skincare",
+    title: "Clean Moroccan skincare",
+    desc: "Serums, creams, and masks formulated with local actives—rose water, ghassoul clays, botanical antioxidants—balanced for modern routines while respecting sensitive skin.",
     details: [
-      { label: "Origin", value: "Fez, Safi" },
-      { label: "Materials", value: "Natural clay & mineral glazes" },
-      { label: "Style", value: "Geometric floral motifs" },
-      { label: "Each piece", value: "Hand-painted" },
+      { label: "Formulation", value: "pH-aware, preservative-smart" },
+      { label: "Transparency", value: "Ingredients spelled for shoppers" },
+      { label: "Proof", value: "Lab notes & certifications on profile" },
+      { label: "Promise", value: "Original Moroccan recipes" },
     ],
     color: "linear-gradient(135deg, #C87040 0%, #A05020 40%, #C89060 100%)",
-    bgImage: "/pottery.png",
-    staticOnly: true,
   },
   {
-    id: "leather",
-    tab: "Leather Goods",
-    title: "Moroccan Leather Goods",
-    desc: "The leather tanneries of Fez and Marrakech produce some of the world's finest hides. Babouches, bags, and belts are crafted using centuries-old vegetable tanning methods, giving each piece its distinctive character.",
+    id: "hammam-body",
+    tab: "Hammam & body",
+    title: "Hammam & body rituals",
+    desc: "Beldi soaps, kessa scrubs, hair masks, and spa-grade textures that translate Moroccan hammam culture into daily self-care—still handmade where it matters.",
     details: [
-      { label: "Origin", value: "Fez, Marrakech" },
-      { label: "Materials", value: "Full-grain natural leather" },
-      { label: "Style", value: "Traditional & contemporary" },
-      { label: "Each piece", value: "Handstitched" },
+      { label: "Textures", value: "Polish, slip, and aromatics" },
+      { label: "Ingredients", value: "Olive paste, ghassoul, botanicals" },
+      { label: "Use", value: "Weekly reset or daily glow" },
+      { label: "Heritage", value: "Ritual, not trend-chasing" },
     ],
     color: "linear-gradient(135deg, #5A3010 0%, #7A4820 50%, #9A6830 100%)",
-    bgImage: "/leather.png",
-    staticOnly: true,
   },
   {
-    id: "lanterns",
-    tab: "Metal Lanterns",
-    title: "Moroccan Metal Lanterns",
-    desc: "Hammered by skilled metalworkers in the souks of Marrakech and Fez, these lanterns cast intricate geometric shadows. Made from brass, copper, or iron, they bring the warmth of the medina into any space.",
+    id: "hair-fragrance",
+    tab: "Hair & scent",
+    title: "Haircare & botanical scent",
+    desc: "Desert botanicals meet perfumery: shampoos, masks, and eaux inspired by Moroccan gardens—jasmine, orange blossom, resins—crafted by independent noses and labs.",
     details: [
-      { label: "Origin", value: "Marrakech, Fez" },
-      { label: "Materials", value: "Brass, copper, iron" },
-      { label: "Style", value: "Islamic geometric patterns" },
-      { label: "Each piece", value: "Hand-hammered" },
-    ],
-    color: "linear-gradient(135deg, #B8882A 0%, #8A6018 40%, #C8A040 100%)",
-    bgImage: "/metal.png",
-    staticOnly: true,
-  },
-  {
-    id: "thuya",
-    tab: "Thuya Wood Craft",
-    title: "Thuya Wood Craft",
-    desc: "Thuya wood from the Atlas Mountains has a rich, aromatic grain unlike any other. Essaouira's master woodworkers transform it into boxes, frames, and furniture inlaid with lemonswood and mother-of-pearl.",
-    details: [
-      { label: "Origin", value: "Essaouira" },
-      { label: "Materials", value: "Thuya burl, citrus wood" },
-      { label: "Style", value: "Marquetry inlay" },
-      { label: "Each piece", value: "Hand-carved" },
-    ],
-    color: "linear-gradient(135deg, #7A5030 0%, #5A3810 50%, #9A7050 100%)",
-    bgImage: "/wood.png",
-    staticOnly: true,
-  },
-  {
-    id: "caftans",
-    tab: "Caftans",
-    title: "Moroccan Caftans",
-    desc: "The Moroccan caftan is a living art form — embroidered, hand-sewn, and layered with symbolism. From grand ceremony to everyday elegance, Moroccan seamstresses weave identity into every thread.",
-    details: [
-      { label: "Origin", value: "Fez, Rabat, Casablanca" },
-      { label: "Materials", value: "Silk, satin, brocade" },
-      { label: "Style", value: "Hand-embroidered" },
-      { label: "Each piece", value: "Made to order" },
+      { label: "Hair", value: "Argan, rhassoul, herbal rinses" },
+      { label: "Scent", value: "Low-temp macerations & attars" },
+      { label: "Packaging", value: "Refillable where possible" },
+      { label: "Vibe", value: "Modern Morocco, not souvenir kitsch" },
     ],
     color: "linear-gradient(135deg, #4A1A60 0%, #7A3A90 50%, #6A2A80 100%)",
-    bgImage: "/caftan.png",
-    staticOnly: true,
   },
 ] as const;
 
@@ -108,10 +70,9 @@ type Props = {
 };
 
 export function FeaturedCategorySectionClient({ samples }: Props) {
-  const [activeId, setActiveId] = useState("carpets");
+  const [activeId, setActiveId] = useState<string>(CATEGORIES[0]!.id);
   const active = CATEGORIES.find((c) => c.id === activeId) ?? CATEGORIES[0]!;
-  const staticOnly = "staticOnly" in active && active.staticOnly === true;
-  const sample = staticOnly ? null : (samples[activeId] ?? null);
+  const sample = samples[activeId] ?? null;
 
   return (
     <section className="w-full py-28" style={{ background: "#F5EDE3" }}>
@@ -170,7 +131,7 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
 
             {/* 3D floating product */}
             {(() => {
-              const imgSrc = sample?.firstImageUrl ?? ("bgImage" in active && active.bgImage ? active.bgImage : null);
+              const imgSrc = sample?.firstImageUrl ?? null;
               if (!imgSrc) return null;
               return (
                 <div
@@ -181,7 +142,7 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
                   <div
                     key={active.id}
                     className="relative w-56 h-56 sm:w-72 sm:h-72"
-                    style={{ animation: "craftFloat 4s ease-in-out infinite" }}
+                    style={{ animation: "productFloat 4s ease-in-out infinite" }}
                   >
                     <Image
                       alt={active.tab}
@@ -236,7 +197,7 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
           </div>
 
           <style>{`
-            @keyframes craftFloat {
+            @keyframes productFloat {
               0%   { transform: translateY(0px); }
               50%  { transform: translateY(-16px); }
               100% { transform: translateY(0px); }

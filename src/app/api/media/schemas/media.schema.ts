@@ -8,7 +8,6 @@ export const MEDIA_UPLOAD_TYPES = [
   "productImages",
   "certificationDocuments",
   "trainingProgramMedia",
-  "rfqMessageAttachments",
 ] as const;
 
 export type UploadMediaType = (typeof MEDIA_UPLOAD_TYPES)[number];

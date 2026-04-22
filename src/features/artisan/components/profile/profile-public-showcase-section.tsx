@@ -30,7 +30,7 @@ export function ProfilePublicShowcaseSection({
         <div>
           <h3 className="font-serif font-bold text-[15px] text-[#2a0f05]">Public business profile</h3>
           <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
-            Shown to buyers on your public CraftHouse page. Add a story, markets, and what makes you stand out.
+            Shown to buyers on your public nevali page. Add a story, markets, and what makes you stand out.
           </p>
         </div>
         {publicProfilePath && (

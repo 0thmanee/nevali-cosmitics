@@ -1,4 +1,4 @@
-# CraftHouse — integration status
+# nevaliCosmetics — integration status
 
 This document tracks **what is connected** to PostgreSQL / Prisma / server actions, **what is only partially connected** or inconsistent, and **remaining work** suggested by the codebase and internal docs.
 
@@ -65,6 +65,6 @@ These areas use Server Actions (or route handlers) that read/write Prisma models
 
 ## 5. Doc drift
 
-- **`docs/ARCHITECTURE.md`** and **`docs/WORKFLOW.md`** still carry the **OrigineMaroc** title for historical reasons; each file now starts with a **“Reality check (CraftHouse repo)”** note. Implemented code uses **`src/app/api/*/actions.ts`** and **`*.repo.ts`**. Treat both docs as **guidance**, not a literal file map.
+- **`docs/ARCHITECTURE.md`** and **`docs/WORKFLOW.md`** still carry the **OrigineMaroc** title for historical reasons; each file now starts with a **“Reality check (nevaliCosmetics repo)”** note. Implemented code uses **`src/app/api/*/actions.ts`** and **`*.repo.ts`**. Treat both docs as **guidance**, not a literal file map.
 
 For “is X wired?” search the Prisma model under `src/app/api/` and the matching hook under `src/features/`.

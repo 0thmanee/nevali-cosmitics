@@ -30,7 +30,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
       <div className="rounded-xl overflow-hidden" style={{ background: "#1a0500" }}>
         <div className="px-5 py-4 border-b border-white/8">
           <h3 className="font-display font-bold uppercase text-[15px] text-white tracking-wide">Artisan status</h3>
-          <p className="font-sans text-[11px] text-white/40 mt-0.5">CraftHouse verified artisan</p>
+          <p className="font-sans text-[11px] text-white/40 mt-0.5">nevali verified brand</p>
         </div>
         <div className="p-5 flex flex-col gap-4">
           <div className="flex items-center gap-3">

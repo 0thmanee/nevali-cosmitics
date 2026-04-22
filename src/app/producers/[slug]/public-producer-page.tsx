@@ -19,7 +19,7 @@ export function PublicProducerPage({ producer }: Props) {
       <header className="border-b shrink-0" style={{ background: "white", borderColor: "#f0e8dc" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
           <Link href="/" className="font-display font-bold uppercase text-[15px] tracking-wide text-[#2a0f05]">
-            CraftHouse
+            nevali
           </Link>
           <Link href="/auth/login" className="font-sans text-sm text-[#7a4d38] hover:text-[#2a0f05] transition-colors">
             Artisan login
@@ -154,7 +154,7 @@ export function PublicProducerPage({ producer }: Props) {
               style={{ background: "#f0e8dc", border: "1px solid #e8d8c8" }}
             >
               <p className="font-sans text-sm text-[#2a0f05] leading-relaxed">
-                Interested in sourcing from this artisan? Join CraftHouse as a buyer or contact us to connect with verified Moroccan craftspeople.
+                Interested in this brand’s line? Browse nevali for Moroccan cosmetics with transparent checkout—or open a buyer account for saved lists.
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
                 <Link

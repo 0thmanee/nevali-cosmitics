@@ -11,13 +11,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { id } = await params;
 	const product = await getApprovedProductForPublicByIdRepo(id);
 	if (!product) {
-		return { title: "Product — CraftHouse" };
+		return { title: "Product — nevali" };
 	}
 	const desc =
 		product.description?.trim().slice(0, 155) ||
-		`Certified ${product.category} from ${product.organizationName} on CraftHouse — verified producer and B2B sourcing.`;
+		`${product.name} — Moroccan cosmetics by ${product.organizationName} on nevali. Original formulas, transparent checkout.`;
 	return {
-		title: `${product.name} — CraftHouse`,
+		title: `${product.name} — nevali`,
 		description: desc,
 		openGraph: {
 			title: product.name,

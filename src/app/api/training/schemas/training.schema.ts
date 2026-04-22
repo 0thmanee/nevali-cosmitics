@@ -15,7 +15,7 @@ export const TRAINING_MEDIA_TYPES = ["VIDEO", "PDF", "IMAGE"] as const;
 export type TrainingMediaType = (typeof TRAINING_MEDIA_TYPES)[number];
 
 /** Default provider name when creating a program. */
-export const DEFAULT_TRAINING_PROVIDER = "CraftHouse Academy";
+export const DEFAULT_TRAINING_PROVIDER = "nevali Academy";
 
 /** Display label for level (UI only). */
 export function getTrainingLevelLabel(level: string): string {

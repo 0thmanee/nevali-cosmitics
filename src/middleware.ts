@@ -136,6 +136,10 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+/**
+ * Matcher is intentionally narrow: the public catalog, cart, and checkout live outside it so
+ * anyone can browse and complete guest checkout without signing in.
+ */
 export const config = {
   matcher: [
     "/artisan/:path*",

@@ -14,10 +14,11 @@ export default function HeroSection() {
             className="font-serif font-bold uppercase text-white leading-[1.05]"
             style={{ fontSize: "clamp(36px, 6vw, 72px)", letterSpacing: "-0.01em" }}
           >
-            From Artisan<br />Hands to Markets
+            Bio Moroccan<br />Cosmetics, Original
           </h1>
           <p className="font-sans text-white/70 leading-relaxed max-w-sm text-base">
-            Connecting Morocco's master craftspeople with global markets where centuries of tradition meet modern commerce.
+            nevali brings together verified Moroccan beauty brands—plant-rich care, honest
+            labels, and checkout that works for everyone, everywhere.
           </p>
         </div>
         <div className="shrink-0">
@@ -26,7 +27,7 @@ export default function HeroSection() {
             className="inline-block font-sans font-semibold uppercase text-white text-sm tracking-[0.15em] px-5 py-3 whitespace-nowrap"
             style={{ background: "#C87020" }}
           >
-            Become Artisan
+            List your brand
           </Link>
         </div>
       </div>
@@ -36,7 +37,7 @@ export default function HeroSection() {
         <div className="relative flex-1 w-full md:flex-none md:h-[50vw] md:max-h-[460px] min-h-[200px]">
           <Image
             src="https://images.unsplash.com/photo-1609597876248-e5f7c84f0295?q=80&w=2371&auto=format&fit=crop"
-            alt="Moroccan medina — Fez tannery"
+            alt="Moroccan argan and botanical beauty ingredients"
             fill
             className="object-cover object-center"
             priority

@@ -418,7 +418,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
                 <h3 className="font-serif font-bold text-[15px] text-[#2a0f05]">Public business profile</h3>
                 <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
-                  Visible on your public CraftHouse page for buyers. Optional but strongly recommended.
+                  Visible on your public nevali page for buyers. Optional but strongly recommended.
                 </p>
               </div>
               <div className="p-5 flex flex-col gap-4">

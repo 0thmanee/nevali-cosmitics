@@ -45,7 +45,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 						<div>
 							{/* eslint-disable-next-line @next/next/no-img-element */}
 							<img
-								alt="CraftHouse"
+								alt="nevali"
 								className="block h-4 w-auto"
 								src="/assets/logo-white.svg"
 							/>

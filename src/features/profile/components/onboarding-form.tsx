@@ -284,7 +284,7 @@ export function OnboardingForm({
         <label className="flex items-start gap-2.5 cursor-pointer">
           <Checkbox checked={form.agreeTerms} onToggle={() => setForm(set("agreeTerms")(!form.agreeTerms))} />
           <span className="font-sans text-[12px] text-text-muted leading-relaxed">
-            I agree to the CraftHouse Terms of Service and Privacy Policy{" "}
+            I agree to the nevali Terms of Service and Privacy Policy{" "}
             <span style={{ color: "#7B1F0A" }}>*</span>
           </span>
         </label>
@@ -358,7 +358,7 @@ export function OnboardingForm({
       {/* Top bar */}
       <div className="flex items-center justify-between px-8 py-4 shrink-0" style={{ borderBottom: "1px solid #e0d4c4" }}>
         <Link href="/" className="font-display font-bold uppercase text-[16px] tracking-wide text-text-dark">
-          CraftHouse
+          nevali
         </Link>
         <div className="flex items-center gap-3">
           {ONBOARDING_STEPS.map((s, i) => (

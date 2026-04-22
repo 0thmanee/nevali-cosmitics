@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useAdminSalesAnalytics } from "../hooks/use-admin-analytics";
+import { useAdminShopOrderAnalytics } from "../hooks/use-admin-analytics";
 import { useAdminOrganizationFilter } from "../hooks/use-admin-organizations";
 import { AdminPageWrapper } from "./admin-ui";
 
@@ -25,7 +25,7 @@ function Bar({ label, value, max }: { label: string; value: number; max: number 
 
 export function AdminAnalyticsView() {
 	const { selectedOrganizationId } = useAdminOrganizationFilter();
-	const { data, isPending, isError } = useAdminSalesAnalytics(selectedOrganizationId);
+	const { data, isPending, isError } = useAdminShopOrderAnalytics(selectedOrganizationId);
 
 	if (isPending) {
 		return (
@@ -40,39 +40,31 @@ export function AdminAnalyticsView() {
 		return (
 			<AdminPageWrapper>
 				<div className="border border-cream-dark bg-white px-5 py-6">
-					<p className="font-sans text-red-600 text-sm">Could not load analytics.</p>
+					<p className="font-sans text-sm text-red-600">Could not load analytics.</p>
 				</div>
 			</AdminPageWrapper>
 		);
 	}
 
-	const rfqMax      = Math.max(1, ...Object.values(data.rfqByStatus));
-	const contractMax = Math.max(1, ...Object.values(data.contractByStatus));
+	const statusMax = Math.max(1, ...data.ordersByStatus.map((r) => r.count));
 
 	return (
 		<AdminPageWrapper>
-			{/* Header card */}
 			<div className="flex flex-col gap-3 border border-cream-dark bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
 				<div>
-					<h2 className="font-bold font-serif text-lg text-text-dark">Sales &amp; pipeline</h2>
+					<h2 className="font-bold font-serif text-lg text-text-dark">Catalog orders</h2>
 					<p className="mt-1 font-sans text-text-muted text-xs">
-						RFQ and contract counts from the database. Contract totals use stored value fields where present.
+						Confirmed revenue sums line totals (MAD) from paid or COD-confirmed checkout. Filter
+						by organization using the selector in the header.
 					</p>
 				</div>
-				<a
-					className="inline-flex items-center justify-center border border-cream-dark bg-cream px-4 py-2 font-sans font-semibold text-text-dark text-sm hover:bg-cream-dark transition-colors"
-					href="/api/admin/reports/sales-summary"
-				>
-					Download PDF summary
-				</a>
 			</div>
 
-			{/* Stat grid */}
 			<div className="grid gap-4 md:grid-cols-3">
 				{[
-					{ label: "RFQs",         value: data.rfqCountAll },
-					{ label: "Contracts",     value: data.contractCountAll },
-					{ label: "Value sum (€)", value: data.contractValueSumEuro },
+					{ label: "Total orders", value: data.totalOrdersCount },
+					{ label: "Confirmed orders", value: data.confirmedOrdersCount },
+					{ label: "Confirmed revenue (MAD)", value: data.confirmedRevenueMad },
 				].map((item) => (
 					<div key={item.label} className="border border-cream-dark bg-white p-5">
 						<p className="font-bold font-sans text-text-muted text-xs uppercase tracking-[0.1em]">
@@ -85,59 +77,80 @@ export function AdminAnalyticsView() {
 				))}
 			</div>
 
-			{/* Bar charts */}
-			<div className="grid gap-4 lg:grid-cols-2">
+			<div className="grid gap-4 md:grid-cols-2">
 				<div className="border border-cream-dark bg-white p-5">
 					<h3 className="mb-4 font-sans font-semibold text-sm text-text-dark uppercase tracking-[0.08em]">
-						RFQs by status
+						Orders by status
 					</h3>
-					<div className="flex flex-col gap-3">
-						{Object.entries(data.rfqByStatus).map(([k, v]) => (
-							<Bar key={k} label={k} max={rfqMax} value={v} />
-						))}
-					</div>
+					{data.ordersByStatus.length === 0 ? (
+						<p className="font-sans text-sm text-text-muted">No orders yet.</p>
+					) : (
+						<div className="flex flex-col gap-3">
+							{data.ordersByStatus.map((row) => (
+								<Bar key={row.status} label={row.status} max={statusMax} value={row.count} />
+							))}
+						</div>
+					)}
 				</div>
 				<div className="border border-cream-dark bg-white p-5">
 					<h3 className="mb-4 font-sans font-semibold text-sm text-text-dark uppercase tracking-[0.08em]">
-						Contracts by status
+						Pipeline summary
 					</h3>
-					<div className="flex flex-col gap-3">
-						{Object.entries(data.contractByStatus).map(([k, v]) => (
-							<Bar key={k} label={k} max={contractMax} value={v} />
-						))}
-					</div>
+					<ul className="space-y-2 font-sans text-sm text-text-muted">
+						<li>
+							<span className="font-medium text-text-dark">{data.pendingPaymentCount}</span>{" "}
+							awaiting card payment
+						</li>
+						<li>
+							<span className="font-medium text-text-dark">{data.otherStatusCount}</span> other
+							status (incl. cancelled / legacy)
+						</li>
+					</ul>
 				</div>
 			</div>
 
-			{/* Top orgs table */}
 			<div className="border border-cream-dark bg-white p-5">
 				<h3 className="mb-4 font-sans font-semibold text-sm text-text-dark uppercase tracking-[0.08em]">
-					Top organizations by recorded contract value
+					Top organizations by confirmed revenue
 				</h3>
 				<div className="overflow-x-auto">
 					<table className="w-full text-left font-sans text-sm">
 						<thead className="border-cream-dark border-b text-text-muted">
 							<tr>
-								<th className="py-2 pr-4 font-bold text-xs uppercase tracking-[0.08em]">Organization</th>
-								<th className="py-2 pr-4 font-bold text-xs uppercase tracking-[0.08em]">Contracts</th>
-								<th className="py-2 font-bold text-xs uppercase tracking-[0.08em]">Value (€)</th>
+								<th className="py-2 pr-4 font-bold text-xs uppercase tracking-[0.08em]">
+									Organization
+								</th>
+								<th className="py-2 pr-4 font-bold text-xs uppercase tracking-[0.08em]">
+									Line items
+								</th>
+								<th className="py-2 font-bold text-xs uppercase tracking-[0.08em]">
+									Revenue (MAD)
+								</th>
 							</tr>
 						</thead>
 						<tbody>
-							{data.topOrganizationsByContractValue.map((o) => (
-								<tr className="border-cream-dark/60 border-b last:border-0" key={o.organizationId}>
-									<td className="py-2.5 pr-4">
-										<Link
-											className="font-medium text-primary hover:underline"
-											href={`/artisans/${o.slug}`}
-										>
-											{o.name}
-										</Link>
+							{data.topOrganizations.length === 0 ? (
+								<tr>
+									<td className="py-4 text-text-muted" colSpan={3}>
+										No confirmed order lines yet.
 									</td>
-									<td className="py-2.5 pr-4 text-text-muted">{o.contractCount}</td>
-									<td className="py-2.5">{Math.round(o.valueCents / 100)}</td>
 								</tr>
-							))}
+							) : (
+								data.topOrganizations.map((o) => (
+									<tr className="border-cream-dark/60 border-b last:border-0" key={o.organizationId}>
+										<td className="py-2.5 pr-4">
+											<Link
+												className="font-medium text-primary hover:underline"
+												href={`/artisans/${o.slug}`}
+											>
+												{o.name}
+											</Link>
+										</td>
+										<td className="py-2.5 pr-4 text-text-muted">{o.lineItems}</td>
+										<td className="py-2.5">{o.revenueMad}</td>
+									</tr>
+								))
+							)}
 						</tbody>
 					</table>
 				</div>

@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Artisans", href: "/artisans" },
-  { label: "Artisan Process", href: "/artisan-process" },
+  { label: "Brands", href: "/artisans" },
+  { label: "Our story", href: "/artisan-process" },
   { label: "Training", href: "/training" },
-  { label: "Our Products", href: "/products" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Shop", href: "/products" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function NavLinks() {

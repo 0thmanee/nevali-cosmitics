@@ -10,7 +10,7 @@ import {
 } from "~/app/api/products/repo/products.repo";
 
 export const metadata = {
-  title: "Products — CraftHouse",
+  title: "Products — nevali",
   description:
     "Browse certified Moroccan artisanal crafts — ceramics, leather, textiles, jewelry and more — sourced directly from verified artisans.",
 };

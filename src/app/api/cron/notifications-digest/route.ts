@@ -76,8 +76,8 @@ export async function POST(request: Request) {
 					`- ${i.title} (${i.createdAt.toISOString().slice(0, 16)}): ${i.body.slice(0, 120)}${i.body.length > 120 ? "…" : ""}`,
 			)
 			.join("\n");
-		const subject = `CraftHouse: ${items.length} unread alert(s)`;
-		const text = `Hello ${name},\n\nYou have ${items.length} unread in-app alert(s) on CraftHouse:\n\n${lines}\n\nOpen alerts: ${inboxHref}\n\n— CraftHouse`;
+		const subject = `nevali: ${items.length} unread alert(s)`;
+		const text = `Hello ${name},\n\nYou have ${items.length} unread in-app alert(s) on nevali:\n\n${lines}\n\nOpen alerts: ${inboxHref}\n\n— nevali`;
 
 		const listHtml = items
 			.map((i) => {
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
 				return `<li style="margin-bottom:8px;">${href}<br/><span style="color:#666;font-size:13px;">${escapeHtml(i.body.slice(0, 200))}${i.body.length > 200 ? "…" : ""}</span></li>`;
 			})
 			.join("");
-		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#2a0f05;background:#faf7f4;padding:24px;"><p>Hello ${escapeHtml(name)},</p><p>You have <strong>${items.length}</strong> unread alert(s).</p><ul style="padding-left:18px;">${listHtml}</ul><p><a href="${escapeHtmlAttr(inboxHref)}" style="color:#7B1F0A;font-weight:600;">Open Alerts</a></p><p style="color:#666;font-size:14px;">— CraftHouse</p></body></html>`;
+		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#2a0f05;background:#faf7f4;padding:24px;"><p>Hello ${escapeHtml(name)},</p><p>You have <strong>${items.length}</strong> unread alert(s).</p><ul style="padding-left:18px;">${listHtml}</ul><p><a href="${escapeHtmlAttr(inboxHref)}" style="color:#7B1F0A;font-weight:600;">Open Alerts</a></p><p style="color:#666;font-size:14px;">— nevali</p></body></html>`;
 
 		await sendTransactionalEmail({
 			to: user.email,

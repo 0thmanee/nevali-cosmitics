@@ -3,12 +3,12 @@ import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { env } from "~/env";
 
-const DEFAULT_CONTACT_EMAIL = "hello@crafthouse.ma";
+const DEFAULT_CONTACT_EMAIL = "hello@nevali-cosmetics.ma";
 
 export const metadata = {
-	title: "Contact — CraftHouse",
+	title: "Contact — nevali",
 	description:
-		"Reach the CraftHouse team for partnerships, press, and platform support.",
+		"Reach the nevali team for brand partnerships, press, and platform support.",
 };
 
 export default function ContactPage() {
@@ -26,19 +26,17 @@ export default function ContactPage() {
 						Contact
 					</span>
 					<h1 className="font-bold font-display text-3xl text-text-dark uppercase tracking-wide md:text-4xl">
-						Talk to CraftHouse
+						Talk to nevali
 					</h1>
 					<p className="font-sans text-[15px] text-text-muted leading-relaxed">
-						We help artisans list certified products and connect with serious
-						buyers. For onboarding, technical issues, or press enquiries, use
-						the channel below that fits best.
+						We help Moroccan cosmetics brands list compliant products and reach shoppers who care about bio-minded, original formulas. For onboarding, technical issues, or press enquiries, use the channel below that fits best.
 					</p>
 				</div>
 
 				<div className="flex flex-col gap-6 rounded-2xl border border-cream-dark bg-white p-8">
 					<div>
 						<h2 className="mb-1 font-sans font-semibold text-sm text-text-dark">
-							Artisan &amp; partner support
+							Brand &amp; partner support
 						</h2>
 						<p className="mb-2 font-sans text-sm text-text-muted">
 							Signed-in partners can open tickets from the dashboard for faster
@@ -97,7 +95,7 @@ export default function ContactPage() {
 					</p>
 				) : null}
 				<p className="font-sans text-sm text-text-muted leading-relaxed">
-					This section describes how CraftHouse handles personal data in plain
+					This section describes how nevali handles personal data in plain
 					language. It is <strong>not</strong> a substitute for a
 					jurisdiction-specific privacy policy reviewed by your counsel. Before
 					you rely on it for compliance (GDPR, CCPA, Morocco Law 09-08, etc.),
@@ -169,7 +167,7 @@ export default function ContactPage() {
 					</p>
 				) : null}
 				<p className="font-sans text-sm text-text-muted leading-relaxed">
-					By using CraftHouse you agree to follow these rules in addition to any
+					By using nevali you agree to follow these rules in addition to any
 					separate agreement you sign with us. This summary is{" "}
 					<strong>not</strong> a binding contract; publish counsel-approved
 					terms for partners, buyers, and visitors before commercial launch.
@@ -192,7 +190,7 @@ export default function ContactPage() {
 						<p>
 							Users must negotiate in good faith, avoid fraudulent listings or
 							inquiries, and comply with export and sanctions laws applicable to
-							their trade. CraftHouse may suspend access for violations or risk
+							their trade. nevali may suspend access for violations or risk
 							to other users.
 						</p>
 					</div>
@@ -201,7 +199,7 @@ export default function ContactPage() {
 							Content &amp; intellectual property
 						</h3>
 						<p>
-							You retain rights to content you upload. You grant CraftHouse a
+							You retain rights to content you upload. You grant nevali a
 							licence to host, display, and distribute that content as needed to
 							operate the platform (for example showing product pages to
 							buyers).
@@ -213,7 +211,7 @@ export default function ContactPage() {
 						</h3>
 						<p>
 							The platform is provided on an “as is” basis to the extent
-							permitted by law. CraftHouse is not a party to contracts between
+							permitted by law. nevali is not a party to contracts between
 							buyers and artisans unless explicitly stated otherwise; users are
 							responsible for their own commercial terms, inspections, and
 							compliance.

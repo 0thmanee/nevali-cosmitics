@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductInquiryModal } from "~/components/product-inquiry-modal";
 import { SaveProductControl } from "~/components/save-product-control";
+import { ProductReviewForm } from "~/components/product-review-form";
+import { ProductReviewsList } from "~/components/product-reviews-list";
 import type { PublicProductDetail } from "~/app/api/products/schemas/products.schema";
 import { useCart } from "~/features/cart/cart-context";
 import { formatPriceMad, paymentOptionLabel } from "~/lib/format-price";
@@ -37,6 +39,7 @@ export function PublicProductDetailView({ product }: Props) {
   const [imgIndex, setImgIndex] = useState(0);
   const [modal, setModal] = useState<"cart" | "b2b" | null>(null);
   const [justAdded, setJustAdded] = useState(false);
+  const [reviewRefreshKey, setReviewRefreshKey] = useState(0);
 
   const defaultV = useMemo(() => pickDefaultPublicVariant(product.variants), [product.variants]);
 
@@ -566,6 +569,21 @@ export function PublicProductDetailView({ product }: Props) {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Reviews Section */}
+          <div className="mt-16 py-12 border-t border-cream-dark">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+              <div className="lg:col-span-2">
+                <ProductReviewsList key={reviewRefreshKey} productId={product.id} />
+              </div>
+              <div>
+                <ProductReviewForm
+                  productId={product.id}
+                  onSuccess={() => setReviewRefreshKey((k) => k + 1)}
+                />
               </div>
             </div>
           </div>

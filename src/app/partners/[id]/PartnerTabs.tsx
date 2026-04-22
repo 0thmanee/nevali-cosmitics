@@ -161,7 +161,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
           <div className="bg-white border border-cream-dark p-6 sm:p-8">
             <SectionLabel>About the business</SectionLabel>
             <p className="font-body text-sm text-text-muted italic">
-              This artisan has not added a full description yet. Browse their product catalog and certifications below.
+              This brand has not added a full description yet. Browse their cosmetics catalog and certifications below.
             </p>
           </div>
         )}
@@ -252,7 +252,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
                 </div>
               ) : null}
               <div>
-                <dt className="font-body text-[11px] text-white/40 uppercase tracking-wide">On CraftHouse since</dt>
+                <dt className="font-body text-[11px] text-white/40 uppercase tracking-wide">On nevali since</dt>
                 <dd className="font-body text-sm text-white/80 mt-1">{platformSince}</dd>
               </div>
             </dl>
@@ -275,7 +275,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
           href="/artisans"
           className="font-body text-sm text-text-muted hover:text-text-dark transition-colors inline-flex items-center gap-2"
         >
-          ← Back to all artisans
+          ← Back to all brands
         </Link>
       </aside>
     </div>
@@ -292,7 +292,7 @@ function CertificationsTab({ certifications }: { certifications: PublicPartnerCe
           </svg>
         </div>
         <p className="font-display font-bold uppercase text-text-dark text-sm tracking-wide">No public certifications yet</p>
-        <p className="font-body text-sm text-text-muted">Approved certificates and audit documents appear here once verified by CraftHouse.</p>
+        <p className="font-body text-sm text-text-muted">Approved certificates and audit documents appear here once verified by nevali.</p>
       </div>
     );
   }
@@ -343,7 +343,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center gap-3 border border-cream-dark bg-white p-12 text-center">
         <p className="font-display font-bold uppercase text-text-dark text-sm tracking-wide">No approved products yet</p>
-        <p className="font-body text-sm text-text-muted">Approved products from this artisan will appear here for buyers to discover.</p>
+        <p className="font-body text-sm text-text-muted">Approved cosmetics from this brand will appear here for shoppers to discover.</p>
       </div>
     );
   }
@@ -357,7 +357,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
             {products.length} live listing{products.length !== 1 ? "s" : ""}
           </h2>
           <p className="mt-1 max-w-xl font-body text-sm text-text-muted">
-            Each row is an approved B2B listing on CraftHouse — moq, capacity, and dates are supplied by the artisan.
+            Each row is an approved catalog listing—variants, pricing, and payment options are supplied by the brand.
           </p>
         </div>
       </div>

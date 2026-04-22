@@ -1,17 +1,17 @@
 import Link from "next/link";
 
 const artisanFeatures = [
-  { label: "Verified profile & certification badge" },
-  { label: "List your crafts with specs & pricing" },
-  { label: "Receive inquiries from global buyers" },
-  { label: "Training programs & export guidance" },
+  { label: "Verified brand profile & certification uploads" },
+  { label: "List SKUs, variants, ingredients, and imagery" },
+  { label: "Receive catalog orders with COD or card rules" },
+  { label: "Training on compliance, packaging, and exports" },
 ];
 
 const buyerFeatures = [
-  { label: "Browse hundreds of certified crafts" },
-  { label: "Submit direct purchase inquiries" },
-  { label: "Full product traceability & QR scan" },
-  { label: "Secure negotiation & order tracking" },
+  { label: "Shop Moroccan skincare, hair, body & ritual care" },
+  { label: "Guest checkout—no account required" },
+  { label: "Transparent ingredients & brand storytelling" },
+  { label: "Saved lists, alerts, and optional buyer account" },
 ];
 
 export default function EcosystemSection() {
@@ -59,7 +59,7 @@ export default function EcosystemSection() {
                 className="font-sans text-xs font-bold tracking-[0.2em] uppercase"
                 style={{ color: "#7B1F0A" }}
               >
-                Artisan side
+                Brand side
               </span>
             </div>
 
@@ -73,8 +73,7 @@ export default function EcosystemSection() {
             </h2>
 
             <p className="font-sans text-stone-500 leading-relaxed max-w-sm" style={{ fontSize: 15 }}>
-              Register, get certified, and open your crafts to buyers across Europe,
-              the Gulf, and North America — all from one dashboard.
+              Register, pass review, and publish your Moroccan cosmetics to shoppers in Morocco and abroad—all from one dashboard.
             </p>
           </div>
 
@@ -100,7 +99,7 @@ export default function EcosystemSection() {
             className="relative z-10 self-start font-sans font-semibold text-sm text-white px-6 py-3 transition-opacity hover:opacity-90 inline-flex items-center gap-2"
             style={{ background: "#7B1F0A" }}
           >
-            Apply as Artisan
+            Apply as a brand
             <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -141,14 +140,14 @@ export default function EcosystemSection() {
               className="font-serif font-bold leading-[1.05]"
               style={{ fontSize: "clamp(32px, 3.5vw, 54px)", color: "#1a0500" }}
             >
-              Source crafts you
+              Shop cosmetics you
               <br />
-              can trust
+              can trace
             </h2>
 
             <p className="font-sans text-stone-500 leading-relaxed max-w-sm" style={{ fontSize: 15 }}>
-              Every product is certified, traceable, and market-ready. Browse, inquire,
-              and negotiate directly with verified Moroccan artisans.
+              Every listing is reviewed for quality and clarity. Browse by category, read ingredients, then
+              check out in a few steps—supporting Moroccan makers without opaque middlemen.
             </p>
           </div>
 
@@ -175,7 +174,7 @@ export default function EcosystemSection() {
               className="self-start font-sans font-semibold text-sm px-6 py-3 transition-opacity hover:opacity-90 inline-flex items-center gap-2 border"
               style={{ color: "#1a0500", borderColor: "rgba(26,5,0,0.2)", background: "white" }}
             >
-              Browse Certified Crafts
+              Browse the catalog
               <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -199,9 +198,9 @@ export default function EcosystemSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-3 border-t border-x border-stone-100 py-8 gap-4 px-8 lg:px-12">
           {[
-            { value: "500+", label: "Certified artisans" },
-            { value: "1,800+", label: "Verified products" },
-            { value: "12", label: "Moroccan regions" },
+            { value: "500+", label: "Partner brands (goal)" },
+            { value: "1,800+", label: "Curated SKUs (goal)" },
+            { value: "12", label: "Regions represented" },
           ].map((s) => (
             <div key={s.label} className="flex flex-col gap-1">
               <span

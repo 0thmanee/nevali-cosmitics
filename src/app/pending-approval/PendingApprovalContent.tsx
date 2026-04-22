@@ -6,7 +6,7 @@ import { signOut } from "~/lib/auth-client";
 const NEXT_STEPS = [
   { n: "1", label: "Profile review", detail: "1–2 business days" },
   { n: "2", label: "Account activation", detail: "Same day as approval" },
-  { n: "3", label: "Access granted", detail: "Full Artisan Portal" },
+  { n: "3", label: "Access granted", detail: "Full brand portal" },
 ];
 
 export function PendingApprovalContent() {
@@ -34,7 +34,7 @@ export function PendingApprovalContent() {
           Your profile is<br />under review.
         </h1>
         <p className="font-sans text-base text-text-muted leading-relaxed">
-          A CraftHouse admin will review your account and enable access to the Artisan Portal. You&apos;ll receive access once approved.
+          A nevali admin will review your account and enable access to the brand portal. You&apos;ll receive access once approved.
         </p>
       </div>
 
@@ -74,7 +74,7 @@ export function PendingApprovalContent() {
       <div className="flex items-center justify-between">
         <p className="font-sans text-sm text-text-muted">
           Questions?{" "}
-          <Link href="mailto:support@crafthouse.ma" className="hover:underline" style={{ color: "#7B1F0A" }}>
+          <Link href="mailto:support@nevali-cosmetics.ma" className="hover:underline" style={{ color: "#7B1F0A" }}>
             Contact support
           </Link>
         </p>

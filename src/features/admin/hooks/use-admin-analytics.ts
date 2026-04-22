@@ -1,15 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getAdminSalesAnalytics } from "~/app/api/admin/actions";
+import { getAdminShopOrderAnalytics } from "~/app/api/shop-orders/admin-actions";
 
-export const adminSalesAnalyticsQueryKey = (
+export const adminShopOrderAnalyticsQueryKey = (
 	organizationId: string | null | undefined,
-) => ["admin", "analytics", "sales", organizationId ?? "all"] as const;
+) => ["admin", "analytics", "shop-orders", organizationId ?? "all"] as const;
 
-export function useAdminSalesAnalytics(organizationId?: string | null) {
+export function useAdminShopOrderAnalytics(organizationId?: string | null) {
 	return useQuery({
-		queryKey: adminSalesAnalyticsQueryKey(organizationId),
-		queryFn: () => getAdminSalesAnalytics(organizationId),
+		queryKey: adminShopOrderAnalyticsQueryKey(organizationId),
+		queryFn: () => getAdminShopOrderAnalytics(organizationId),
 	});
 }

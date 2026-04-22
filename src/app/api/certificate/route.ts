@@ -58,7 +58,7 @@ export async function GET() {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="crafthouse-partner-certificate.pdf"`,
+      "Content-Disposition": `attachment; filename="nevali-cosmetics-partner-certificate.pdf"`,
       "Content-Length": String(body.length),
     },
   });

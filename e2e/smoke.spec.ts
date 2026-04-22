@@ -1,15 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("public smoke", () => {
-  test("home loads and shows CraftHouse", async ({ page }) => {
+  test("home loads and shows nevali", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/CraftHouse/i);
+    await expect(page).toHaveTitle(/nevali/i);
     await expect(page.getByRole("navigation")).toBeVisible();
   });
 
   test("cart page shows empty state with cleared storage", async ({ page }) => {
     await page.addInitScript(() => {
-      localStorage.removeItem("crafthouse-cart-v2");
+      localStorage.removeItem("nevali-cosmetics-cart-v2");
     });
     await page.goto("/cart");
     // Empty state uses a styled <p>, not a semantic heading
@@ -18,7 +18,7 @@ test.describe("public smoke", () => {
 
   test("checkout redirects to cart when cart is empty", async ({ page }) => {
     await page.addInitScript(() => {
-      localStorage.removeItem("crafthouse-cart-v2");
+      localStorage.removeItem("nevali-cosmetics-cart-v2");
     });
     await page.goto("/cart/checkout");
     await page.waitForURL("**/cart", { timeout: 15_000 });

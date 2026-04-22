@@ -28,11 +28,11 @@ export const SUPPORT_FAQ: ReadonlyArray<{ q: string; a: string }> = [
 	},
 	{
 		q: "Can I list products from multiple cooperatives?",
-		a: "Each account is tied to one registered cooperative. If you manage multiple cooperatives, you'll need a separate CraftHouse partner account for each entity.",
+		a: "Each account is tied to one registered cooperative. If you manage multiple cooperatives, you'll need a separate nevali partner account for each entity.",
 	},
 	{
-		q: "How do I respond to a buyer RFQ?",
-		a: "Go to Contracts & RFQs, open the request, and click 'Quote'. Fill in your offered quantity, unit price, and lead time. The buyer will be notified instantly and can accept, counter, or decline.",
+		q: "How do I see sales from the public catalog?",
+		a: "Open Catalog orders under your portal. You will see aggregated units and revenue per approved product from checkout (no buyer personal data). Fulfillment is coordinated using the contact details sent to your organization email.",
 	},
 	{
 		q: "What happens if my certification expires?",

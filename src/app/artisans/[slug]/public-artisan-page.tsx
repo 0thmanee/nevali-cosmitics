@@ -203,7 +203,7 @@ export function PublicArtisanPage({ producer }: Props) {
               />
               <div className="p-5 flex flex-col gap-4">
                 <p className="font-body text-sm text-text-dark/80 leading-relaxed">
-                  Interested in sourcing from this artisan? Join CraftHouse to connect directly with verified Moroccan craftspeople.
+                  Interested in this brand’s cosmetics? Shop on nevali—guest checkout—or create a buyer account for lists and alerts.
                 </p>
                 <Link
                   href="/auth/register"

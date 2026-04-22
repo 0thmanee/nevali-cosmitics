@@ -9,7 +9,7 @@ import { ProductInquiryModal } from "./product-inquiry-modal";
 import type { PublicProduct } from "./public-product-types";
 
 const PUBLIC_BILLING_HINT =
-	"No card payment here—this starts an inquiry / RFQ to the artisan. Settlement stays between you and the producer unless you integrate checkout later.";
+	"Add to cart to check out on nevali. Card (Stripe) or cash on delivery depends on the listing; the brand fulfills your order.";
 
 type Props = {
 	product: PublicProduct;
@@ -109,7 +109,7 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 					aria-live="polite"
 					role="status"
 				>
-					<span className="font-semibold">Added to your sourcing cart.</span>{" "}
+					<span className="font-semibold">Added to your cart.</span>{" "}
 					<Link className="font-semibold text-[#7B1F0A] underline underline-offset-2" href="/cart">
 						View cart
 					</Link>

@@ -9,7 +9,7 @@ export default function QuoteSection() {
           className="font-serif italic text-white leading-relaxed"
           style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}
         >
-          &ldquo;Every handmade piece carries a story woven, shaped, and crafted through generations of Moroccan heritage.&rdquo;
+          &ldquo;Original Moroccan beauty is botanical discipline: respectful of skin, land, and the women who formulate it.&rdquo;
         </p>
       </blockquote>
     </section>

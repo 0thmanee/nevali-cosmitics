@@ -7,9 +7,9 @@ import { Lock, BookOpen, Clock, Users, ChevronRight } from "lucide-react";
 import { FREE_COURSES, LOCKED_COURSES_DATA as LOCKED_COURSES } from "./courses/data";
 
 export const metadata = {
-  title: "Training — CraftHouse",
+  title: "Training — nevali",
   description:
-    "Export readiness and quality programs for verified CraftHouse partners — documentation, packaging, and market access.",
+    "Compliance, packaging, and export-readiness programs for verified nevali beauty partners.",
 };
 
 export default async function TrainingMarketingPage() {
@@ -40,13 +40,13 @@ export default async function TrainingMarketingPage() {
                 className="font-serif font-bold uppercase text-white leading-[1.0]"
                 style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
               >
-                Training built<br />for export-ready<br />artisans
+                Training built<br />for export-ready<br />beauty brands
               </h1>
             </AnimateOnScroll>
 
             <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
               <p className="font-sans text-white/60 leading-relaxed text-sm mb-8">
-                Start with our free courses open to everyone. Partner with CraftHouse to unlock the full curriculum and list your products on global markets.
+                Start with our free courses open to everyone. Partner with nevali to unlock the full curriculum and publish cosmetics listings with confidence.
               </p>
               {!session?.user && (
                 <div className="flex flex-wrap gap-3">
@@ -158,10 +158,10 @@ export default async function TrainingMarketingPage() {
                 Partner Access — {LOCKED_COURSES.length} more courses
               </p>
               <h3 className="font-serif font-bold uppercase text-white text-xl leading-tight">
-                Partner with CraftHouse to unlock the full curriculum
+                Partner with nevali to unlock the full curriculum
               </h3>
               <p className="font-sans text-white/60 text-sm mt-2">
-                Verified artisans get access to all courses, the buyer network, and dedicated export support.
+                Verified partner brands get access to all courses, the shopper network, and dedicated export support.
               </p>
             </div>
             <Link
@@ -203,7 +203,7 @@ export default async function TrainingMarketingPage() {
                         <Lock size={18} className="text-white" />
                       </div>
                       <p className="font-sans text-xs text-text-muted text-center max-w-[180px]">
-                        Partner with CraftHouse to access this course
+                        Partner with nevali to access this course
                       </p>
                       <Link
                         href="/auth/register"

@@ -2,12 +2,12 @@ import Link from "next/link";
 
 const LINKS = {
 	Platform: [
-		{ label: "Browse Artisans", href: "/artisans" },
-		{ label: "Browse Products", href: "/products" },
-		{ label: "Become an Artisan", href: "/auth/register" },
+		{ label: "Our brands", href: "/artisans" },
+		{ label: "Shop cosmetics", href: "/products" },
+		{ label: "Sell on nevali", href: "/auth/register" },
 	],
 	Company: [
-		{ label: "About CraftHouse", href: "/#about" },
+		{ label: "About nevali", href: "/#about" },
 		{ label: "Our Mission", href: "/#mission" },
 		{ label: "Contact", href: "/contact" },
 	],
@@ -41,21 +41,21 @@ export default function Footer() {
 									color: "#FAF5EE",
 								}}
 							>
-								CraftHouse
+								nevali
 							</span>
 							<span
 								className="font-sans text-xs uppercase tracking-[0.2em]"
 								style={{ color: "#C87020" }}
 							>
-								From artisan hands to markets
+								Bio · Moroccan · Original
 							</span>
 						</Link>
 						<p
 							className="font-sans text-xs leading-relaxed"
 							style={{ color: "rgba(250,245,238,0.5)", maxWidth: "200px" }}
 						>
-							Connecting Morocco&apos;s finest artisans with buyers who value
-							authentic craftsmanship.
+							The marketplace for Moroccan cosmetics—plant-rich care, honest
+							labels, and brands rooted in terroir.
 						</p>
 						{/* Social */}
 						<div className="mt-1 flex items-center gap-3">
@@ -123,7 +123,7 @@ export default function Footer() {
 					className="font-sans text-xs"
 					style={{ color: "rgba(250,245,238,0.3)" }}
 				>
-					© 2027 CraftHouse. All rights reserved. Casablanca, Morocco.
+					© 2027 nevali. All rights reserved. Casablanca, Morocco.
 				</span>
 				<div className="flex items-center gap-4">
 					<Link

@@ -3,6 +3,7 @@ import { prisma } from "~/lib/db";
 import { paymentOptionAllowsCheckout } from "~/lib/checkout-payment";
 
 export async function createShopOrderFromCheckout(input: {
+  buyerUserId?: string | null;
   buyerName: string;
   buyerEmail: string;
   buyerPhone?: string | null;
@@ -106,6 +107,7 @@ export async function createShopOrderFromCheckout(input: {
   const order = await prisma.$transaction(async (tx) => {
     return tx.shopOrder.create({
       data: {
+        buyerUserId: input.buyerUserId?.trim() || null,
         buyerName: input.buyerName.trim(),
         buyerEmail: input.buyerEmail.trim().toLowerCase(),
         buyerPhone: input.buyerPhone?.trim() || null,
@@ -412,4 +414,163 @@ export async function countShopOrdersForProducerRepo(organizationId: string): Pr
       lines: { some: { organizationId } },
     },
   });
+}
+
+export type BuyerShopOrderListRow = {
+  id: string;
+  createdAt: Date;
+  status: string;
+  paymentMethod: string;
+  totalMad: string;
+  lineCount: number;
+  previewProductNames: string[];
+};
+
+/** Orders visible to a buyer account (linked user id or legacy guest rows by email). */
+export async function listShopOrdersForBuyerRepo(params: {
+  userId: string;
+  email: string;
+}): Promise<BuyerShopOrderListRow[]> {
+  const email = params.email.trim().toLowerCase();
+  const orders = await prisma.shopOrder.findMany({
+    where: {
+      OR: [{ buyerUserId: params.userId }, { buyerUserId: null, buyerEmail: email }],
+    },
+    orderBy: { createdAt: "desc" },
+    take: 50,
+    include: {
+      lines: {
+        select: { productName: true, quantity: true, unitPrice: true },
+        orderBy: { id: "asc" },
+      },
+    },
+  });
+
+  return orders.map((o) => {
+    let total = 0;
+    for (const l of o.lines) {
+      const up = Number(l.unitPrice);
+      total += (Number.isFinite(up) ? up : 0) * l.quantity;
+    }
+    return {
+      id: o.id,
+      createdAt: o.createdAt,
+      status: o.status,
+      paymentMethod: o.paymentMethod,
+      totalMad: total.toFixed(2),
+      lineCount: o.lines.length,
+      previewProductNames: o.lines.slice(0, 3).map((l) => l.productName),
+    };
+  });
+}
+
+export type AdminShopOrderAnalytics = {
+  ordersByStatus: { status: string; count: number }[];
+  confirmedOrdersCount: number;
+  pendingPaymentCount: number;
+  otherStatusCount: number;
+  totalOrdersCount: number;
+  confirmedRevenueMad: string;
+  topOrganizations: {
+    organizationId: string;
+    name: string;
+    slug: string;
+    lineItems: number;
+    revenueMad: string;
+  }[];
+};
+
+export async function getShopOrderAnalyticsForAdminRepo(params: {
+  organizationId?: string | null;
+}): Promise<AdminShopOrderAnalytics> {
+  const orgId = params.organizationId?.trim() || null;
+  const orderScope =
+    orgId != null && orgId !== ""
+      ? { lines: { some: { organizationId: orgId } } }
+      : {};
+
+  const statusGroups = await prisma.shopOrder.groupBy({
+    by: ["status"],
+    where: orderScope,
+    _count: { id: true },
+  });
+
+  const ordersByStatus = statusGroups
+    .map((g) => ({ status: g.status, count: g._count.id }))
+    .sort((a, b) => b.count - a.count);
+
+  let confirmedOrdersCount = 0;
+  let pendingPaymentCount = 0;
+  let otherStatusCount = 0;
+  let totalOrdersCount = 0;
+  for (const row of ordersByStatus) {
+    totalOrdersCount += row.count;
+    if (row.status === "CONFIRMED") confirmedOrdersCount = row.count;
+    else if (row.status === "PENDING_PAYMENT") pendingPaymentCount = row.count;
+    else otherStatusCount += row.count;
+  }
+
+  const lineWhere =
+    orgId != null && orgId !== ""
+      ? {
+          order: {
+            status: "CONFIRMED" as const,
+            lines: { some: { organizationId: orgId } },
+          },
+          organizationId: orgId,
+        }
+      : {
+          order: { status: "CONFIRMED" as const },
+        };
+
+  const revenueLines = await prisma.shopOrderLine.findMany({
+    where: lineWhere,
+    select: {
+      unitPrice: true,
+      quantity: true,
+      organizationId: true,
+      organization: { select: { name: true, slug: true } },
+    },
+  });
+
+  let confirmedRevenue = 0;
+  const byOrg = new Map<
+    string,
+    { name: string; slug: string; revenue: number; lineItems: number }
+  >();
+  for (const l of revenueLines) {
+    const up = Number(l.unitPrice);
+    const lineTotal = (Number.isFinite(up) ? up : 0) * l.quantity;
+    confirmedRevenue += lineTotal;
+    const cur = byOrg.get(l.organizationId) ?? {
+      name: l.organization.name,
+      slug: l.organization.slug,
+      revenue: 0,
+      lineItems: 0,
+    };
+    cur.revenue += lineTotal;
+    cur.lineItems += 1;
+    byOrg.set(l.organizationId, cur);
+  }
+
+  const topOrganizations = Array.from(byOrg.entries())
+    .map(([organizationId, v]) => ({
+      organizationId,
+      name: v.name,
+      slug: v.slug,
+      lineItems: v.lineItems,
+      revenueMad: v.revenue.toFixed(2),
+    }))
+    .sort((a, b) => Number(b.revenueMad) - Number(a.revenueMad) || b.lineItems - a.lineItems)
+    .slice(0, 12);
+
+  return {
+    ordersByStatus,
+    confirmedOrdersCount,
+    pendingPaymentCount,
+    otherStatusCount,
+    totalOrdersCount,
+    confirmedRevenueMad: confirmedRevenue.toFixed(2),
+    topOrganizations,
+  };
 }

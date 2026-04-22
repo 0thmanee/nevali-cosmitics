@@ -7,7 +7,6 @@ import { prisma } from "~/lib/db";
 import type { NotificationPrefs } from "~/lib/notification-prefs";
 import {
 	parseNotificationPrefs,
-	userMuteRfqThreadEmail,
 } from "~/lib/notification-prefs";
 
 /** Unread in-app alerts for the current user (buyer or partner). */
@@ -95,20 +94,11 @@ export async function markAllNotificationsReadAction(): Promise<{
 	return {};
 }
 
-/** Mark RFQ thread alerts read for this inquiry (e.g. when opening the thread). */
+/** Legacy RFQ thread notifications - deprecated. */
 export async function markRfqThreadNotificationsReadAction(
 	rfqId: string,
 ): Promise<{ error?: string }> {
-	const { userId } = await requireBuyerOrPartnerSession();
-	await prisma.userNotification.updateMany({
-		where: {
-			userId,
-			contextRfqId: rfqId,
-			kind: "RFQ_THREAD_MESSAGE",
-			readAt: null,
-		},
-		data: { readAt: new Date() },
-	});
+	// RFQ threads are no longer supported
 	return {};
 }
 
@@ -120,8 +110,9 @@ export async function getMyNotificationPrefsAction(): Promise<{
 		where: { id: userId },
 		select: { notificationPrefs: true },
 	});
+	const prefs = parseNotificationPrefs(u?.notificationPrefs);
 	return {
-		muteRfqThreadEmail: userMuteRfqThreadEmail(u?.notificationPrefs),
+		muteRfqThreadEmail: prefs.muteOrderEmails === true,
 	};
 }
 
@@ -135,8 +126,9 @@ export async function updateMyNotificationPrefsAction(input: {
 	});
 	const prev = parseNotificationPrefs(u?.notificationPrefs);
 	const merged: NotificationPrefs = { ...prev };
+	// Map RFQ thread mute to order email mute
 	if (typeof input.muteRfqThreadEmail === "boolean") {
-		merged.muteRfqThreadEmail = input.muteRfqThreadEmail;
+		merged.muteOrderEmails = input.muteRfqThreadEmail;
 	}
 	await prisma.user.update({
 		where: { id: userId },

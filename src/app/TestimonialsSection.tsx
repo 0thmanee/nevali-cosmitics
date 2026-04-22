@@ -56,9 +56,9 @@ const testimonials = [
     cardShadow: "#0B241712 0px 4px 32px",
     dark: false,
     quote:
-      '"CraftHouse gave our cooperative the credibility we needed. Within 6 months of certification, we signed our first contract with a French organic retailer — something we never could have done alone."',
+      '"nevali gave our cooperative shelf-ready storytelling. Within weeks of launch we were shipping argan serums to Paris boutiques—with ingredients and batches documented the way EU buyers expect."',
     name: "Fatima Ait Benhaddou",
-    role: "Director, Coopérative Tissint — Argan & Rose",
+    role: "Director, Coopérative Tissint — Argan & rose care",
     initials: "FA",
     avatarGradient:
       "linear-gradient(in oklab 135deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 100%)",
@@ -81,7 +81,7 @@ const testimonials = [
     cardShadow: "#0B241740 0px 8px 48px",
     dark: true,
     quote:
-      '"As a European organic importer, supplier verification used to take months. CraftHouse gave us instant access to pre-certified Moroccan cooperatives with full traceability — we closed our first B2B contract in under 3 weeks."',
+      '"Supplier diligence used to take months. nevali surfaces Moroccan labs with documentation, imagery, and checkout-ready SKUs—we onboarded a new argan line in under three weeks."',
     name: "Lars Van der Berg",
     role: "Procurement Director, NaturaBio Imports — Amsterdam",
     initials: "LV",
@@ -108,9 +108,9 @@ const testimonials = [
     cardShadow: "#0B241712 0px 4px 32px",
     dark: false,
     quote:
-      '"The training programs transformed how we document our production process. The platform\'s support system meant we always had an expert one message away for our export paperwork."',
+      '"The training modules taught us how to photograph textures, write INCI blocks, and prep export paperwork. Support tickets keep our hammam line compliant without hiring a full-time regulatory team."',
     name: "Mohammed Benali",
-    role: "Artisan, Domaine Berbère — Saffron, Taliouine",
+    role: "Lead formulator, Domaine Berbère — botanical skincare, Taliouine",
     initials: "MB",
     avatarGradient:
       "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
@@ -138,7 +138,7 @@ export default function TestimonialsSection() {
               />
             </svg>
             <span className="font-sans text-sm font-semibold tracking-[0.18em] text-secondary uppercase">
-              Artisan Stories
+              Brand voices
             </span>
             <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
               <path
@@ -152,14 +152,13 @@ export default function TestimonialsSection() {
           </div>
 
           <h2 className="font-serif font-bold text-text-dark leading-tight text-4xl md:text-5xl">
-            Trusted by growers
+            Trusted by makers
             <br />
-            and buyers alike
+            and beauty buyers
           </h2>
 
           <p className="font-sans text-text-muted text-lg max-w-[480px] leading-relaxed">
-            Real results from both sides of the marketplace — Moroccan artisans
-            and international buyers.
+            Moroccan labs, cooperatives, and retailers growing together on the nevali marketplace.
           </p>
         </div>
 

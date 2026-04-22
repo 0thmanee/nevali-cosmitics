@@ -4,9 +4,9 @@ import Navbar from "~/app/Navbar";
 import { CartPageClient } from "./cart-page-client";
 
 export const metadata = {
-  title: "Cart — CraftHouse",
+  title: "Cart — nevali",
   description:
-    "Review products you are sourcing before sending quote requests to artisans.",
+    "Review your cosmetics selection before checkout. No account required—pay as a guest when you proceed.",
 };
 
 export default function CartPage() {
@@ -22,7 +22,11 @@ export default function CartPage() {
             <span className="mx-2">/</span>
             <span className="font-medium text-text-dark">Cart</span>
           </nav>
-          <h1 className="mb-8 font-serif text-3xl font-bold text-text-dark">Sourcing cart</h1>
+          <h1 className="font-serif text-3xl font-bold text-text-dark">Your cart</h1>
+          <p className="mb-8 mt-2 max-w-2xl font-sans text-sm text-stone-600">
+            Checkout is open to everyone—you do not need to create an account. Use the same email as
+            your buyer profile if you want orders to show up under My orders.
+          </p>
           <CartPageClient />
         </div>
       </section>

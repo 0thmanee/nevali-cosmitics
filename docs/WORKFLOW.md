@@ -1,6 +1,6 @@
 # OrigineMaroc — Workflow & Roles
 
-> **Reality check (CraftHouse repo):** Narrative still references **OrigineMaroc** as the product archetype. Implemented roles and routes use **CraftHouse** naming (`superadmin`, `partner` under `/artisan`, `buyer` under `/buyer`). Treat workflow diagrams as intent, not a guarantee of every integration (e.g. payments remain off-platform / backlog).
+> **Reality check (nevaliCosmetics repo):** Narrative still references **OrigineMaroc** as the product archetype. Implemented roles and routes use **nevaliCosmetics** naming (`superadmin`, `partner` under `/artisan`, `buyer` under `/buyer`). Treat workflow diagrams as intent, not a guarantee of every integration (e.g. payments remain off-platform / backlog).
 
 **Plateforme Produits du Terroir** — Certified Moroccan products from verified cooperatives to global buyers.
 
