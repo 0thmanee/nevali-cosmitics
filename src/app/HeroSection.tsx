@@ -5,11 +5,54 @@ import { COSMETICS_MARKETING, productPlaceholderImageUrl } from "~/lib/cosmetics
 import { formatPriceMad } from "~/lib/format-price";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { getFeaturedHomeHeroProductRepo } from "~/app/api/products/repo/products.repo";
+import type { ProductPaymentOptionValue } from "~/app/api/products/schemas/products.schema";
 
 function teaser(text: string | null, max = 200): string {
   const t = text?.trim() ?? "";
   if (t.length <= max) return t;
   return `${t.slice(0, max).trim()}…`;
+}
+
+const COSMETICS_CATEGORY_LABELS: Record<string, string> = {
+  SKINCARE: "Skincare",
+  MAKEUP: "Makeup",
+  HAIRCARE: "Haircare",
+  BODY_CARE: "Body care",
+  FRAGRANCE: "Fragrance",
+  TOOLS_ACCESSORIES: "Tools & accessories",
+  SUPPLEMENTS: "Supplements",
+  OTHER: "Other",
+};
+
+function cosmeticsCategoryLabel(code: string | null): string | null {
+  if (!code) return null;
+  return (
+    COSMETICS_CATEGORY_LABELS[code] ??
+    code
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+  );
+}
+
+function ingredientsTeaser(raw: string | null, max = 118): string | null {
+  const s = raw?.trim();
+  if (!s) return null;
+  const bits = s
+    .split(/[,;]/)
+    .map((b) => b.trim())
+    .filter(Boolean)
+    .slice(0, 5);
+  const joined = bits.join(" · ");
+  if (joined.length <= max) return joined;
+  return `${joined.slice(0, max - 1).trim()}…`;
+}
+
+function paymentChips(option: ProductPaymentOptionValue | null): string[] {
+  if (!option) return [];
+  if (option === "BOTH") return ["Card checkout", "Cash on delivery"];
+  if (option === "CARD") return ["Card checkout"];
+  return ["Cash on delivery"];
 }
 
 export default async function HeroSection() {
@@ -19,63 +62,132 @@ export default async function HeroSection() {
     const imageSrc =
       featured.imageUrl ?? productPlaceholderImageUrl(`${featured.id}:hero`, 1200);
     const sub = teaser(featured.description);
+    const typedCategory = cosmeticsCategoryLabel(featured.cosmeticsCategory);
+    const ingredientLine = ingredientsTeaser(featured.ingredients);
+    const pay = paymentChips(featured.paymentOption);
+    const moreVariants = Math.max(0, featured.variantCount - featured.variantsPreview.length);
+
+    const categoryEyebrow =
+      typedCategory && typedCategory.toLowerCase() !== featured.category.trim().toLowerCase()
+        ? `${featured.category} · ${typedCategory}`
+        : featured.category;
+    const eyebrowParts = [
+      "Featured",
+      categoryEyebrow,
+      SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partner" : null,
+    ].filter(Boolean) as string[];
 
     return (
-      <section className="relative w-full overflow-hidden bg-linear-to-br from-cream via-paper to-cream-dark/30 text-text-dark">
-        <div className="mx-auto grid min-h-[min(88vh,900px)] w-full max-w-[1600px] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-          <AnimateOnScroll className="flex flex-col justify-center border-cream-dark px-6 py-14 sm:px-10 sm:py-20 lg:border-r lg:py-24 lg:pl-14 lg:pr-10" delay={0} direction="right">
-            <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-primary/70">
-              Featured
-            </p>
-            <p className="mt-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-              {featured.category}
-            </p>
-            <h1
-              className="mt-4 font-serif font-semibold leading-[1.05] tracking-tight"
-              style={{ fontSize: "clamp(2rem, 4.2vw, 3.35rem)" }}
-            >
-              {featured.name}
-            </h1>
-            {sub ? (
-              <p className="mt-5 max-w-xl font-sans text-[15px] leading-relaxed text-text-muted line-clamp-4">
-                {sub}
-              </p>
-            ) : null}
-            {featured.capacity?.trim() ? (
-              <p className="mt-3 font-sans text-sm text-text-muted">{featured.capacity}</p>
-            ) : null}
-            <p className="mt-8 font-serif text-2xl font-semibold text-primary-dark">
-              From {formatPriceMad(featured.fromPriceMad)}
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Link
-                href={`/products/${featured.id}`}
-                className="inline-flex items-center justify-center rounded-sm border border-primary bg-primary px-7 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90"
-              >
-                View product
-              </Link>
-              <Link
-                href="/products"
-                className="inline-flex items-center justify-center rounded-sm border border-primary/40 bg-white/70 px-7 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-primary-dark transition-colors hover:border-primary/70 hover:bg-white"
-              >
-                Full catalog
-              </Link>
-            </div>
-          </AnimateOnScroll>
-
-          <AnimateOnScroll className="relative min-h-[320px] bg-cream-dark/35 lg:min-h-0" delay={100} direction="left">
+      <section className="w-full border-b border-stone-200 bg-paper text-text-dark">
+        <div className="grid w-full lg:grid-cols-2">
+          <AnimateOnScroll
+            className="relative min-h-[min(50vh,480px)] w-full overflow-hidden lg:min-h-[min(88vh,960px)]"
+            delay={0}
+            direction="right"
+          >
             <Image
               src={imageSrc}
-              alt=""
+              alt={featured.name}
               fill
-              className="object-contain object-center p-6 sm:p-10 lg:p-14"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
-            <div
-              className="pointer-events-none absolute inset-0 bg-linear-to-t from-primary/10 via-transparent to-transparent lg:bg-linear-to-l"
-              aria-hidden
-            />
+          </AnimateOnScroll>
+
+          <AnimateOnScroll
+            className="flex flex-col justify-center border-t border-stone-200 px-6 py-14 sm:px-10 lg:border-l lg:border-t-0 lg:py-20 lg:pl-14 lg:pr-12"
+            delay={60}
+            direction="left"
+          >
+            <div className="mx-auto w-full max-w-lg lg:mx-0 lg:max-w-xl">
+              <p className="font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-text-muted">
+                {eyebrowParts.join(" · ")}
+              </p>
+              {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                <Link
+                  href={`/artisans/${featured.organizationSlug}`}
+                  className="mt-3 inline-flex w-fit font-sans text-sm text-text-dark underline-offset-[5px] transition-opacity hover:opacity-70"
+                >
+                  {featured.organizationName}
+                </Link>
+              ) : (
+                <p className="mt-3 font-sans text-sm text-text-dark">{featured.organizationName}</p>
+              )}
+              <h1
+                className="mt-5 font-serif font-semibold leading-[1.08] tracking-tight text-text-dark"
+                style={{ fontSize: "clamp(1.65rem, 3.2vw, 2.6rem)" }}
+              >
+                {featured.name}
+              </h1>
+
+              {featured.variantsPreview.length > 0 ? (
+                <div className="mt-10 divide-y divide-stone-200 border-y border-stone-200">
+                  {featured.variantsPreview.map((v, i) => (
+                    <div
+                      key={`${featured.id}-hero-var-${i}`}
+                      className="flex items-start justify-between gap-8 py-4"
+                    >
+                      <div className="min-w-0">
+                        <p className="font-sans text-sm leading-snug text-text-dark">{v.name}</p>
+                        <p className="mt-1 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">
+                          {v.unit}
+                        </p>
+                        {!v.inStock ? (
+                          <p className="mt-1 font-sans text-xs text-text-muted">Unavailable at the moment</p>
+                        ) : null}
+                      </div>
+                      <p className="shrink-0 font-serif text-base font-medium tabular-nums text-text-dark">
+                        {formatPriceMad(v.priceMad)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+              {moreVariants > 0 ? (
+                <p className="mt-3 font-sans text-xs text-text-muted">
+                  {moreVariants} further variant{moreVariants === 1 ? "" : "s"} on the product page
+                </p>
+              ) : null}
+
+              {pay.length > 0 ? (
+                <p className="mt-8 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">
+                  {pay.join(" · ")}
+                </p>
+              ) : null}
+
+              {sub ? (
+                <p className="mt-8 max-w-lg font-sans text-[15px] leading-[1.65] text-text-muted">{sub}</p>
+              ) : null}
+              {featured.capacity?.trim() ? (
+                <p className="mt-4 font-sans text-sm text-text-muted">{featured.capacity}</p>
+              ) : null}
+              {ingredientLine ? (
+                <p className="mt-4 max-w-lg font-sans text-sm leading-relaxed text-text-muted">{ingredientLine}</p>
+              ) : null}
+
+              <p className="mt-10 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-text-muted">
+                From{" "}
+                <span className="font-serif text-2xl font-semibold normal-case tracking-normal text-text-dark sm:text-3xl">
+                  {formatPriceMad(featured.fromPriceMad)}
+                </span>
+              </p>
+
+              <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <Link
+                  href={`/products/${featured.id}`}
+                  className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-text-dark underline underline-offset-[6px] transition-opacity hover:opacity-70"
+                >
+                  View product
+                </Link>
+                <Link
+                  href="/products"
+                  className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-text-muted transition-opacity hover:opacity-70"
+                >
+                  All products
+                </Link>
+              </div>
+            </div>
           </AnimateOnScroll>
         </div>
       </section>

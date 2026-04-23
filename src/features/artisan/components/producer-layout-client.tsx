@@ -211,7 +211,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
       <aside className="hidden h-screen w-[248px] shrink-0 flex-col border-r border-cream-dark bg-linear-to-b from-cream via-cream-dark/45 to-primary-light/35 lg:flex">
         <Link
           href="/"
-          className="shrink-0 border-b border-primary/20 px-5 pb-5 pt-6 transition-opacity hover:opacity-90"
+          className="shrink-0 px-5 pb-5 pt-6 transition-opacity hover:opacity-90"
         >
           <div className="flex items-center gap-2.5">
             <div>

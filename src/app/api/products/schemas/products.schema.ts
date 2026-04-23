@@ -76,6 +76,14 @@ export type ProductRow = {
 };
 
 /** Approved product selected for the marketing homepage hero. */
+/** Up to three lowest-priced variants for homepage hero preview. */
+export type HomeHeroVariantPreview = {
+	name: string;
+	unit: string;
+	priceMad: string;
+	inStock: boolean;
+};
+
 export type HomeHeroFeaturedProduct = {
 	id: string;
 	name: string;
@@ -85,6 +93,14 @@ export type HomeHeroFeaturedProduct = {
 	imageUrl: string | null;
 	/** Lowest variant price, decimal string MAD e.g. "189.00". */
 	fromPriceMad: string;
+	organizationName: string;
+	organizationSlug: string;
+	/** Prisma `ProductCategory` enum value, e.g. SKINCARE; null if unset. */
+	cosmeticsCategory: string | null;
+	ingredients: string | null;
+	paymentOption: ProductPaymentOptionValue | null;
+	variantsPreview: HomeHeroVariantPreview[];
+	variantCount: number;
 };
 
 /** Full variant row returned to producer/admin UIs (price as decimal string). */
@@ -185,9 +201,27 @@ export type PublicProductListRow = {
 	variants: PublicProductVariant[];
 };
 
+/** Approved certification shown on the public PDP (trust). */
+export type PublicProductCertification = {
+	id: string;
+	name: string;
+	fileUrl: string;
+	/** Linked to this SKU vs partner-wide lab / facility doc. */
+	kind: "product" | "partner";
+};
+
 /** Single approved product for public PDP. */
 export type PublicProductDetail = PublicProductListRow & {
 	organizationSlug: string;
 	/** Production capacity label when present. */
 	capacity: string | null;
+	/** Legacy / mirrored MOQ note when present. */
+	moq: string | null;
+	ingredients: string | null;
+	skinTypes: string | null;
+	/** Prisma `ProductCategory` enum value when set. */
+	cosmeticsCategory: string | null;
+	certifications: PublicProductCertification[];
+	/** Partner logo URL when set (brand strip on PDP). */
+	organizationLogo: string | null;
 };

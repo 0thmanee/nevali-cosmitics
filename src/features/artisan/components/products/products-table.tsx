@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
 import { formatProductUpdatedAt } from "../../utils/format";
+import { useClearHomepageHeroProduct, useSetHomepageHeroProduct } from "../../hooks/use-products";
 import type { ProductListRow } from "~/app/api/products/schemas/products.schema";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
@@ -20,6 +21,10 @@ function ProductThumb({ firstImageUrl, seed }: { firstImageUrl: string | null; s
 }
 
 export function ProductsTable({ products }: ProductsTableProps) {
+  const setHero = useSetHomepageHeroProduct();
+  const clearHero = useClearHomepageHeroProduct();
+  const [heroError, setHeroError] = useState<string | null>(null);
+
   if (products.length === 0) {
     return (
       <div
@@ -67,11 +72,18 @@ export function ProductsTable({ products }: ProductsTableProps) {
     );
   }
 
+  const heroBusy = setHero.isPending || clearHero.isPending;
+
   return (
     <div
       className="rounded-sm overflow-hidden"
       style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
     >
+      {heroError ? (
+        <p className="border-b border-cream-dark bg-[color-mix(in_srgb,var(--color-danger)_8%,white)] px-5 py-2 font-sans text-xs text-[var(--color-danger)]">
+          {heroError}
+        </p>
+      ) : null}
       <div
         className="grid px-5 py-3 text-[10px] font-bold tracking-[0.14em] text-text-muted uppercase"
         style={{
@@ -109,6 +121,11 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 <p className="font-sans text-[11px] text-text-muted mt-0.5">
                   {p.category} · {formatProductUpdatedAt(p.updatedAt)}
                 </p>
+                {p.status === "APPROVED" && p.featuredOnHome ? (
+                  <p className="mt-1 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-text-dark">
+                    Public homepage hero
+                  </p>
+                ) : null}
               </div>
             </div>
             <span className="font-sans text-sm text-text-dark">
@@ -130,29 +147,64 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-2">
-              <Link
-                href={`/artisan/products/${p.id}/edit`}
-                className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
-                style={{
-                  background: "var(--color-paper)",
-                  color: "var(--color-ink)",
-                  border: "1px solid var(--color-cream-dark)",
-                }}
-              >
-                Edit
-              </Link>
-              <Link
-                href={`/artisan/products/${p.id}`}
-                className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
-                style={{
-                  background: "var(--color-paper)",
-                  color: "var(--color-ink)",
-                  border: "1px solid var(--color-cream-dark)",
-                }}
-              >
-                View
-              </Link>
+            <div className="flex flex-col items-stretch gap-1.5">
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/artisan/products/${p.id}/edit`}
+                  className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block text-center"
+                  style={{
+                    background: "var(--color-paper)",
+                    color: "var(--color-ink)",
+                    border: "1px solid var(--color-cream-dark)",
+                  }}
+                >
+                  Edit
+                </Link>
+                <Link
+                  href={`/artisan/products/${p.id}`}
+                  className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block text-center"
+                  style={{
+                    background: "var(--color-paper)",
+                    color: "var(--color-ink)",
+                    border: "1px solid var(--color-cream-dark)",
+                  }}
+                >
+                  View
+                </Link>
+              </div>
+              {p.status === "APPROVED" ? (
+                p.featuredOnHome ? (
+                  <button
+                    type="button"
+                    disabled={heroBusy}
+                    className="font-sans text-[11px] font-medium text-text-muted underline-offset-2 hover:underline disabled:opacity-50"
+                    onClick={() => {
+                      setHeroError(null);
+                      clearHero.mutate(undefined, {
+                        onError: (e) =>
+                          setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                      });
+                    }}
+                  >
+                    Remove from homepage
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={heroBusy}
+                    className="font-sans text-[11px] font-medium text-text-dark underline-offset-2 hover:underline disabled:opacity-50"
+                    onClick={() => {
+                      setHeroError(null);
+                      setHero.mutate(p.id, {
+                        onError: (e) =>
+                          setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                      });
+                    }}
+                  >
+                    Show on homepage
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
         );

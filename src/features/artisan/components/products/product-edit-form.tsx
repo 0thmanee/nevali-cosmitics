@@ -270,7 +270,10 @@ export function ProductEditForm({ productId }: Props) {
           </div>
 
           {product.status === "APPROVED" ? (
-            <div className="mt-6 rounded-sm border border-cream-dark bg-[color-mix(in srgb, var(--color-paper) 75%, var(--color-cream))] px-4 py-4 sm:col-span-2">
+            <div
+              id="homepage-hero-spotlight"
+              className="mt-6 rounded-sm border border-cream-dark bg-[color-mix(in srgb, var(--color-paper) 75%, var(--color-cream))] px-4 py-4 sm:col-span-2"
+            >
               <label className="flex cursor-pointer items-start gap-3">
                 <input
                   type="checkbox"
@@ -280,10 +283,12 @@ export function ProductEditForm({ productId }: Props) {
                   disabled={isLoading}
                 />
                 <span>
-                  <span className="font-sans text-sm font-semibold text-text-dark">Homepage hero spotlight</span>
+                  <span className="font-sans text-sm font-semibold text-text-dark">Public homepage hero</span>
                   <span className="mt-1 block font-sans text-xs leading-relaxed text-text-muted">
-                    When checked, this approved listing becomes the large hero on the public homepage. Only one
-                    product can be featured at a time—enabling this clears the flag on your other SKUs.
+                    When enabled, visitors see this approved listing as the featured product on the site
+                    homepage. Only one SKU at a time—you can also use{" "}
+                    <strong className="font-semibold text-text-dark/90">Show on homepage</strong> from the
+                    products list.
                   </span>
                 </span>
               </label>

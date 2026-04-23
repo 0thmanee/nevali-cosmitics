@@ -19,6 +19,8 @@ import {
   updateProductImageVariantRepo,
   deleteProductImageRepo,
   updateProductRepo,
+  setOrganizationHomepageHeroProductRepo,
+  clearOrganizationHomepageHeroRepo,
   listProductsForAdminRepo,
   updateProductStatusRepo,
 } from "./repo/products.repo";
@@ -126,6 +128,20 @@ export async function createProduct(data: CreateProductInput) {
       sortOrder: v.sortOrder ?? i,
     })),
   });
+}
+
+/** Set which approved product is shown on the public homepage hero (only one per organization). */
+export async function setMyHomepageHeroProduct(productId: string) {
+  const orgId = await getProducerOrgId();
+  if (!orgId) throw new Error("You must belong to an organization.");
+  await setOrganizationHomepageHeroProductRepo(productId, orgId);
+}
+
+/** Clear homepage hero for your organization (default marketing hero is shown instead). */
+export async function clearMyHomepageHeroProduct() {
+  const orgId = await getProducerOrgId();
+  if (!orgId) throw new Error("You must belong to an organization.");
+  await clearOrganizationHomepageHeroRepo(orgId);
 }
 
 /** Update a product (must belong to current user's organization). */

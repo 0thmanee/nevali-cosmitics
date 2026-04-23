@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useProduct } from "../../hooks/use-products";
+import {
+  useProduct,
+  useSetHomepageHeroProduct,
+  useClearHomepageHeroProduct,
+} from "../../hooks/use-products";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
 import { formatProductUpdatedAt } from "../../utils/format";
 import { ProductGallery } from "./product-gallery";
@@ -17,6 +21,10 @@ type Props = { productId: string };
 
 export function ProductDetailView({ productId }: Props) {
   const { data: product, isLoading, isError, error } = useProduct(productId);
+  const setHero = useSetHomepageHeroProduct();
+  const clearHero = useClearHomepageHeroProduct();
+  const [heroError, setHeroError] = useState<string | null>(null);
+  const heroBusy = setHero.isPending || clearHero.isPending;
 
   if (isLoading) {
     return (
@@ -88,6 +96,59 @@ export function ProductDetailView({ productId }: Props) {
             </Link>
           </div>
         </div>
+        {product.status === "APPROVED" ? (
+          <div className="border-t border-cream-dark px-6 py-4">
+            {heroError ? (
+              <p className="mb-2 font-sans text-xs text-[var(--color-danger)]">{heroError}</p>
+            ) : null}
+            {product.featuredOnHome ? (
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-sans text-sm text-text-dark">
+                  This listing is the <span className="font-semibold">public homepage hero</span>.
+                </p>
+                <button
+                  type="button"
+                  disabled={heroBusy}
+                  className="w-fit font-sans text-xs font-medium text-text-muted underline-offset-2 hover:underline disabled:opacity-50"
+                  onClick={() => {
+                    setHeroError(null);
+                    clearHero.mutate(undefined, {
+                      onError: (e) =>
+                        setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                    });
+                  }}
+                >
+                  Remove from homepage
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-sans text-sm text-text-muted">
+                  Choose whether this SKU appears as the large featured product on the public homepage.
+                </p>
+                <button
+                  type="button"
+                  disabled={heroBusy}
+                  className="w-fit font-sans text-xs font-semibold uppercase tracking-wide text-text-dark underline-offset-2 hover:underline disabled:opacity-50"
+                  onClick={() => {
+                    setHeroError(null);
+                    setHero.mutate(productId, {
+                      onError: (e) =>
+                        setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                    });
+                  }}
+                >
+                  Show on homepage
+                </button>
+              </div>
+            )}
+            <p className="mt-2 font-sans text-[11px] text-text-muted">
+              <Link href={`/artisan/products/${productId}/edit#homepage-hero-spotlight`} className="underline">
+                Advanced: toggle in product edit
+              </Link>
+            </p>
+          </div>
+        ) : null}
       </div>
 
       {/* Gallery */}

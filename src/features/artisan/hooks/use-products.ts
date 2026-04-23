@@ -7,6 +7,8 @@ import {
   createProduct,
   getMyProduct,
   updateProduct,
+  setMyHomepageHeroProduct,
+  clearMyHomepageHeroProduct,
   addProductImage,
   removeProductImage,
   setProductImageVariant,
@@ -62,6 +64,28 @@ export function useUpdateProduct() {
     onSuccess: (_, { productId }) => {
       queryClient.invalidateQueries({ queryKey: producerProductsQueryKey });
       queryClient.invalidateQueries({ queryKey: producerProductQueryKey(productId) });
+    },
+  });
+}
+
+export function useSetHomepageHeroProduct() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (productId: string) => setMyHomepageHeroProduct(productId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: producerProductsQueryKey });
+      queryClient.invalidateQueries({ queryKey: [...producerProductsQueryKey, "detail"] });
+    },
+  });
+}
+
+export function useClearHomepageHeroProduct() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => clearMyHomepageHeroProduct(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: producerProductsQueryKey });
+      queryClient.invalidateQueries({ queryKey: [...producerProductsQueryKey, "detail"] });
     },
   });
 }

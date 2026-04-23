@@ -49,6 +49,24 @@ function fromPriceFromVariants(variants: { price: Prisma.Decimal }[]): string | 
   return Number.isFinite(min) ? min.toFixed(2) : null;
 }
 
+type HeroVariantPick = {
+  name: string;
+  unit: string;
+  price: Prisma.Decimal;
+  inStock: boolean;
+};
+
+function heroVariantsSortedByPrice(variants: HeroVariantPick[]) {
+  return [...variants].sort((a, b) => Number(a.price) - Number(b.price));
+}
+
+function toPaymentOptionValue(
+  v: "CARD" | "COD" | "BOTH" | null,
+): ProductPaymentOptionValue | null {
+  if (v === null) return null;
+  return v;
+}
+
 /** Approved product flagged for the homepage hero (cached for a single RSC tree). */
 export const getFeaturedHomeHeroProductRepo = cache(
   async (): Promise<HomeHeroFeaturedProduct | null> => {
@@ -61,19 +79,38 @@ export const getFeaturedHomeHeroProductRepo = cache(
         category: true,
         description: true,
         capacity: true,
+        cosmeticsCategory: true,
+        ingredients: true,
+        paymentOption: true,
         images: {
           take: 1,
           orderBy: { sortOrder: "asc" },
           select: { url: true },
         },
+        organization: {
+          select: { name: true, slug: true },
+        },
         variants: {
-          select: { price: true },
+          select: {
+            name: true,
+            unit: true,
+            price: true,
+            inStock: true,
+            sortOrder: true,
+          },
           orderBy: { sortOrder: "asc" },
         },
       },
     });
     if (!row) return null;
     const from = fromPriceFromVariants(row.variants);
+    const sorted = heroVariantsSortedByPrice(row.variants);
+    const variantsPreview = sorted.slice(0, 3).map((v) => ({
+      name: v.name,
+      unit: v.unit,
+      priceMad: v.price.toFixed(2),
+      inStock: v.inStock,
+    }));
     return {
       id: row.id,
       name: row.name,
@@ -82,6 +119,13 @@ export const getFeaturedHomeHeroProductRepo = cache(
       capacity: row.capacity,
       imageUrl: row.images[0]?.url ?? null,
       fromPriceMad: from ?? "0.00",
+      organizationName: row.organization.name,
+      organizationSlug: row.organization.slug,
+      cosmeticsCategory: row.cosmeticsCategory,
+      ingredients: row.ingredients,
+      paymentOption: toPaymentOptionValue(row.paymentOption),
+      variantsPreview,
+      variantCount: row.variants.length,
     };
   },
 );
@@ -414,6 +458,38 @@ export async function deleteProductImageRepo(
   await prisma.productImage.delete({ where: { id: imageId } });
 }
 
+/** Mark one approved product as the public homepage hero; clears the flag on all other SKUs in the same org. */
+export async function setOrganizationHomepageHeroProductRepo(
+  productId: string,
+  organizationId: string,
+): Promise<void> {
+  const ok = await prisma.product.findFirst({
+    where: { id: productId, organizationId, status: "APPROVED" },
+    select: { id: true },
+  });
+  if (!ok) {
+    throw new Error("Product not found, not approved, or does not belong to your organization.");
+  }
+  await prisma.$transaction([
+    prisma.product.updateMany({
+      where: { organizationId },
+      data: { featuredOnHome: false },
+    }),
+    prisma.product.update({
+      where: { id: productId },
+      data: { featuredOnHome: true },
+    }),
+  ]);
+}
+
+/** Remove homepage hero for every product in the org (site falls back to the default marketing hero). */
+export async function clearOrganizationHomepageHeroRepo(organizationId: string): Promise<void> {
+  await prisma.product.updateMany({
+    where: { organizationId },
+    data: { featuredOnHome: false },
+  });
+}
+
 /**
  * Update a product. Enforces that the product belongs to the given organization
  * (defense in depth: only update products of that org).
@@ -672,9 +748,28 @@ export async function getApprovedProductForPublicByIdRepo(
       moq: true,
       capacity: true,
       description: true,
+      ingredients: true,
+      skinTypes: true,
+      cosmeticsCategory: true,
       paymentOption: true,
       organizationId: true,
-      organization: { select: { name: true, slug: true } },
+      organization: {
+        select: {
+          name: true,
+          slug: true,
+          logo: true,
+          certifications: {
+            where: { status: "APPROVED", productId: null },
+            orderBy: { updatedAt: "desc" },
+            select: { id: true, name: true, fileUrl: true },
+          },
+        },
+      },
+      certifications: {
+        where: { status: "APPROVED" },
+        orderBy: { updatedAt: "desc" },
+        select: { id: true, name: true, fileUrl: true },
+      },
       images: {
         orderBy: { sortOrder: "asc" },
         select: { id: true, url: true, sortOrder: true, variantId: true },
@@ -715,10 +810,32 @@ export async function getApprovedProductForPublicByIdRepo(
     gallery,
     variants: row.variants,
   });
+  const productCerts = row.certifications.map((c) => ({
+    id: c.id,
+    name: c.name,
+    fileUrl: c.fileUrl,
+    kind: "product" as const,
+  }));
+  const partnerCertIds = new Set(productCerts.map((c) => c.id));
+  const partnerCerts = row.organization.certifications
+    .filter((c) => !partnerCertIds.has(c.id))
+    .map((c) => ({
+      id: c.id,
+      name: c.name,
+      fileUrl: c.fileUrl,
+      kind: "partner" as const,
+    }));
+  const certifications = [...productCerts, ...partnerCerts];
   return {
     ...base,
     organizationSlug: row.organization.slug,
     capacity: row.capacity,
+    moq: row.moq,
+    ingredients: row.ingredients,
+    skinTypes: row.skinTypes,
+    cosmeticsCategory: row.cosmeticsCategory,
+    certifications,
+    organizationLogo: row.organization.logo,
   };
 }
 
