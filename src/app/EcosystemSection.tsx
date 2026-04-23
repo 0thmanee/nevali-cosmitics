@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const artisanFeatures = [
   { label: "Verified brand profile & certification uploads" },
@@ -15,6 +16,100 @@ const buyerFeatures = [
 ];
 
 export default function EcosystemSection() {
+  if (!SHOW_MULTI_PRODUCER_EXPERIENCE) {
+    return (
+      <section id="about" className="w-full overflow-hidden bg-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex items-center gap-4 border-b border-stone-100 py-10">
+            <span
+              className="font-sans text-xs font-bold tracking-[0.25em] uppercase"
+              style={{ color: "#727272" }}
+            >
+              How it works
+            </span>
+            <div className="h-px flex-1 bg-stone-100" />
+            <span className="font-sans text-xs tracking-widest text-stone-400 uppercase">Shop nevali</span>
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-3xl px-6 py-16 lg:py-20">
+          <div className="flex flex-col gap-3">
+            <h2
+              className="font-serif font-bold leading-[1.05]"
+              style={{ fontSize: "clamp(32px, 3.5vw, 48px)", color: "#000000" }}
+            >
+              Moroccan cosmetics,
+              <br />
+              one trusted house brand
+            </h2>
+            <p className="max-w-lg font-sans text-[15px] leading-relaxed text-stone-500">
+              NEVALI formulates and curates every listing you see today—transparent ingredients, guest checkout, and
+              optional buyer accounts for orders and saved lists.
+            </p>
+          </div>
+
+          <ul className="mt-10 flex flex-col gap-3">
+            {buyerFeatures.map((f) => (
+              <li key={f.label} className="flex items-start gap-3">
+                <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center" style={{ color: "#727272" }}>
+                  <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+                    <path
+                      d="M3 8l3.5 3.5L13 4.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span className="font-sans text-sm text-stone-600">{f.label}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 self-start border border-stone-300 bg-white px-6 py-3 font-sans text-sm font-semibold transition-opacity hover:opacity-90"
+              style={{ color: "#000000" }}
+            >
+              Browse the catalog
+              <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+            <Link
+              href="/auth/register-buyer"
+              className="inline-flex items-center gap-2 self-start bg-black px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            >
+              Create buyer account
+              <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-1 gap-4 border-x border-t border-stone-100 py-8 px-8 sm:grid-cols-3 lg:px-12">
+            {[
+              { value: "24+", label: "Curated SKUs" },
+              { value: "100%", label: "House-controlled listings" },
+              { value: "1", label: "Moroccan lab, one voice" },
+            ].map((s) => (
+              <div key={s.label} className="flex flex-col gap-1">
+                <span className="font-serif font-bold" style={{ fontSize: "clamp(22px, 2.5vw, 36px)", color: "#000000" }}>
+                  {s.value}
+                </span>
+                <span className="font-sans text-xs uppercase tracking-widest text-stone-400">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="about" className="w-full bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">

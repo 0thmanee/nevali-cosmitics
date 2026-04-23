@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSession } from "~/app/api/auth/actions";
 import { CartNavLink } from "~/components/cart-nav-link";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { NavbarUserMenu } from "./NavbarUserMenu";
 import { NavLinks } from "./NavLinks";
 
@@ -35,10 +36,10 @@ export default async function Navbar() {
                 Sign In
               </Link>
               <Link
-                href="/auth/register"
+                href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
                 className="font-sans text-sm font-medium text-forest-light border border-forest-light px-4 py-1.5 hover:bg-forest-light hover:text-white transition-colors"
               >
-                Sign Up
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Sign Up" : "Create account"}
               </Link>
             </>
           )}

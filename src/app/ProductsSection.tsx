@@ -1,9 +1,15 @@
 import Link from "next/link";
-import { listApprovedProductsForPublicRepo } from "~/app/api/products/repo/products.repo";
+import {
+	getFeaturedHomeHeroProductRepo,
+	listApprovedProductsForPublicRepo,
+} from "~/app/api/products/repo/products.repo";
 import { PublicProductCard } from "~/components/public-product-card";
 
 export default async function ProductsSection() {
-	const dbProducts = await listApprovedProductsForPublicRepo(12).catch(() => []);
+	const hero = await getFeaturedHomeHeroProductRepo().catch(() => null);
+	const dbProducts = await listApprovedProductsForPublicRepo(12, {
+		excludeIds: hero?.id ? [hero.id] : undefined,
+	}).catch(() => []);
 
 	return (
 		<section className="w-full bg-cream py-14">

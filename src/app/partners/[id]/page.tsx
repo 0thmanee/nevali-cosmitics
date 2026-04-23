@@ -4,6 +4,7 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import Footer from "~/app/Footer";
 import { getPublicPartner } from "~/app/api/partners/public-actions";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import PartnerTabs from "./PartnerTabs";
 import type {
   PublicPartnerCertification,
@@ -116,7 +117,15 @@ export default async function PartnerProfilePage({
         <div className="max-w-7xl mx-auto px-6">
           {/* Breadcrumb */}
           <nav className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10 flex-wrap">
-            <Link href="/artisans" className="hover:text-white/70 transition-colors">Artisans</Link>
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <Link href="/artisans" className="hover:text-white/70 transition-colors">
+                Artisans
+              </Link>
+            ) : (
+              <Link href="/products" className="hover:text-white/70 transition-colors">
+                Shop
+              </Link>
+            )}
             <span>/</span>
             <span>{profile.region}</span>
             <span>/</span>

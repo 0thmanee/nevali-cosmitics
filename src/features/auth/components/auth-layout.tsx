@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export function AuthLayout({
   children,
@@ -44,7 +45,7 @@ export function AuthLayout({
               nevali
             </span>
             <span className="font-sans text-[9px] font-semibold tracking-[0.22em] text-white/40 uppercase mt-1">
-              Partner portal
+              {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partner portal" : "nevali"}
             </span>
           </Link>
 
@@ -106,14 +107,17 @@ export function AuthLayout({
             {showRegisterLink && (
               <>
                 New here?{" "}
-                <Link href="/auth/register" className="font-semibold text-forest-light hover:underline">
-                  Create account
+                <Link
+                  href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
+                  className="font-semibold text-forest-light hover:underline"
+                >
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Create account" : "Create buyer account"}
                 </Link>
               </>
             )}
             {showLoginLink && (
               <>
-                Already a partner?{" "}
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Already a partner? " : "Already have an account? "}
                 <Link href="/auth/login" className="font-semibold text-forest-light hover:underline">
                   Sign in
                 </Link>

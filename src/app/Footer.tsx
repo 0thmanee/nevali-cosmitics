@@ -1,22 +1,42 @@
 import Link from "next/link";
+import {
+	PLATFORM_OWNED_ORG_SLUG,
+	SHOW_MULTI_PRODUCER_EXPERIENCE,
+} from "~/lib/platform-producer-mode";
 
-const LINKS = {
-	Platform: [
-		{ label: "Our brands", href: "/artisans" },
-		{ label: "Shop cosmetics", href: "/products" },
-		{ label: "Sell on nevali", href: "/auth/register" },
-	],
-	Company: [
-		{ label: "About nevali", href: "/#about" },
-		{ label: "Our Mission", href: "/#mission" },
-		{ label: "Contact", href: "/contact" },
-	],
-	Resources: [
-		{ label: "Training & readiness", href: "/training" },
-		{ label: "Quality Standards", href: "/products" },
-		{ label: "Partner Program", href: "/auth/register" },
-	],
-};
+function buildFooterLinks(): Record<string, { label: string; href: string }[]> {
+	const platform = SHOW_MULTI_PRODUCER_EXPERIENCE
+		? [
+				{ label: "Our brands", href: "/artisans" },
+				{ label: "Shop cosmetics", href: "/products" },
+				{ label: "Sell on nevali", href: "/auth/register" },
+			]
+		: [
+				{ label: "Our brand", href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` },
+				{ label: "Shop cosmetics", href: "/products" },
+			];
+
+	const resources = SHOW_MULTI_PRODUCER_EXPERIENCE
+		? [
+				{ label: "Training & readiness", href: "/training" },
+				{ label: "Quality Standards", href: "/products" },
+				{ label: "Partner Program", href: "/auth/register" },
+			]
+		: [
+				{ label: "Training & readiness", href: "/training" },
+				{ label: "Quality Standards", href: "/products" },
+			];
+
+	return {
+		Platform: platform,
+		Company: [
+			{ label: "About nevali", href: "/#about" },
+			{ label: "Our Mission", href: "/#mission" },
+			{ label: "Contact", href: "/contact" },
+		],
+		Resources: resources,
+	};
+}
 
 const SOCIAL = [
 	{ label: "Instagram", href: "https://www.instagram.com", icon: "IG" },
@@ -25,6 +45,7 @@ const SOCIAL = [
 ];
 
 export default function Footer() {
+	const LINKS = buildFooterLinks();
 	return (
 		<footer style={{ background: "#000000" }}>
 			{/* Main grid */}
@@ -54,8 +75,9 @@ export default function Footer() {
 							className="font-sans text-xs leading-relaxed"
 							style={{ color: "rgba(250,245,238,0.5)", maxWidth: "200px" }}
 						>
-							The marketplace for Moroccan cosmetics—plant-rich care, honest
-							labels, and brands rooted in terroir.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE
+								? "The marketplace for Moroccan cosmetics—plant-rich care, honest labels, and brands rooted in terroir."
+								: "Moroccan cosmetics from nevali—plant-rich care, honest labels, and formulas rooted in terroir."}
 						</p>
 						{/* Social */}
 						<div className="mt-1 flex items-center gap-3">

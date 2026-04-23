@@ -7,6 +7,7 @@ import { PublicProductInquiryTriggers } from "~/components/public-product-inquir
 import type { PublicProduct } from "~/components/public-product-types";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { Prisma } from "@prisma/client";
 import { buildPublicProductListRow } from "~/lib/public-product-mapper";
 import type {
@@ -265,10 +266,10 @@ function OverviewTab({ profile, organization, products, certifications, platform
         </div>
 
         <Link
-          href="/artisans"
+          href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : "/products"}
           className="font-body text-sm text-text-muted hover:text-text-dark transition-colors inline-flex items-center gap-2"
         >
-          ← Back to all brands
+          {SHOW_MULTI_PRODUCER_EXPERIENCE ? "← Back to all brands" : "← Back to shop"}
         </Link>
       </aside>
     </div>

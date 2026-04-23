@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { listApprovedProductsForPublicRepo } from "~/app/api/products/repo/products.repo";
+import {
+	getFeaturedHomeHeroProductRepo,
+	listApprovedProductsForPublicRepo,
+} from "~/app/api/products/repo/products.repo";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 type MosaicProduct = {
 	id: string;
@@ -38,7 +42,10 @@ function MosaicTile({ product }: { product: MosaicProduct }) {
 }
 
 export default async function CollectionsSection() {
-	const products = await listApprovedProductsForPublicRepo(8).catch(() => []);
+	const hero = await getFeaturedHomeHeroProductRepo().catch(() => null);
+	const products = await listApprovedProductsForPublicRepo(8, {
+		excludeIds: hero?.id ? [hero.id] : undefined,
+	}).catch(() => []);
 
 	const row1 = products.slice(0, 3);
 	const row2 = products.slice(3, 5);
@@ -66,7 +73,9 @@ export default async function CollectionsSection() {
 							No approved products to highlight yet
 						</p>
 						<p className="max-w-md font-sans text-sm text-text-muted">
-							When partners publish approved listings, they will show here automatically.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE
+								? "When partners publish approved listings, they will show here automatically."
+								: "When new SKUs are approved, they will show here automatically."}
 						</p>
 						<Link
 							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"

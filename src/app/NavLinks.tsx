@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  PLATFORM_OWNED_ORG_SLUG,
+  SHOW_MULTI_PRODUCER_EXPERIENCE,
+} from "~/lib/platform-producer-mode";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Brands", href: "/artisans" },
+  ...(SHOW_MULTI_PRODUCER_EXPERIENCE
+    ? [{ label: "Brands", href: "/artisans" as const }]
+    : [{ label: "Our brand", href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` as const }]),
   { label: "Our story", href: "/artisan-process" },
   { label: "Training", href: "/training" },
   { label: "Shop", href: "/products" },

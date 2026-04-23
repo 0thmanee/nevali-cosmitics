@@ -697,6 +697,14 @@ async function main() {
 		productCount += 1;
 	}
 
+	await prisma.product.updateMany({
+		where: {
+			organizationId: org.id,
+			name: "Cold-pressed argan oil — signature",
+		},
+		data: { featuredOnHome: true },
+	});
+
 	const someProducts = await prisma.product.findMany({
 		where: { organizationId: org.id },
 		take: 5,
@@ -744,7 +752,7 @@ async function main() {
 	console.log(`  Partner:   ${PARTNER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Buyer:     ${BUYER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Org:       /artisans/${ORG_SLUG}`);
-	console.log(`  Products:  ${productCount} APPROVED (with images)`);
+	console.log(`  Products:  ${productCount} APPROVED (with images; argan oil = homepage hero)`);
 }
 
 main()

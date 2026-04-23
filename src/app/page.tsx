@@ -17,11 +17,11 @@ export default function HomePage() {
       <HeroSection />
       <NewFutureSection />
       <EcosystemSection />
+      <QuoteSection />
+      <StoriesSection />
       <FeaturedCategorySection />
       <CollectionsSection />
-      <QuoteSection />
       <ProductsSection />
-      <StoriesSection />
       <Footer />
     </main>
   );

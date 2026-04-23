@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { env } from "~/env";
+import { PLATFORM_OWNED_ORG_SLUG, SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const DEFAULT_CONTACT_EMAIL = "hello@nevali-cosmetics.ma";
 
@@ -35,9 +36,11 @@ export default function BuyerHomePage() {
 				</Link>
 				<Link
 					className="rounded-xl border border-cream-dark px-5 py-2.5 font-medium font-sans text-sm text-text-dark transition-colors hover:bg-cream"
-					href="/artisans"
+					href={
+						SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : `/artisans/${PLATFORM_OWNED_ORG_SLUG}`
+					}
 				>
-					Our brands
+					{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Our brands" : "Our brand"}
 				</Link>
 			</div>
 

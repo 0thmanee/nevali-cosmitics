@@ -11,6 +11,7 @@ import type { PublicProductDetail } from "~/app/api/products/schemas/products.sc
 import { useCart } from "~/features/cart/cart-context";
 import { formatPriceMad, paymentOptionLabel } from "~/lib/format-price";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import {
   getCategoryGradient,
   orderedImagesForPublicVariant,
@@ -143,10 +144,21 @@ export function PublicProductDetailView({ product }: Props) {
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-16 lg:py-20">
           {/* Breadcrumb */}
           <nav className="font-sans text-sm text-text-muted mb-8 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <Link href="/artisans" className="hover:text-text-dark transition-colors">
-              Artisans
-            </Link>
-            <span aria-hidden>/</span>
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <>
+                <Link href="/artisans" className="hover:text-text-dark transition-colors">
+                  Artisans
+                </Link>
+                <span aria-hidden>/</span>
+              </>
+            ) : (
+              <>
+                <Link href="/products" className="hover:text-text-dark transition-colors">
+                  Shop
+                </Link>
+                <span aria-hidden>/</span>
+              </>
+            )}
             <Link
               href={`/artisans/${product.organizationSlug}`}
               className="hover:text-text-dark transition-colors"

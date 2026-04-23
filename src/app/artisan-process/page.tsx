@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import { COSMETICS_MARKETING } from "~/lib/cosmetics-image-placeholders";
 import Footer from "~/app/Footer";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { AnimateOnScroll } from "./animate-on-scroll";
 
 // ─── Value chain data ─────────────────────────────────────────────────────────
@@ -332,13 +333,23 @@ export default function ArtisanProcessPage() {
                     </div>
                   </div>
 
-                  <Link
-                    href="/auth/register"
-                    className="inline-flex items-center gap-3 bg-primary text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity w-fit"
-                  >
-                    List your brand
-                    <span className="text-secondary">→</span>
-                  </Link>
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                    <Link
+                      href="/auth/register"
+                      className="inline-flex items-center gap-3 bg-primary text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity w-fit"
+                    >
+                      List your brand
+                      <span className="text-secondary">→</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/products"
+                      className="inline-flex items-center gap-3 bg-primary text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-8 py-4 hover:opacity-90 transition-opacity w-fit"
+                    >
+                      Shop the catalog
+                      <span className="text-secondary">→</span>
+                    </Link>
+                  )}
                 </AnimateOnScroll>
               </div>
 
@@ -401,12 +412,14 @@ export default function ArtisanProcessPage() {
               </AnimateOnScroll>
 
               <AnimateOnScroll direction="up" delay={150} className="flex flex-col gap-4 shrink-0">
-                <Link
-                  href="/auth/register"
-                  className="inline-flex items-center justify-center bg-secondary text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
-                >
-                  List your brand
-                </Link>
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                  <Link
+                    href="/auth/register"
+                    className="inline-flex items-center justify-center bg-secondary text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-10 py-5 hover:opacity-90 transition-opacity"
+                  >
+                    List your brand
+                  </Link>
+                ) : null}
                 <Link
                   href="/products"
                   className="inline-flex items-center justify-center border border-white/30 text-white font-sans font-semibold text-xs tracking-[0.2em] uppercase px-10 py-5 hover:bg-white/10 transition-colors"

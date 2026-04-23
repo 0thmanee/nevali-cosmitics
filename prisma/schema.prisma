@@ -258,6 +258,8 @@ model Product {
   rejectionReason  String?                // set by admin when rejecting
   moq              String?                // minimum order quantity (legacy; mirrored on default variant)
   capacity         String?
+  /// Homepage hero spotlight (single listing per org; toggled in partner product edit when APPROVED).
+  featuredOnHome   Boolean                @default(false)
   /// Set when a product is approved; applies to all variants for checkout payment rules.
   paymentOption    ProductPaymentOption?
   createdAt        DateTime               @default(now())
@@ -273,6 +275,7 @@ model Product {
   @@index([organizationId])
   @@index([cosmeticsCategory])
   @@index([status])
+  @@index([featuredOnHome, status])
   @@map("product")
 }
 

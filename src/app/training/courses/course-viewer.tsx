@@ -6,6 +6,7 @@ import { Clock, ArrowLeft, ChevronRight } from "lucide-react";
 import { type Course, type LangCode, LANGUAGES } from "./data";
 import { LanguageSwitcher } from "./language-switcher";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const STORAGE_KEY = "ch_course_lang";
 
@@ -161,12 +162,23 @@ export function CourseViewer({ course }: { course: Course }) {
                   : "Partner with nevali to unlock the full curriculum and list your products globally."}
               </p>
             </div>
-            <Link href="/auth/register"
-              className={`shrink-0 inline-flex items-center gap-2 bg-primary px-6 py-3 font-sans font-semibold text-white text-xs tracking-[0.15em] uppercase hover:opacity-90 transition-opacity whitespace-nowrap ${dir === "rtl" ? "flex-row-reverse" : ""}`}
-            >
-              {lang === "ar" ? "انضم الآن" : lang === "fr" ? "Devenir partenaire" : "Become a Partner"}
-              <ChevronRight size={14} />
-            </Link>
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <Link
+                href="/auth/register"
+                className={`shrink-0 inline-flex items-center gap-2 bg-primary px-6 py-3 font-sans font-semibold text-white text-xs tracking-[0.15em] uppercase hover:opacity-90 transition-opacity whitespace-nowrap ${dir === "rtl" ? "flex-row-reverse" : ""}`}
+              >
+                {lang === "ar" ? "انضم الآن" : lang === "fr" ? "Devenir partenaire" : "Become a Partner"}
+                <ChevronRight size={14} />
+              </Link>
+            ) : (
+              <Link
+                href="/auth/login"
+                className={`shrink-0 inline-flex items-center gap-2 border border-primary bg-white px-6 py-3 font-sans font-semibold text-primary text-xs tracking-[0.15em] uppercase hover:bg-primary hover:text-white transition-colors whitespace-nowrap ${dir === "rtl" ? "flex-row-reverse" : ""}`}
+              >
+                {lang === "ar" ? "تسجيل الدخول" : lang === "fr" ? "Connexion équipe" : "Team sign in"}
+                <ChevronRight size={14} />
+              </Link>
+            )}
           </div>
         </div>
 

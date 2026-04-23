@@ -3,6 +3,7 @@ import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import { getSession } from "~/app/api/auth/actions";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { Lock, BookOpen, Clock, Users, ChevronRight } from "lucide-react";
 import { FREE_COURSES, LOCKED_COURSES_DATA as LOCKED_COURSES } from "./courses/data";
 
@@ -46,16 +47,20 @@ export default async function TrainingMarketingPage() {
 
             <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
               <p className="font-sans text-white/60 leading-relaxed text-sm mb-8">
-                Start with our free courses open to everyone. Partner with nevali to unlock the full curriculum and publish cosmetics listings with confidence.
+                {SHOW_MULTI_PRODUCER_EXPERIENCE
+                  ? "Start with our free courses open to everyone. Partner with nevali to unlock the full curriculum and publish cosmetics listings with confidence."
+                  : "Start with our free courses open to everyone. Full curriculum access is managed for the nevali studio team—sign in if you have an account."}
               </p>
               {!session?.user && (
                 <div className="flex flex-wrap gap-3">
-                  <Link
-                    className="inline-flex items-center justify-center bg-secondary px-6 py-3 font-sans font-semibold text-white text-xs tracking-[0.15em] uppercase transition-opacity hover:opacity-90"
-                    href="/auth/register"
-                  >
-                    Become a Partner
-                  </Link>
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                    <Link
+                      className="inline-flex items-center justify-center bg-secondary px-6 py-3 font-sans font-semibold text-white text-xs tracking-[0.15em] uppercase transition-opacity hover:opacity-90"
+                      href="/auth/register"
+                    >
+                      Become a Partner
+                    </Link>
+                  ) : null}
                   <Link
                     className="inline-flex items-center justify-center border border-white/30 px-6 py-3 font-sans font-semibold text-xs tracking-[0.15em] uppercase text-white transition-colors hover:bg-white/10"
                     href="/auth/login"
@@ -150,7 +155,7 @@ export default async function TrainingMarketingPage() {
       </section>
 
       {/* ── Gate Banner ── */}
-      {!isPartner && (
+      {!isPartner && SHOW_MULTI_PRODUCER_EXPERIENCE && (
         <AnimateOnScroll direction="up" className="max-w-7xl mx-auto px-6 py-6 w-full">
           <div className="bg-primary flex flex-col md:flex-row items-center justify-between gap-6 px-8 py-7">
             <div>
@@ -184,7 +189,8 @@ export default async function TrainingMarketingPage() {
             <div className="flex-1 h-px bg-cream-dark" />
             {!isPartner && (
               <span className="flex items-center gap-1.5 font-sans text-xs text-text-muted">
-                <Lock size={11} /> Partners only
+                <Lock size={11} />{" "}
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partners only" : "Studio access"}
               </span>
             )}
           </div>
@@ -203,14 +209,25 @@ export default async function TrainingMarketingPage() {
                         <Lock size={18} className="text-white" />
                       </div>
                       <p className="font-sans text-xs text-text-muted text-center max-w-[180px]">
-                        Partner with nevali to access this course
+                        {SHOW_MULTI_PRODUCER_EXPERIENCE
+                          ? "Partner with nevali to access this course"
+                          : "Full curriculum is reserved for nevali studio accounts."}
                       </p>
-                      <Link
-                        href="/auth/register"
-                        className="font-sans text-xs tracking-[0.1em] uppercase font-semibold text-primary border border-primary px-4 py-2 hover:bg-primary hover:text-white transition-colors"
-                      >
-                        Apply now
-                      </Link>
+                      {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                        <Link
+                          href="/auth/register"
+                          className="font-sans text-xs tracking-[0.1em] uppercase font-semibold text-primary border border-primary px-4 py-2 hover:bg-primary hover:text-white transition-colors"
+                        >
+                          Apply now
+                        </Link>
+                      ) : (
+                        <Link
+                          href="/auth/login"
+                          className="font-sans text-xs tracking-[0.1em] uppercase font-semibold text-primary border border-primary px-4 py-2 hover:bg-primary hover:text-white transition-colors"
+                        >
+                          Team sign in
+                        </Link>
+                      )}
                     </div>
                   </div>
                 )}

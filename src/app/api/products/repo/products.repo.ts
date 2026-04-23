@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { Prisma } from "@prisma/client";
 import { prisma } from "~/lib/db";
 import type { FeaturedHomeProductSample } from "~/app/featured-category-samples.types";
@@ -12,6 +13,7 @@ import type {
   CertifiedProductListRow,
   PublicProductDetail,
   ProductPaymentOptionValue,
+  HomeHeroFeaturedProduct,
 } from "../schemas/products.schema";
 import { buildPublicProductListRow } from "~/lib/public-product-mapper";
 
@@ -46,6 +48,43 @@ function fromPriceFromVariants(variants: { price: Prisma.Decimal }[]): string | 
   }
   return Number.isFinite(min) ? min.toFixed(2) : null;
 }
+
+/** Approved product flagged for the homepage hero (cached for a single RSC tree). */
+export const getFeaturedHomeHeroProductRepo = cache(
+  async (): Promise<HomeHeroFeaturedProduct | null> => {
+    const row = await prisma.product.findFirst({
+      where: { status: "APPROVED", featuredOnHome: true },
+      orderBy: { updatedAt: "desc" },
+      select: {
+        id: true,
+        name: true,
+        category: true,
+        description: true,
+        capacity: true,
+        images: {
+          take: 1,
+          orderBy: { sortOrder: "asc" },
+          select: { url: true },
+        },
+        variants: {
+          select: { price: true },
+          orderBy: { sortOrder: "asc" },
+        },
+      },
+    });
+    if (!row) return null;
+    const from = fromPriceFromVariants(row.variants);
+    return {
+      id: row.id,
+      name: row.name,
+      category: row.category,
+      description: row.description,
+      capacity: row.capacity,
+      imageUrl: row.images[0]?.url ?? null,
+      fromPriceMad: from ?? "0.00",
+    };
+  },
+);
 
 type VariantUpsertInput = {
   id?: string;
@@ -133,6 +172,7 @@ const productSelect = {
   moq: true,
   capacity: true,
   description: true,
+  featuredOnHome: true,
   paymentOption: true,
   createdAt: true,
   updatedAt: true,
@@ -387,6 +427,7 @@ export async function updateProductRepo(
     moq?: string | null;
     capacity?: string | null;
     description?: string | null;
+    featuredOnHome?: boolean;
     variants: VariantUpsertInput[];
   },
 ): Promise<ProductRowWithImages> {
@@ -399,6 +440,12 @@ export async function updateProductRepo(
   }
 
   await prisma.$transaction(async (tx) => {
+    if (data.featuredOnHome === true) {
+      await tx.product.updateMany({
+        where: { organizationId },
+        data: { featuredOnHome: false },
+      });
+    }
     await tx.product.update({
       where: { id: productId },
       data: {
@@ -407,6 +454,7 @@ export async function updateProductRepo(
         moq: data.moq ?? null,
         capacity: data.capacity ?? null,
         description: data.description ?? null,
+        ...(data.featuredOnHome !== undefined ? { featuredOnHome: data.featuredOnHome } : {}),
       },
     });
     await syncProductVariantsTx(tx, productId, data.variants);
@@ -675,9 +723,15 @@ export async function getApprovedProductForPublicByIdRepo(
 }
 
 /** All APPROVED products for the public landing page — no auth required. */
-export async function listApprovedProductsForPublicRepo(limit = 8) {
+export async function listApprovedProductsForPublicRepo(
+  limit = 8,
+  opts?: { excludeIds?: string[] },
+) {
   const rows = await prisma.product.findMany({
-    where: { status: "APPROVED" },
+    where: {
+      status: "APPROVED",
+      ...(opts?.excludeIds?.length ? { id: { notIn: opts.excludeIds } } : {}),
+    },
     orderBy: { updatedAt: "desc" },
     take: limit,
     select: {
@@ -862,6 +916,7 @@ export async function updateProductStatusRepo(
       ...(status === "APPROVED"
         ? { paymentOption: paymentOption ?? "BOTH" }
         : {}),
+      ...(status === "REJECTED" ? { featuredOnHome: false } : {}),
     },
     select: productSelect,
   });

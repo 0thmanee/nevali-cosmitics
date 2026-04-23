@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { postRegisterKind } from "~/app/api/auth/register-kind-actions";
 import { signUp } from "~/lib/auth-client";
 import { AuthLayout, AuthInput, AuthField } from "~/features/auth";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export function RegisterBuyerForm() {
   const router = useRouter();
@@ -29,7 +30,13 @@ export function RegisterBuyerForm() {
   return (
     <AuthLayout
       title="Create a buyer account"
-      subtitle={<>Browse artisans and request quotes.</>}
+      subtitle={
+        SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+          <>Browse artisans and request quotes.</>
+        ) : (
+          <>Browse nevali, save lists, and track orders when you sign in with the same email as checkout.</>
+        )
+      }
       showLoginLink
       contentClassName="max-w-md"
     >
@@ -161,12 +168,14 @@ export function RegisterBuyerForm() {
           >
             {submitting ? "Creating account…" : "Create buyer account"}
           </button>
-          <Link
-            href="/auth/register"
-            className="font-sans text-sm text-text-muted/80 hover:text-text-muted transition-colors text-center"
-          >
-            Artisan or producer? Register as a partner instead
-          </Link>
+          {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+            <Link
+              href="/auth/register"
+              className="font-sans text-sm text-text-muted/80 hover:text-text-muted transition-colors text-center"
+            >
+              Artisan or producer? Register as a partner instead
+            </Link>
+          ) : null}
           <Link
             href="/auth/login"
             className="font-sans text-sm text-text-muted/60 hover:text-text-muted transition-colors text-center"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import Footer from "~/app/Footer";
 import type { PublicProducerProfile } from "~/app/api/profile/schemas/profile.schema";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 type Props = {
   producer: PublicProducerProfile;
@@ -61,12 +62,12 @@ export function PublicArtisanPage({ producer }: Props) {
             </p>
           </div>
 
-          {/* Back link */}
+          {/* Back link — directory hidden while single-house-brand mode */}
           <Link
-            href="/artisans"
+            href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : "/products"}
             className="shrink-0 font-body text-sm text-white/40 hover:text-white/70 transition-colors flex items-center gap-1.5"
           >
-            ← All artisans
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? "← All artisans" : "← Shop"}
           </Link>
         </div>
 
@@ -205,17 +206,26 @@ export function PublicArtisanPage({ producer }: Props) {
                 <p className="font-body text-sm text-text-dark/80 leading-relaxed">
                   Interested in this brand’s cosmetics? Shop on nevali—guest checkout—or create a buyer account for lists and alerts.
                 </p>
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                  <Link
+                    href="/auth/register"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-primary px-4 py-3 font-display font-bold uppercase tracking-[0.1em] text-white text-sm transition-opacity hover:opacity-90"
+                  >
+                    Get started →
+                  </Link>
+                ) : (
+                  <Link
+                    href="/auth/register-buyer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-primary px-4 py-3 font-display font-bold uppercase tracking-[0.1em] text-white text-sm transition-opacity hover:opacity-90"
+                  >
+                    Create buyer account →
+                  </Link>
+                )}
                 <Link
-                  href="/auth/register"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-primary px-4 py-3 font-display font-bold uppercase tracking-[0.1em] text-white text-sm transition-opacity hover:opacity-90"
-                >
-                  Get started →
-                </Link>
-                <Link
-                  href="/artisans"
+                  href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : "/products"}
                   className="w-full inline-flex items-center justify-center border border-cream-dark bg-cream px-4 py-2.5 font-body text-sm text-text-dark transition-colors hover:border-primary/30"
                 >
-                  Browse all artisans
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Browse all artisans" : "Browse products"}
                 </Link>
               </div>
             </div>

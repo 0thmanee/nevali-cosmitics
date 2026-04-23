@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { postRegisterKind } from "~/app/api/auth/register-kind-actions";
 import { signUp } from "~/lib/auth-client";
 import { AuthLayout, AuthInput, AuthField } from "~/features/auth";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -156,12 +157,14 @@ export function RegisterForm() {
           >
             {submitting ? "Creating account…" : "Create account"}
           </button>
-          <Link
-            href="/auth/register-buyer"
-            className="font-sans text-sm text-text-muted/80 hover:text-text-muted transition-colors text-center"
-          >
-            Buying for your store? Create a buyer account
-          </Link>
+          {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+            <Link
+              href="/auth/register-buyer"
+              className="font-sans text-sm text-text-muted/80 hover:text-text-muted transition-colors text-center"
+            >
+              Buying for your store? Create a buyer account
+            </Link>
+          ) : null}
           <Link
             href="/auth/login"
             className="font-sans text-sm text-text-muted/60 hover:text-text-muted transition-colors text-center"

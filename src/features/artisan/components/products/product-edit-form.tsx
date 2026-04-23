@@ -37,6 +37,7 @@ export function ProductEditForm({ productId }: Props) {
     description: "",
     capacity: "",
   });
+  const [featuredOnHome, setFeaturedOnHome] = useState(false);
   const [variants, setVariants] = useState<VariantDraft[]>([emptyVariantDraft()]);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -48,6 +49,7 @@ export function ProductEditForm({ productId }: Props) {
         description: product.description ?? "",
         capacity: product.capacity ?? "",
       });
+      setFeaturedOnHome(product.featuredOnHome ?? false);
       setVariants(
         product.variants?.length
           ? product.variants.map(variantDraftFromServer)
@@ -86,6 +88,7 @@ export function ProductEditForm({ productId }: Props) {
           category: form.category.trim(),
           description: form.description.trim() || null,
           capacity: form.capacity.trim() || undefined,
+          ...(product?.status === "APPROVED" ? { featuredOnHome } : {}),
           variants: variants.map((v, i) => ({
             id: v.serverId,
             name: v.name.trim(),
@@ -265,6 +268,32 @@ export function ProductEditForm({ productId }: Props) {
               />
             </div>
           </div>
+
+          {product.status === "APPROVED" ? (
+            <div className="mt-6 rounded-xl border border-[#d8d0c4] bg-[#faf8f5] px-4 py-4 sm:col-span-2">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  className="mt-1 h-4 w-4 shrink-0 rounded border-[#d8d0c4]"
+                  checked={featuredOnHome}
+                  onChange={(e) => setFeaturedOnHome(e.target.checked)}
+                  disabled={isLoading}
+                />
+                <span>
+                  <span className="font-sans text-sm font-semibold text-[#000000]">Homepage hero spotlight</span>
+                  <span className="mt-1 block font-sans text-xs leading-relaxed text-[#727272]">
+                    When checked, this approved listing becomes the large hero on the public homepage. Only one
+                    product can be featured at a time—enabling this clears the flag on your other SKUs.
+                  </span>
+                </span>
+              </label>
+            </div>
+          ) : (
+            <p className="mt-4 font-sans text-xs text-[#727272]">
+              Homepage hero is available only for <strong>approved</strong> products. Current status:{" "}
+              {product.status}.
+            </p>
+          )}
 
           <div className="mt-2 pt-6 border-t border-[#d8d0c4]">
             <h3 className="font-serif font-bold text-[14px] text-[#000000] mb-3">Variants & pricing</h3>

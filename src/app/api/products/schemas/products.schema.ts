@@ -30,6 +30,8 @@ export const updateProductSchema = z.object({
 	moq: z.string().max(100).optional().nullable(),
 	capacity: z.string().max(100).optional().nullable(),
 	description: z.string().max(20000).optional().nullable(),
+	/** When true, clears other org products and sets this one as the homepage hero. */
+	featuredOnHome: z.boolean().optional(),
 	variants: z.array(productVariantUpsertBaseSchema).min(1),
 });
 
@@ -67,9 +69,22 @@ export type ProductRow = {
 	moq: string | null;
 	capacity: string | null;
 	description: string | null;
+	featuredOnHome: boolean;
 	paymentOption: ProductPaymentOptionValue | null;
 	createdAt: Date;
 	updatedAt: Date;
+};
+
+/** Approved product selected for the marketing homepage hero. */
+export type HomeHeroFeaturedProduct = {
+	id: string;
+	name: string;
+	category: string;
+	description: string | null;
+	capacity: string | null;
+	imageUrl: string | null;
+	/** Lowest variant price, decimal string MAD e.g. "189.00". */
+	fromPriceMad: string;
 };
 
 /** Full variant row returned to producer/admin UIs (price as decimal string). */

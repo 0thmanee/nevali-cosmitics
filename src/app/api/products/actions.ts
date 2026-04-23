@@ -141,6 +141,7 @@ export async function updateProduct(productId: string, data: UpdateProductInput)
     moq: parsed.moq ?? null,
     capacity: parsed.capacity ?? null,
     description: parsed.description ?? null,
+    ...(parsed.featuredOnHome !== undefined ? { featuredOnHome: parsed.featuredOnHome } : {}),
     variants: parsed.variants.map((v, i) => ({
       id: v.id,
       name: v.name,

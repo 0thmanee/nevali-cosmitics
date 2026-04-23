@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
-const faqs = [
+const FAQS_MULTI = [
 	{
 		q: "What is nevali?",
 		a: "nevali is Morocco’s curated cosmetics marketplace: bio-minded, original formulas from independent Moroccan brands—sold online with guest checkout, clear ingredients, and certifications you can trust.",
@@ -27,9 +28,37 @@ const faqs = [
 		q: "What are the fees?",
 		a: "Browsing is free. Commercial terms for partners (subscriptions or success fees) are agreed in onboarding. Buyers pay product and shipping prices shown at checkout—no hidden RFQ layer.",
 	},
-];
+] as const;
+
+const FAQS_SINGLE_BRAND = [
+	{
+		q: "What is nevali?",
+		a: "nevali is Moroccan skincare and cosmetics from our own lab and trusted supply chain—bio-minded where it matters, transparent labels, and checkout-ready listings with guest-friendly payment options.",
+	},
+	{
+		q: "How are products chosen and described?",
+		a: "Every SKU is reviewed for clarity: INCI-style ingredients, imagery, variants, and payment options (card and/or cash on delivery). Certifications and lab notes are published when relevant so you know what you are applying.",
+	},
+	{
+		q: "What kinds of products can I find?",
+		a: "Skincare, haircare, body and hammam rituals, botanical oils (including argan), fragrances, and accessories—focused on Moroccan origin and responsible formulation.",
+	},
+	{
+		q: "Do I need an account to buy?",
+		a: "No. You can browse, add to cart, and check out as a guest. Creating a free buyer account is optional if you want saved lists, alerts, and order history when your email matches checkout.",
+	},
+	{
+		q: "How can I verify a product?",
+		a: "Each product page highlights ingredients, capacity, and origin. Certifications and documents appear on our public brand profile when available.",
+	},
+	{
+		q: "What are the fees?",
+		a: "Browsing is free. You pay the product and shipping prices shown at checkout—no hidden layers.",
+	},
+] as const;
 
 export default function FAQSection() {
+	const faqs = SHOW_MULTI_PRODUCER_EXPERIENCE ? FAQS_MULTI : FAQS_SINGLE_BRAND;
 	const [open, setOpen] = useState(0);
 
 	return (
@@ -67,8 +96,9 @@ export default function FAQSection() {
 					</h2>
 
 					<p className="max-w-[480px] font-sans text-lg text-text-muted leading-relaxed">
-						For shoppers discovering Moroccan beauty, and for brands joining the nevali
-						marketplace.
+						{SHOW_MULTI_PRODUCER_EXPERIENCE
+							? "For shoppers discovering Moroccan beauty, and for brands joining the nevali marketplace."
+							: "For shoppers discovering Moroccan beauty—straight from the nevali house brand."}
 					</p>
 				</div>
 

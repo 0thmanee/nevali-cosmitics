@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import type { PublicProducerProfile } from "~/app/api/profile/schemas/profile.schema";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 type Props = {
   producer: PublicProducerProfile;
@@ -158,11 +159,11 @@ export function PublicProducerPage({ producer }: Props) {
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
                 <Link
-                  href="/auth/register"
+                  href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
                   className="font-sans text-sm font-semibold rounded-xl px-5 py-2.5 text-white transition-colors hover:opacity-90"
                   style={{ background: "#000000" }}
                 >
-                  Get started
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Get started" : "Create buyer account"}
                 </Link>
                 <Link
                   href="/"
