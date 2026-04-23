@@ -13,7 +13,7 @@ import {
 } from "~/app/api/products/actions";
 import type { CreateProductInput, UpdateProductInput } from "~/app/api/products/schemas/products.schema";
 
-export const producerProductsQueryKey = ["artisan", "products"] as const;
+export const producerProductsQueryKey = ["producer", "products"] as const;
 
 export function producerProductQueryKey(id: string) {
   return [...producerProductsQueryKey, "detail", id] as const;
@@ -27,7 +27,7 @@ export function useProducts() {
   });
 }
 
-export const producerCertifiedProductsQueryKey = ["artisan", "products", "certified"] as const;
+export const producerCertifiedProductsQueryKey = ["producer", "products", "certified"] as const;
 
 export function useCertifiedProducts() {
   return useQuery({

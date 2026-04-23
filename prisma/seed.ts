@@ -483,6 +483,7 @@ async function wipeCatalogAndUsersExcept(adminId: string) {
 			await tx.productImage.deleteMany();
 			await tx.productVariant.deleteMany();
 			await tx.product.deleteMany();
+			await tx.producerArticle.deleteMany();
 			await tx.trainingEnrollment.deleteMany();
 			await tx.supportTicketStatusEvent.deleteMany();
 			await tx.supportTicket.deleteMany();
@@ -705,6 +706,98 @@ async function main() {
 		data: { featuredOnHome: true },
 	});
 
+	const articleCoverInk =
+		"linear-gradient(135deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink) 75%, var(--color-text-muted)) 50%, var(--color-text-muted) 100%)";
+	const articleCoverTwilight =
+		"linear-gradient(135deg, color-mix(in srgb, var(--color-ink) 88%, black) 0%, color-mix(in srgb, var(--color-ink) 70%, var(--color-text-muted)) 50%, color-mix(in srgb, var(--color-text-muted) 70%, white) 100%)";
+	const articleCoverStudio =
+		"linear-gradient(135deg, color-mix(in srgb, var(--color-ink) 95%, black) 0%, var(--color-ink) 55%, var(--color-text-muted) 100%)";
+	const seedPub = new Date("2027-03-10T12:00:00.000Z");
+
+	await prisma.producerArticle.createMany({
+		data: [
+			{
+				organizationId: org.id,
+				title: "How Moroccan labs document INCI lists for EU-conscious shoppers",
+				tag: "Compliance",
+				excerpt:
+					"What buyers see on a label—and how we trace each ingredient to documentation for export markets.",
+				body: `Moroccan cosmetics exporters often start with rich botanical stories. EU buyers still ask for the same thing: an **INCI list** that matches the formula batch, documentary evidence for claims, and stability notes you can hand an auditor.
+
+## What we keep in the bundle
+
+- Versioned INCI for each export market
+- Batch-linked COA references
+- Stability summaries tied to fill dates
+
+In our lab we snapshot each reformulation in the documentation bundle we keep for retail-ready SKUs. That discipline turns a beautiful story into something a distributor can defend on a shelf in Hamburg or London.
+
+> Small mismatches between label and batch become big delays at customs—alignment is non-negotiable.
+
+If you are listing on nevali, publish the INCI you intend for export markets and keep the batch record aligned.`,
+				coverGradient: articleCoverStudio,
+				coverImageUrl: cosmeticsPhoto(PH.creams, 1600),
+				status: "PUBLISHED",
+				publishedAt: seedPub,
+			},
+			{
+				organizationId: org.id,
+				title: "Micro-learning for beauty founders on nevali",
+				tag: "Education",
+				excerpt: "Short modules that map to real export paperwork—not generic webinars.",
+				body: `Training only works when it connects to the **next action** you must take: label review, MOQ planning, or a first pallet shipment.
+
+| Module style | Outcome |
+| --- | --- |
+| Short checkpoint | One updated artifact (label, cert, process note) |
+| Cohort week | Shared Q&A with the nevali team |
+
+We built our programs as short checkpoints with clear outputs so you can finish a module and immediately update a listing, certificate, or process note.
+
+Partners on nevali can track progress from the dashboard and pick up where they left off—no lost context between sessions.`,
+				coverGradient: articleCoverTwilight,
+				coverImageUrl: cosmeticsPhoto(PH.flatlay, 1600),
+				status: "PUBLISHED",
+				publishedAt: new Date(seedPub.getTime() - 86400000),
+			},
+			{
+				organizationId: org.id,
+				title: "Argan cooperatives meet modern serum science",
+				tag: "Community",
+				excerpt: "Bridging traditional harvest windows with cold-chain and stability testing.",
+				body: `## Why harvest windows matter
+
+Cooperative harvest rhythms and lab calendars **do not always** line up.
+
+![Argan and botanicals](${cosmeticsPhoto(PH.argan, 1400)})
+
+### What we document
+
+- Press date and acidity
+- Cold chain handoff
+- Stability lot IDs
+
+Transparency is the bridge: buyers see origin, acidity targets, and fill dates in one place.
+
+This seed article demonstrates **Markdown** on the public journal—headings, lists, tables, and inline images.`,
+				coverGradient: articleCoverInk,
+				coverImageUrl: null,
+				status: "PUBLISHED",
+				publishedAt: new Date(seedPub.getTime() - 2 * 86400000),
+			},
+			{
+				organizationId: org.id,
+				title: "Draft: upcoming — winter barrier routines",
+				tag: "Formulation",
+				excerpt: null,
+				body: "Work in progress for a winter barrier series. Not visible on the public site until published.",
+				coverGradient: articleCoverInk,
+				status: "DRAFT",
+				publishedAt: null,
+			},
+		],
+	});
+
 	const someProducts = await prisma.product.findMany({
 		where: { organizationId: org.id },
 		take: 5,
@@ -753,6 +846,7 @@ async function main() {
 	console.log(`  Buyer:     ${BUYER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Org:       /artisans/${ORG_SLUG}`);
 	console.log(`  Products:  ${productCount} APPROVED (with images; argan oil = homepage hero)`);
+	console.log(`  Journal:   3 published producer articles (+ 1 draft) on /journal`);
 }
 
 main()

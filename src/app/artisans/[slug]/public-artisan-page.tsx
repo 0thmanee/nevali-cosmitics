@@ -24,7 +24,7 @@ export function PublicArtisanPage({ producer }: Props) {
           {/* Avatar */}
           <div
             className="w-20 h-20 sm:w-24 sm:h-24 shrink-0 border-2 border-white/20 overflow-hidden"
-            style={{ background: "#000000" }}
+            style={{ background: "var(--color-ink)" }}
           >
             {producer.profileImage ? (
               <img src={producer.profileImage} alt="" className="w-full h-full object-cover" />
@@ -40,7 +40,7 @@ export function PublicArtisanPage({ producer }: Props) {
             <div className="flex items-center gap-3 flex-wrap">
               <span
                 className="font-body text-[10px] font-bold uppercase tracking-[0.2em] border px-2.5 py-1"
-                style={{ borderColor: "rgba(114,114,114,0.5)", color: "#727272" }}
+                style={{ borderColor: "color-mix(in srgb, var(--color-text-muted) 50%, transparent)", color: "var(--color-text-muted)" }}
               >
                 Verified Artisan
               </span>
@@ -74,7 +74,7 @@ export function PublicArtisanPage({ producer }: Props) {
         {/* Terracotta accent line at bottom */}
         <div
           className="h-0.5 w-full"
-          style={{ background: "linear-gradient(90deg, #000000 0%, #454545 50%, #727272 100%)" }}
+          style={{ background: "linear-gradient(90deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink) 70%, var(--color-text-muted)) 50%, var(--color-text-muted) 100%)" }}
         />
       </section>
 
@@ -200,7 +200,7 @@ export function PublicArtisanPage({ producer }: Props) {
             <div className="border border-cream-dark bg-white">
               <div
                 className="h-1 w-full"
-                style={{ background: "linear-gradient(90deg, #000000 0%, #727272 100%)" }}
+                style={{ background: "linear-gradient(90deg, var(--color-ink) 0%, var(--color-text-muted) 100%)" }}
               />
               <div className="p-5 flex flex-col gap-4">
                 <p className="font-body text-sm text-text-dark/80 leading-relaxed">

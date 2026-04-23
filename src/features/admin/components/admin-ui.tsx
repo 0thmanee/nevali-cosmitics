@@ -8,15 +8,15 @@ import React from "react";
 // Amber = positive/approved, to match platform palette (no green)
 
 export const STATUS_COLORS = {
-  APPROVED:  { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Approved"  },
-  PENDING:   { bg: "rgba(114,114,114,0.06)", color: "#727272", label: "Pending"   },
-  REJECTED:  { bg: "rgba(192,57,43,0.10)", color: "#c0392b", label: "Rejected"  },
-  RESOLVED:  { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Resolved"  },
-  OPEN:      { bg: "rgba(192,57,43,0.10)", color: "#c0392b", label: "Open"      },
-  IN_REVIEW: { bg: "rgba(114,114,114,0.06)", color: "#727272", label: "In Review" },
-  ACTIVE:    { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Active"    },
-  DRAFT:     { bg: "rgba(0,0,0,0.06)",     color: "#888",    label: "Draft"     },
-  PUBLISHED: { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Published" },
+  APPROVED:  { bg: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", label: "Approved"  },
+  PENDING:   { bg: "color-mix(in srgb, var(--color-text-muted) 6%, transparent)", color: "var(--color-text-muted)", label: "Pending"   },
+  REJECTED:  { bg: "color-mix(in srgb, var(--color-danger-dark) 10%, transparent)", color: "var(--color-danger-dark)", label: "Rejected"  },
+  RESOLVED:  { bg: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", label: "Resolved"  },
+  OPEN:      { bg: "color-mix(in srgb, var(--color-danger-dark) 10%, transparent)", color: "var(--color-danger-dark)", label: "Open"      },
+  IN_REVIEW: { bg: "color-mix(in srgb, var(--color-text-muted) 6%, transparent)", color: "var(--color-text-muted)", label: "In Review" },
+  ACTIVE:    { bg: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", label: "Active"    },
+  DRAFT:     { bg: "color-mix(in srgb, var(--color-ink) 6%, transparent)",     color: "var(--color-text-muted)",    label: "Draft"     },
+  PUBLISHED: { bg: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", label: "Published" },
 } as const;
 
 export type StatusKey = keyof typeof STATUS_COLORS;

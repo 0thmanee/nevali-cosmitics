@@ -11,12 +11,12 @@ export default async function ProductShowPage({ params }: Props) {
       <nav className="flex items-center gap-2 text-sm">
         <Link
           href="/artisan/products"
-          className="font-sans text-[#727272] hover:text-[#000000] transition-colors"
+          className="font-sans text-text-muted hover:text-text-dark transition-colors"
         >
           Products
         </Link>
-        <span className="font-sans text-[#727272]/60">/</span>
-        <span className="font-sans font-medium text-[#000000] truncate">View</span>
+        <span className="font-sans text-text-muted/60">/</span>
+        <span className="font-sans font-medium text-text-dark truncate">View</span>
       </nav>
       <ProductDetailView productId={id} />
     </div>

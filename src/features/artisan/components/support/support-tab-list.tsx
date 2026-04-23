@@ -24,8 +24,8 @@ export function SupportTabList({
           className="font-sans text-[12px] font-semibold rounded-sm px-4 py-1.5 transition-colors"
           style={
             activeTab === tab
-              ? { background: "#000000", color: "white" }
-              : { background: "white", color: "#727272", border: "1px solid #d8d0c4" }
+              ? { background: "var(--color-ink)", color: "white" }
+              : { background: "white", color: "var(--color-text-muted)", border: "1px solid var(--color-cream-dark)" }
           }
         >
           {tab}
@@ -35,10 +35,10 @@ export function SupportTabList({
               style={
                 activeTab === tab
                   ? {
-                      background: "rgba(255,255,255,0.15)",
-                      color: "rgba(255,255,255,0.8)",
+                      background: "color-mix(in srgb, var(--color-paper) 15%, transparent)",
+                      color: "color-mix(in srgb, var(--color-paper) 80%, transparent)",
                     }
-                  : { background: "rgba(0,0,0,0.08)", color: "#727272" }
+                  : { background: "color-mix(in srgb, var(--color-ink) 8%, transparent)", color: "var(--color-text-muted)" }
               }
             >
               {ticketCount}

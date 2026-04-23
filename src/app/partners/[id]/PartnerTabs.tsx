@@ -121,7 +121,7 @@ function VerifiedBadge() {
   return (
     <span
       className="shrink-0 border px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wide"
-      style={{ borderColor: "#727272", color: "#727272", background: "rgba(114,114,114,0.07)" }}
+      style={{ borderColor: "var(--color-text-muted)", color: "var(--color-text-muted)", background: "color-mix(in srgb, var(--color-text-muted) 7%, transparent)" }}
     >
       Verified
     </span>
@@ -132,7 +132,7 @@ function ApprovedBadge() {
   return (
     <span
       className="inline-flex border px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wide"
-      style={{ borderColor: "#727272", color: "#727272", background: "rgba(114,114,114,0.07)" }}
+      style={{ borderColor: "var(--color-text-muted)", color: "var(--color-text-muted)", background: "color-mix(in srgb, var(--color-text-muted) 7%, transparent)" }}
     >
       Approved
     </span>
@@ -174,7 +174,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
         ) : null}
 
         {profile.valuesHighlight ? (
-          <div className="border border-cream-dark p-6 sm:p-8" style={{ background: "#ede6dc" }}>
+          <div className="border border-cream-dark p-6 sm:p-8" style={{ background: "var(--color-cream)" }}>
             <SectionLabel>Values & practices</SectionLabel>
             <p className="font-body text-[15px] text-text-dark leading-relaxed whitespace-pre-wrap">
               {profile.valuesHighlight}
@@ -197,7 +197,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
         <div className="bg-primary border border-white/10">
           <div
             className="h-0.5 w-full"
-            style={{ background: "linear-gradient(90deg, #000000 0%, #727272 100%)" }}
+            style={{ background: "linear-gradient(90deg, var(--color-ink) 0%, var(--color-text-muted) 100%)" }}
           />
           <div className="p-5">
             <p className="font-body text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase mb-4">
@@ -282,7 +282,7 @@ function CertificationsTab({ certifications }: { certifications: PublicPartnerCe
       <div className="bg-white border border-cream-dark p-12 flex flex-col items-center gap-3 text-center max-w-lg mx-auto">
         <div className="w-12 h-12 border border-cream-dark flex items-center justify-center">
           <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden>
-            <path d="M10 2l2.2 5L17 7.5l-3.5 3.5.8 5L10 13.5 6.7 16l.8-5L4 7.5 8.8 7z" stroke="#7a3020" strokeWidth="1.4" strokeLinejoin="round" />
+            <path d="M10 2l2.2 5L17 7.5l-3.5 3.5.8 5L10 13.5 6.7 16l.8-5L4 7.5 8.8 7z" stroke="var(--color-primary-darker)" strokeWidth="1.4" strokeLinejoin="round" />
           </svg>
         </div>
         <p className="font-display font-bold uppercase text-text-dark text-sm tracking-wide">No public certifications yet</p>
@@ -309,7 +309,7 @@ function CertificationsTab({ certifications }: { certifications: PublicPartnerCe
                 {c.product ? (
                   <p className="font-body text-xs text-text-muted mt-1">Product: {c.product.name}</p>
                 ) : (
-                  <p className="font-body text-xs text-text-muted mt-1 uppercase tracking-wide" style={{ color: "#727272" }}>Organization-level</p>
+                  <p className="font-body text-xs text-text-muted mt-1 uppercase tracking-wide" style={{ color: "var(--color-text-muted)" }}>Organization-level</p>
                 )}
               </div>
               <VerifiedBadge />
@@ -360,7 +360,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
       <div className="hidden overflow-x-auto border border-cream-dark bg-white md:block">
         <table className="w-full min-w-[800px] border-collapse text-left">
           <thead>
-            <tr className="border-b border-cream-dark" style={{ background: "#ede6dc" }}>
+            <tr className="border-b border-cream-dark" style={{ background: "var(--color-cream)" }}>
               {["Listing", "Category", "Price", "MOQ", "Capacity", "Status", "Listed", "Updated", "Actions"].map((h) => (
                 <th key={h} className="px-4 py-3 font-body text-[10px] font-bold uppercase tracking-widest text-text-muted">
                   {h}

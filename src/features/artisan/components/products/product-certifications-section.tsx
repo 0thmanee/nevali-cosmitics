@@ -8,11 +8,11 @@ import { useAddCertification, useRemoveCertification } from "../../hooks/use-cer
 import { producerProductQueryKey } from "../../hooks/use-products";
 import { useQueryClient } from "@tanstack/react-query";
 
-const cardStyle = { background: "white", border: "1px solid #d8d0c4" } as const;
+const cardStyle = { background: "white", border: "1px solid var(--color-cream-dark)" } as const;
 const statusStyles: Record<string, { bg: string; color: string; border: string }> = {
-  PENDING: { bg: "rgba(201,145,61,0.2)", color: "#E8B84B", border: "1px solid rgba(201,145,61,0.3)" },
-  APPROVED: { bg: "rgba(0,0,0,0.8)", color: "#727272", border: "1px solid rgba(200,150,60,0.25)" },
-  REJECTED: { bg: "rgba(180,30,30,0.2)", color: "#f87171", border: "1px solid rgba(248,113,113,0.25)" },
+  PENDING: { bg: "color-mix(in srgb, var(--color-gold) 20%, transparent)", color: "var(--color-gold)", border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)" },
+  APPROVED: { bg: "color-mix(in srgb, var(--color-ink) 80%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-gold) 25%, transparent)" },
+  REJECTED: { bg: "color-mix(in srgb, var(--color-danger-dark) 20%, transparent)", color: "var(--color-danger)", border: "1px solid color-mix(in srgb, var(--color-danger) 25%, transparent)" },
 };
 
 const ALLOWED_SET = new Set<string>(CERTIFICATION_ALLOWED_MIMES);
@@ -62,13 +62,13 @@ export function ProductCertificationsSection({ productId, productName, certifica
 
   return (
     <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-      <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-col gap-1">
-        <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
-        <p className="font-sans text-[11px] text-[#727272]">
+      <div className="px-6 py-4 border-b border-cream-dark flex flex-col gap-1">
+        <h2 className="font-serif font-bold text-[15px] text-text-dark">Certifications</h2>
+        <p className="font-sans text-[11px] text-text-muted">
           Add documents (PDF or image) for this product. Each certification is reviewed by admin separately and will show as PENDING until approved.
         </p>
       </div>
-      <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3">
+      <div className="px-6 py-4 border-b border-cream-dark flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-2">
             <input
@@ -86,7 +86,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
                 setName(e.target.value);
                 setFileError(null);
               }}
-              className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-40"
+              className="font-sans text-sm rounded-sm px-3 py-2 border border-cream-dark w-40"
             />
             <button
               type="button"
@@ -96,14 +96,14 @@ export function ProductCertificationsSection({ productId, productName, certifica
               }}
               disabled={addMutation.isPending}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-              style={{ background: "#000000", color: "white" }}
+              style={{ background: "var(--color-ink)", color: "white" }}
             >
               {addMutation.isPending ? "Uploading…" : "Upload certification"}
             </button>
           </div>
-          <p className="font-sans text-[11px] text-[#727272]">PDF or image only (JPEG, PNG, WebP). Max 10 MB.</p>
+          <p className="font-sans text-[11px] text-text-muted">PDF or image only (JPEG, PNG, WebP). Max 10 MB.</p>
           {fileError && (
-            <p className="font-sans text-[12px] text-[#f87171]" role="alert">
+            <p className="font-sans text-[12px] text-[var(--color-danger)]" role="alert">
               {fileError}
             </p>
           )}
@@ -111,7 +111,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
       </div>
       <div className="p-6">
         {certifications.length === 0 ? (
-          <p className="font-sans text-sm text-[#727272]">
+          <p className="font-sans text-sm text-text-muted">
             No certifications linked to this product yet. Add a document (PDF or image) above.
           </p>
         ) : (
@@ -122,19 +122,19 @@ export function ProductCertificationsSection({ productId, productName, certifica
                 <li
                   key={c.id}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-sm px-4 py-3"
-                  style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
+                  style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}
                 >
                   <div className="min-w-0">
                     <a
                       href={c.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-sans font-semibold text-sm text-[#000000] hover:underline block truncate"
+                      className="font-sans font-semibold text-sm text-text-dark hover:underline block truncate"
                     >
                       {c.name}
                     </a>
                     {c.status === "REJECTED" && c.rejectionReason && (
-                      <p className="font-sans text-[11px] text-[#f87171] mt-0.5">{c.rejectionReason}</p>
+                      <p className="font-sans text-[11px] text-[var(--color-danger)] mt-0.5">{c.rejectionReason}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
@@ -148,7 +148,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
                       href={c.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-sans text-[12px] font-medium text-[#000000] hover:underline"
+                      className="font-sans text-[12px] font-medium text-text-dark hover:underline"
                     >
                       View
                     </a>
@@ -156,7 +156,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
                       type="button"
                       onClick={() => removeMutation.mutate(c.id)}
                       disabled={removeMutation.isPending}
-                      className="font-sans text-[12px] font-medium text-[#f87171] hover:underline disabled:opacity-60"
+                      className="font-sans text-[12px] font-medium text-[var(--color-danger)] hover:underline disabled:opacity-60"
                     >
                       Remove
                     </button>

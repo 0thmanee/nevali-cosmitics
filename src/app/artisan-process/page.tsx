@@ -9,11 +9,11 @@ import { AnimateOnScroll } from "./animate-on-scroll";
 // ─── Value chain data ─────────────────────────────────────────────────────────
 
 const CHAIN = [
-  { actor: "Moroccan brand", cut: 42, color: "#000000", detail: "Keeps the lion’s share when selling direct on nevali" },
-  { actor: "Ingredients & lab time", cut: 22, color: "#454545", detail: "Botanicals, stability testing, compounding labor" },
-  { actor: "Packaging & fulfilment", cut: 18, color: "#727272", detail: "Bottles, labels, cold chain or COD logistics" },
-  { actor: "Platform & compliance", cut: 12, color: "#727272", detail: "Payments, reviews, certification workflows" },
-  { actor: "Retail markup (elsewhere)", cut: 6, color: "#9CA3AF", detail: "What department stores often add on top" },
+  { actor: "Moroccan brand", cut: 42, color: "var(--color-ink)", detail: "Keeps the lion’s share when selling direct on nevali" },
+  { actor: "Ingredients & lab time", cut: 22, color: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))", detail: "Botanicals, stability testing, compounding labor" },
+  { actor: "Packaging & fulfilment", cut: 18, color: "var(--color-text-muted)", detail: "Bottles, labels, cold chain or COD logistics" },
+  { actor: "Platform & compliance", cut: 12, color: "var(--color-text-muted)", detail: "Payments, reviews, certification workflows" },
+  { actor: "Retail markup (elsewhere)", cut: 6, color: "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))", detail: "What department stores often add on top" },
 ];
 
 const FORMULATION_STEPS = [
@@ -39,11 +39,11 @@ export default function ArtisanProcessPage() {
         {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="bg-primary relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10">
+            <AnimateOnScroll className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10" direction="down">
               <Link href="/" className="hover:text-white/70 transition-colors">Home</Link>
               <span>/</span>
               <span className="text-white/70">Our story</span>
-            </div>
+            </AnimateOnScroll>
 
             <div className="py-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <AnimateOnScroll direction="up">

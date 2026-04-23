@@ -22,7 +22,7 @@ export function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex items-center gap-7">
+    <div className="hidden items-center gap-7 md:flex">
       {NAV_LINKS.map((item) => {
         const isActive =
           item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -30,9 +30,9 @@ export function NavLinks() {
           <Link
             key={item.label}
             href={item.href}
-            className={`relative font-sans text-sm transition-colors pb-0.5 ${
+            className={`relative pb-0.5 font-sans text-sm transition-colors ${
               isActive
-                ? "text-primary font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-secondary"
+                ? "font-semibold text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary/70"
                 : "text-text-dark hover:text-primary"
             }`}
           >

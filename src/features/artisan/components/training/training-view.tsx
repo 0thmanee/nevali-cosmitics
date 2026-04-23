@@ -13,15 +13,15 @@ const TABS = ["All", "In Progress", "Available", "Completed"] as const;
 type Tab = (typeof TABS)[number];
 
 const LEVEL_COLORS: Record<string, string> = {
-  BEGINNER: "#60A5FA",
-  INTERMEDIATE: "#727272",
-  ADVANCED: "#a78bfa",
+  BEGINNER: "var(--color-info)",
+  INTERMEDIATE: "var(--color-text-muted)",
+  ADVANCED: "var(--color-primary-light)",
 };
 
 const levelStyle: Record<string, { bg: string; color: string; border: string }> = {
-  BEGINNER: { bg: "rgba(96,165,250,0.12)", color: "#60A5FA", border: "1px solid rgba(96,165,250,0.25)" },
-  INTERMEDIATE: { bg: "rgba(201,145,61,0.12)", color: "#727272", border: "1px solid rgba(201,145,61,0.25)" },
-  ADVANCED: { bg: "rgba(167,139,250,0.12)", color: "#a78bfa", border: "1px solid rgba(167,139,250,0.25)" },
+  BEGINNER: { bg: "color-mix(in srgb, var(--color-info) 12%, transparent)", color: "var(--color-info)", border: "1px solid color-mix(in srgb, var(--color-info) 25%, transparent)" },
+  INTERMEDIATE: { bg: "color-mix(in srgb, var(--color-gold) 12%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-gold) 25%, transparent)" },
+  ADVANCED: { bg: "color-mix(in srgb, var(--color-primary-light) 12%, transparent)", color: "var(--color-primary-light)", border: "1px solid color-mix(in srgb, var(--color-primary-light) 25%, transparent)" },
 };
 
 export function TrainingView() {
@@ -50,7 +50,7 @@ export function TrainingView() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <p className="font-sans text-sm text-[#727272]">Loading programs…</p>
+        <p className="font-sans text-sm text-text-muted">Loading programs…</p>
       </div>
     );
   }
@@ -58,7 +58,7 @@ export function TrainingView() {
   if (isError) {
     return (
       <div>
-        <p className="font-sans text-sm text-[#f87171]">Failed to load training programs.</p>
+        <p className="font-sans text-sm text-[var(--color-danger)]">Failed to load training programs.</p>
       </div>
     );
   }
@@ -77,12 +77,12 @@ export function TrainingView() {
             type="button"
             onClick={() => { setActiveTab(tab); setExpanded(null); }}
             className="font-sans text-[12px] font-semibold rounded-sm px-4 py-1.5 transition-colors"
-            style={activeTab === tab ? { background: "#000000", color: "white" } : { background: "white", color: "#727272", border: "1px solid #d8d0c4" }}
+            style={activeTab === tab ? { background: "var(--color-ink)", color: "white" } : { background: "white", color: "var(--color-text-muted)", border: "1px solid var(--color-cream-dark)" }}
           >
             {tab}
             <span
               className="ml-1.5 text-[10px] font-bold rounded-full px-1.5 py-0.5"
-              style={activeTab === tab ? { background: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.8)" } : { background: "rgba(0,0,0,0.08)", color: "#727272" }}
+              style={activeTab === tab ? { background: "color-mix(in srgb, var(--color-paper) 15%, transparent)", color: "color-mix(in srgb, var(--color-paper) 80%, transparent)" } : { background: "color-mix(in srgb, var(--color-ink) 8%, transparent)", color: "var(--color-text-muted)" }}
             >
               {counts[tab]}
             </span>
@@ -91,8 +91,8 @@ export function TrainingView() {
       </div>
       <div className="flex flex-col gap-3">
         {filtered.length === 0 ? (
-          <div className="rounded-sm px-5 py-8 text-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
-            <p className="font-sans text-sm text-[#727272]">
+          <div className="rounded-sm px-5 py-8 text-center" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
+            <p className="font-sans text-sm text-text-muted">
               {programs.length === 0
                 ? "No training programs available yet. The admin will publish programs and assign them to your organization."
                 : `No programs in this tab.`}
@@ -101,28 +101,28 @@ export function TrainingView() {
         ) : (
           filtered.map((program) => {
             const status = getTrainingProgramDisplayStatus(program);
-            const color = LEVEL_COLORS[program.level] ?? "#727272";
+            const color = LEVEL_COLORS[program.level] ?? "var(--color-text-muted)";
             const isExpanded = expanded === program.id;
             const modulesCompleted = program.enrollment?.modulesCompleted ?? 0;
             const totalModules = program.modulesCount;
             const progress = program.enrollment?.progress ?? 0;
 
             return (
-              <div key={program.id} className="rounded-sm overflow-hidden transition-all" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+              <div key={program.id} className="rounded-sm overflow-hidden transition-all" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
                 <div className="px-5 py-4 flex items-start gap-4">
                   <div className="w-1 self-stretch rounded-full shrink-0" style={{ background: color, minHeight: 40 }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <h3 className="font-serif font-bold text-[15px] text-[#000000] leading-tight">{program.name}</h3>
+                          <h3 className="font-serif font-bold text-[15px] text-text-dark leading-tight">{program.name}</h3>
                           <span className="font-sans text-[10px] font-bold tracking-wide rounded-full px-2.5 py-0.5 uppercase shrink-0" style={levelStyle[program.level] ?? levelStyle.INTERMEDIATE}>{getTrainingLevelLabel(program.level)}</span>
                         </div>
-                        <p className="font-sans text-[12px] text-[#727272]">{program.provider} · {program.category}{program.durationLabel ? ` · ${program.durationLabel}` : ""}</p>
+                        <p className="font-sans text-[12px] text-text-muted">{program.provider} · {program.category}{program.durationLabel ? ` · ${program.durationLabel}` : ""}</p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         {status === "IN_PROGRESS" && (
-                          <Link href={`/artisan/training/${program.id}`} className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors inline-block" style={{ background: "#000000", color: "white" }}>Continue →</Link>
+                          <Link href={`/artisan/training/${program.id}`} className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors inline-block" style={{ background: "var(--color-ink)", color: "white" }}>Continue →</Link>
                         )}
                         {status === "AVAILABLE" && (
                           <button
@@ -134,17 +134,17 @@ export function TrainingView() {
                             }
                             disabled={enrollMutation.isPending}
                             className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-                            style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
+                            style={{ background: "var(--color-paper)", color: "var(--color-ink)", border: "1px solid var(--color-cream-dark)" }}
                           >
                             {enrollMutation.isPending ? "Starting…" : "Start"}
                           </button>
                         )}
                         {status === "COMPLETED" && (
-                          <span className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 inline-block" style={{ background: "rgba(200,150,60,0.1)", color: "#727272", border: "1px solid rgba(200,150,60,0.2)" }}>Completed</span>
+                          <span className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 inline-block" style={{ background: "color-mix(in srgb, var(--color-gold) 10%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-gold) 20%, transparent)" }}>Completed</span>
                         )}
-                        <button type="button" onClick={() => setExpanded(isExpanded ? null : program.id)} className="w-8 h-8 rounded-sm flex items-center justify-center transition-colors" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                        <button type="button" onClick={() => setExpanded(isExpanded ? null : program.id)} className="w-8 h-8 rounded-sm flex items-center justify-center transition-colors" style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}>
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-                            <path d="M2 4l4 4 4-4" stroke="#727272" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 4l4 4 4-4" stroke="var(--color-text-muted)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </button>
                       </div>
@@ -152,32 +152,32 @@ export function TrainingView() {
                     {status === "IN_PROGRESS" && (
                       <div className="mt-3">
                         <div className="flex items-center justify-between mb-1.5">
-                          <span className="font-sans text-[11px] text-[#727272]">{modulesCompleted} of {totalModules} modules completed</span>
+                          <span className="font-sans text-[11px] text-text-muted">{modulesCompleted} of {totalModules} modules completed</span>
                           <span className="font-sans text-[11px] font-semibold" style={{ color }}>{progress}%</span>
                         </div>
-                        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#ffffff" }}>
+                        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--color-paper)" }}>
                           <div className="h-full rounded-full transition-all" style={{ width: `${progress}%`, background: color }} />
                         </div>
-                        <p className="font-sans text-[11px] text-[#727272] mt-1.5">
-                          Up next: <Link href={`/artisan/training/${program.id}`} className="font-semibold text-[#000000] hover:underline">Open program</Link>
+                        <p className="font-sans text-[11px] text-text-muted mt-1.5">
+                          Up next: <Link href={`/artisan/training/${program.id}`} className="font-semibold text-text-dark hover:underline">Open program</Link>
                         </p>
                       </div>
                     )}
                     {status === "COMPLETED" && (
                       <div className="mt-2 flex items-center gap-1.5">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <circle cx="6" cy="6" r="5" stroke="#727272" strokeWidth="1.2" />
-                          <path d="M3.5 6l1.8 1.8 3.2-3.6" stroke="#727272" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                          <circle cx="6" cy="6" r="5" stroke="var(--color-text-muted)" strokeWidth="1.2" />
+                          <path d="M3.5 6l1.8 1.8 3.2-3.6" stroke="var(--color-text-muted)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <span className="font-sans text-[11px] font-semibold text-[#727272]">Completed · All {totalModules} modules</span>
+                        <span className="font-sans text-[11px] font-semibold text-text-muted">Completed · All {totalModules} modules</span>
                       </div>
                     )}
                   </div>
                 </div>
                 {isExpanded && (
-                  <div className="px-5 pb-5 border-t" style={{ borderColor: "#d8d0c4" }}>
+                  <div className="px-5 pb-5 border-t" style={{ borderColor: "var(--color-cream-dark)" }}>
                     <div className="pt-4 flex flex-col gap-3">
-                      {program.description && <p className="font-sans text-[13px] text-[#727272] leading-relaxed">{program.description}</p>}
+                      {program.description && <p className="font-sans text-[13px] text-text-muted leading-relaxed">{program.description}</p>}
                       <div className="flex flex-wrap gap-2">
                         {[
                           { label: "Category", value: program.category },
@@ -185,9 +185,9 @@ export function TrainingView() {
                           { label: "Level", value: getTrainingLevelLabel(program.level) },
                           { label: "Provider", value: program.provider },
                         ].map((d) => (
-                          <div key={d.label} className="rounded-sm px-3 py-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
-                            <p className="font-sans text-[9px] font-bold tracking-wider text-[#727272] uppercase">{d.label}</p>
-                            <p className="font-sans text-[12px] font-semibold text-[#000000] mt-0.5">{d.value}</p>
+                          <div key={d.label} className="rounded-sm px-3 py-2" style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}>
+                            <p className="font-sans text-[9px] font-bold tracking-wider text-text-muted uppercase">{d.label}</p>
+                            <p className="font-sans text-[12px] font-semibold text-text-dark mt-0.5">{d.value}</p>
                           </div>
                         ))}
                       </div>
@@ -201,7 +201,7 @@ export function TrainingView() {
                           }
                           disabled={enrollMutation.isPending}
                           className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 w-fit transition-colors disabled:opacity-60"
-                          style={{ background: "#000000", color: "white" }}
+                          style={{ background: "var(--color-ink)", color: "white" }}
                         >
                           {enrollMutation.isPending ? "Starting…" : "Enroll and start"}
                         </button>

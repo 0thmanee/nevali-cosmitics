@@ -10,11 +10,11 @@ import { AdminPageWrapper } from "./admin-ui";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const C = {
-  approved: "#727272",   // amber — positive / approved
-  pending:  "#727272",   // amber-dark — pending
-  rejected: "#c0392b",   // red — rejected
-  draft:    "#bbb",      // gray — draft
-  primary:  "#000000",   // terracotta
+  approved: "var(--color-text-muted)",   // amber — positive / approved
+  pending:  "var(--color-text-muted)",   // amber-dark — pending
+  rejected: "var(--color-danger-dark)",   // red — rejected
+  draft:    "var(--color-text-muted)",      // gray — draft
+  primary:  "var(--color-ink)",   // terracotta
 } as const;
 
 // ─── Donut chart ─────────────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ function DonutChart({
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg viewBox="0 0 100 100" width={size} height={size}>
-        <circle cx={50} cy={50} r={r} fill="none" stroke="#d8d0c4" strokeWidth={10} />
+        <circle cx={50} cy={50} r={r} fill="none" stroke="var(--color-cream-dark)" strokeWidth={10} />
         {total > 0 &&
           segments.map((seg, i) => {
             const fraction = seg.value / total;

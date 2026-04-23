@@ -16,16 +16,16 @@ export function CertificationStandardsGrid() {
         <div
           key={s.code}
           className="rounded-sm p-5 flex flex-col gap-3"
-          style={{ background: "white", border: "1px solid #d8d0c4" }}
+          style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
         >
           <div>
-            <p className="font-sans font-semibold text-sm text-[#000000] leading-tight">{s.label}</p>
-            <p className="font-sans text-[11px] text-[#727272] mt-0.5">{s.region}</p>
+            <p className="font-sans font-semibold text-sm text-text-dark leading-tight">{s.label}</p>
+            <p className="font-sans text-[11px] text-text-muted mt-0.5">{s.region}</p>
           </div>
-          <div className="rounded-sm px-3 py-2" style={{ background: "#ffffff" }}>
-            <span className="font-sans text-[11px] font-mono text-[#727272]">{s.code}</span>
+          <div className="rounded-sm px-3 py-2" style={{ background: "var(--color-paper)" }}>
+            <span className="font-sans text-[11px] font-mono text-text-muted">{s.code}</span>
           </div>
-          <p className="font-sans text-[11px] text-[#727272]">
+          <p className="font-sans text-[11px] text-text-muted">
             Reference standard. Upload supporting documents in the Documents tab.
           </p>
         </div>

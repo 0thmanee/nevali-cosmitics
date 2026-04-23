@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { env } from "~/env";
@@ -21,6 +22,7 @@ export default function ContactPage() {
 			<div className="pt-[56px]" />
 
 			<section className="mx-auto flex max-w-2xl flex-col gap-8 px-6 py-16">
+				<AnimateOnScroll className="flex flex-col gap-8" direction="up" scale>
 				<div className="flex flex-col gap-3">
 					<span className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.2em]">
 						Contact
@@ -76,12 +78,14 @@ export default function ContactPage() {
 				>
 					← Back to home
 				</Link>
+				</AnimateOnScroll>
 			</section>
 
 			<section
 				className="mx-auto flex max-w-2xl flex-col gap-4 border-cream-dark border-t px-6 py-12"
 				id="privacy"
 			>
+				<AnimateOnScroll className="flex flex-col gap-4" delay={40} direction="up">
 				<h2 className="font-bold font-display text-lg text-text-dark uppercase tracking-wide">
 					Privacy information
 				</h2>
@@ -150,12 +154,14 @@ export default function ContactPage() {
 						</p>
 					</div>
 				</div>
+				</AnimateOnScroll>
 			</section>
 
 			<section
 				className="mx-auto flex max-w-2xl flex-col gap-4 px-6 pb-20"
 				id="terms"
 			>
+				<AnimateOnScroll className="flex flex-col gap-4" delay={40} direction="up">
 				<h2 className="font-bold font-display text-lg text-text-dark uppercase tracking-wide">
 					Terms of use (summary)
 				</h2>
@@ -218,6 +224,7 @@ export default function ContactPage() {
 						</p>
 					</div>
 				</div>
+				</AnimateOnScroll>
 			</section>
 
 			<Footer />

@@ -81,10 +81,10 @@ function Pagination({
             href={buildHref(p, category)}
             className={`${btnBase} ${
               p === currentPage
-                ? "text-white border-transparent"
+                ? "border-transparent text-white"
                 : "text-stone-700 bg-white border-stone-200 hover:bg-stone-50"
             }`}
-            style={p === currentPage ? { background: "#000000" } : undefined}
+            style={p === currentPage ? { background: "var(--color-primary)" } : undefined}
           >
             {p}
           </Link>
@@ -140,44 +140,44 @@ export default async function ProductsPage({
       <Navbar />
 
       {/* ── Hero ── */}
-      <section className="bg-primary">
+      <section className="border-b border-cream-dark bg-linear-to-b from-cream to-cream-dark/40">
         <div className="max-w-7xl mx-auto px-6">
 
           {/* Breadcrumb */}
-          <div className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10">
-            <Link href="/" className="hover:text-white/70 transition-colors">Home</Link>
+          <AnimateOnScroll className="py-4 flex items-center gap-2 border-b border-cream-dark font-sans text-xs uppercase tracking-[0.08em] text-primary/70" direction="down">
+            <Link href="/" className="transition-colors hover:text-primary">Home</Link>
             <span>/</span>
-            <span className="text-white/70">Products</span>
-          </div>
+            <span className="text-primary">Products</span>
+          </AnimateOnScroll>
 
           {/* Headline row */}
           <div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
             <AnimateOnScroll direction="up" delay={0}>
-              <p className="font-sans text-xs tracking-[0.2em] uppercase text-secondary mb-5">
+              <p className="mb-5 font-sans text-xs uppercase tracking-[0.2em] text-primary/80">
                 Certified Marketplace — {total} Products
               </p>
               <h1
-                className="font-serif font-bold uppercase text-white leading-[1.0]"
+                className="font-serif font-bold uppercase leading-none text-text-dark"
                 style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
               >
-                Moroccan cosmetics,<br />certified<br />&amp; traceable
+                Moroccan cosmetics,<br />softly curated<br />&amp; traceable
               </h1>
             </AnimateOnScroll>
 
             <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
-              <p className="font-sans text-white/60 leading-relaxed text-sm mb-8">
+              <p className="mb-8 font-sans text-sm leading-relaxed text-text-muted">
                 Every SKU comes from a verified Moroccan beauty brand with clear ingredients,
                 imagery, and fulfilment rules—shop as a guest or save lists with a buyer account.
               </p>
-              <div className="grid grid-cols-3 divide-x divide-white/10 border border-white/10">
+              <div className="grid grid-cols-3 divide-x divide-cream-dark border border-cream-dark bg-white/60">
                 {[
                   { value: String(total), label: "Products" },
                   { value: String(categories.length), label: "Categories" },
                   { value: "100%", label: "Verified" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col items-center gap-1 py-4 px-3">
-                    <span className="font-serif font-bold text-secondary text-2xl leading-none">{stat.value}</span>
-                    <span className="font-sans text-xs tracking-[0.15em] uppercase text-white/40 mt-1">{stat.label}</span>
+                    <span className="font-serif text-2xl font-bold leading-none text-primary-dark">{stat.value}</span>
+                    <span className="mt-1 font-sans text-xs uppercase tracking-[0.15em] text-text-muted">{stat.label}</span>
                   </div>
                 ))}
               </div>
@@ -186,11 +186,11 @@ export default async function ProductsPage({
 
           {/* Category filter tabs */}
           {categories.length > 0 && (
-            <div className="flex items-center flex-wrap gap-0 border-t border-white/10">
+            <AnimateOnScroll className="flex flex-wrap items-center gap-0 border-t border-cream-dark" direction="down">
               <Link
                 href="/products"
                 className={`px-5 py-3 font-sans text-xs font-semibold tracking-[0.05em] uppercase transition-colors border-b-2 ${
-                  !currentCategory ? "text-secondary border-secondary" : "text-white/40 border-transparent hover:text-white/70"
+                  !currentCategory ? "text-primary border-primary" : "text-text-muted border-transparent hover:text-primary"
                 }`}
               >
                 All
@@ -200,20 +200,20 @@ export default async function ProductsPage({
                   key={cat}
                   href={buildHref(1, cat)}
                   className={`px-5 py-3 font-sans text-xs font-semibold tracking-[0.05em] uppercase transition-colors border-b-2 ${
-                    currentCategory === cat ? "text-secondary border-secondary" : "text-white/40 border-transparent hover:text-white/70"
+                    currentCategory === cat ? "text-primary border-primary" : "text-text-muted border-transparent hover:text-primary"
                   }`}
                 >
                   {cat}
                 </Link>
               ))}
-            </div>
+            </AnimateOnScroll>
           )}
         </div>
       </section>
 
       {/* ── Catalogue ── */}
       <section className="flex-1 py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col gap-6">
+        <AnimateOnScroll className="mx-auto flex max-w-7xl flex-col gap-6" delay={50} direction="up" scale>
 
           {/* Results count */}
           {total > 0 && (
@@ -231,8 +231,7 @@ export default async function ProductsPage({
               {currentCategory && (
                 <Link
                   href="/products"
-                  className="font-sans text-sm font-medium flex items-center gap-1 transition-opacity hover:opacity-70"
-                  style={{ color: "#000000" }}
+                  className="flex items-center gap-1 font-sans text-sm font-medium text-primary transition-opacity hover:opacity-70"
                 >
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
@@ -248,7 +247,7 @@ export default async function ProductsPage({
             <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
               <div
                 className="w-16 h-16 flex items-center justify-center"
-                style={{ background: "#000000" }}
+                style={{ background: "var(--color-primary)" }}
               >
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <rect x="3" y="10" width="20" height="13" rx="1.5" stroke="white" strokeWidth="1.4" />
@@ -264,8 +263,7 @@ export default async function ProductsPage({
               {currentCategory && (
                 <Link
                   href="/products"
-                  className="font-sans font-semibold text-sm text-white px-6 py-3 transition-opacity hover:opacity-90"
-                  style={{ background: "#000000" }}
+                  className="rounded-full bg-primary px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   Browse all products
                 </Link>
@@ -281,7 +279,7 @@ export default async function ProductsPage({
 
           {/* Pagination */}
           <Pagination currentPage={currentPage} totalPages={totalPages} category={currentCategory} />
-        </div>
+        </AnimateOnScroll>
       </section>
 
       <Footer />

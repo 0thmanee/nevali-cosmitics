@@ -10,7 +10,7 @@ import { ProductCertificationsSection } from "./product-certifications-section";
 
 const cardStyle = {
   background: "white",
-  border: "1px solid #d8d0c4",
+  border: "1px solid var(--color-cream-dark)",
 } as const;
 
 type Props = { productId: string };
@@ -24,7 +24,7 @@ export function ProductDetailView({ productId }: Props) {
         className="rounded-sm overflow-hidden flex items-center justify-center py-20"
         style={cardStyle}
       >
-        <p className="font-sans text-sm text-[#727272]">Loading product…</p>
+        <p className="font-sans text-sm text-text-muted">Loading product…</p>
       </div>
     );
   }
@@ -35,12 +35,12 @@ export function ProductDetailView({ productId }: Props) {
         className="rounded-sm overflow-hidden px-6 py-12 text-center"
         style={cardStyle}
       >
-        <p className="font-sans text-sm text-[#f87171]">
+        <p className="font-sans text-sm text-[var(--color-danger)]">
           {error instanceof Error ? error.message : "Product not found."}
         </p>
         <Link
           href="/artisan/products"
-          className="mt-4 inline-block font-sans text-sm font-medium text-[#000000] underline"
+          className="mt-4 inline-block font-sans text-sm font-medium text-text-dark underline"
         >
           ← Back to products
         </Link>
@@ -59,13 +59,13 @@ export function ProductDetailView({ productId }: Props) {
       >
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
-            <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">
+            <h1 className="font-serif font-bold text-[22px] text-text-dark leading-tight">
               {product.name}
             </h1>
-            <p className="font-sans text-[13px] text-[#727272] mt-1">
+            <p className="font-sans text-[13px] text-text-muted mt-1">
               {product.category}
             </p>
-            <p className="font-sans text-[12px] text-[#727272]/80 mt-1">
+            <p className="font-sans text-[12px] text-text-muted/80 mt-1">
               Updated {formatProductUpdatedAt(product.updatedAt)}
             </p>
           </div>
@@ -80,7 +80,7 @@ export function ProductDetailView({ productId }: Props) {
               href={`/artisan/products/${productId}/edit`}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
               style={{
-                background: "#000000",
+                background: "var(--color-ink)",
                 color: "white",
               }}
             >
@@ -105,26 +105,26 @@ export function ProductDetailView({ productId }: Props) {
         className="rounded-sm overflow-hidden shadow-sm"
         style={cardStyle}
       >
-        <div className="px-6 py-4 border-b border-[#d8d0c4]">
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">
+        <div className="px-6 py-4 border-b border-cream-dark">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">
             Details
           </h2>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
-              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
+            <div className="rounded-sm p-4" style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}>
+              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase mb-1">
                 Minimum order quantity
               </p>
-              <p className="font-sans text-[15px] font-semibold text-[#000000]">
+              <p className="font-sans text-[15px] font-semibold text-text-dark">
                 {product.moq ?? "—"}
               </p>
             </div>
-            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
-              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
+            <div className="rounded-sm p-4" style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}>
+              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase mb-1">
                 Capacity
               </p>
-              <p className="font-sans text-[15px] font-semibold text-[#000000]">
+              <p className="font-sans text-[15px] font-semibold text-text-dark">
                 {product.capacity ?? "—"}
               </p>
             </div>
@@ -133,14 +133,14 @@ export function ProductDetailView({ productId }: Props) {
             <div
               className="rounded-sm px-4 py-3 flex flex-col gap-1"
               style={{
-                background: "rgba(248,113,113,0.08)",
-                border: "1px solid rgba(248,113,113,0.2)",
+                background: "color-mix(in srgb, var(--color-danger) 8%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--color-danger) 20%, transparent)",
               }}
             >
-              <p className="font-sans text-[11px] font-bold tracking-wide text-[#f87171] uppercase">
+              <p className="font-sans text-[11px] font-bold tracking-wide text-[var(--color-danger)] uppercase">
                 Rejection reason
               </p>
-              <p className="font-sans text-sm text-[#000000]">
+              <p className="font-sans text-sm text-text-dark">
                 {product.rejectionReason}
               </p>
             </div>

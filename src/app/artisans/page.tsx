@@ -1,3 +1,4 @@
+import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import { listPublicPartners } from "~/app/api/partners/public-actions";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
@@ -19,13 +20,14 @@ export default async function ArtisansDirectoryPage() {
 			<section className="bg-primary">
 				<div className="max-w-7xl mx-auto px-6">
 					{/* Breadcrumb */}
-					<div className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10">
+					<AnimateOnScroll className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10" direction="down">
 						<span>Home</span>
 						<span>/</span>
 						<span className="text-white/70">Brands</span>
-					</div>
+					</AnimateOnScroll>
 
 					<div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
+						<AnimateOnScroll direction="up">
 						<div>
 							<p className="font-sans text-xs tracking-[0.2em] uppercase text-secondary mb-5">
 								Verified Moroccan cosmetics makers
@@ -37,8 +39,9 @@ export default async function ArtisansDirectoryPage() {
 								The makers<br />behind every<br />bio-minded SKU
 							</h1>
 						</div>
+						</AnimateOnScroll>
 
-						<div className="md:max-w-xs shrink-0 flex flex-col gap-6">
+						<AnimateOnScroll className="md:max-w-xs shrink-0 flex flex-col gap-6" delay={150} direction="up">
 							<p className="font-sans text-white/60 leading-relaxed text-sm">
 								Independent labs, cooperatives, and founder-led houses—each reviewed for formulation integrity, documentation, and the ability to ship beautiful Moroccan cosmetics with confidence.
 							</p>
@@ -54,7 +57,7 @@ export default async function ArtisansDirectoryPage() {
 									</div>
 								))}
 							</div>
-						</div>
+						</AnimateOnScroll>
 					</div>
 				</div>
 			</section>

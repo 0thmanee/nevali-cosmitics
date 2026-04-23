@@ -48,7 +48,7 @@ export function SaveProductControl({ productId }: Props) {
 					))}
 				</select>
 				<button
-					className="rounded-sm bg-[#000000] px-4 py-2 font-sans font-semibold text-sm text-white hover:opacity-90 disabled:opacity-50"
+					className="rounded-sm bg-ink px-4 py-2 font-sans font-semibold text-sm text-white hover:opacity-90 disabled:opacity-50"
 					disabled={addProduct.isPending || !effectiveListId}
 					onClick={async () => {
 						const res = await addProduct.mutateAsync({
@@ -71,7 +71,7 @@ export function SaveProductControl({ productId }: Props) {
 function LinkBuyerSaved() {
 	return (
 		<a
-			className="font-sans text-[#000000] text-xs hover:underline"
+			className="font-sans text-text-dark text-xs hover:underline"
 			href="/buyer/saved"
 		>
 			View saved lists →

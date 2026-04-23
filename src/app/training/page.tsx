@@ -26,11 +26,11 @@ export default async function TrainingMarketingPage() {
       <section className="bg-primary">
         <div className="max-w-7xl mx-auto px-6">
 
-          <div className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10">
+          <AnimateOnScroll className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10" direction="down">
             <Link href="/" className="hover:text-white/70 transition-colors">Home</Link>
             <span>/</span>
             <span className="text-white/70">Training</span>
-          </div>
+          </AnimateOnScroll>
 
           <div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
             <AnimateOnScroll direction="up" delay={0}>

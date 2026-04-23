@@ -40,7 +40,7 @@ export function LoginForm() {
         <>
           Welcome
           <br />
-          <span className="italic" style={{ color: "#727272" }}>back</span>
+          <span className="italic" style={{ color: "var(--color-text-muted)" }}>back</span>
         </>
       }
       showRegisterLink
@@ -58,10 +58,10 @@ export function LoginForm() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {error && (
             <div
-              className="rounded-sm px-4 py-3 font-sans text-sm text-[#f87171] space-y-2"
+              className="rounded-sm px-4 py-3 font-sans text-sm text-[var(--color-danger)] space-y-2"
               style={{
-                background: "rgba(248,113,113,0.1)",
-                border: "1px solid rgba(248,113,113,0.25)",
+                background: "color-mix(in srgb, var(--color-danger) 10%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--color-danger) 25%, transparent)",
               }}
             >
               <p>{error}</p>
@@ -93,7 +93,7 @@ export function LoginForm() {
             type="submit"
             disabled={loading}
             className="font-sans font-semibold text-sm text-white rounded px-8 py-3.5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed w-full"
-            style={{ background: "#000000" }}
+            style={{ background: "var(--color-ink)" }}
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>

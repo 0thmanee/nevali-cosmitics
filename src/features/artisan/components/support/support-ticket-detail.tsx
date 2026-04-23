@@ -44,14 +44,14 @@ function MessageBubble({
 }) {
 	return (
 		<div className="flex flex-col gap-1">
-			<span className="font-sans font-semibold text-[#727272] text-[10px] uppercase tracking-wide">
+			<span className="font-sans font-semibold text-text-muted text-[10px] uppercase tracking-wide">
 				{segment.label}
 			</span>
 			<div
-				className="whitespace-pre-wrap rounded-sm px-4 py-3 font-sans text-[#000000] text-[13px] leading-relaxed"
+				className="whitespace-pre-wrap rounded-sm px-4 py-3 font-sans text-text-dark text-[13px] leading-relaxed"
 				style={{
-					background: isFirst ? "rgba(0,0,0,0.06)" : "white",
-					border: "1px solid #d8d0c4",
+					background: isFirst ? "color-mix(in srgb, var(--color-ink) 6%, transparent)" : "white",
+					border: "1px solid var(--color-cream-dark)",
 				}}
 			>
 				{segment.text}
@@ -77,7 +77,7 @@ export function SupportTicketDetail({
 	const { label: statusLabel, ...statusPillStyle } = statusEntry;
 	const priorityColor = TICKET_PRIORITY_STYLE[
 		ticket.priority?.toUpperCase()
-	] ?? { color: "#727272" };
+	] ?? { color: "var(--color-text-muted)" };
 	const segments = parseMessages(ticket.message);
 	const isResolved = ticket.status === "RESOLVED";
 
@@ -114,26 +114,26 @@ export function SupportTicketDetail({
 			onClick={(e) => {
 				if (e.target === e.currentTarget) onClose();
 			}}
-			style={{ background: "rgba(10,20,14,0.45)", backdropFilter: "blur(3px)" }}
+			style={{ background: "color-mix(in srgb, var(--color-ink) 45%, transparent)", backdropFilter: "blur(3px)" }}
 		>
 			{/* Drawer */}
 			<div
 				className="relative flex h-full flex-col overflow-hidden"
 				style={{
 					width: "min(560px, 100vw)",
-					background: "#F8FAF8",
-					borderLeft: "1px solid #d8d0c4",
-					boxShadow: "-8px 0 32px rgba(0,0,0,0.12)",
+					background: "var(--color-paper)",
+					borderLeft: "1px solid var(--color-cream-dark)",
+					boxShadow: "-8px 0 32px color-mix(in srgb, var(--color-ink) 12%, transparent)",
 				}}
 			>
 				{/* ── Header ── */}
 				<div
 					className="flex items-start justify-between gap-4 border-b px-6 py-5"
-					style={{ borderColor: "#d8d0c4", background: "white" }}
+					style={{ borderColor: "var(--color-cream-dark)", background: "white" }}
 				>
 					<div className="flex min-w-0 flex-col gap-2">
 						<div className="flex flex-wrap items-center gap-2">
-							<span className="font-mono text-[#727272] text-[10px]">
+							<span className="font-mono text-text-muted text-[10px]">
 								{ticket.id.slice(0, 12)}
 							</span>
 							<span
@@ -149,31 +149,31 @@ export function SupportTicketDetail({
 								● {ticket.priority}
 							</span>
 						</div>
-						<h2 className="font-bold font-serif text-[#000000] text-[17px] leading-snug">
+						<h2 className="font-bold font-serif text-text-dark text-[17px] leading-snug">
 							{ticket.subject}
 						</h2>
 						<div className="flex flex-wrap items-center gap-3">
 							<span
 								className="rounded-sm px-2 py-0.5 font-sans font-semibold text-[10px]"
-								style={{ background: "rgba(0,0,0,0.07)", color: "#727272" }}
+								style={{ background: "color-mix(in srgb, var(--color-ink) 7%, transparent)", color: "var(--color-text-muted)" }}
 							>
 								{ticket.category}
 							</span>
-							<span className="font-sans text-[#727272] text-[11px]">
+							<span className="font-sans text-text-muted text-[11px]">
 								Opened {formatDate(ticket.createdAt)}
 							</span>
 						</div>
 					</div>
 					<button
-						className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-[#F0F4F1]"
+						className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-[color-mix(in srgb, var(--color-paper) 60%, var(--color-cream-dark))]"
 						onClick={onClose}
-						style={{ border: "1px solid #d8d0c4" }}
+						style={{ border: "1px solid var(--color-cream-dark)" }}
 						type="button"
 					>
 						<svg fill="none" height="12" viewBox="0 0 12 12" width="12">
 							<path
 								d="M1 1l10 10M11 1L1 11"
-								stroke="#727272"
+								stroke="var(--color-text-muted)"
 								strokeLinecap="round"
 								strokeWidth="1.5"
 							/>
@@ -191,26 +191,26 @@ export function SupportTicketDetail({
 				{/* ── Reply form ── */}
 				<div
 					className="border-t px-6 py-5"
-					style={{ borderColor: "#d8d0c4", background: "white" }}
+					style={{ borderColor: "var(--color-cream-dark)", background: "white" }}
 				>
 					{isResolved ? (
 						<div
 							className="flex items-center gap-2 rounded-sm px-4 py-3"
 							style={{
-								background: "rgba(0,0,0,0.06)",
-								border: "1px solid rgba(0,0,0,0.14)",
+								background: "color-mix(in srgb, var(--color-ink) 6%, transparent)",
+								border: "1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)",
 							}}
 						>
 							<svg fill="none" height="14" viewBox="0 0 14 14" width="14">
 								<path
 									d="M2.5 7.5l3 3 6-6"
-									stroke="#16a34a"
+									stroke="var(--color-success)"
 									strokeLinecap="round"
 									strokeLinejoin="round"
 									strokeWidth="1.5"
 								/>
 							</svg>
-							<span className="font-sans text-[#727272] text-[12px]">
+							<span className="font-sans text-text-muted text-[12px]">
 								This ticket is resolved. Open a new ticket if you need further
 								help.
 							</span>
@@ -218,25 +218,25 @@ export function SupportTicketDetail({
 					) : (
 						<form className="flex flex-col gap-3" onSubmit={handleSubmit}>
 							<textarea
-								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-[#000000] text-[13px] transition-colors placeholder:text-[#9BB0A0] focus:outline-none"
+								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-text-dark text-[13px] transition-colors placeholder:text-[var(--color-text-muted)] focus:outline-none"
 								onChange={(e) => setReply(e.target.value)}
 								placeholder="Add a follow-up message…"
 								ref={textareaRef}
 								rows={3}
 								style={{
-									borderColor: reply ? "#000000" : "#d8d0c4",
-									background: "#ffffff",
+									borderColor: reply ? "var(--color-ink)" : "var(--color-cream-dark)",
+									background: "var(--color-paper)",
 								}}
 								value={reply}
 							/>
 							<div className="flex items-center justify-between gap-3">
-								<p className="font-sans text-[#727272] text-[11px]">
+								<p className="font-sans text-text-muted text-[11px]">
 									The support team will review your follow-up.
 								</p>
 								<button
 									className="flex items-center gap-2 rounded-sm px-5 py-2.5 font-sans font-semibold text-[13px] transition-opacity disabled:opacity-50"
 									disabled={!reply.trim() || replyMutation.isPending}
-									style={{ background: "#000000", color: "white" }}
+									style={{ background: "var(--color-ink)", color: "white" }}
 									type="submit"
 								>
 									{replyMutation.isPending ? (

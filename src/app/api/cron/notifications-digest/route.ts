@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { env } from "~/env";
 import { prisma } from "~/lib/db";
 import { isValidEmail, sendTransactionalEmail } from "~/lib/email";
+import { emailTheme } from "~/lib/email-theme";
 
 function escapeHtml(value: string): string {
 	return value
@@ -84,10 +85,10 @@ export async function POST(request: Request) {
 				const href = i.linkHref
 					? `<a href="${escapeHtmlAttr(i.linkHref)}">${escapeHtml(i.title)}</a>`
 					: `<strong>${escapeHtml(i.title)}</strong>`;
-				return `<li style="margin-bottom:8px;">${href}<br/><span style="color:#727272;font-size:13px;">${escapeHtml(i.body.slice(0, 200))}${i.body.length > 200 ? "…" : ""}</span></li>`;
+				return `<li style="margin-bottom:8px;">${href}<br/><span style="color:${emailTheme.textMuted};font-size:13px;">${escapeHtml(i.body.slice(0, 200))}${i.body.length > 200 ? "…" : ""}</span></li>`;
 			})
 			.join("");
-		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#000000;background:#ede6dc;padding:24px;"><p>Hello ${escapeHtml(name)},</p><p>You have <strong>${items.length}</strong> unread alert(s).</p><ul style="padding-left:18px;">${listHtml}</ul><p><a href="${escapeHtmlAttr(inboxHref)}" style="color:#000000;font-weight:600;">Open Alerts</a></p><p style="color:#727272;font-size:14px;">— nevali</p></body></html>`;
+		const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;"><p>Hello ${escapeHtml(name)},</p><p>You have <strong>${items.length}</strong> unread alert(s).</p><ul style="padding-left:18px;">${listHtml}</ul><p><a href="${escapeHtmlAttr(inboxHref)}" style="color:${emailTheme.ink};font-weight:600;">Open Alerts</a></p><p style="color:${emailTheme.textMuted};font-size:14px;">— nevali</p></body></html>`;
 
 		await sendTransactionalEmail({
 			to: user.email,

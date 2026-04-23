@@ -7,7 +7,7 @@ import type { ProductImageItem, ProductVariantRow } from "~/app/api/products/sch
 
 const cardStyle = {
   background: "white",
-  border: "1px solid #d8d0c4",
+  border: "1px solid var(--color-cream-dark)",
 } as const;
 
 type Props = {
@@ -45,8 +45,8 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
 
   return (
     <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-      <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-serif font-bold text-[15px] text-[#000000]">Product images</h2>
+      <div className="px-6 py-4 border-b border-cream-dark flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-serif font-bold text-[15px] text-text-dark">Product images</h2>
         <input
           ref={inputRef}
           type="file"
@@ -59,20 +59,20 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
           onClick={() => inputRef.current?.click()}
           disabled={addMutation.isPending}
           className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-          style={{ background: "#000000", color: "white" }}
+          style={{ background: "var(--color-ink)", color: "white" }}
         >
           {addMutation.isPending ? "Uploading…" : "Add image"}
         </button>
       </div>
       <div className="p-6">
         {images.length === 0 && !addMutation.isPending ? (
-          <p className="font-sans text-sm text-[#727272]">
+          <p className="font-sans text-sm text-text-muted">
             No images yet. Click &quot;Add image&quot; to upload (JPEG, PNG or WebP, max 5MB).
           </p>
         ) : (
           <div className="flex flex-col gap-4">
             {variants.length > 0 ? (
-              <p className="font-sans text-[12px] text-[#727272]">
+              <p className="font-sans text-[12px] text-text-muted">
                 Optionally link each image to a variant so the storefront can highlight the right packaging.
               </p>
             ) : null}
@@ -85,7 +85,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
                 >
                   <div
                     className="relative group rounded-sm overflow-hidden"
-                    style={{ width: "100%", height: 120, border: "1px solid #d8d0c4" }}
+                    style={{ width: "100%", height: 120, border: "1px solid var(--color-cream-dark)" }}
                   >
                     <img src={img.url} alt="" className="w-full h-full object-cover" />
                     <button
@@ -98,7 +98,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
                     </button>
                   </div>
                   {variants.length > 0 ? (
-                    <label className="flex flex-col gap-1 font-sans text-[10px] font-semibold text-[#727272] uppercase tracking-wide">
+                    <label className="flex flex-col gap-1 font-sans text-[10px] font-semibold text-text-muted uppercase tracking-wide">
                       Show for variant
                       <select
                         value={img.variantId ?? ""}
@@ -111,7 +111,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
                           });
                         }}
                         disabled={variantMutation.isPending}
-                        className="font-sans text-[11px] font-medium normal-case tracking-normal rounded-sm border border-[#d8d0c4] px-2 py-1.5 text-[#000000] bg-white"
+                        className="font-sans text-[11px] font-medium normal-case tracking-normal rounded-sm border border-cream-dark px-2 py-1.5 text-text-dark bg-white"
                       >
                         {variantOptions.map((o) => (
                           <option key={o.value || "all"} value={o.value}>

@@ -26,7 +26,7 @@ export function AuthLayout({
       {/* ── Left panel: brand side ── */}
       <div
         className="hidden lg:flex flex-col justify-between w-[420px] shrink-0 px-10 py-12 relative overflow-hidden"
-        style={{ background: "#000000" }}
+        style={{ background: "var(--color-ink)" }}
       >
         {/* Subtle grid pattern */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.06 }} aria-hidden>
@@ -66,11 +66,11 @@ export function AuthLayout({
         <div className="relative z-10 my-8 rounded-sm overflow-hidden" style={{ height: "180px" }}>
           <div
             className="w-full h-full"
-            style={{ background: "linear-gradient(135deg, #727272 0%, #333333 40%, #000000 100%)" }}
+            style={{ background: "linear-gradient(135deg, var(--color-text-muted) 0%, color-mix(in srgb, var(--color-ink) 85%, black) 40%, var(--color-ink) 100%)" }}
           />
           <div
             className="absolute inset-0 flex items-end p-4"
-            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }}
+            style={{ background: "linear-gradient(to top, color-mix(in srgb, var(--color-ink) 50%, transparent) 0%, transparent 60%)" }}
           >
             <span className="font-sans text-white/60 text-[10px] uppercase tracking-widest">NEVALI</span>
           </div>
@@ -80,7 +80,7 @@ export function AuthLayout({
         <div className="relative z-10">
           <div
             className="rounded-sm p-5"
-            style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.1)" }}
+            style={{ background: "color-mix(in srgb, var(--color-ink) 20%, transparent)", border: "1px solid color-mix(in srgb, var(--color-paper) 10%, transparent)" }}
           >
             <div className="flex gap-0.5 mb-3">
               {[...Array(5)].map((_, i) => (
@@ -144,4 +144,4 @@ export const inputCls =
   "font-sans text-[14px] text-text-dark bg-white border border-cream-dark rounded px-4 py-3 outline-none w-full transition-colors placeholder:text-text-muted/40";
 
 export const inputStyle = {};
-export const inputFocusStyle = { borderColor: "#000000", boxShadow: "0 0 0 2px rgba(0,0,0,0.08)" };
+export const inputFocusStyle = { borderColor: "var(--color-ink)", boxShadow: "0 0 0 2px color-mix(in srgb, var(--color-ink) 8%, transparent)" };

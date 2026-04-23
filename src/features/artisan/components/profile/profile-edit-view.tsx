@@ -132,7 +132,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <Link
           href="/artisan/profile"
-          className="font-sans text-sm text-[#727272] hover:text-[#000000] transition-colors"
+          className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors"
         >
           ← Back to profile
         </Link>
@@ -154,8 +154,8 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
             {/* Personal Information */}
             <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
-                <h3 className="font-serif font-bold text-[15px] text-[#000000]">Personal Information</h3>
-                <p className="font-sans text-[11px] text-[#727272] mt-0.5">Your account and contact details</p>
+                <h3 className="font-serif font-bold text-[15px] text-text-dark">Personal Information</h3>
+                <p className="font-sans text-[11px] text-text-muted mt-0.5">Your account and contact details</p>
               </div>
               <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 flex flex-wrap items-end gap-4">
@@ -182,7 +182,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                           onClick={openPhotoPicker}
                           disabled={photoUploading}
                           className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors disabled:opacity-50 w-fit"
-                          style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
+                          style={{ background: "var(--color-paper)", color: "var(--color-ink)", border: "1px solid var(--color-cream-dark)" }}
                         >
                           {photoUploading ? "Uploading…" : "Change photo"}
                         </button>
@@ -225,7 +225,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                 </div>
                 <div>
                   <label className={labelClassName}>Email Address</label>
-                  <div className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5" style={fieldStyle}>
+                  <div className="font-sans text-sm text-text-dark rounded-sm px-3.5 py-2.5" style={fieldStyle}>
                     {user.email}
                   </div>
                 </div>
@@ -249,8 +249,8 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
             {/* Business Information */}
             <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
-                <h3 className="font-serif font-bold text-[15px] text-[#000000]">Business Information</h3>
-                <p className="font-sans text-[11px] text-[#727272] mt-0.5">Your cooperative and legal details</p>
+                <h3 className="font-serif font-bold text-[15px] text-text-dark">Business Information</h3>
+                <p className="font-sans text-[11px] text-text-muted mt-0.5">Your cooperative and legal details</p>
               </div>
               <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -359,7 +359,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                 </div>
                 <div className="sm:col-span-2">
                   <p className={labelClassName}>Primary Products</p>
-                  <p className="font-sans text-[11px] text-[#727272] mb-2">Select all categories you produce</p>
+                  <p className="font-sans text-[11px] text-text-muted mb-2">Select all categories you produce</p>
                   <div className="flex flex-wrap gap-2">
                     {PRODUCT_CATEGORIES.map((cat) => {
                       const selected = form.categories.includes(cat.label);
@@ -371,8 +371,8 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                           className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-all"
                           style={
                             selected
-                              ? { background: cat.color, color: "#000000", border: `1px solid ${cat.color}` }
-                              : { background: "#ffffff", color: "#727272", border: "1px solid #d8d0c4" }
+                              ? { background: cat.color, color: "var(--color-ink)", border: `1px solid ${cat.color}` }
+                              : { background: "var(--color-paper)", color: "var(--color-text-muted)", border: "1px solid var(--color-cream-dark)" }
                           }
                         >
                           {cat.label}
@@ -416,8 +416,8 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
 
             <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
-                <h3 className="font-serif font-bold text-[15px] text-[#000000]">Public business profile</h3>
-                <p className="font-sans text-[11px] text-[#727272] mt-0.5">
+                <h3 className="font-serif font-bold text-[15px] text-text-dark">Public business profile</h3>
+                <p className="font-sans text-[11px] text-text-muted mt-0.5">
                   Visible on your public nevali page for buyers. Optional but strongly recommended.
                 </p>
               </div>
@@ -488,7 +488,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
             {error && (
               <div
                 className="rounded-sm px-4 py-3 font-sans text-sm text-red-600"
-                style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.25)" }}
+                style={{ background: "color-mix(in srgb, var(--color-danger) 10%, transparent)", border: "1px solid color-mix(in srgb, var(--color-danger) 25%, transparent)" }}
               >
                 {error}
               </div>
@@ -498,7 +498,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
               type="submit"
               disabled={submitting}
               className="font-sans font-semibold text-sm rounded-sm px-8 py-3 transition-colors disabled:opacity-60 w-fit"
-              style={{ background: "#000000", color: "#ffffff", border: "1px solid #000000" }}
+              style={{ background: "var(--color-ink)", color: "var(--color-paper)", border: "1px solid var(--color-ink)" }}
             >
               {submitting ? "Saving…" : "Save changes"}
             </button>

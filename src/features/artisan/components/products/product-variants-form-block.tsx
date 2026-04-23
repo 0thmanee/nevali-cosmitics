@@ -72,14 +72,14 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <p className="font-sans text-[13px] text-[#727272]">
+        <p className="font-sans text-[13px] text-text-muted">
           Packaging / SKUs: each line has its own price, stock, and minimum order. Buyers pick a variant when adding to cart.
         </p>
         <button
           type="button"
           onClick={add}
           disabled={disabled}
-          className="shrink-0 inline-flex items-center gap-1 font-sans text-xs font-semibold text-[#000000] border border-[#d8d0c4] rounded-sm px-3 py-1.5 hover:bg-[#ffffff] disabled:opacity-50"
+          className="shrink-0 inline-flex items-center gap-1 font-sans text-xs font-semibold text-text-dark border border-cream-dark rounded-sm px-3 py-1.5 hover:bg-[var(--color-paper)] disabled:opacity-50"
         >
           <Plus size={14} aria-hidden />
           Add variant
@@ -90,10 +90,10 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
         <div
           key={v.key}
           className="rounded-sm p-4 flex flex-col gap-3"
-          style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
+          style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="font-sans text-[11px] font-bold text-[#727272] uppercase tracking-wide">
+            <span className="font-sans text-[11px] font-bold text-text-muted uppercase tracking-wide">
               Variant {idx + 1}
             </span>
             {variants.length > 1 ? (
@@ -101,7 +101,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 type="button"
                 onClick={() => remove(v.key)}
                 disabled={disabled}
-                className="p-1 rounded-sm text-[#f87171] hover:bg-red-50 disabled:opacity-40"
+                className="p-1 rounded-sm text-[var(--color-danger)] hover:bg-red-50 disabled:opacity-40"
                 aria-label="Remove variant"
               >
                 <Trash2 size={16} />
@@ -112,7 +112,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label className={productFormLabelClass}>
-                Packaging name <span className="text-[#f87171]">*</span>
+                Packaging name <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 type="text"
@@ -140,7 +140,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
             </div>
             <div className="flex flex-col gap-1.5">
               <label className={productFormLabelClass}>
-                Price (MAD) <span className="text-[#f87171]">*</span>
+                Price (MAD) <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 type="text"
@@ -168,7 +168,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
             </div>
             <div className="flex flex-col gap-1.5">
               <label className={productFormLabelClass}>
-                MOQ note <span className="text-[#727272]/70">(optional)</span>
+                MOQ note <span className="text-text-muted/70">(optional)</span>
               </label>
               <input
                 type="text"
@@ -192,17 +192,17 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 style={productFormInputStyle}
                 disabled={disabled}
               />
-              <p className="font-sans text-[10px] text-[#727272]/80">
+              <p className="font-sans text-[10px] text-text-muted/80">
                 Use 0 to skip a hard cap; when &gt; 0, checkout cannot exceed this quantity.
               </p>
             </div>
-            <label className="flex items-center gap-2 font-sans text-sm text-[#000000] sm:col-span-2 cursor-pointer">
+            <label className="flex items-center gap-2 font-sans text-sm text-text-dark sm:col-span-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={v.inStock}
                 onChange={(e) => update(v.key, { inStock: e.target.checked })}
                 disabled={disabled}
-                className="rounded border-[#d8d0c4]"
+                className="rounded border-cream-dark"
               />
               In stock (buyers can add this variant to cart)
             </label>

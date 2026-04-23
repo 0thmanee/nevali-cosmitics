@@ -20,17 +20,17 @@ function paymentLabel(method: string) {
 }
 
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string }> = {
-  CONFIRMED: { bg: "rgba(0,0,0,0.08)", color: "#000000", border: "1px solid rgba(0,0,0,0.25)" },
-  PENDING_PAYMENT: { bg: "rgba(202,138,4,0.12)", color: "#a16207", border: "1px solid rgba(234,179,8,0.35)" },
-  PENDING: { bg: "rgba(202,138,4,0.12)", color: "#a16207", border: "1px solid rgba(234,179,8,0.35)" },
-  CANCELLED: { bg: "rgba(100,100,100,0.1)", color: "#6b7280", border: "1px solid rgba(107,114,128,0.25)" },
+  CONFIRMED: { bg: "color-mix(in srgb, var(--color-ink) 8%, transparent)", color: "var(--color-ink)", border: "1px solid color-mix(in srgb, var(--color-ink) 25%, transparent)" },
+  PENDING_PAYMENT: { bg: "color-mix(in srgb, var(--color-warning) 12%, transparent)", color: "var(--color-warning-dark)", border: "1px solid color-mix(in srgb, var(--color-warning) 35%, transparent)" },
+  PENDING: { bg: "color-mix(in srgb, var(--color-warning) 12%, transparent)", color: "var(--color-warning-dark)", border: "1px solid color-mix(in srgb, var(--color-warning) 35%, transparent)" },
+  CANCELLED: { bg: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-text-muted) 25%, transparent)" },
 };
 
 function statusBadge(status: string) {
   const s = STATUS_STYLES[status] ?? {
-    bg: "rgba(202,138,4,0.12)",
-    color: "#a16207",
-    border: "1px solid rgba(234,179,8,0.35)",
+    bg: "color-mix(in srgb, var(--color-warning) 12%, transparent)",
+    color: "var(--color-warning-dark)",
+    border: "1px solid color-mix(in srgb, var(--color-warning) 35%, transparent)",
   };
   return (
     <span

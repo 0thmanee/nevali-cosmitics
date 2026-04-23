@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+	/* Keep `src/lib/email-theme.ts` in sync when changing these hex values (email HTML). */
 	/* Primary: Fraunces — display & editorial headings */
 	--font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
 	--font-display: var(--font-fraunces), ui-serif, Georgia, serif;
@@ -29,6 +30,15 @@
 	--color-gold-light: #8a8a8a;
 	--color-text-dark: #000000;
 	--color-text-muted: #727272;
+	--color-danger: #b42318;
+	--color-danger-dark: #8f1c14;
+	--color-info: #2563eb;
+	--color-info-dark: #1d4ed8;
+	--color-warning: #a16207;
+	--color-warning-dark: #854d0e;
+	--color-success: #166534;
+	--color-success-light: #22c55e;
+	--color-muted-light: #b8b0a5;
 }
 
 *,
@@ -43,5 +53,11 @@ html {
 
 body {
 	background-color: var(--color-cream);
+	color: var(--color-text-dark);
+	font-family: var(--font-body);
+}
+
+::selection {
+	background: color-mix(in srgb, var(--color-primary-light) 28%, var(--color-paper));
 	color: var(--color-text-dark);
 }

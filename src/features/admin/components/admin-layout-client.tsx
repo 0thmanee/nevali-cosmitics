@@ -12,10 +12,10 @@ import { useAdminOrganizationFilter } from "../hooks/use-admin-organizations";
 function IconDashboard({ active }: { active?: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+      <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "var(--color-text-muted)" : "none"} stroke={active ? "var(--color-text-muted)" : "color-mix(in srgb, var(--color-paper) 40%, transparent)"} strokeWidth="1.3" />
+      <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "var(--color-text-muted)" : "none"} stroke={active ? "var(--color-text-muted)" : "color-mix(in srgb, var(--color-paper) 40%, transparent)"} strokeWidth="1.3" />
+      <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "var(--color-text-muted)" : "none"} stroke={active ? "var(--color-text-muted)" : "color-mix(in srgb, var(--color-paper) 40%, transparent)"} strokeWidth="1.3" />
+      <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "var(--color-text-muted)" : "none"} stroke={active ? "var(--color-text-muted)" : "color-mix(in srgb, var(--color-paper) 40%, transparent)"} strokeWidth="1.3" />
     </svg>
   );
 }
@@ -23,10 +23,10 @@ function IconDashboard({ active }: { active?: boolean }) {
 function IconUsers() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="5.5" cy="4.5" r="2.5" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" />
-      <path d="M2 13c0-2 1.5-3 3.5-3s3.5 1 3.5 3" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M10.5 6c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M14 13c0-1.2-.6-2.2-1.5-2.7" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
+      <circle cx="5.5" cy="4.5" r="2.5" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.3" />
+      <path d="M2 13c0-2 1.5-3 3.5-3s3.5 1 3.5 3" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M10.5 6c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M14 13c0-1.2-.6-2.2-1.5-2.7" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   );
 }
@@ -34,10 +34,10 @@ function IconUsers() {
 function IconProducts() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="2" y="2" width="5" height="5" rx="1.2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
-      <rect x="9" y="2" width="5" height="5" rx="1.2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
-      <rect x="2" y="9" width="5" height="5" rx="1.2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
-      <rect x="9" y="9" width="5" height="5" rx="1.2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
+      <rect x="2" y="2" width="5" height="5" rx="1.2" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
+      <rect x="9" y="2" width="5" height="5" rx="1.2" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
+      <rect x="2" y="9" width="5" height="5" rx="1.2" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
+      <rect x="9" y="9" width="5" height="5" rx="1.2" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
     </svg>
   );
 }
@@ -47,13 +47,13 @@ function IconOrders() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M1 2h2l1 8h9l2-5H4"
-        stroke="rgba(250,250,247,0.4)"
+        stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="6.5" cy="13.5" r="1" fill="rgba(250,250,247,0.4)" />
-      <circle cx="12" cy="13.5" r="1" fill="rgba(250,250,247,0.4)" />
+      <circle cx="6.5" cy="13.5" r="1" fill="color-mix(in srgb, var(--color-paper) 40%, transparent)" />
+      <circle cx="12" cy="13.5" r="1" fill="color-mix(in srgb, var(--color-paper) 40%, transparent)" />
     </svg>
   );
 }
@@ -61,7 +61,7 @@ function IconOrders() {
 function IconCertifications() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1.5l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.3l-3.7 2.7 1.4-4.3L2 6h4.5L8 1.5z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M8 1.5l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.3l-3.7 2.7 1.4-4.3L2 6h4.5L8 1.5z" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.3" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -69,9 +69,9 @@ function IconCertifications() {
 function IconTraining() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M2 4h12v7H2V4z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" strokeLinejoin="round" />
-      <path d="M5 4V2a1 1 0 012 0v2M9 4V2a1 1 0 012 0v2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
-      <path d="M4 8h8M4 10h5" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M2 4h12v7H2V4z" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M5 4V2a1 1 0 012 0v2M9 4V2a1 1 0 012 0v2" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
+      <path d="M4 8h8M4 10h5" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -79,9 +79,9 @@ function IconTraining() {
 function IconSupport() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 14A6 6 0 108 2a6 6 0 000 12z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" />
-      <path d="M8 10.5v-.5a1.5 1.5 0 10-1.5-1.5" stroke="rgba(250,250,247,0.4)" strokeWidth="1.2" strokeLinecap="round" />
-      <circle cx="8" cy="6.25" r="0.9" fill="rgba(250,250,247,0.4)" />
+      <path d="M8 14A6 6 0 108 2a6 6 0 000 12z" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" />
+      <path d="M8 10.5v-.5a1.5 1.5 0 10-1.5-1.5" stroke="color-mix(in srgb, var(--color-paper) 40%, transparent)" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="8" cy="6.25" r="0.9" fill="color-mix(in srgb, var(--color-paper) 40%, transparent)" />
     </svg>
   );
 }
@@ -89,8 +89,8 @@ function IconSupport() {
 function IconAnalytics() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M3 13V8M8 13V4M13 13v-5" stroke="rgba(250,250,247,0.45)" strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M2 14h12" stroke="rgba(250,250,247,0.35)" strokeWidth="1.2" />
+      <path d="M3 13V8M8 13V4M13 13v-5" stroke="color-mix(in srgb, var(--color-paper) 45%, transparent)" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M2 14h12" stroke="color-mix(in srgb, var(--color-paper) 35%, transparent)" strokeWidth="1.2" />
     </svg>
   );
 }
@@ -237,7 +237,7 @@ export function AdminLayoutClient({ user, children }: Props) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0 h-screen">
-        <header className="shrink-0 flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-[#d8d0c4] bg-white z-10">
+        <header className="shrink-0 flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-cream-dark bg-white z-10">
           <div>
             <h1 className="font-serif font-bold text-xl text-forest-mid leading-tight">{title}</h1>
             <p className="font-sans text-sm text-text-muted mt-0.5">{subtitle}</p>

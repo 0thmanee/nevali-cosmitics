@@ -24,16 +24,16 @@ export function NavbarUserMenu({ name, email, role }: Props) {
     <div className="relative flex items-center gap-2">
       <Link
         href={dash}
-        className="font-sans text-sm font-medium text-text-dark border border-text-dark/30 px-5 h-10 inline-flex items-center hover:bg-text-dark/5 transition-colors hidden sm:inline-flex"
+        className="hidden h-10 items-center rounded-sm border border-primary/40 bg-white px-5 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10 sm:inline-flex"
       >
         Dashboard
       </Link>
       <button
         type="button"
         onClick={() => setMenuOpen((o) => !o)}
-        className="font-sans text-sm font-medium text-text-dark border border-text-dark/30 px-4 h-10 hover:bg-text-dark/5 transition-colors flex items-center gap-2"
+        className="flex h-10 items-center gap-2 rounded-sm border border-primary/35 bg-white px-4 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10"
       >
-        <span className="w-6 h-6 rounded-full bg-forest-mid flex items-center justify-center text-white text-xs font-bold">
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
           {(name || email || "?").slice(0, 1).toUpperCase()}
         </span>
         <span className="max-w-[100px] truncate hidden sm:inline">{name || email}</span>
@@ -57,7 +57,7 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         <>
           <div className="fixed inset-0 z-40" aria-hidden onClick={() => setMenuOpen(false)} />
           <div
-            className="absolute right-0 top-full mt-2 py-2 w-48 rounded-sm bg-white border border-cream-dark shadow-lg z-50"
+            className="absolute right-0 top-full z-50 mt-2 w-48 rounded-sm border border-cream-dark bg-white py-2 shadow-lg"
             role="menu"
           >
             <div className="px-4 py-2 border-b border-cream-dark">
@@ -66,14 +66,14 @@ export function NavbarUserMenu({ name, email, role }: Props) {
             </div>
             <Link
               href={dash}
-              className="block px-4 py-2 font-sans text-sm text-text-dark hover:bg-cream transition-colors"
+              className="block px-4 py-2 font-sans text-sm text-text-dark transition-colors hover:bg-cream"
               onClick={() => setMenuOpen(false)}
             >
               Dashboard
             </Link>
             <button
               type="button"
-              className="w-full text-left px-4 py-2 font-sans text-sm text-text-dark hover:bg-cream transition-colors"
+              className="w-full px-4 py-2 text-left font-sans text-sm text-text-dark transition-colors hover:bg-cream"
               onClick={() => { signOut(); setMenuOpen(false); }}
             >
               Sign out

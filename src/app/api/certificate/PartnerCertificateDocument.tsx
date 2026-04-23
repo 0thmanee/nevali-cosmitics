@@ -9,18 +9,18 @@ import {
 
 // Platform theme (nevali)
 const colors = {
-  primary: "#000000",
-  primaryLight: "#000000",
-  muted: "#727272",
-  border: "#d8d0c4",
-  cream: "#ede6dc",
-  paper: "#ffffff",
+  primary: "var(--color-ink)",
+  primaryLight: "var(--color-ink)",
+  muted: "var(--color-text-muted)",
+  border: "var(--color-cream-dark)",
+  cream: "var(--color-cream)",
+  paper: "var(--color-paper)",
 };
 
 const styles = StyleSheet.create({
   page: {
     padding: 48,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.paper,
   },
   border: {
     position: "absolute",

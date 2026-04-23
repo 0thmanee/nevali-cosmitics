@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import {
 	getFeaturedHomeHeroProductRepo,
 	listApprovedProductsForPublicRepo,
@@ -13,7 +14,7 @@ export default async function ProductsSection() {
 
 	return (
 		<section className="w-full bg-cream py-14">
-			<div className="mx-auto max-w-7xl px-6">
+			<AnimateOnScroll className="mx-auto max-w-7xl px-6" direction="up" scale>
 				<h2
 					className="mb-8 text-center font-bold font-display text-text-dark uppercase"
 					style={{
@@ -34,9 +35,8 @@ export default async function ProductsSection() {
 							catalog to see what is available today.
 						</p>
 						<Link
-							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"
+							className="rounded-sm bg-primary px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
 							href="/products"
-							style={{ background: "#000000" }}
 						>
 							View all products
 						</Link>
@@ -51,15 +51,14 @@ export default async function ProductsSection() {
 						<div className="mt-10 flex justify-center">
 							<Link
 								href="/products"
-								className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-6 py-3 transition-opacity hover:opacity-90"
-								style={{ background: "#000000" }}
+								className="rounded-sm bg-primary px-6 py-3 font-sans text-xs font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
 							>
 								View all products
 							</Link>
 						</div>
 					</>
 				)}
-			</div>
+			</AnimateOnScroll>
 		</section>
 	);
 }

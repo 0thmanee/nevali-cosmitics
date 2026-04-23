@@ -43,6 +43,11 @@ const CONFIG: Record<UploadMediaType, UploadTypeConfig> = {
     maxSizeBytes: DEFAULT_MAX_BYTES,
     pathStrategy: "unique",
   },
+  articleMedia: {
+    allowedMimeTypes: DEFAULT_MIMES,
+    maxSizeBytes: DEFAULT_MAX_BYTES,
+    pathStrategy: "unique",
+  },
   certificationDocuments: {
     allowedMimeTypes: [...PDF_MIMES, ...DEFAULT_MIMES],
     maxSizeBytes: CERT_DOC_MAX_BYTES,

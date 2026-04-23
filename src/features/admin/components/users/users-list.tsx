@@ -224,7 +224,7 @@ export function UsersList() {
                   page <= 1 ? "opacity-40 cursor-default" : "cursor-pointer hover:bg-cream"
                 }`}
               >
-                <ChevronLeft size={14} color="#270d06" strokeWidth={1.5} />
+                <ChevronLeft size={14} color="var(--color-text-dark)" strokeWidth={1.5} />
               </button>
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 const pageNum = i + 1;
@@ -250,7 +250,7 @@ export function UsersList() {
                   page >= totalPages ? "opacity-40 cursor-default" : "cursor-pointer hover:bg-cream"
                 }`}
               >
-                <ChevronRight size={14} color="#270d06" strokeWidth={1.5} />
+                <ChevronRight size={14} color="var(--color-text-dark)" strokeWidth={1.5} />
               </button>
             </div>
           </div>

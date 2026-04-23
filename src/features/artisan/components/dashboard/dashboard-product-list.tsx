@@ -20,20 +20,20 @@ function formatUpdatedAt(date: Date): string {
 
 function ProductRowItem({ p }: { p: ProductRow }) {
   const statusStyle = PRODUCT_STATUS_STYLES[p.status] ?? PRODUCT_STATUS_STYLES.PENDING;
-  const dotColor = STATUS_DOT_COLORS[p.status] ?? "#E8B84B";
+  const dotColor = STATUS_DOT_COLORS[p.status] ?? "var(--color-gold)";
   return (
     <div
-      className="flex items-center gap-4 px-5 py-3 border-t border-[#d8d0c4] first:border-t-0"
+      className="flex items-center gap-4 px-5 py-3 border-t border-cream-dark first:border-t-0"
     >
       <div
         className="w-2.5 h-2.5 rounded-full shrink-0"
         style={{ background: dotColor }}
       />
       <div className="flex-1 min-w-0">
-        <p className="font-sans font-semibold text-sm text-[#000000] leading-tight truncate">
+        <p className="font-sans font-semibold text-sm text-text-dark leading-tight truncate">
           {p.name}
         </p>
-        <p className="font-sans text-[12px] text-[#727272] mt-0.5">
+        <p className="font-sans text-[12px] text-text-muted mt-0.5">
           {p.category} · {formatUpdatedAt(p.updatedAt)}
         </p>
       </div>
@@ -55,14 +55,14 @@ export function DashboardProductList() {
   return (
     <div className="flex flex-col gap-0">
       <div
-        className="rounded-t-xl px-5 py-4 flex items-center justify-between border-b border-[#d8d0c4]"
+        className="rounded-t-xl px-5 py-4 flex items-center justify-between border-b border-cream-dark"
         style={{ background: "white" }}
       >
         <div>
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">
             My Products
           </h2>
-          <p className="font-sans text-[12px] text-[#727272] mt-0.5">
+          <p className="font-sans text-[12px] text-text-muted mt-0.5">
             {products.length} listings · {approvedCount} approved
           </p>
         </div>
@@ -70,9 +70,9 @@ export function DashboardProductList() {
           href="/artisan/products"
           className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors"
           style={{
-            background: "#ffffff",
-            color: "#000000",
-            border: "1px solid #d8d0c4",
+            background: "var(--color-paper)",
+            color: "var(--color-ink)",
+            border: "1px solid var(--color-cream-dark)",
           }}
         >
           View all
@@ -80,15 +80,15 @@ export function DashboardProductList() {
       </div>
       <div className="rounded-b-xl overflow-hidden" style={{ background: "white" }}>
         {isLoading ? (
-          <div className="px-5 py-8 font-sans text-sm text-[#727272]">
+          <div className="px-5 py-8 font-sans text-sm text-text-muted">
             Loading products…
           </div>
         ) : isError ? (
-          <div className="px-5 py-8 font-sans text-sm text-[#f87171]">
+          <div className="px-5 py-8 font-sans text-sm text-[var(--color-danger)]">
             Failed to load products.
           </div>
         ) : products.length === 0 ? (
-          <div className="px-5 py-8 font-sans text-sm text-[#727272]">
+          <div className="px-5 py-8 font-sans text-sm text-text-muted">
             No products yet. Add products from the Products page.
           </div>
         ) : (
@@ -98,8 +98,8 @@ export function DashboardProductList() {
           <div
             className="mx-4 mb-3 mt-1 rounded-sm px-4 py-2.5 flex items-start gap-3"
             style={{
-              background: "rgba(248,113,113,0.08)",
-              border: "1px solid rgba(248,113,113,0.2)",
+              background: "color-mix(in srgb, var(--color-danger) 8%, transparent)",
+              border: "1px solid color-mix(in srgb, var(--color-danger) 20%, transparent)",
             }}
           >
             <svg
@@ -111,7 +111,7 @@ export function DashboardProductList() {
             >
               <path
                 d="M8 2L1.5 13h13L8 2z"
-                stroke="#f87171"
+                stroke="var(--color-danger)"
                 strokeWidth="1.3"
                 strokeLinejoin="round"
               />
@@ -120,17 +120,17 @@ export function DashboardProductList() {
                 y1="7"
                 x2="8"
                 y2="10"
-                stroke="#f87171"
+                stroke="var(--color-danger)"
                 strokeWidth="1.3"
                 strokeLinecap="round"
               />
-              <circle cx="8" cy="12" r="0.6" fill="#f87171" />
+              <circle cx="8" cy="12" r="0.6" fill="var(--color-danger)" />
             </svg>
             <div>
-              <p className="font-sans text-sm font-semibold text-[#f87171] leading-tight">
+              <p className="font-sans text-sm font-semibold text-[var(--color-danger)] leading-tight">
                 Action required — {rejected.name}
               </p>
-              <p className="font-sans text-[12px] text-[#f87171]/70 mt-0.5">
+              <p className="font-sans text-[12px] text-[var(--color-danger)]/70 mt-0.5">
                 Your listing was rejected. Review feedback and resubmit if needed.
               </p>
             </div>

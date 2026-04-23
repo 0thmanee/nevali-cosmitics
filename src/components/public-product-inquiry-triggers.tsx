@@ -66,11 +66,11 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 				<button
 					className={`flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold shadow-sm transition-opacity disabled:cursor-default ${
 						justAdded
-							? "border border-[#000000]/35 bg-cream text-[#000000]"
-							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 focus-visible:ring-offset-2"
+							? "border border-[var(--color-ink)]/35 bg-cream text-text-dark"
+							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ink)]/55 focus-visible:ring-offset-2"
 					}`}
 					onClick={handleAddToCart}
-					style={justAdded ? undefined : { background: "#000000" }}
+					style={justAdded ? undefined : { background: "var(--color-ink)" }}
 					type="button"
 				>
 					<svg aria-hidden="true" fill="none" height="13" viewBox="0 0 14 14" width="13">
@@ -87,7 +87,7 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 					{justAdded ? "Added" : "Add to Cart"}
 				</button>
 				<button
-					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-sans text-sm font-medium text-text-muted transition-colors hover:text-[#000000] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35 focus-visible:ring-offset-2"
+					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-sans text-sm font-medium text-text-muted transition-colors hover:text-text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ink)]/35 focus-visible:ring-offset-2"
 					onClick={() => setModal("b2b")}
 					type="button"
 				>
@@ -110,7 +110,7 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 					role="status"
 				>
 					<span className="font-semibold">Added to your cart.</span>{" "}
-					<Link className="font-semibold text-[#000000] underline underline-offset-2" href="/cart">
+					<Link className="font-semibold text-text-dark underline underline-offset-2" href="/cart">
 						View cart
 					</Link>
 				</div>

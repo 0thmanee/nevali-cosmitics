@@ -40,8 +40,8 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
         <div
           className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
           style={{
-            background: "rgba(0,0,0,0.08)",
-            border: "1px solid rgba(0,0,0,0.2)",
+            background: "color-mix(in srgb, var(--color-ink) 8%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--color-ink) 20%, transparent)",
           }}
         >
           <svg
@@ -49,7 +49,7 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
             height="28"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000000"
+            stroke="var(--color-ink)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -74,9 +74,9 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
             disabled={status === "sending"}
             className="font-sans font-semibold text-sm rounded px-6 py-3 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             style={{
-              background: "rgba(0,0,0,0.08)",
-              color: "#000000",
-              border: "1px solid rgba(0,0,0,0.2)",
+              background: "color-mix(in srgb, var(--color-ink) 8%, transparent)",
+              color: "var(--color-ink)",
+              border: "1px solid color-mix(in srgb, var(--color-ink) 20%, transparent)",
             }}
           >
             {status === "sending"
@@ -91,12 +91,12 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
             </p>
           )}
           {status === "error" && errorMessage && (
-            <p className="font-sans text-[11px] text-[#f87171]">{errorMessage}</p>
+            <p className="font-sans text-[11px] text-[var(--color-danger)]">{errorMessage}</p>
           )}
           <Link
             href="/auth/login"
             className="font-sans font-semibold text-sm transition-colors"
-            style={{ color: "#000000" }}
+            style={{ color: "var(--color-ink)" }}
           >
             Go to Sign in →
           </Link>

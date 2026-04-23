@@ -24,18 +24,18 @@ export const MOROCCAN_REGIONS = [
 ] as const;
 
 export const PRODUCT_CATEGORIES = [
-  { label: "Carpets & Rugs", color: "#454545" },
-  { label: "Pottery & Ceramics", color: "#727272" },
-  { label: "Leather Goods", color: "#3a3a3a" },
-  { label: "Metal Lanterns", color: "#5c5c5c" },
-  { label: "Thuya Wood", color: "#3a3a3a" },
-  { label: "Caftans & Clothing", color: "#000000" },
-  { label: "Zellige & Tiles", color: "#4a4a4a" },
-  { label: "Jewelry & Silver", color: "#6a6a6a" },
-  { label: "Basketry & Weaving", color: "#5a5a5a" },
-  { label: "Babouches", color: "#727272" },
-  { label: "Embroidery", color: "#8a8a8a" },
-  { label: "Cosmetics & Oils", color: "#000000" },
+  { label: "Carpets & Rugs", color: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))" },
+  { label: "Pottery & Ceramics", color: "var(--color-text-muted)" },
+  { label: "Leather Goods", color: "color-mix(in srgb, var(--color-ink) 88%, black)" },
+  { label: "Metal Lanterns", color: "color-mix(in srgb, var(--color-ink) 65%, var(--color-text-muted))" },
+  { label: "Thuya Wood", color: "color-mix(in srgb, var(--color-ink) 88%, black)" },
+  { label: "Caftans & Clothing", color: "var(--color-ink)" },
+  { label: "Zellige & Tiles", color: "color-mix(in srgb, var(--color-ink) 78%, var(--color-text-muted))" },
+  { label: "Jewelry & Silver", color: "color-mix(in srgb, var(--color-text-muted) 85%, var(--color-ink))" },
+  { label: "Basketry & Weaving", color: "color-mix(in srgb, var(--color-ink) 58%, var(--color-text-muted))" },
+  { label: "Babouches", color: "var(--color-text-muted)" },
+  { label: "Embroidery", color: "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))" },
+  { label: "Cosmetics & Oils", color: "var(--color-ink)" },
 ] as const;
 
 export const ENTITY_TYPES = [

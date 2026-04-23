@@ -246,7 +246,7 @@ export function PublicProductDetailView({ product }: Props) {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-6">
               <div
-                className="relative aspect-square w-full max-w-xl border border-cream-dark bg-[#FAFAF8] lg:max-w-none"
+                className="relative aspect-square w-full max-w-xl border border-cream-dark bg-paper lg:max-w-none"
               >
                 {selected ? (
                   <p className="absolute left-4 top-4 z-10 font-sans text-[10px] font-medium uppercase tracking-widest text-text-muted">

@@ -34,12 +34,12 @@ const STATUS_TABS = [
 ];
 
 const PRIORITY_BADGE: Record<string, { bg: string; color: string }> = {
-  High:   { bg: "rgba(192,57,43,0.10)", color: "#c0392b" },
-  Medium: { bg: "rgba(114,114,114,0.06)", color: "#727272" },
-  Low:    { bg: "rgba(0,0,0,0.06)",     color: "#888"    },
+  High:   { bg: "color-mix(in srgb, var(--color-danger-dark) 10%, transparent)", color: "var(--color-danger-dark)" },
+  Medium: { bg: "color-mix(in srgb, var(--color-text-muted) 6%, transparent)", color: "var(--color-text-muted)" },
+  Low:    { bg: "color-mix(in srgb, var(--color-ink) 6%, transparent)",     color: "var(--color-text-muted)"    },
 };
 
-const PRIORITY_DEFAULT = { bg: "rgba(114,114,114,0.06)", color: "#727272" };
+const PRIORITY_DEFAULT = { bg: "color-mix(in srgb, var(--color-text-muted) 6%, transparent)", color: "var(--color-text-muted)" };
 
 function formatRelativeTime(d: Date): string {
   const diff = Date.now() - new Date(d).getTime();

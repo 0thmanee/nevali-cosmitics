@@ -35,10 +35,10 @@ function getCategories(raw: unknown): string[] {
 }
 
 const AVATAR_PALETTES = [
-  { bg: "#000000", text: "#ffffff" },
-  { bg: "#1a1a1a", text: "#ede6dc" },
-  { bg: "#727272", text: "#ffffff" },
-  { bg: "#2a2a2a", text: "#ede6dc" },
+  { bg: "var(--color-ink)", text: "var(--color-paper)" },
+  { bg: "color-mix(in srgb, var(--color-ink) 90%, black)", text: "var(--color-cream)" },
+  { bg: "var(--color-text-muted)", text: "var(--color-paper)" },
+  { bg: "color-mix(in srgb, var(--color-ink) 82%, black)", text: "var(--color-cream)" },
 ];
 
 function avatarPalette(id: string) {
@@ -137,7 +137,7 @@ export default async function PartnerProfilePage({
             <div className="flex items-start gap-5 min-w-0">
               {/* Avatar */}
               {org?.logo ? (
-                <div className="relative w-20 h-20 shrink-0 border border-white/20 overflow-hidden" style={{ background: "rgba(0,0,0,0.2)" }}>
+                <div className="relative w-20 h-20 shrink-0 border border-white/20 overflow-hidden" style={{ background: "color-mix(in srgb, var(--color-ink) 20%, transparent)" }}>
                   <Image src={org.logo} alt="" fill className="object-contain p-2" sizes="80px" />
                 </div>
               ) : profile.profileImage ? (

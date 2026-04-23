@@ -14,23 +14,23 @@ export function CertificationBanner() {
   const isLoading = certLoading || productsLoading;
 
   return (
-    <div className="rounded-sm overflow-hidden" style={{ background: "#000000" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "var(--color-ink)" }}>
       <div
         className="h-1"
         style={{
-          background: "linear-gradient(90deg, #727272 0%, #727272 50%, #727272 100%)",
+          background: "linear-gradient(90deg, var(--color-text-muted) 0%, var(--color-text-muted) 50%, var(--color-text-muted) 100%)",
         }}
       />
       <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
           <div
             className="w-12 h-12 rounded-sm flex items-center justify-center shrink-0"
-            style={{ background: "#7272721A", border: "1px solid #72727233" }}
+            style={{ background: "var(--color-text-muted)1A", border: "1px solid var(--color-text-muted)33" }}
           >
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path
                 d="M11 2l2 6h6l-5 3.6 1.8 6L11 14l-4.8 3.6 1.8-6L3 8h6L11 2z"
-                stroke="#727272"
+                stroke="var(--color-text-muted)"
                 strokeWidth="1.6"
                 strokeLinejoin="round"
               />
@@ -44,9 +44,9 @@ export function CertificationBanner() {
               <span
                 className="font-sans text-[9px] font-bold tracking-wider rounded-full px-2.5 py-1 uppercase"
                 style={{
-                  background: "#7272721A",
-                  color: "#727272",
-                  border: "1px solid #72727233",
+                  background: "var(--color-text-muted)1A",
+                  color: "var(--color-text-muted)",
+                  border: "1px solid var(--color-text-muted)33",
                 }}
               >
                 Verified
@@ -69,9 +69,9 @@ export function CertificationBanner() {
             rel="noopener noreferrer"
             className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors inline-block"
             style={{
-              background: "rgba(200,150,60,0.12)",
-              color: "#727272",
-              border: "1px solid rgba(200,150,60,0.2)",
+              background: "color-mix(in srgb, var(--color-gold) 12%, transparent)",
+              color: "var(--color-text-muted)",
+              border: "1px solid color-mix(in srgb, var(--color-gold) 20%, transparent)",
             }}
           >
             Download PDF

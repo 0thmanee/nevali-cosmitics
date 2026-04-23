@@ -22,7 +22,7 @@ export function CartPageClient() {
           Browse products and add items you want to include in checkout.
         </p>
         <Link
-          className="mt-8 inline-flex rounded-sm bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-8 inline-flex rounded-sm bg-ink px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
           href="/products"
         >
           Browse products
@@ -33,7 +33,7 @@ export function CartPageClient() {
 
   return (
     <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
-      <div className="flex flex-col gap-3 lg:col-span-7">
+      <div className="h-full flex flex-col gap-3 lg:col-span-7">
         {lines.map((line) => {
           const unitPrice = Number(line.price.replace(",", "."));
           const lineTotal = unitPrice * line.quantity;
@@ -79,7 +79,7 @@ export function CartPageClient() {
                     −
                   </button>
                   <input
-                    className="h-8 w-12 rounded-sm border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-[#000000]"
+                    className="h-8 w-12 rounded-sm border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-ink"
                     max={999}
                     min={1}
                     onChange={(e) =>
@@ -172,7 +172,7 @@ export function CartPageClient() {
           <Link
             className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
             href="/cart/checkout"
-            style={{ background: "#000000" }}
+            style={{ background: "var(--color-ink)" }}
           >
             Proceed to checkout →
           </Link>

@@ -28,7 +28,7 @@ export function AuthSelect({
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map((o) => (
-        <option key={o} value={o} style={{ background: "#fff", color: "#000000" }}>
+        <option key={o} value={o} style={{ background: "var(--color-paper)", color: "var(--color-ink)" }}>
           {o}
         </option>
       ))}

@@ -90,7 +90,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 		<div
 			ref={overlayRef}
 			className="fixed inset-0 z-[999] flex items-center justify-center p-4"
-			style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+			style={{ background: "color-mix(in srgb, var(--color-ink) 50%, transparent)", backdropFilter: "blur(4px)" }}
 			onClick={(e) => e.target === overlayRef.current && onClose()}
 		>
 			<div className="relative flex w-full max-w-md flex-col overflow-hidden rounded-sm bg-white shadow-2xl">
@@ -108,7 +108,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 					<div className="flex flex-col items-center justify-center gap-5 px-8 py-16 text-center">
 						<div
 							className="flex h-16 w-16 items-center justify-center rounded-full"
-							style={{ background: "#000000" }}
+							style={{ background: "var(--color-ink)" }}
 						>
 							<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<path
@@ -132,7 +132,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 						<button
 							onClick={onClose}
 							className="rounded-sm px-8 py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90"
-							style={{ background: "#000000" }}
+							style={{ background: "var(--color-ink)" }}
 							type="button"
 						>
 							Done
@@ -156,8 +156,8 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 										className="rounded-full px-2 py-0.5 font-sans text-[9px] font-bold tracking-widest"
 										style={
 											isB2B
-												? { background: "#ede6dc", color: "#000000" }
-												: { background: "#f4f4f4", color: "#000000" }
+												? { background: "var(--color-cream)", color: "var(--color-ink)" }
+												: { background: "color-mix(in srgb, var(--color-paper) 85%, var(--color-cream-dark))", color: "var(--color-ink)" }
 										}
 									>
 										{isB2B ? "WHOLESALE" : "ORDER"}
@@ -247,7 +247,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							<button
 								className="flex w-full items-center justify-center gap-2 rounded-sm py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 								disabled={state === "loading"}
-								style={{ background: "#000000" }}
+								style={{ background: "var(--color-ink)" }}
 								type="submit"
 							>
 								{state === "loading" ? (

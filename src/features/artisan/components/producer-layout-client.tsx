@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "~/components/avatar";
 import { signOut } from "~/lib/auth-client";
 import { useUnreadNotificationCount } from "~/features/notifications/use-unread-notification-count";
-import { PRODUCER_NAV_ITEMS, PAGE_SUBTITLE, getPageTitle } from "../config";
+import { PRODUCER_NAV_ITEMS, getPageSubtitle, getPageTitle } from "../config";
 import { useArtisanDashboardStats } from "../hooks/use-dashboard-stats";
 import type { UserDisplay, LayoutProfile } from "~/app/api/profile/schemas/profile.schema";
 
@@ -83,6 +83,22 @@ function IconProducts() {
   );
 }
 
+function IconJournal() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <path
+        d="M4.5 2.5h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7A1.5 1.5 0 0 1 3 13V4a1.5 1.5 0 0 1 1.5-1.5z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <line x1="6" y1="5.5" x2="10" y2="5.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="6" y1="8" x2="10" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="6" y1="10.5" x2="8.5" y2="10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function IconOrders() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
@@ -151,6 +167,7 @@ const ICONS: Record<string, (active: boolean) => React.ReactNode> = {
   "/artisan": (active) => <IconDashboard active={active} />,
   "/artisan/profile": () => <IconProfile />,
   "/artisan/products": () => <IconProducts />,
+  "/artisan/articles": () => <IconJournal />,
   "/artisan/orders": () => <IconOrders />,
   "/artisan/certification": () => <IconCertification />,
   "/artisan/training": () => <IconTraining />,
@@ -176,7 +193,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
   const { data: unreadAlerts = 0 } = useUnreadNotificationCount();
 
   const openSupportTickets = dashboardStats?.openSupportTickets ?? 0;
-  const subtitle = PAGE_SUBTITLE[pathname] ?? PAGE_SUBTITLE["/artisan"];
+  const subtitle = getPageSubtitle(pathname);
   const firstName = profile?.firstName ?? user.name.split(/\s+/)[0] ?? null;
   const title = getPageTitle(pathname, firstName);
 
@@ -191,16 +208,16 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 
   return (
     <div className="h-screen flex overflow-hidden bg-cream">
-      <aside className="hidden h-screen w-[248px] shrink-0 flex-col border-r border-cream-dark bg-[#0a0a0a] lg:flex">
+      <aside className="hidden h-screen w-[248px] shrink-0 flex-col border-r border-cream-dark bg-linear-to-b from-cream via-cream-dark/45 to-primary-light/35 lg:flex">
         <Link
           href="/"
-          className="shrink-0 border-b border-white/10 px-5 pb-5 pt-6 transition-opacity hover:opacity-90"
+          className="shrink-0 border-b border-primary/20 px-5 pb-5 pt-6 transition-opacity hover:opacity-90"
         >
           <div className="flex items-center gap-2.5">
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/logo-white.svg" alt="nevali" className="block h-8 w-auto" />
-              <span className="mt-[3px] block font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-cream/50">
+              <img src="/assets/logo.svg" alt="nevali" className="block h-8 w-auto" />
+              <span className="mt-[3px] block font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-primary/70">
                 Brand portal
               </span>
             </div>
@@ -227,16 +244,16 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
                 onMouseEnter={() => router.prefetch(item.href)}
                 className={`flex w-full items-center gap-3 rounded-sm border px-3 py-2 transition-colors ${
                   isActive
-                    ? "border-cream-dark/60 bg-cream/10 text-cream"
-                    : "border-transparent bg-transparent text-white/55 hover:bg-white/4 hover:text-cream/90"
+                    ? "border-primary/35 bg-white/70 text-primary-dark"
+                    : "border-transparent bg-transparent text-primary/70 hover:bg-white/55 hover:text-primary-dark"
                 }`}
               >
-                <span className={`shrink-0 ${isActive ? "text-cream" : "text-white/40"}`}>
+                <span className={`shrink-0 ${isActive ? "text-primary-dark" : "text-primary/60"}`}>
                   {Icon(isActive)}
                 </span>
                 <span
                   className={`flex-1 font-sans text-sm leading-none ${
-                    isActive ? "font-semibold text-cream" : "font-normal"
+                    isActive ? "font-semibold text-primary-dark" : "font-normal"
                   }`}
                 >
                   {item.label}
@@ -245,8 +262,8 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
                   <span
                     className={`rounded-full border px-2 py-0.5 font-sans text-[10px] font-bold leading-none ${
                       isActive
-                        ? "border-cream-dark/50 bg-cream/15 text-cream"
-                        : "border-white/10 bg-white/5 text-white/55"
+                        ? "border-primary/40 bg-primary/10 text-primary-dark"
+                        : "border-primary/20 bg-white/60 text-primary/80"
                     }`}
                   >
                     {badge}
@@ -257,17 +274,17 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
           })}
         </nav>
 
-        <div className="shrink-0 border-t border-white/10 px-4 py-4">
+        <div className="shrink-0 border-t border-primary/20 px-4 py-4">
           <div className="flex items-center gap-3">
             <Avatar
               displayName={displayName}
               imageUrl={profile?.profileImage}
               size="sm"
-              className="text-white"
+              className="text-primary-dark"
             />
             <div className="flex flex-col gap-0.5 min-w-0">
-              <span className="font-sans text-sm font-semibold text-white leading-tight truncate">{shortName}</span>
-              <span className="font-sans text-[11px] text-white/40 leading-tight truncate">{entityLabel}</span>
+              <span className="font-sans text-sm font-semibold text-primary-dark leading-tight truncate">{shortName}</span>
+              <span className="font-sans text-[11px] text-primary/70 leading-tight truncate">{entityLabel}</span>
             </div>
           </div>
         </div>

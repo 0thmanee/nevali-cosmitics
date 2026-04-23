@@ -11,8 +11,8 @@ export default async function Navbar() {
   const role = (user as { role?: string } | null)?.role;
 
   return (
-    <nav className="w-full bg-cream border-b border-cream-dark fixed top-0 left-0 z-50">
-      <div className="max-w-7xl mx-auto w-full px-6 h-[56px] flex items-center justify-between">
+    <nav className="fixed left-0 top-0 z-50 w-full border-b border-cream-dark/80 bg-paper/85 backdrop-blur-md">
+      <div className="mx-auto flex h-[56px] w-full max-w-7xl items-center justify-between px-6">
         <Link href="/" className="flex items-center shrink-0">
           <img src="/assets/logo.svg" alt="nevali" className="h-8 w-auto" />
         </Link>
@@ -37,7 +37,7 @@ export default async function Navbar() {
               </Link>
               <Link
                 href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
-                className="font-sans text-sm font-medium text-forest-light border border-forest-light px-4 py-1.5 hover:bg-forest-light hover:text-white transition-colors"
+                className="rounded-sm border border-primary/50 bg-primary/10 px-4 py-1.5 font-sans text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
               >
                 {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Sign Up" : "Create account"}
               </Link>

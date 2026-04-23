@@ -1,6 +1,7 @@
 import { after } from "next/server";
 import { Resend } from "resend";
 import { env } from "~/env";
+import { emailTheme } from "~/lib/email-theme";
 
 /** Resend secret keys are `re_…` (see https://resend.com/docs/dashboard/api-keys). */
 function looksLikeResendApiKey(key: string): boolean {
@@ -191,6 +192,6 @@ export function buildVerificationEmailContent(params: {
 	const { verificationUrl, productName = "nevali" } = params;
 	const safeUrl = escapeHtmlAttr(verificationUrl);
 	const text = `Verify your email for ${productName}\n\nClick the link below to verify your email:\n${verificationUrl}\n\nIf you didn't request this, you can ignore this email.`;
-	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#333;"><p>Click the link below to verify your email and complete your ${productName} account.</p><p><a href="${safeUrl}" style="color:#727272;font-weight:600;">Verify my email</a></p><p style="color:#666;font-size:14px;">If you didn't request this, you can ignore this email.</p></body></html>`;
+	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;"><p>Click the link below to verify your email and complete your ${productName} account.</p><p><a href="${safeUrl}" style="color:${emailTheme.textMuted};font-weight:600;">Verify my email</a></p><p style="color:${emailTheme.textMuted};font-size:14px;">If you didn't request this, you can ignore this email.</p></body></html>`;
 	return { text, html };
 }

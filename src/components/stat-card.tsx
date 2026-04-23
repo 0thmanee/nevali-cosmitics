@@ -4,44 +4,44 @@ export type StatCardVariant = "neutral" | "green" | "amber" | "red";
 
 const STYLES: Record<StatCardVariant, { accent: string; label: string; value: string; iconBg: string; iconColor: string; bg: string }> = {
   neutral: {
-    accent:    "#000000",
+    accent:    "var(--color-ink)",
     bg:        "bg-white",
     label:     "text-text-muted",
     value:     "text-text-dark",
-    iconBg:    "bg-[#f5ede3]",
-    iconColor: "#000000",
+    iconBg:    "bg-cream",
+    iconColor: "var(--color-ink)",
   },
   green: {
-    accent:    "#000000",
+    accent:    "var(--color-ink)",
     bg:        "bg-white",
     label:     "text-text-muted",
     value:     "text-text-dark",
-    iconBg:    "bg-[#f5ede3]",
-    iconColor: "#000000",
+    iconBg:    "bg-cream",
+    iconColor: "var(--color-ink)",
   },
   amber: {
-    accent:    "#727272",
+    accent:    "var(--color-text-muted)",
     bg:        "bg-white",
     label:     "text-text-muted",
-    value:     "text-[#727272]",
-    iconBg:    "bg-[#fdf3e0]",
-    iconColor: "#727272",
+    value:     "text-text-muted",
+    iconBg:    "bg-cream",
+    iconColor: "var(--color-text-muted)",
   },
   red: {
-    accent:    "#c0392b",
+    accent:    "var(--color-danger-dark)",
     bg:        "bg-white",
     label:     "text-text-muted",
-    value:     "text-[#c0392b]",
-    iconBg:    "bg-[#fdf0f0]",
-    iconColor: "#c0392b",
+    value:     "text-[var(--color-danger-dark)]",
+    iconBg:    "bg-cream",
+    iconColor: "var(--color-danger-dark)",
   },
 };
 
 export const STAT_ICON_COLOR: Record<StatCardVariant, string> = {
-  neutral: "#000000",
-  green:   "#000000",
-  amber:   "#727272",
-  red:     "#c0392b",
+  neutral: "var(--color-ink)",
+  green:   "var(--color-ink)",
+  amber:   "var(--color-text-muted)",
+  red:     "var(--color-danger-dark)",
 };
 
 type Props = {

@@ -12,11 +12,11 @@ import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
 
 const inputClass =
-  "w-full rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-text-dark transition-colors focus:outline-none focus:ring-2 focus:ring-[#000000]/40";
+  "w-full rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-text-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ink/40";
 
 const stepCircleClass =
   "flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-sans text-xs font-bold text-white";
-const stepCircleStyle = { background: "#000000" } as const;
+const stepCircleStyle = { background: "var(--color-ink)" } as const;
 
 export function CheckoutPageClient({
   initialName,
@@ -284,19 +284,19 @@ export function CheckoutPageClient({
                 <button
                   className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
                     paymentMethod === "CARD"
-                      ? "border-[#000000] bg-cream ring-1 ring-[#000000]/20"
-                      : "border-cream-dark hover:border-[#000000]/35"
+                      ? "border-ink bg-cream ring-1 ring-ink/20"
+                      : "border-cream-dark hover:border-ink/35"
                   }`}
                   onClick={() => setPaymentMethod("CARD")}
                   type="button"
                 >
                   <div
                     className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "CARD" ? "border-[#000000]" : "border-cream-dark"
+                      paymentMethod === "CARD" ? "border-ink" : "border-cream-dark"
                     }`}
                   >
                     {paymentMethod === "CARD" ? (
-                      <div className="h-2 w-2 rounded-full bg-[#000000]" />
+                      <div className="h-2 w-2 rounded-full bg-ink" />
                     ) : null}
                   </div>
                   <div>
@@ -311,19 +311,19 @@ export function CheckoutPageClient({
                 <button
                   className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
                     paymentMethod === "COD"
-                      ? "border-[#000000] bg-cream ring-1 ring-[#000000]/20"
-                      : "border-cream-dark hover:border-[#000000]/35"
+                      ? "border-ink bg-cream ring-1 ring-ink/20"
+                      : "border-cream-dark hover:border-ink/35"
                   }`}
                   onClick={() => setPaymentMethod("COD")}
                   type="button"
                 >
                   <div
                     className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "COD" ? "border-[#000000]" : "border-cream-dark"
+                      paymentMethod === "COD" ? "border-ink" : "border-cream-dark"
                     }`}
                   >
                     {paymentMethod === "COD" ? (
-                      <div className="h-2 w-2 rounded-full bg-[#000000]" />
+                      <div className="h-2 w-2 rounded-full bg-ink" />
                     ) : null}
                   </div>
                   <div>
@@ -345,9 +345,9 @@ export function CheckoutPageClient({
         ) : null}
 
         <button
-          className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/55 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           disabled={pending || !canSubmit}
-          style={{ background: "#000000" }}
+          style={{ background: "var(--color-ink)" }}
           type="submit"
         >
           {pending

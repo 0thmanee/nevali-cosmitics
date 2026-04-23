@@ -16,10 +16,10 @@ import {
 import type { ProducerDashboardStats } from "~/app/api/dashboard/dashboard.types";
 import { formatPriceMad } from "~/lib/format-price";
 
-const CHART_AXIS = { fill: "#727272", fontSize: 11, fontFamily: "var(--font-roboto-mono), ui-monospace, monospace" };
-const GRID = "#e8e2d8";
-const INK = "#000000";
-const MUTED = "#727272";
+const CHART_AXIS = { fill: "var(--color-text-muted)", fontSize: 11, fontFamily: "var(--font-roboto-mono), ui-monospace, monospace" };
+const GRID = "var(--color-cream-dark)";
+const INK = "var(--color-ink)";
+const MUTED = "var(--color-text-muted)";
 
 function shortDayLabel(isoDay: string): string {
   const d = new Date(`${isoDay}T12:00:00.000Z`);
@@ -38,12 +38,12 @@ function normalizeCatalogByStatus(
 }
 
 const tooltipBox = {
-  backgroundColor: "#ffffff",
-  border: "1px solid #d8d0c4",
+  backgroundColor: "var(--color-paper)",
+  border: "1px solid var(--color-cream-dark)",
   borderRadius: 0,
   fontSize: 12,
   fontFamily: "var(--font-roboto-mono), ui-monospace, monospace",
-  color: "#000000",
+  color: "var(--color-ink)",
 };
 
 type Props = {
@@ -119,7 +119,7 @@ export function DashboardOverviewCharts({ stats, isLoading }: Props) {
             <XAxis dataKey="label" tick={CHART_AXIS} axisLine={{ stroke: GRID }} tickLine={false} />
             <YAxis allowDecimals={false} tick={CHART_AXIS} axisLine={false} tickLine={false} width={36} />
             <Tooltip
-              cursor={{ fill: "rgba(237, 230, 220, 0.35)" }}
+              cursor={{ fill: "color-mix(in srgb, var(--color-cream-dark) 35%, transparent)" }}
               contentStyle={tooltipBox}
               formatter={(value) => [Number(value ?? 0), "Products"]}
             />
@@ -165,7 +165,7 @@ export function DashboardOverviewCharts({ stats, isLoading }: Props) {
             <Legend
               wrapperStyle={{ fontFamily: "var(--font-roboto-mono), monospace", fontSize: 11, color: MUTED }}
             />
-            <Bar yAxisId="orders" dataKey="orderCount" name="Orders" fill="#d8d0c4" radius={[2, 2, 0, 0]} maxBarSize={28} />
+            <Bar yAxisId="orders" dataKey="orderCount" name="Orders" fill="var(--color-cream-dark)" radius={[2, 2, 0, 0]} maxBarSize={28} />
             <Line
               yAxisId="mad"
               type="monotone"

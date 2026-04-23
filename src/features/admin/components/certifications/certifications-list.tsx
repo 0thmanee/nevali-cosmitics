@@ -40,17 +40,17 @@ const TYPE_TABS = [
 const TYPE_CONFIG = {
 	ORGANIZATION: {
 		label: "Organization",
-		pillBg: "rgba(0,0,0,0.10)",
-		pillColor: "#000000",
-		accent: "#000000",
+		pillBg: "color-mix(in srgb, var(--color-ink) 10%, transparent)",
+		pillColor: "var(--color-ink)",
+		accent: "var(--color-ink)",
 		iconGradient:
 			"linear-gradient(in oklab 135deg, oklab(36% 0.09 0.048) 0%, oklab(24% 0.07 0.038) 100%)",
 	},
 	PRODUCT: {
 		label: "Product",
-		pillBg: "#EFF6FF",
-		pillColor: "#1D4ED8",
-		accent: "#2563EB",
+		pillBg: "color-mix(in srgb, var(--color-info) 12%, var(--color-paper))",
+		pillColor: "var(--color-info-dark)",
+		accent: "var(--color-info-dark)",
 		iconGradient:
 			"linear-gradient(in oklab 135deg, oklab(52% -0.020 -0.100) 0%, oklab(40% -0.015 -0.080) 100%)",
 	},
@@ -179,11 +179,11 @@ function CertCard({
 										<span className="text-cream-dark text-[10px]">·</span>
 										<div className="flex items-center gap-1">
 											<svg fill="none" height="10" viewBox="0 0 10 10" width="10">
-												<rect height="5.5" rx="1" stroke="#2563EB" strokeWidth="1.1" width="8" x="1" y="3" />
-												<path d="M3.5 3V2.5a1.5 1.5 0 0 1 3 0V3" stroke="#2563EB" strokeLinecap="round" strokeWidth="1.1" />
+												<rect height="5.5" rx="1" stroke="var(--color-info-dark)" strokeWidth="1.1" width="8" x="1" y="3" />
+												<path d="M3.5 3V2.5a1.5 1.5 0 0 1 3 0V3" stroke="var(--color-info-dark)" strokeLinecap="round" strokeWidth="1.1" />
 											</svg>
 											<button
-												className="cursor-pointer border-none bg-transparent p-0 font-medium font-sans text-[#2563EB] text-xs hover:underline"
+												className="cursor-pointer border-none bg-transparent p-0 font-medium font-sans text-[var(--color-info-dark)] text-xs hover:underline"
 												onClick={() => router.push(`/admin/products/${c.product!.id}`)}
 												type="button"
 											>

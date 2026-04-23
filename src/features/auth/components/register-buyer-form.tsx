@@ -81,10 +81,10 @@ export function RegisterBuyerForm() {
               className="w-5 h-5 rounded-sm flex items-center justify-center shrink-0 mt-0.5 transition-colors"
               style={
                 agreeTerms
-                  ? { background: "#000000", border: "1px solid #000000" }
+                  ? { background: "var(--color-ink)", border: "1px solid var(--color-ink)" }
                   : {
-                      background: "#fff",
-                      border: "1px solid #d0c4b0",
+                      background: "var(--color-paper)",
+                      border: "1px solid color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))",
                     }
               }
               onClick={() => setAgreeTerms(!agreeTerms)}
@@ -110,17 +110,17 @@ export function RegisterBuyerForm() {
             </div>
             <span className="font-sans text-[13px] text-text-muted leading-relaxed">
               I agree to the nevali Terms of Service and Privacy Policy{" "}
-              <span style={{ color: "#000000" }}>*</span>
+              <span style={{ color: "var(--color-ink)" }}>*</span>
             </span>
           </label>
         </div>
 
         {submitError && (
           <div
-            className="rounded-sm px-4 py-3 font-sans text-sm text-[#f87171]"
+            className="rounded-sm px-4 py-3 font-sans text-sm text-[var(--color-danger)]"
             style={{
-              background: "rgba(248,113,113,0.1)",
-              border: "1px solid rgba(248,113,113,0.25)",
+              background: "color-mix(in srgb, var(--color-danger) 10%, transparent)",
+              border: "1px solid color-mix(in srgb, var(--color-danger) 25%, transparent)",
             }}
           >
             {submitError}
@@ -158,10 +158,10 @@ export function RegisterBuyerForm() {
             className="font-sans font-semibold text-sm rounded-sm px-8 py-3.5 transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full"
             style={
               canSubmit && !submitting
-                ? { background: "#000000", color: "#fff" }
+                ? { background: "var(--color-ink)", color: "var(--color-paper)" }
                 : {
-                    background: "rgba(0,0,0,0.12)",
-                    color: "rgba(0,0,0,0.35)",
+                    background: "color-mix(in srgb, var(--color-ink) 12%, transparent)",
+                    color: "color-mix(in srgb, var(--color-ink) 35%, transparent)",
                     cursor: "not-allowed",
                   }
             }

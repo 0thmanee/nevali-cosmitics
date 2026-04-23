@@ -22,7 +22,7 @@ import {
 
 const cardStyle = {
   background: "white",
-  border: "1px solid #d8d0c4",
+  border: "1px solid var(--color-cream-dark)",
 } as const;
 
 type Props = { productId: string };
@@ -120,18 +120,18 @@ export function ProductEditForm({ productId }: Props) {
       >
         {isError ? (
           <div className="text-center px-6">
-            <p className="font-sans text-sm text-[#f87171]">
+            <p className="font-sans text-sm text-[var(--color-danger)]">
               {error instanceof Error ? error.message : "Failed to load product."}
             </p>
             <Link
               href="/artisan/products"
-              className="mt-3 inline-block font-sans text-sm font-medium text-[#000000] underline"
+              className="mt-3 inline-block font-sans text-sm font-medium text-text-dark underline"
             >
               ← Back to products
             </Link>
           </div>
         ) : (
-          <p className="font-sans text-sm text-[#727272]">Loading product…</p>
+          <p className="font-sans text-sm text-text-muted">Loading product…</p>
         )}
       </div>
     );
@@ -144,13 +144,13 @@ export function ProductEditForm({ productId }: Props) {
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
-            <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">
+            <h1 className="font-serif font-bold text-[22px] text-text-dark leading-tight">
               Edit product
             </h1>
-            <p className="font-sans text-[13px] text-[#727272] mt-1">
+            <p className="font-sans text-[13px] text-text-muted mt-1">
               Update the details below. Status is managed by the admin team.
             </p>
-            <p className="font-sans text-[12px] text-[#727272]/80 mt-1">
+            <p className="font-sans text-[12px] text-text-muted/80 mt-1">
               Current status:{" "}
               <span
                 className="font-sans text-[11px] font-bold tracking-wide rounded-full px-2.5 py-0.5 uppercase"
@@ -164,7 +164,7 @@ export function ProductEditForm({ productId }: Props) {
             <Link
               href={`/artisan/products/${productId}`}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
-              style={{ background: "#000000", color: "white" }}
+              style={{ background: "var(--color-ink)", color: "white" }}
             >
               View
             </Link>
@@ -175,9 +175,9 @@ export function ProductEditForm({ productId }: Props) {
       {validationError && (
         <div
           className="rounded-sm overflow-hidden px-6 py-4"
-          style={{ ...cardStyle, background: "rgba(248,113,113,0.06)", borderColor: "rgba(248,113,113,0.3)" }}
+          style={{ ...cardStyle, background: "color-mix(in srgb, var(--color-danger) 6%, transparent)", borderColor: "color-mix(in srgb, var(--color-danger) 30%, transparent)" }}
         >
-          <p className="font-sans text-sm text-[#f87171]">{validationError}</p>
+          <p className="font-sans text-sm text-[var(--color-danger)]">{validationError}</p>
         </div>
       )}
 
@@ -194,14 +194,14 @@ export function ProductEditForm({ productId }: Props) {
       />
 
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#d8d0c4]">
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
+        <div className="px-6 py-4 border-b border-cream-dark">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">Details</h2>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-name" className={productFormLabelClass}>
-                Product name <span className="text-[#f87171]">*</span>
+                Product name <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 id="product-name"
@@ -217,7 +217,7 @@ export function ProductEditForm({ productId }: Props) {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-category" className={productFormLabelClass}>
-                Category <span className="text-[#f87171]">*</span>
+                Category <span className="text-[var(--color-danger)]">*</span>
               </label>
               <select
                 id="product-category"
@@ -237,7 +237,7 @@ export function ProductEditForm({ productId }: Props) {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-capacity" className={productFormLabelClass}>
-                Capacity <span className="text-[#727272]/70">(optional)</span>
+                Capacity <span className="text-text-muted/70">(optional)</span>
               </label>
               <input
                 id="product-capacity"
@@ -253,7 +253,7 @@ export function ProductEditForm({ productId }: Props) {
             </div>
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-description" className={productFormLabelClass}>
-                Description <span className="text-[#727272]/70">(optional)</span>
+                Description <span className="text-text-muted/70">(optional)</span>
               </label>
               <textarea
                 id="product-description"
@@ -270,18 +270,18 @@ export function ProductEditForm({ productId }: Props) {
           </div>
 
           {product.status === "APPROVED" ? (
-            <div className="mt-6 rounded-sm border border-[#d8d0c4] bg-[#faf8f5] px-4 py-4 sm:col-span-2">
+            <div className="mt-6 rounded-sm border border-cream-dark bg-[color-mix(in srgb, var(--color-paper) 75%, var(--color-cream))] px-4 py-4 sm:col-span-2">
               <label className="flex cursor-pointer items-start gap-3">
                 <input
                   type="checkbox"
-                  className="mt-1 h-4 w-4 shrink-0 rounded border-[#d8d0c4]"
+                  className="mt-1 h-4 w-4 shrink-0 rounded border-cream-dark"
                   checked={featuredOnHome}
                   onChange={(e) => setFeaturedOnHome(e.target.checked)}
                   disabled={isLoading}
                 />
                 <span>
-                  <span className="font-sans text-sm font-semibold text-[#000000]">Homepage hero spotlight</span>
-                  <span className="mt-1 block font-sans text-xs leading-relaxed text-[#727272]">
+                  <span className="font-sans text-sm font-semibold text-text-dark">Homepage hero spotlight</span>
+                  <span className="mt-1 block font-sans text-xs leading-relaxed text-text-muted">
                     When checked, this approved listing becomes the large hero on the public homepage. Only one
                     product can be featured at a time—enabling this clears the flag on your other SKUs.
                   </span>
@@ -289,14 +289,14 @@ export function ProductEditForm({ productId }: Props) {
               </label>
             </div>
           ) : (
-            <p className="mt-4 font-sans text-xs text-[#727272]">
+            <p className="mt-4 font-sans text-xs text-text-muted">
               Homepage hero is available only for <strong>approved</strong> products. Current status:{" "}
               {product.status}.
             </p>
           )}
 
-          <div className="mt-2 pt-6 border-t border-[#d8d0c4]">
-            <h3 className="font-serif font-bold text-[14px] text-[#000000] mb-3">Variants & pricing</h3>
+          <div className="mt-2 pt-6 border-t border-cream-dark">
+            <h3 className="font-serif font-bold text-[14px] text-text-dark mb-3">Variants & pricing</h3>
             <ProductVariantsFormBlock variants={variants} onChange={setVariants} disabled={isLoading} />
           </div>
         </div>
@@ -310,13 +310,13 @@ export function ProductEditForm({ productId }: Props) {
           type="submit"
           disabled={isLoading}
           className="font-sans font-semibold text-sm text-white rounded-sm px-6 py-3 transition-colors disabled:opacity-60 min-w-[140px]"
-          style={{ background: "#000000" }}
+          style={{ background: "var(--color-ink)" }}
         >
           {isLoading ? "Saving…" : "Save changes"}
         </button>
         <Link
           href={`/artisan/products/${productId}`}
-          className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors"
+          className="font-sans text-sm font-medium text-text-muted hover:text-text-dark transition-colors"
         >
           Cancel
         </Link>

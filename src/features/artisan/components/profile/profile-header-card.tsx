@@ -52,7 +52,7 @@ export function ProfileHeaderCard({
   const displayError = error ?? (uploadMutation.isError && uploadMutation.error instanceof Error ? uploadMutation.error.message : null);
 
   return (
-    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
       <div
         className="h-20"
         style={{
@@ -80,7 +80,7 @@ export function ProfileHeaderCard({
               type="button"
               onClick={openFilePicker}
               disabled={uploading}
-              className="font-sans text-[11px] font-medium text-[#727272] hover:text-[#000000] transition-colors disabled:opacity-50"
+              className="font-sans text-[11px] font-medium text-text-muted hover:text-text-dark transition-colors disabled:opacity-50"
             >
               {uploading ? "Uploading…" : "Change photo"}
             </button>
@@ -93,38 +93,38 @@ export function ProfileHeaderCard({
           <Link
             href="/artisan/profile/edit"
             className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors inline-block"
-            style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
+            style={{ background: "var(--color-paper)", color: "var(--color-ink)", border: "1px solid var(--color-cream-dark)" }}
           >
             Edit Profile
           </Link>
         </div>
         <div className="mt-3 flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <h2 className="font-display font-bold uppercase text-[20px] text-[#000000] leading-tight">{displayName}</h2>
+            <h2 className="font-display font-bold uppercase text-[20px] text-text-dark leading-tight">{displayName}</h2>
             <span
               className="font-sans text-[9px] font-bold tracking-wider rounded-full px-2.5 py-1 uppercase"
-              style={{ background: "rgba(0,0,0,0.85)", color: "#727272", border: "1px solid rgba(200,150,60,0.3)" }}
+              style={{ background: "color-mix(in srgb, var(--color-ink) 85%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)" }}
             >
               Certified
             </span>
           </div>
-          <p className="font-sans text-sm text-[#727272]">{entityType} · {entityName}</p>
+          <p className="font-sans text-sm text-text-muted">{entityType} · {entityName}</p>
           {publicTagline?.trim() && (
-            <p className="font-sans text-sm text-[#000000] font-medium mt-2 leading-snug max-w-xl">{publicTagline}</p>
+            <p className="font-sans text-sm text-text-dark font-medium mt-2 leading-snug max-w-xl">{publicTagline}</p>
           )}
           <div className="flex items-center gap-4 mt-1 flex-wrap">
-            <span className="font-sans text-[12px] text-[#727272] flex items-center gap-1.5">
+            <span className="font-sans text-[12px] text-text-muted flex items-center gap-1.5">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M6 1C4.1 1 2.5 2.6 2.5 4.5c0 2.8 3.5 6.5 3.5 6.5s3.5-3.7 3.5-6.5C9.5 2.6 7.9 1 6 1z" stroke="#727272" strokeWidth="1.1" />
-                <circle cx="6" cy="4.5" r="1.2" stroke="#727272" strokeWidth="1.1" />
+                <path d="M6 1C4.1 1 2.5 2.6 2.5 4.5c0 2.8 3.5 6.5 3.5 6.5s3.5-3.7 3.5-6.5C9.5 2.6 7.9 1 6 1z" stroke="var(--color-text-muted)" strokeWidth="1.1" />
+                <circle cx="6" cy="4.5" r="1.2" stroke="var(--color-text-muted)" strokeWidth="1.1" />
               </svg>
               {region} Region, Morocco
             </span>
-            <span className="font-sans text-[12px] text-[#727272] flex items-center gap-1.5">
+            <span className="font-sans text-[12px] text-text-muted flex items-center gap-1.5">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <rect x="1" y="2" width="10" height="8" rx="1.5" stroke="#727272" strokeWidth="1.1" />
-                <path d="M1 4.5h10" stroke="#727272" strokeWidth="1.1" />
-                <path d="M4 1v2M8 1v2" stroke="#727272" strokeWidth="1.1" strokeLinecap="round" />
+                <rect x="1" y="2" width="10" height="8" rx="1.5" stroke="var(--color-text-muted)" strokeWidth="1.1" />
+                <path d="M1 4.5h10" stroke="var(--color-text-muted)" strokeWidth="1.1" />
+                <path d="M4 1v2M8 1v2" stroke="var(--color-text-muted)" strokeWidth="1.1" strokeLinecap="round" />
               </svg>
               Member since {memberSince}
             </span>

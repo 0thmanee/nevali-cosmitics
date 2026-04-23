@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import {
 	getFeaturedHomeHeroProductRepo,
 	listApprovedProductsForPublicRepo,
@@ -30,7 +31,7 @@ function MosaicTile({ product }: { product: MosaicProduct }) {
 			<div
 				className="absolute inset-0 flex items-end p-3"
 				style={{
-					background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 68%)",
+					background: "linear-gradient(to top, color-mix(in srgb, var(--color-ink) 45%, transparent) 0%, transparent 68%)",
 				}}
 			>
 				<span className="line-clamp-2 font-sans text-sm font-medium uppercase tracking-widest text-white/95">
@@ -53,7 +54,7 @@ export default async function CollectionsSection() {
 	return (
 		<section className="w-full bg-white py-28">
 			<div className="mx-auto max-w-7xl px-6">
-				<div className="mb-8 flex flex-col gap-2">
+				<AnimateOnScroll className="mb-8 flex flex-col gap-2" direction="up">
 					<h2
 						className="font-display font-bold uppercase leading-[1.0] text-text-dark"
 						style={{ fontSize: "clamp(28px, 3.5vw, 48px)", letterSpacing: "-0.01em" }}
@@ -65,10 +66,10 @@ export default async function CollectionsSection() {
 					<p className="max-w-md font-sans text-base leading-relaxed text-text-muted">
 						Live picks from the catalog—tap through for ingredients, brand story, variants, and guest-friendly checkout.
 					</p>
-				</div>
+				</AnimateOnScroll>
 
 				{products.length === 0 ? (
-					<div className="flex flex-col items-start gap-3 rounded-sm border border-stone-200 bg-stone-50/80 py-10 px-6">
+					<AnimateOnScroll className="flex flex-col items-start gap-3 rounded-sm border border-stone-200 bg-stone-50/80 px-6 py-10" direction="up">
 						<p className="font-sans font-semibold text-text-dark">
 							No approved products to highlight yet
 						</p>
@@ -80,13 +81,13 @@ export default async function CollectionsSection() {
 						<Link
 							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"
 							href="/products"
-							style={{ background: "#000000" }}
+							style={{ background: "var(--color-ink)" }}
 						>
 							Browse catalog
 						</Link>
-					</div>
+					</AnimateOnScroll>
 				) : (
-					<div className="flex flex-col gap-3">
+					<AnimateOnScroll className="flex flex-col gap-3" delay={90} direction="up" scale>
 						{row1.length > 0 ? (
 							<div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
 								{row1.map((p) => (
@@ -126,7 +127,7 @@ export default async function CollectionsSection() {
 								) : null}
 							</div>
 						) : null}
-					</div>
+					</AnimateOnScroll>
 				)}
 			</div>
 		</section>

@@ -32,15 +32,15 @@ import {
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 
 const CATEGORY_COLORS: Record<string, { bg: string; dot: string; text: string }> = {
-  "Oils & Extracts": { bg: "#ede6dc", dot: "#727272", text: "#000000" },
-  "Spices & Herbs": { bg: "#ede6dc", dot: "#5a5a5a", text: "#000000" },
-  "Florals & Essences": { bg: "#ede6dc", dot: "#454545", text: "#000000" },
-  "Dried Fruits": { bg: "#ede6dc", dot: "#727272", text: "#000000" },
-  "Cosmetics": { bg: "#ede6dc", dot: "#000000", text: "#000000" },
+  "Oils & Extracts": { bg: "var(--color-cream)", dot: "var(--color-text-muted)", text: "var(--color-ink)" },
+  "Spices & Herbs": { bg: "var(--color-cream)", dot: "color-mix(in srgb, var(--color-ink) 58%, var(--color-text-muted))", text: "var(--color-ink)" },
+  "Florals & Essences": { bg: "var(--color-cream)", dot: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))", text: "var(--color-ink)" },
+  "Dried Fruits": { bg: "var(--color-cream)", dot: "var(--color-text-muted)", text: "var(--color-ink)" },
+  "Cosmetics": { bg: "var(--color-cream)", dot: "var(--color-ink)", text: "var(--color-ink)" },
 };
 
 function getCategoryStyle(category: string) {
-  return CATEGORY_COLORS[category] ?? { bg: "#ede6dc", dot: "#727272", text: "#000000" };
+  return CATEGORY_COLORS[category] ?? { bg: "var(--color-cream)", dot: "var(--color-text-muted)", text: "var(--color-ink)" };
 }
 
 const STATUS_TABS = [

@@ -27,10 +27,10 @@ export function ProfileView({ user, profile, memberSince, partnerId, publicProfi
       <div>
         <div
           className="rounded-sm p-8 text-center"
-          style={{ background: "white", border: "1px solid #d8d0c4" }}
+          style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
         >
-          <p className="font-sans text-[#727272]">No profile data yet. Complete onboarding to see your profile here.</p>
-          <Link href="/onboarding" className="mt-4 inline-block font-sans text-sm font-medium text-[#000000] underline">
+          <p className="font-sans text-text-muted">No profile data yet. Complete onboarding to see your profile here.</p>
+          <Link href="/onboarding" className="mt-4 inline-block font-sans text-sm font-medium text-text-dark underline">
             Go to onboarding
           </Link>
         </div>

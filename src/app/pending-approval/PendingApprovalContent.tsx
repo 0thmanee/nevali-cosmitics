@@ -17,9 +17,9 @@ export function PendingApprovalContent() {
         <div className="flex items-center gap-3 mb-4">
           {/* Clock icon */}
           <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-            style={{ background: "rgba(0,0,0,0.08)", border: "1px solid rgba(0,0,0,0.18)" }}>
+            style={{ background: "color-mix(in srgb, var(--color-ink) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-ink) 18%, transparent)" }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              stroke="var(--color-ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
@@ -48,7 +48,7 @@ export function PendingApprovalContent() {
             <div key={s.n} className="flex items-start gap-0 flex-1">
               <div className="flex flex-col items-center">
                 <div className="w-7 h-7 rounded-full flex items-center justify-center font-sans font-bold text-xs shrink-0"
-                  style={{ background: "rgba(0,0,0,0.08)", color: "#000000", border: "1px solid rgba(0,0,0,0.18)" }}>
+                  style={{ background: "color-mix(in srgb, var(--color-ink) 8%, transparent)", color: "var(--color-ink)", border: "1px solid color-mix(in srgb, var(--color-ink) 18%, transparent)" }}>
                   {s.n}
                 </div>
                 {i < NEXT_STEPS.length - 1 && (
@@ -60,7 +60,7 @@ export function PendingApprovalContent() {
                 <p className="font-sans text-xs text-text-muted mt-0.5">{s.detail}</p>
               </div>
               {i < NEXT_STEPS.length - 1 && (
-                <div className="self-center w-6 h-px shrink-0 mr-2" style={{ background: "#d0c4b0" }} />
+                <div className="self-center w-6 h-px shrink-0 mr-2" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))" }} />
               )}
             </div>
           ))}
@@ -68,13 +68,13 @@ export function PendingApprovalContent() {
       </div>
 
       {/* Divider */}
-      <div className="h-px w-full" style={{ background: "#e0d4c4" }} />
+      <div className="h-px w-full" style={{ background: "var(--color-cream-dark)" }} />
 
       {/* Actions */}
       <div className="flex items-center justify-between">
         <p className="font-sans text-sm text-text-muted">
           Questions?{" "}
-          <Link href="mailto:support@nevali-cosmetics.ma" className="hover:underline" style={{ color: "#000000" }}>
+          <Link href="mailto:support@nevali-cosmetics.ma" className="hover:underline" style={{ color: "var(--color-ink)" }}>
             Contact support
           </Link>
         </p>
@@ -85,7 +85,7 @@ export function PendingApprovalContent() {
           </button>
           <Link href="/"
             className="font-sans font-semibold text-sm text-white px-5 py-2.5 rounded-sm transition-colors"
-            style={{ background: "#000000" }}>
+            style={{ background: "var(--color-ink)" }}>
             Back to homepage
           </Link>
         </div>

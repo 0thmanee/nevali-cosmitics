@@ -47,19 +47,19 @@ export function CatalogOrdersView() {
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Total product-orders
           </p>
-          <p className="mt-1 font-serif text-2xl font-bold text-[#000000]">{totalOrders}</p>
+          <p className="mt-1 font-serif text-2xl font-bold text-text-dark">{totalOrders}</p>
         </div>
         <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Units sold
           </p>
-          <p className="mt-1 font-serif text-2xl font-bold text-[#000000]">{totalUnits}</p>
+          <p className="mt-1 font-serif text-2xl font-bold text-text-dark">{totalUnits}</p>
         </div>
         <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Revenue
           </p>
-          <p className="mt-1 font-serif text-2xl font-bold text-[#000000]">
+          <p className="mt-1 font-serif text-2xl font-bold text-text-dark">
             {formatPriceMad(totalRevenue)}
           </p>
         </div>

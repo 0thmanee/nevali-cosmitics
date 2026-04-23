@@ -7,7 +7,7 @@ function IconPillar1() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M8 1l1.5 4.5H14l-4 2.9 1.5 4.6L8 10.2 4.5 13l1.5-4.6L2 5.5h4.5L8 1z"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.3"
         strokeLinejoin="round"
       />
@@ -18,10 +18,10 @@ function IconPillar1() {
 function IconPillar2() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="8" r="6" stroke="#727272" strokeWidth="1.3" />
+      <circle cx="8" cy="8" r="6" stroke="var(--color-text-muted)" strokeWidth="1.3" />
       <path
         d="M5 8h6M8 5l3 3-3 3"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -35,7 +35,7 @@ function IconPillar3() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M2 12l4-4 3 3 5-7"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -51,7 +51,7 @@ function IconStar() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M10 2l1.8 5.5H18l-5 3.6 1.8 5.5L10 13l-4.6 3.6 1.8-5.5L2 7.5h6.2L10 2z"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
@@ -64,12 +64,12 @@ function IconCheckCircle() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M5 10l3 3 7-7"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="10" cy="10" r="8" stroke="#000000" strokeWidth="1.6" />
+      <circle cx="10" cy="10" r="8" stroke="var(--color-ink)" strokeWidth="1.6" />
     </svg>
   );
 }
@@ -83,12 +83,12 @@ function IconAudit() {
         width="14"
         height="11"
         rx="1.5"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
       />
       <path
         d="M7 5V4a3 3 0 0 1 6 0v1M8 11l2 2 4-4"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -106,7 +106,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
       />
       <rect
@@ -115,7 +115,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
       />
       <rect
@@ -124,7 +124,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
       />
       <rect
@@ -133,7 +133,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
       />
     </svg>
@@ -145,13 +145,13 @@ function IconShoppingBag() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M5 7h10v11H5V7z"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
       <path
         d="M8 7V5a2 2 0 0 1 4 0v2"
-        stroke="#727272"
+        stroke="var(--color-text-muted)"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -164,12 +164,12 @@ function IconMatch() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M10 3a7 7 0 1 0 0 14A7 7 0 0 0 10 3z"
-        stroke="#E8B84B"
+        stroke="var(--color-gold)"
         strokeWidth="1.6"
       />
       <path
         d="M7 10l2 2 4-4"
-        stroke="#E8B84B"
+        stroke="var(--color-gold)"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -183,7 +183,7 @@ function IconTraining() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M10 3v14M5 7l5-4 5 4M5 13l5 4 5-4"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -201,12 +201,12 @@ function IconDoc() {
         width="12"
         height="14"
         rx="1.5"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
       />
       <path
         d="M8 7h4M8 10h4M8 13h2"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -223,7 +223,7 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
       />
       <rect
@@ -232,7 +232,7 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
       />
       <rect
@@ -241,12 +241,12 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
       />
       <path
         d="M12 15h6M15 12v6"
-        stroke="#000000"
+        stroke="var(--color-ink)"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -260,13 +260,13 @@ const pillars = [
   {
     label: "PILLAR 1 — TRUST & COMPLIANCE",
     pillarIcon: <IconPillar1 />,
-    pillarIconBg: "#ffffff",
+    pillarIconBg: "var(--color-paper)",
     cards: [
       {
         icon: <IconStar />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Quality Certification",
         desc: "Per-category quality criteria, document review, structured audit workflows, and certification expiry tracking.",
@@ -274,26 +274,26 @@ const pillars = [
           {
             label: "ISO READY",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
           {
             label: "MULTI-CATEGORY",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
       },
       {
         icon: <IconCheckCircle />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Traceability & QR Verification",
         desc: "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify.",
@@ -301,26 +301,26 @@ const pillars = [
           {
             label: "QR SCANNABLE",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
           {
             label: "BATCH LINKED",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
       },
       {
         icon: <IconAudit />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Quality Audits",
         desc: "Structured audit workflows with document upload, approval tracking, and automated expiry alerts.",
@@ -328,17 +328,17 @@ const pillars = [
           {
             label: "AUTO-ALERTS",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
           {
             label: "SECURE & AUDITABLE",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
@@ -348,13 +348,13 @@ const pillars = [
   {
     label: "PILLAR 2 — MARKETPLACE ACCESS",
     pillarIcon: <IconPillar2 />,
-    pillarIconBg: "#F5EDD6",
+    pillarIconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
     cards: [
       {
         icon: <IconGrid />,
-        iconBg: "#F5EDD6",
-        cardBg: "#ffffff",
-        cardBorder: "#F0E6CC",
+        iconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+        cardBg: "var(--color-paper)",
+        cardBorder: "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
         dark: false,
         title: "Product listings",
         desc: "Skincare, hair, body, fragrance, and ritual care—organized by category with photos, INCI-style ingredients, and variant pricing in MAD.",
@@ -362,18 +362,18 @@ const pillars = [
           {
             label: "COSMETICS FOCUS",
             style: {
-              background: "#F5EDD6",
-              color: "#727272",
-              border: "1px solid #e8d4a0",
+              background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+              color: "var(--color-text-muted)",
+              border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
             },
           },
         ],
       },
       {
         icon: <IconShoppingBag />,
-        iconBg: "#F5EDD6",
-        cardBg: "#ffffff",
-        cardBorder: "#F0E6CC",
+        iconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+        cardBg: "var(--color-paper)",
+        cardBorder: "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
         dark: false,
         title: "Guest checkout & cart",
         desc: "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment.",
@@ -381,18 +381,18 @@ const pillars = [
           {
             label: "NO LOGIN REQUIRED",
             style: {
-              background: "#F5EDD6",
-              color: "#727272",
-              border: "1px solid #e8d4a0",
+              background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+              color: "var(--color-text-muted)",
+              border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
             },
           },
         ],
       },
       {
         icon: <IconMatch />,
-        iconBg: "#72727233",
-        cardBg: "#000000",
-        cardBorder: "#000000",
+        iconBg: "color-mix(in srgb, var(--color-text-muted) 20%, transparent)",
+        cardBg: "var(--color-ink)",
+        cardBorder: "var(--color-ink)",
         dark: true,
         title: "Brand discovery",
         desc: "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes.",
@@ -400,9 +400,9 @@ const pillars = [
           {
             label: "CURATED DIRECTORY",
             style: {
-              background: "rgba(201,145,61,0.2)",
-              color: "#E8B84B",
-              border: "1px solid rgba(201,145,61,0.3)",
+              background: "color-mix(in srgb, var(--color-gold) 20%, transparent)",
+              color: "var(--color-gold)",
+              border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)",
             },
           },
         ],
@@ -412,13 +412,13 @@ const pillars = [
   {
     label: "PILLAR 3 — GROWTH ENABLEMENT",
     pillarIcon: <IconPillar3 />,
-    pillarIconBg: "#ffffff",
+    pillarIconBg: "var(--color-paper)",
     cards: [
       {
         icon: <IconTraining />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Training programs",
         desc: "Micro-learning for beauty founders: EU-style labelling, stability basics, packaging photography, and export readiness for cosmetics.",
@@ -426,18 +426,18 @@ const pillars = [
           {
             label: "PROGRESS TRACKING",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
       },
       {
         icon: <IconDoc />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Legal & export guidance",
         desc: "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request.",
@@ -445,18 +445,18 @@ const pillars = [
           {
             label: "REAL-TIME STATUS",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
       },
       {
         icon: <IconAnalytics />,
-        iconBg: "#ffffff",
-        cardBg: "#ffffff",
-        cardBorder: "#ffffff",
+        iconBg: "var(--color-paper)",
+        cardBg: "var(--color-paper)",
+        cardBorder: "var(--color-paper)",
         dark: false,
         title: "Analytics & reporting",
         desc: "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.",
@@ -464,9 +464,9 @@ const pillars = [
           {
             label: "EXPORT PDF / XLS",
             style: {
-              background: "#ffffff",
-              color: "#000000",
-              border: "1px solid #d8d0c4",
+              background: "var(--color-paper)",
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-cream-dark)",
             },
           },
         ],
@@ -543,7 +543,7 @@ export default function FeaturesSection() {
                     <div className="flex flex-col gap-2 flex-1">
                       <h3
                         className="font-serif font-bold text-xl leading-snug"
-                        style={{ color: card.dark ? "#ffffff" : "#000000" }}
+                        style={{ color: card.dark ? "var(--color-paper)" : "var(--color-ink)" }}
                       >
                         {card.title}
                       </h3>
@@ -551,8 +551,8 @@ export default function FeaturesSection() {
                         className="font-sans text-sm leading-relaxed"
                         style={{
                           color: card.dark
-                            ? "rgba(250,250,247,0.55)"
-                            : "#727272",
+                            ? "color-mix(in srgb, var(--color-paper) 55%, transparent)"
+                            : "var(--color-text-muted)",
                         }}
                       >
                         {card.desc}

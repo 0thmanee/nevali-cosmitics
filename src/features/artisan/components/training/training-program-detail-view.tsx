@@ -7,9 +7,9 @@ import type { TrainingProgramDetailRow, TrainingProgramMediaRow } from "~/app/ap
 import { useTrainingProgram, useEnrollInProgram, useUpdateEnrollmentProgress } from "~/features/artisan/hooks/use-training";
 
 const levelStyle: Record<string, { bg: string; color: string; border: string }> = {
-  BEGINNER: { bg: "rgba(96,165,250,0.12)", color: "#60A5FA", border: "1px solid rgba(96,165,250,0.25)" },
-  INTERMEDIATE: { bg: "rgba(201,145,61,0.12)", color: "#727272", border: "1px solid rgba(201,145,61,0.25)" },
-  ADVANCED: { bg: "rgba(167,139,250,0.12)", color: "#a78bfa", border: "1px solid rgba(167,139,250,0.25)" },
+  BEGINNER: { bg: "color-mix(in srgb, var(--color-info) 12%, transparent)", color: "var(--color-info)", border: "1px solid color-mix(in srgb, var(--color-info) 25%, transparent)" },
+  INTERMEDIATE: { bg: "color-mix(in srgb, var(--color-gold) 12%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-gold) 25%, transparent)" },
+  ADVANCED: { bg: "color-mix(in srgb, var(--color-primary-light) 12%, transparent)", color: "var(--color-primary-light)", border: "1px solid color-mix(in srgb, var(--color-primary-light) 25%, transparent)" },
 };
 
 function MediaBlock({ media }: { media: TrainingProgramMediaRow }) {
@@ -30,20 +30,20 @@ function MediaBlock({ media }: { media: TrainingProgramMediaRow }) {
   }
   if (media.mediaType === "PDF") {
     return (
-      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
         <iframe src={media.fileUrl} title={title} className="w-full h-[400px]" />
-        <a href={media.fileUrl} target="_blank" rel="noopener noreferrer" className="block font-sans text-[12px] font-medium text-[#000000] hover:underline px-3 py-2">
+        <a href={media.fileUrl} target="_blank" rel="noopener noreferrer" className="block font-sans text-[12px] font-medium text-text-dark hover:underline px-3 py-2">
           Open PDF: {title}
         </a>
       </div>
     );
   }
   return (
-    <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
       <a href={media.fileUrl} target="_blank" rel="noopener noreferrer" className="block">
-        <img src={media.fileUrl} alt={title} className="w-full max-h-[400px] object-contain bg-[#ffffff]" />
+        <img src={media.fileUrl} alt={title} className="w-full max-h-[400px] object-contain bg-[var(--color-paper)]" />
       </a>
-      {title && <p className="font-sans text-[12px] text-[#727272] px-3 py-2">{title}</p>}
+      {title && <p className="font-sans text-[12px] text-text-muted px-3 py-2">{title}</p>}
     </div>
   );
 }
@@ -58,7 +58,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
   if (isLoading || !program) {
     return (
       <div className="p-4 lg:p-6 flex items-center justify-center py-20">
-        <p className="font-sans text-sm text-[#727272]">{isLoading ? "Loading…" : "Program not found."}</p>
+        <p className="font-sans text-sm text-text-muted">{isLoading ? "Loading…" : "Program not found."}</p>
       </div>
     );
   }
@@ -66,8 +66,8 @@ export function TrainingProgramDetailView({ programId }: Props) {
   if (isError) {
     return (
       <div className="p-4 lg:p-6">
-        <p className="font-sans text-sm text-[#f87171]">Failed to load program.</p>
-        <Link href="/artisan/training" className="mt-2 inline-block font-sans text-sm font-medium text-[#000000] underline">← Back to Training</Link>
+        <p className="font-sans text-sm text-[var(--color-danger)]">Failed to load program.</p>
+        <Link href="/artisan/training" className="mt-2 inline-block font-sans text-sm font-medium text-text-dark underline">← Back to Training</Link>
       </div>
     );
   }
@@ -75,22 +75,22 @@ export function TrainingProgramDetailView({ programId }: Props) {
   const enrollment = program.enrollment;
   const modulesCompleted = enrollment?.modulesCompleted ?? 0;
   const programMedia = program.media.filter((m) => !m.moduleId);
-  const cardStyle = { background: "white", border: "1px solid #d8d0c4" } as const;
+  const cardStyle = { background: "white", border: "1px solid var(--color-cream-dark)" } as const;
 
   return (
     <div className="p-4 lg:p-6 flex flex-col gap-6">
       <nav className="flex items-center gap-2 text-sm">
-        <Link href="/artisan/training" className="font-sans text-[#727272] hover:text-[#000000] transition-colors">Training</Link>
-        <span className="font-sans text-[#727272]/60">/</span>
-        <span className="font-sans font-medium text-[#000000] truncate">{program.name}</span>
+        <Link href="/artisan/training" className="font-sans text-text-muted hover:text-text-dark transition-colors">Training</Link>
+        <span className="font-sans text-text-muted/60">/</span>
+        <span className="font-sans font-medium text-text-dark truncate">{program.name}</span>
       </nav>
 
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
-            <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">{program.name}</h1>
-            <p className="font-sans text-[13px] text-[#727272] mt-1">{program.provider} · {program.category}</p>
-            <p className="font-sans text-[12px] text-[#727272]/80 mt-1">{program.durationLabel ?? ""}</p>
+            <h1 className="font-serif font-bold text-[22px] text-text-dark leading-tight">{program.name}</h1>
+            <p className="font-sans text-[13px] text-text-muted mt-1">{program.provider} · {program.category}</p>
+            <p className="font-sans text-[12px] text-text-muted/80 mt-1">{program.durationLabel ?? ""}</p>
             <span className="font-sans text-[10px] font-bold tracking-wide rounded-full px-2.5 py-0.5 uppercase mt-2 inline-block" style={levelStyle[program.level] ?? levelStyle.INTERMEDIATE}>{getTrainingLevelLabel(program.level)}</span>
           </div>
           {!enrollment && (
@@ -99,7 +99,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
               onClick={() => enrollMutation.mutate(programId)}
               disabled={enrollMutation.isPending}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60 shrink-0"
-              style={{ background: "#000000", color: "white" }}
+              style={{ background: "var(--color-ink)", color: "white" }}
             >
               {enrollMutation.isPending ? "Enrolling…" : "Enroll"}
             </button>
@@ -107,17 +107,17 @@ export function TrainingProgramDetailView({ programId }: Props) {
         </div>
         {program.description && (
           <div className="px-6 pb-5">
-            <p className="font-sans text-[13px] text-[#727272] leading-relaxed">{program.description}</p>
+            <p className="font-sans text-[13px] text-text-muted leading-relaxed">{program.description}</p>
           </div>
         )}
         {enrollment && (
           <div className="px-6 pb-5">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-sans text-[11px] text-[#727272]">{modulesCompleted} of {program.modules.length} modules completed</span>
-              <span className="font-sans text-[11px] font-semibold text-[#000000]">{enrollment.progress}%</span>
+              <span className="font-sans text-[11px] text-text-muted">{modulesCompleted} of {program.modules.length} modules completed</span>
+              <span className="font-sans text-[11px] font-semibold text-text-dark">{enrollment.progress}%</span>
             </div>
-            <div className="h-2 rounded-full overflow-hidden" style={{ background: "#ffffff" }}>
-              <div className="h-full rounded-full transition-all" style={{ width: `${enrollment.progress}%`, background: "#000000" }} />
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--color-paper)" }}>
+              <div className="h-full rounded-full transition-all" style={{ width: `${enrollment.progress}%`, background: "var(--color-ink)" }} />
             </div>
           </div>
         )}
@@ -125,8 +125,8 @@ export function TrainingProgramDetailView({ programId }: Props) {
 
       {programMedia.length > 0 && (
         <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-          <div className="px-6 py-4 border-b border-[#d8d0c4]">
-            <h2 className="font-serif font-bold text-[15px] text-[#000000]">Program materials</h2>
+          <div className="px-6 py-4 border-b border-cream-dark">
+            <h2 className="font-serif font-bold text-[15px] text-text-dark">Program materials</h2>
           </div>
           <div className="p-6 flex flex-col gap-4">
             {programMedia.map((m) => (
@@ -138,10 +138,10 @@ export function TrainingProgramDetailView({ programId }: Props) {
 
       {program.modules.length > 0 && (
         <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-          <div className="px-6 py-4 border-b border-[#d8d0c4]">
-            <h2 className="font-serif font-bold text-[15px] text-[#000000]">Modules</h2>
+          <div className="px-6 py-4 border-b border-cream-dark">
+            <h2 className="font-serif font-bold text-[15px] text-text-dark">Modules</h2>
           </div>
-          <div className="divide-y divide-[#d8d0c4]">
+          <div className="divide-y divide-[var(--color-cream-dark)]">
             {program.modules.map((module, index) => {
               const moduleMedia = program.media.filter((m) => m.moduleId === module.id);
               const isComplete = enrollment ? modulesCompleted > index : false;
@@ -151,13 +151,13 @@ export function TrainingProgramDetailView({ programId }: Props) {
                 <div key={module.id} className="px-6 py-5 flex flex-col gap-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-serif font-bold text-[15px] text-[#000000]">Module {index + 1}: {module.title}</h3>
-                      {module.description && <p className="font-sans text-[12px] text-[#727272] mt-1">{module.description}</p>}
+                      <h3 className="font-serif font-bold text-[15px] text-text-dark">Module {index + 1}: {module.title}</h3>
+                      {module.description && <p className="font-sans text-[12px] text-text-muted mt-1">{module.description}</p>}
                     </div>
                     <div className="shrink-0">
                       {isComplete && (
-                        <span className="font-sans text-[11px] font-semibold text-[#727272] flex items-center gap-1.5">
-                          <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#727272" strokeWidth="1.2" /><path d="M3.5 6l1.8 1.8 3.2-3.6" stroke="#727272" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        <span className="font-sans text-[11px] font-semibold text-text-muted flex items-center gap-1.5">
+                          <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="var(--color-text-muted)" strokeWidth="1.2" /><path d="M3.5 6l1.8 1.8 3.2-3.6" stroke="var(--color-text-muted)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                           Complete
                         </span>
                       )}
@@ -167,7 +167,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
                           onClick={() => updateProgressMutation.mutate({ enrollmentId: enrollment.id, modulesCompleted: index + 1 })}
                           disabled={updateProgressMutation.isPending}
                           className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-                          style={{ background: "#000000", color: "white" }}
+                          style={{ background: "var(--color-ink)", color: "white" }}
                         >
                           {updateProgressMutation.isPending ? "Saving…" : "Mark complete"}
                         </button>
@@ -188,7 +188,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
         </div>
       )}
 
-      <Link href="/artisan/training" className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors w-fit">
+      <Link href="/artisan/training" className="font-sans text-sm font-medium text-text-muted hover:text-text-dark transition-colors w-fit">
         ← Back to Training
       </Link>
     </div>

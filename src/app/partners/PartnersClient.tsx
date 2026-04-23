@@ -3,25 +3,26 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import type { PublicPartnerListItem } from "~/app/partners/public-types";
 
 type Partner = PublicPartnerListItem;
 
 const AVATAR_PALETTES = [
-  { bg: "#d8d0c4", text: "#000000" },
-  { bg: "#e8e2d8", text: "#000000" },
-  { bg: "#f5ede3", text: "#454545" },
-  { bg: "#faf0e8", text: "#000000" },
-  { bg: "#eeddd0", text: "#000000" },
-  { bg: "#f8ede0", text: "#454545" },
+  { bg: "var(--color-cream-dark)", text: "var(--color-ink)" },
+  { bg: "color-mix(in srgb, var(--color-cream-dark) 80%, var(--color-paper))", text: "var(--color-ink)" },
+  { bg: "color-mix(in srgb, var(--color-cream-dark) 65%, var(--color-paper))", text: "var(--color-text-dark)" },
+  { bg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))", text: "var(--color-ink)" },
+  { bg: "color-mix(in srgb, var(--color-cream-dark) 72%, var(--color-paper))", text: "var(--color-ink)" },
+  { bg: "color-mix(in srgb, var(--color-cream-dark) 60%, var(--color-paper))", text: "var(--color-text-dark)" },
 ];
 
 function avatarPalette(id: string) {
   let hash = 0;
   for (const c of id) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffff;
   return AVATAR_PALETTES[Math.abs(hash) % AVATAR_PALETTES.length] ?? {
-    bg: "#d8d0c4",
-    text: "#000000",
+    bg: "var(--color-cream-dark)",
+    text: "var(--color-ink)",
   };
 }
 
@@ -47,7 +48,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
       {/* Brand accent bar */}
       <div
         className="h-1 w-full shrink-0"
-        style={{ background: "linear-gradient(90deg, #000000 0%, #454545 50%, #727272 100%)" }}
+        style={{ background: "linear-gradient(90deg, var(--color-ink) 0%, color-mix(in srgb, var(--color-ink) 70%, var(--color-text-muted)) 50%, var(--color-text-muted) 100%)" }}
         aria-hidden
       />
 
@@ -94,9 +95,9 @@ function PartnerCard({ partner }: { partner: Partner }) {
           <span
             className="shrink-0 border px-2.5 py-1 font-body text-[10px] font-bold uppercase tracking-widest"
             style={{
-              borderColor: "#727272",
-              color: "#727272",
-              background: "rgba(114,114,114,0.07)",
+              borderColor: "var(--color-text-muted)",
+              color: "var(--color-text-muted)",
+              background: "color-mix(in srgb, var(--color-text-muted) 7%, transparent)",
             }}
           >
             Verified
@@ -114,7 +115,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
         <div className="flex flex-wrap items-center gap-2">
           <span
             className="inline-flex items-center gap-1.5 px-3 py-1 font-body text-[11px] font-semibold"
-            style={{ background: "rgba(0,0,0,0.09)", color: "#000000" }}
+            style={{ background: "color-mix(in srgb, var(--color-ink) 9%, transparent)", color: "var(--color-ink)" }}
           >
             <svg aria-hidden fill="none" height="11" viewBox="0 0 12 12" width="11">
               <rect height="7" rx="0.5" stroke="currentColor" strokeWidth="1.1" width="9" x="1.5" y="3.5" />
@@ -197,7 +198,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
     <section className="flex-1 bg-cream">
       {/* Filter bar */}
       <div className="border-b border-cream-dark bg-white px-4 py-5">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <AnimateOnScroll className="mx-auto flex max-w-7xl flex-col items-start gap-4 sm:flex-row sm:items-center" direction="up">
           <div className="relative w-full shrink-0 sm:w-72">
             <svg
               aria-hidden
@@ -231,8 +232,8 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
                 className="border px-3.5 py-1.5 font-body text-sm transition-colors"
                 style={
                   region === r
-                    ? { background: "#000000", borderColor: "#000000", color: "#fff" }
-                    : { background: "white", borderColor: "#d8d0c4", color: "#270d06" }
+                    ? { background: "var(--color-ink)", borderColor: "var(--color-ink)", color: "var(--color-paper)" }
+                    : { background: "var(--color-paper)", borderColor: "var(--color-cream-dark)", color: "var(--color-text-dark)" }
                 }
                 onClick={() => setRegion(r)}
                 type="button"
@@ -241,11 +242,11 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
               </button>
             ))}
           </div>
-        </div>
+        </AnimateOnScroll>
       </div>
 
       {/* Grid */}
-      <div className="mx-auto max-w-7xl px-4 py-10">
+      <AnimateOnScroll className="mx-auto max-w-7xl px-4 py-10" delay={60} direction="up" scale>
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
             <p className="font-body text-text-muted">No artisans match your filters.</p>
@@ -257,7 +258,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
             ))}
           </div>
         )}
-      </div>
+      </AnimateOnScroll>
     </section>
   );
 }

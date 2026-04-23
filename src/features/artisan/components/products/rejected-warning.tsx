@@ -18,8 +18,8 @@ export function RejectedWarning({ count, rejectedProducts = [] }: RejectedWarnin
     <div
       className="rounded-sm px-5 py-4 flex items-start gap-3"
       style={{
-        background: "rgba(248,113,113,0.06)",
-        border: "1px solid rgba(248,113,113,0.18)",
+        background: "color-mix(in srgb, var(--color-danger) 6%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--color-danger) 18%, transparent)",
       }}
     >
       <svg
@@ -31,7 +31,7 @@ export function RejectedWarning({ count, rejectedProducts = [] }: RejectedWarnin
       >
         <path
           d="M8 2L1.5 13h13L8 2z"
-          stroke="#f87171"
+          stroke="var(--color-danger)"
           strokeWidth="1.3"
           strokeLinejoin="round"
         />
@@ -40,21 +40,21 @@ export function RejectedWarning({ count, rejectedProducts = [] }: RejectedWarnin
           y1="7"
           x2="8"
           y2="10"
-          stroke="#f87171"
+          stroke="var(--color-danger)"
           strokeWidth="1.3"
           strokeLinecap="round"
         />
-        <circle cx="8" cy="12" r="0.6" fill="#f87171" />
+        <circle cx="8" cy="12" r="0.6" fill="var(--color-danger)" />
       </svg>
       <div>
-        <p className="font-sans font-semibold text-sm text-[#f87171]">
+        <p className="font-sans font-semibold text-sm text-[var(--color-danger)]">
           {count} product{count > 1 ? "s" : ""} require{count === 1 ? "s" : ""}{" "}
           action
         </p>
-        <p className="font-sans text-[12px] text-[#f87171]/70 mt-0.5">
+        <p className="font-sans text-[12px] text-[var(--color-danger)]/70 mt-0.5">
           {firstWithReason ? (
             <>
-              <span className="font-semibold text-[#f87171]">{firstWithReason.name}:</span>{" "}
+              <span className="font-semibold text-[var(--color-danger)]">{firstWithReason.name}:</span>{" "}
               {firstWithReason.rejectionReason}
             </>
           ) : (

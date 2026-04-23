@@ -178,6 +178,7 @@ model Organization {
   trainingEnrollments TrainingEnrollment[]
   supportTickets    SupportTicket[]
   shopOrderLines    ShopOrderLine[]
+  producerArticles  ProducerArticle[]
 
   @@map("organization")
 }
@@ -508,6 +509,29 @@ model SavedListProduct {
   @@unique([savedListId, productId])
   @@index([productId])
   @@map("saved_list_product")
+}
+
+/// Short-form journal posts written by producers; published items surface on the public homepage.
+model ProducerArticle {
+  id               String   @id @default(cuid())
+  organizationId   String
+  title            String
+  tag              String?
+  excerpt          String?  @db.Text
+  body             String   @db.Text
+  /// CSS background (gradient) for listing cards on the marketing site.
+  coverGradient    String   @default("linear-gradient(135deg, #000000 0%, #727272 100%)")
+  /// Optional hero / card image (HTTPS URL from media upload).
+  coverImageUrl    String?
+  status           String   @default("DRAFT") // DRAFT | PUBLISHED
+  publishedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([status, publishedAt])
+  @@map("producer_article")
 }
 
 // ─── Support (producer org opens tickets) ────────────────────────────────────

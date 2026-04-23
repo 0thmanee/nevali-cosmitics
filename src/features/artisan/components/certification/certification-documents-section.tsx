@@ -10,9 +10,9 @@ import type { CertificationRow } from "~/app/api/certifications/schemas/certific
 // ── Shared atoms ──────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG = {
-  PENDING:  { bg: "rgba(201,145,61,0.10)", color: "#727272", dot: "#727272",  label: "Pending review" },
-  APPROVED: { bg: "rgba(0,0,0,0.10)",   color: "#16a34a", dot: "#4ade80",  label: "Approved" },
-  REJECTED: { bg: "rgba(180,30,30,0.10)",  color: "#dc2626", dot: "#f87171",  label: "Rejected" },
+  PENDING:  { bg: "color-mix(in srgb, var(--color-gold) 10%, transparent)", color: "var(--color-text-muted)", dot: "var(--color-text-muted)",  label: "Pending review" },
+  APPROVED: { bg: "color-mix(in srgb, var(--color-ink) 10%, transparent)",   color: "var(--color-success)", dot: "var(--color-success-light)",  label: "Approved" },
+  REJECTED: { bg: "color-mix(in srgb, var(--color-danger-dark) 10%, transparent)",  color: "var(--color-danger-dark)", dot: "var(--color-danger)",  label: "Rejected" },
 } as const;
 
 const ALLOWED_SET = new Set<string>(CERTIFICATION_ALLOWED_MIMES);
@@ -31,17 +31,17 @@ function CertRow({
     <div className="flex items-center gap-3 px-4 py-3 bg-white group">
       <div
         className="w-8 h-8 rounded-sm flex items-center justify-center shrink-0"
-        style={{ background: "rgba(0,0,0,0.07)" }}
+        style={{ background: "color-mix(in srgb, var(--color-ink) 7%, transparent)" }}
       >
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path d="M4 2h6l3 3v9H4V2z" stroke="#000000" strokeWidth="1.3" strokeLinejoin="round" />
-          <path d="M10 2v3h3" stroke="#000000" strokeWidth="1.3" strokeLinejoin="round" />
-          <path d="M6 7h4M6 9.5h4M6 12h2" stroke="#000000" strokeWidth="1.1" strokeLinecap="round" />
+          <path d="M4 2h6l3 3v9H4V2z" stroke="var(--color-ink)" strokeWidth="1.3" strokeLinejoin="round" />
+          <path d="M10 2v3h3" stroke="var(--color-ink)" strokeWidth="1.3" strokeLinejoin="round" />
+          <path d="M6 7h4M6 9.5h4M6 12h2" stroke="var(--color-ink)" strokeWidth="1.1" strokeLinecap="round" />
         </svg>
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="font-sans font-semibold text-[13px] text-[#000000] truncate">{cert.name}</p>
+        <p className="font-sans font-semibold text-[13px] text-text-dark truncate">{cert.name}</p>
         {cert.status === "REJECTED" && cert.rejectionReason && (
           <p className="font-sans text-[11px] text-red-500 mt-0.5 truncate">{cert.rejectionReason}</p>
         )}
@@ -59,7 +59,7 @@ function CertRow({
           href={cert.fileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-sans text-[11px] font-medium text-[#000000] bg-[#F5F7F5] border border-[#d8d0c4] rounded-sm px-2.5 py-1 hover:bg-[#EEF2EE] transition-colors"
+          className="font-sans text-[11px] font-medium text-text-dark bg-[color-mix(in srgb, var(--color-paper) 70%, var(--color-cream-dark))] border border-cream-dark rounded-sm px-2.5 py-1 hover:bg-[color-mix(in srgb, var(--color-paper) 55%, var(--color-cream-dark))] transition-colors"
         >
           View
         </a>
@@ -67,7 +67,7 @@ function CertRow({
           type="button"
           onClick={onRemove}
           disabled={removing}
-          className="font-sans text-[11px] font-medium text-[#9BB0A0] hover:text-red-500 disabled:opacity-50 transition-colors"
+          className="font-sans text-[11px] font-medium text-[var(--color-text-muted)] hover:text-red-500 disabled:opacity-50 transition-colors"
         >
           Remove
         </button>
@@ -117,9 +117,9 @@ function InlineUploadForm({
   return (
     <div
       className="flex flex-col gap-2 px-4 py-3 rounded-sm"
-      style={{ background: "rgba(0,0,0,0.04)", border: "1px dashed rgba(0,0,0,0.18)" }}
+      style={{ background: "color-mix(in srgb, var(--color-ink) 4%, transparent)", border: "1px dashed color-mix(in srgb, var(--color-ink) 18%, transparent)" }}
     >
-      <p className="font-sans text-[11px] font-semibold text-[#000000] uppercase tracking-wide">
+      <p className="font-sans text-[11px] font-semibold text-text-dark uppercase tracking-wide">
         New certificate
       </p>
       <div className="flex items-center gap-2 flex-wrap">
@@ -129,14 +129,14 @@ function InlineUploadForm({
           placeholder="Certificate name (e.g. ISO 22000, Bio Certificate…)"
           value={name}
           onChange={(e) => { setName(e.target.value); setFileError(null); }}
-          className="font-sans text-[13px] rounded-sm px-3.5 py-2 border border-[#d8d0c4] bg-white flex-1 min-w-[200px] focus:outline-none focus:border-[#000000] transition-colors"
+          className="font-sans text-[13px] rounded-sm px-3.5 py-2 border border-cream-dark bg-white flex-1 min-w-[200px] focus:outline-none focus:border-[var(--color-ink)] transition-colors"
         />
         <button
           type="button"
           onClick={() => { setFileError(null); inputRef.current?.click(); }}
           disabled={addMutation.isPending}
           className="font-sans text-[13px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60 flex items-center gap-2 shrink-0"
-          style={{ background: "#000000", color: "white" }}
+          style={{ background: "var(--color-ink)", color: "white" }}
         >
           {addMutation.isPending ? (
             <>
@@ -157,7 +157,7 @@ function InlineUploadForm({
           )}
         </button>
       </div>
-      <p className="font-sans text-[11px] text-[#727272]">PDF, JPEG, PNG or WebP — max 10 MB</p>
+      <p className="font-sans text-[11px] text-text-muted">PDF, JPEG, PNG or WebP — max 10 MB</p>
       {fileError && <p className="font-sans text-[12px] text-red-500" role="alert">{fileError}</p>}
     </div>
   );
@@ -177,25 +177,25 @@ function SectionHeader({
   count?: number;
 }) {
   return (
-    <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+    <div className="px-5 py-4 border-b" style={{ borderColor: "var(--color-cream-dark)" }}>
       <div className="flex items-center gap-2 mb-0.5">
         <div
           className="w-6 h-6 rounded-sm flex items-center justify-center shrink-0"
-          style={{ background: "rgba(0,0,0,0.10)" }}
+          style={{ background: "color-mix(in srgb, var(--color-ink) 10%, transparent)" }}
         >
           {icon}
         </div>
-        <h3 className="font-serif font-bold text-[15px] text-[#000000]">{title}</h3>
+        <h3 className="font-serif font-bold text-[15px] text-text-dark">{title}</h3>
         {count !== undefined && count > 0 && (
           <span
             className="font-sans text-[10px] font-semibold rounded-full px-2 py-0.5"
-            style={{ background: "rgba(0,0,0,0.10)", color: "#000000" }}
+            style={{ background: "color-mix(in srgb, var(--color-ink) 10%, transparent)", color: "var(--color-ink)" }}
           >
             {count}
           </span>
         )}
       </div>
-      <p className="font-sans text-[12px] text-[#727272]">{description}</p>
+      <p className="font-sans text-[12px] text-text-muted">{description}</p>
     </div>
   );
 }
@@ -214,14 +214,14 @@ export function CertificationDocumentsSection() {
 
   if (isLoading) {
     return (
-      <div className="rounded-sm py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
-        <p className="font-sans text-[13px] text-[#727272]">Loading certifications…</p>
+      <div className="rounded-sm py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
+        <p className="font-sans text-[13px] text-text-muted">Loading certifications…</p>
       </div>
     );
   }
   if (isError) {
     return (
-      <div className="rounded-sm py-6 px-5" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm py-6 px-5" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
         <p className="font-sans text-[13px] text-red-500">Failed to load certifications.</p>
       </div>
     );
@@ -241,11 +241,11 @@ export function CertificationDocumentsSection() {
     <div className="flex flex-col gap-4">
 
       {/* ── Section 1: Organization Certifications ── */}
-      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
         <SectionHeader
           icon={
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 1l1.4 3.5H11L8.3 6.7l1 3.3L6 8.2l-3.3 1.8 1-3.3L1 4.5h3.6L6 1z" stroke="#000000" strokeWidth="1.2" strokeLinejoin="round" />
+              <path d="M6 1l1.4 3.5H11L8.3 6.7l1 3.3L6 8.2l-3.3 1.8 1-3.3L1 4.5h3.6L6 1z" stroke="var(--color-ink)" strokeWidth="1.2" strokeLinejoin="round" />
             </svg>
           }
           title="Organization Certifications"
@@ -279,7 +279,7 @@ export function CertificationDocumentsSection() {
               type="button"
               onClick={() => setOrgFormOpen(true)}
               className="flex items-center gap-2 font-sans text-[13px] font-semibold rounded-sm px-4 py-2.5 self-start transition-colors"
-              style={{ background: "rgba(0,0,0,0.06)", color: "#000000", border: "1px solid rgba(0,0,0,0.14)" }}
+              style={{ background: "color-mix(in srgb, var(--color-ink) 6%, transparent)", color: "var(--color-ink)", border: "1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)" }}
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -289,7 +289,7 @@ export function CertificationDocumentsSection() {
           )}
 
           {globalCerts.length === 0 && !orgFormOpen && (
-            <p className="font-sans text-[12px] text-[#727272]">
+            <p className="font-sans text-[12px] text-text-muted">
               No organization certificates yet.
             </p>
           )}
@@ -297,13 +297,13 @@ export function CertificationDocumentsSection() {
       </div>
 
       {/* ── Section 2: Product Certifications ── */}
-      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}>
         <SectionHeader
           icon={
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <rect x="1" y="4" width="10" height="7" rx="1.5" stroke="#000000" strokeWidth="1.2" />
-              <path d="M4 4V3a2 2 0 0 1 4 0v1" stroke="#000000" strokeWidth="1.2" strokeLinecap="round" />
-              <circle cx="6" cy="7.5" r="1" fill="#000000" />
+              <rect x="1" y="4" width="10" height="7" rx="1.5" stroke="var(--color-ink)" strokeWidth="1.2" />
+              <path d="M4 4V3a2 2 0 0 1 4 0v1" stroke="var(--color-ink)" strokeWidth="1.2" strokeLinecap="round" />
+              <circle cx="6" cy="7.5" r="1" fill="var(--color-ink)" />
             </svg>
           }
           title="Product Certifications"
@@ -313,7 +313,7 @@ export function CertificationDocumentsSection() {
 
         {products.length === 0 ? (
           <div className="px-5 py-8 text-center">
-            <p className="font-sans text-[13px] text-[#727272]">
+            <p className="font-sans text-[13px] text-text-muted">
               No products yet. Add products from My Products first.
             </p>
           </div>
@@ -327,25 +327,25 @@ export function CertificationDocumentsSection() {
                 <div
                   key={product.id}
                   className="rounded-sm overflow-hidden flex flex-col gap-0"
-                  style={{ border: "1px solid #d8d0c4", background: "#ffffff" }}
+                  style={{ border: "1px solid var(--color-cream-dark)", background: "var(--color-paper)" }}
                 >
                 <div className="px-4 py-3.5 flex flex-col gap-3">
                   {/* Product row */}
                   <div className="flex items-center gap-3 justify-between">
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <span className="font-sans font-semibold text-[13px] text-[#000000] truncate">
+                      <span className="font-sans font-semibold text-[13px] text-text-dark truncate">
                         {product.name}
                       </span>
                       <span
                         className="font-sans text-[10px] font-semibold rounded-sm px-1.5 py-0.5 shrink-0"
-                        style={{ background: "rgba(0,0,0,0.07)", color: "#727272" }}
+                        style={{ background: "color-mix(in srgb, var(--color-ink) 7%, transparent)", color: "var(--color-text-muted)" }}
                       >
                         {product.category}
                       </span>
                       {certs.length > 0 && (
                         <span
                           className="font-sans text-[10px] font-semibold rounded-full px-2 py-0.5 shrink-0"
-                          style={{ background: "rgba(0,0,0,0.10)", color: "#000000" }}
+                          style={{ background: "color-mix(in srgb, var(--color-ink) 10%, transparent)", color: "var(--color-ink)" }}
                         >
                           {certs.length} cert{certs.length !== 1 ? "s" : ""}
                         </span>
@@ -358,8 +358,8 @@ export function CertificationDocumentsSection() {
                       className="flex items-center gap-1.5 font-sans text-[12px] font-semibold rounded-sm px-3 py-1.5 shrink-0 transition-colors"
                       style={
                         isOpen
-                          ? { background: "rgba(0,0,0,0.10)", color: "#000000" }
-                          : { background: "rgba(0,0,0,0.06)", color: "#000000", border: "1px solid rgba(0,0,0,0.14)" }
+                          ? { background: "color-mix(in srgb, var(--color-ink) 10%, transparent)", color: "var(--color-ink)" }
+                          : { background: "color-mix(in srgb, var(--color-ink) 6%, transparent)", color: "var(--color-ink)", border: "1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)" }
                       }
                     >
                       {isOpen ? (
@@ -394,12 +394,12 @@ export function CertificationDocumentsSection() {
                 {certs.length > 0 && (
                   <div
                     className="flex flex-col gap-0 border-t"
-                    style={{ borderColor: "#d8d0c4" }}
+                    style={{ borderColor: "var(--color-cream-dark)" }}
                   >
                     {certs.map((c, i) => (
                       <div
                         key={c.id}
-                        style={{ borderTop: i > 0 ? "1px solid #d8d0c4" : "none" }}
+                        style={{ borderTop: i > 0 ? "1px solid var(--color-cream-dark)" : "none" }}
                       >
                         <CertRow
                           cert={c}

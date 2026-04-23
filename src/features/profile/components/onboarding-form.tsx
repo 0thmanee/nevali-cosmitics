@@ -24,7 +24,7 @@ const set =
 const labelCls =
   "font-sans text-[10px] font-bold tracking-[0.16em] text-text-muted uppercase";
 const inputCls =
-  "font-sans text-[14px] text-text-dark bg-transparent border-0 border-b border-[#d0c4b0] rounded-none px-0 py-2 outline-none w-full transition-colors placeholder:text-[#c0b4a4] focus:border-[#000000]";
+  "font-sans text-[14px] text-text-dark bg-transparent border-0 border-b border-[color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))] rounded-none px-0 py-2 outline-none w-full transition-colors placeholder:text-[var(--color-muted-light)] focus:border-[var(--color-ink)]";
 const selectCls = inputCls + " appearance-none cursor-pointer";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -42,8 +42,8 @@ function Checkbox({ checked, onToggle }: { checked: boolean; onToggle: () => voi
       className="w-4 h-4 flex items-center justify-center shrink-0 mt-0.5 cursor-pointer transition-colors"
       style={
         checked
-          ? { background: "#000000", border: "1.5px solid #000000", borderRadius: "2px" }
-          : { background: "#fff", border: "1.5px solid #d0c4b0", borderRadius: "2px" }
+          ? { background: "var(--color-ink)", border: "1.5px solid var(--color-ink)", borderRadius: "2px" }
+          : { background: "var(--color-paper)", border: "1.5px solid color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))", borderRadius: "2px" }
       }
       onClick={onToggle}
       onKeyDown={(e) => e.key === "Enter" && onToggle()}
@@ -207,8 +207,8 @@ export function OnboardingForm({
                 className="font-sans text-[11px] font-medium px-3 py-1.5 transition-all"
                 style={
                   selected
-                    ? { background: "#000000", color: "#fff", border: "1.5px solid #000000", borderRadius: "2px" }
-                    : { background: "transparent", color: "#727272", border: "1.5px solid #d0c4b0", borderRadius: "2px" }
+                    ? { background: "var(--color-ink)", color: "var(--color-paper)", border: "1.5px solid var(--color-ink)", borderRadius: "2px" }
+                    : { background: "transparent", color: "var(--color-text-muted)", border: "1.5px solid color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))", borderRadius: "2px" }
                 }>
                 {selected && "✓ "}{cat.label}
               </button>
@@ -236,15 +236,15 @@ export function OnboardingForm({
   const step3Fields = (
     <div className="flex flex-col gap-4">
       {/* Business card */}
-      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #e0d4c4" }}>
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#e0d4c4]" style={{ background: "#f5eee4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-cream-dark)]" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
           <span className={labelCls}>Brand &amp; studio</span>
           <button type="button" onClick={() => setStep(1)}
-            className="font-sans text-[11px] hover:underline" style={{ color: "#000000" }}>
+            className="font-sans text-[11px] hover:underline" style={{ color: "var(--color-ink)" }}>
             Edit
           </button>
         </div>
-        <div className="px-4 py-3 grid grid-cols-2 gap-3" style={{ background: "#ede6dc" }}>
+        <div className="px-4 py-3 grid grid-cols-2 gap-3" style={{ background: "var(--color-cream)" }}>
           {[
             { label: "Name", value: `${form.firstName} ${form.lastName}`.trim() },
             { label: "Entity", value: form.entityName },
@@ -261,18 +261,18 @@ export function OnboardingForm({
       </div>
 
       {/* Categories card */}
-      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #e0d4c4" }}>
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#e0d4c4]" style={{ background: "#f5eee4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-cream-dark)]" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
           <span className={labelCls}>Categories</span>
           <button type="button" onClick={() => setStep(2)}
-            className="font-sans text-[11px] hover:underline" style={{ color: "#000000" }}>
+            className="font-sans text-[11px] hover:underline" style={{ color: "var(--color-ink)" }}>
             Edit
           </button>
         </div>
-        <div className="px-4 py-3 flex flex-wrap gap-1.5" style={{ background: "#ede6dc" }}>
+        <div className="px-4 py-3 flex flex-wrap gap-1.5" style={{ background: "var(--color-cream)" }}>
           {form.categories.map((c) => (
             <span key={c} className="font-sans text-[11px] font-medium px-2.5 py-0.5"
-              style={{ background: "rgba(0,0,0,0.08)", color: "#000000", border: "1px solid rgba(0,0,0,0.15)", borderRadius: "2px" }}>
+              style={{ background: "color-mix(in srgb, var(--color-ink) 8%, transparent)", color: "var(--color-ink)", border: "1px solid color-mix(in srgb, var(--color-ink) 15%, transparent)", borderRadius: "2px" }}>
               {c}
             </span>
           ))}
@@ -285,7 +285,7 @@ export function OnboardingForm({
           <Checkbox checked={form.agreeTerms} onToggle={() => setForm(set("agreeTerms")(!form.agreeTerms))} />
           <span className="font-sans text-[12px] text-text-muted leading-relaxed">
             I agree to the nevali Terms of Service and Privacy Policy{" "}
-            <span style={{ color: "#000000" }}>*</span>
+            <span style={{ color: "var(--color-ink)" }}>*</span>
           </span>
         </label>
         <label className="flex items-start gap-2.5 cursor-pointer">
@@ -298,7 +298,7 @@ export function OnboardingForm({
 
       {submitError && (
         <div className="px-4 py-3 font-sans text-sm rounded-sm"
-          style={{ background: "rgba(180,40,20,0.08)", border: "1px solid rgba(180,40,20,0.2)", color: "#b02010" }}>
+          style={{ background: "color-mix(in srgb, var(--color-danger-dark) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--color-danger-dark) 20%, transparent)", color: "var(--color-danger-dark)" }}>
           {submitError}
         </div>
       )}
@@ -317,13 +317,13 @@ export function OnboardingForm({
           </Link>
           <h1 className="font-serif font-bold text-[28px] text-text-dark leading-tight mt-3 mb-1">Edit profile</h1>
           <p className="font-sans text-text-muted text-sm mb-8">Update your brand profile and contact details.</p>
-          <div className="flex gap-0 mb-8 border-b border-[#e0d4c4]">
+          <div className="flex gap-0 mb-8 border-b border-[var(--color-cream-dark)]">
             {ONBOARDING_STEPS.map((s) => (
               <button key={s.number} type="button" onClick={() => setStep(s.number)}
                 className="font-sans text-[11px] font-semibold uppercase tracking-wider px-5 py-3 transition-colors"
                 style={{
-                  color: step === s.number ? "#000000" : "#b0a090",
-                  borderBottom: step === s.number ? "2px solid #000000" : "2px solid transparent",
+                  color: step === s.number ? "var(--color-ink)" : "var(--color-text-muted)",
+                  borderBottom: step === s.number ? "2px solid var(--color-ink)" : "2px solid transparent",
                   marginBottom: "-1px",
                 }}>
                 {s.label}
@@ -338,12 +338,12 @@ export function OnboardingForm({
             {step < totalSteps
               ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
-                  style={canNext() ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
+                  style={canNext() ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
                   Continue →
                 </button>
               : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
-                  style={canNext() && !submitting ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
+                  style={canNext() && !submitting ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
                   {submitting ? "Saving…" : "Save changes"}
                 </button>}
           </div>
@@ -354,9 +354,9 @@ export function OnboardingForm({
 
   /* ── Onboarding: full-page, no-scroll, two-panel ── */
   return (
-    <div className="h-screen flex flex-col overflow-hidden" style={{ background: "#ffffff" }}>
+    <div className="h-screen flex flex-col overflow-hidden" style={{ background: "var(--color-paper)" }}>
       {/* Top bar */}
-      <div className="flex items-center justify-between px-8 py-4 shrink-0" style={{ borderBottom: "1px solid #e0d4c4" }}>
+      <div className="flex items-center justify-between px-8 py-4 shrink-0" style={{ borderBottom: "1px solid var(--color-cream-dark)" }}>
         <Link href="/" className="font-display font-bold uppercase text-[16px] tracking-wide text-text-dark">
           nevali
         </Link>
@@ -368,15 +368,15 @@ export function OnboardingForm({
                   style={{
                     width: step === s.number ? "7px" : "5px",
                     height: step === s.number ? "7px" : "5px",
-                    background: step >= s.number ? "#000000" : "#d0c4b0",
+                    background: step >= s.number ? "var(--color-ink)" : "color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))",
                   }} />
                 <span className="font-sans text-[10px] uppercase tracking-widest hidden sm:block"
-                  style={{ color: step === s.number ? "#000000" : "#b8a898", fontWeight: step === s.number ? 700 : 400 }}>
+                  style={{ color: step === s.number ? "var(--color-ink)" : "var(--color-text-muted)", fontWeight: step === s.number ? 700 : 400 }}>
                   {s.label}
                 </span>
               </div>
               {i < ONBOARDING_STEPS.length - 1 && (
-                <div className="hidden sm:block w-6 h-px" style={{ background: "#d8cec4" }} />
+                <div className="hidden sm:block w-6 h-px" style={{ background: "var(--color-cream-dark)" }} />
               )}
             </React.Fragment>
           ))}
@@ -384,15 +384,15 @@ export function OnboardingForm({
       </div>
 
       {/* Progress bar */}
-      <div className="h-px w-full shrink-0" style={{ background: "#e8ddd0" }}>
-        <div className="h-full transition-all duration-500" style={{ width: `${(step / totalSteps) * 100}%`, background: "#000000" }} />
+      <div className="h-px w-full shrink-0" style={{ background: "var(--color-cream-dark)" }}>
+        <div className="h-full transition-all duration-500" style={{ width: `${(step / totalSteps) * 100}%`, background: "var(--color-ink)" }} />
       </div>
 
       {/* Two-panel content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left: step context */}
-        <div className="w-64 shrink-0 flex flex-col justify-center px-10 py-8" style={{ borderRight: "1px solid #e8ddd0" }}>
-          <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#727272" }}>
+        <div className="w-64 shrink-0 flex flex-col justify-center px-10 py-8" style={{ borderRight: "1px solid var(--color-cream-dark)" }}>
+          <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "var(--color-text-muted)" }}>
             Step {step} of {totalSteps}
           </span>
           <h1 className="font-serif font-bold text-[32px] text-text-dark leading-[1.05] mb-3">
@@ -407,9 +407,9 @@ export function OnboardingForm({
             {ONBOARDING_STEPS.map((s) => (
               <div key={s.number} className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 rounded-full shrink-0 transition-all"
-                  style={{ background: step >= s.number ? "#000000" : "#d0c4b0" }} />
+                  style={{ background: step >= s.number ? "var(--color-ink)" : "color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))" }} />
                 <span className="font-sans text-[11px] uppercase tracking-wider"
-                  style={{ color: step === s.number ? "#000000" : "#c0b4a4", fontWeight: step === s.number ? 700 : 400 }}>
+                  style={{ color: step === s.number ? "var(--color-ink)" : "var(--color-muted-light)", fontWeight: step === s.number ? 700 : 400 }}>
                   {s.label}
                 </span>
               </div>
@@ -426,7 +426,7 @@ export function OnboardingForm({
       </div>
 
       {/* Bottom nav */}
-      <div className="shrink-0 flex items-center justify-between px-8 py-4" style={{ borderTop: "1px solid #e0d4c4", background: "#ffffff" }}>
+      <div className="shrink-0 flex items-center justify-between px-8 py-4" style={{ borderTop: "1px solid var(--color-cream-dark)", background: "var(--color-paper)" }}>
         {step > 1
           ? <button type="button" onClick={() => setStep(step - 1)}
               className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
@@ -439,12 +439,12 @@ export function OnboardingForm({
         {step < totalSteps
           ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
-              style={canNext() ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
+              style={canNext() ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
               Continue →
             </button>
           : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
-              style={canNext() && !submitting ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
+              style={canNext() && !submitting ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
               {submitting ? "Saving…" : "Complete profile"}
             </button>}
       </div>

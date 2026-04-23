@@ -161,10 +161,10 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 				<div className="relative shrink-0 overflow-hidden rounded-t-sm" style={{ height: 200 }}>
 					<Link
 						href={`/products/${product.id}`}
-						className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/45 focus-visible:ring-inset"
+						className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-inset"
 						aria-label={`View details: ${product.name}`}
 					/>
-					<div className="pointer-events-none relative z-[1] flex h-full items-center justify-center overflow-hidden bg-cream">
+					<div className="pointer-events-none relative z-1 flex h-full items-center justify-center overflow-hidden bg-cream">
 						<Image
 							src={resolvedImageUrl}
 							alt=""
@@ -180,7 +180,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								type="button"
 								aria-label="Previous photo"
 								onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
-								className="absolute top-1/2 left-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#000000]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35"
+								className="absolute top-1/2 left-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-primary/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
 							>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 									<path
@@ -196,7 +196,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								type="button"
 								aria-label="Next photo"
 								onClick={() => setSlide((s) => (s + 1) % gallery.length)}
-								className="absolute top-1/2 right-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#000000]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35"
+								className="absolute top-1/2 right-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-primary/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
 							>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 									<path
@@ -217,7 +217,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 										aria-current={i === slide ? "true" : undefined}
 										onClick={() => setSlide(i)}
 										className={`h-1.5 rounded-full transition-all ${
-											i === slide ? "w-4 bg-[#000000] shadow-sm" : "w-1.5 bg-white/55 hover:bg-white/80"
+											i === slide ? "w-4 bg-primary shadow-sm" : "w-1.5 bg-white/55 hover:bg-white/80"
 										}`}
 									/>
 								))}
@@ -228,20 +228,20 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 					<div
 						className="pointer-events-none absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-[9px] font-bold tracking-widest"
 						style={{
-							background: "rgba(0,0,0,0.82)",
-							color: "#727272",
-							border: "1px solid rgba(114,114,114,0.35)",
+							background: "color-mix(in srgb, var(--color-primary) 17%, transparent)",
+							color: "var(--color-primary-dark)",
+							border: "1px solid color-mix(in srgb, var(--color-primary) 35%, transparent)",
 						}}
 					>
-						<span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "#727272" }} />
+						<span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "var(--color-primary-dark)" }} />
 						CERTIFIED
 					</div>
 					<div
 						className="pointer-events-none absolute top-3 right-3 z-10 max-w-[120px] truncate rounded-full px-2.5 py-1 font-sans text-[9px] font-bold tracking-widest"
 						style={{
-							background: "rgba(255,255,255,0.75)",
-							color: "rgba(20,30,22,0.80)",
-							border: "1px solid rgba(0,0,0,0.08)",
+							background: "color-mix(in srgb, var(--color-paper) 75%, transparent)",
+							color: "color-mix(in srgb, var(--color-ink) 80%, transparent)",
+							border: "1px solid color-mix(in srgb, var(--color-ink) 8%, transparent)",
 						}}
 					>
 						{product.category.toUpperCase()}
@@ -251,7 +251,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 				<div className="flex flex-1 flex-col gap-3 p-4">
 					<Link
 						href={`/products/${product.id}`}
-						className="-mx-1 flex flex-col gap-0.5 rounded-sm px-1 py-0.5 transition-colors hover:bg-cream/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35 focus-visible:ring-offset-2"
+						className="-mx-1 flex flex-col gap-0.5 rounded-sm px-1 py-0.5 transition-colors hover:bg-cream/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-2"
 					>
 						<h3 className="line-clamp-2 font-serif font-bold text-[15px] leading-snug text-text-dark transition-colors group-hover:text-forest-mid">
 							{product.name}
@@ -276,7 +276,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								<select
 									value={selectedId ?? ""}
 									onChange={(e) => setSelectedId(e.target.value || null)}
-									className="w-full rounded-sm border border-cream-dark bg-cream/40 px-2.5 py-2 text-[12px] font-medium text-text-dark focus:border-[#000000]/50 focus:outline-none focus:ring-2 focus:ring-[#000000]/25"
+									className="w-full rounded-sm border border-cream-dark bg-cream/40 px-2.5 py-2 text-[12px] font-medium text-text-dark focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/25"
 								>
 									{product.variants.map((v) => (
 										<option key={v.id} value={v.id} disabled={!v.inStock}>
@@ -320,7 +320,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									aria-label="Decrease quantity"
 									disabled={qty <= minQty}
 									onClick={() => setQty((q) => Math.max(minQty, q - 1))}
-									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#000000]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30 disabled:cursor-not-allowed disabled:opacity-40"
+									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-primary/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
 								>
 									−
 								</button>
@@ -336,14 +336,14 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 										if (!Number.isFinite(n)) return;
 										setQty(Math.min(maxQty, Math.max(minQty, Math.floor(n))));
 									}}
-									className="h-8 w-10 shrink-0 rounded-sm border border-cream-dark bg-cream/40 px-1 text-center font-sans text-sm font-semibold text-text-dark [appearance:textfield] focus:border-[#000000]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#000000]/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									className="h-8 w-10 shrink-0 rounded-sm border border-cream-dark bg-cream/40 px-1 text-center font-sans text-sm font-semibold text-text-dark [appearance:textfield] focus:border-primary/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 								/>
 								<button
 									type="button"
 									aria-label="Increase quantity"
 									disabled={qty >= maxQty}
 									onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
-									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#000000]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30 disabled:cursor-not-allowed disabled:opacity-40"
+									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-primary/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
 								>
 									+
 								</button>
@@ -353,10 +353,10 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									disabled={justAdded}
 									className={`flex h-8 flex-1 items-center justify-center gap-2 rounded-sm font-sans text-[13px] font-semibold shadow-sm transition-opacity disabled:cursor-default ${
 										justAdded
-											? "border border-[#000000]/35 bg-cream text-[#000000]"
-											: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 focus-visible:ring-offset-2"
+											? "border border-primary/35 bg-cream text-primary-dark"
+											: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
 									}`}
-									style={justAdded ? undefined : { background: "#000000" }}
+									style={justAdded ? undefined : { background: "var(--color-primary)" }}
 								>
 									{justAdded ? (
 										<>
@@ -393,8 +393,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							<button
 								type="button"
 								onClick={handleAddToCart}
-								className="flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/50 focus-visible:ring-offset-2"
-								style={{ background: "#000000" }}
+								className="flex w-full items-center justify-center gap-2 rounded-sm bg-primary py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
 							>
 								Request pricing
 							</button>
@@ -405,7 +404,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 						<button
 							type="button"
 							onClick={() => setModal("b2b")}
-							className="rounded-sm py-1 text-center font-sans text-[11px] font-medium text-text-muted transition-colors hover:text-[#000000] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30"
+							className="rounded-sm py-1 text-center font-sans text-[11px] font-medium text-text-muted transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
 						>
 							Wholesale inquiry →
 						</button>

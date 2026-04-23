@@ -6,6 +6,7 @@
 export const MEDIA_UPLOAD_TYPES = [
   "profilePictures",
   "productImages",
+  "articleMedia",
   "certificationDocuments",
   "trainingProgramMedia",
 ] as const;

@@ -9,7 +9,7 @@ export function CartNavLink() {
   return (
     <Link
       href="/cart"
-      className="relative flex items-center justify-center w-9 h-9 border border-text-dark/15 text-text-dark hover:bg-text-dark/5 transition-colors"
+      className="relative flex h-9 w-9 items-center justify-center rounded-sm border border-primary/25 text-primary transition-colors hover:bg-primary/10"
       aria-label={totalQuantity > 0 ? `Cart, ${totalQuantity} items` : "Cart"}
     >
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
@@ -25,8 +25,7 @@ export function CartNavLink() {
       </svg>
       {ready && totalQuantity > 0 ? (
         <span
-          className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 text-white font-sans text-[10px] font-bold flex items-center justify-center"
-          style={{ background: "#000000" }}
+          className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center bg-primary px-1 font-sans text-[10px] font-bold text-white"
         >
           {totalQuantity > 99 ? "99+" : totalQuantity}
         </span>

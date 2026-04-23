@@ -21,7 +21,7 @@ import {
   type VariantDraft,
 } from "./product-variants-form-block";
 
-const cardStyle = { background: "white", border: "1px solid #d8d0c4" } as const;
+const cardStyle = { background: "white", border: "1px solid var(--color-cream-dark)" } as const;
 const CERT_ALLOWED = new Set<string>(CERTIFICATION_ALLOWED_MIMES);
 
 type StagedImage = { id: string; file: File; preview: string };
@@ -161,17 +161,17 @@ export function ProductCreateForm() {
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
-            <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">Add new product</h1>
-            <p className="font-sans text-[13px] text-[#727272] mt-1">
+            <h1 className="font-serif font-bold text-[22px] text-text-dark leading-tight">Add new product</h1>
+            <p className="font-sans text-[13px] text-text-muted mt-1">
               Fill in the details, add images and certifications, then submit for review.
             </p>
-            <p className="font-sans text-[12px] text-[#727272]/80 mt-1">
+            <p className="font-sans text-[12px] text-text-muted/80 mt-1">
               Products are reviewed by the admin team. You'll be notified once approved.
             </p>
           </div>
           <span
             className="font-sans text-[11px] font-bold tracking-wide rounded-full px-2.5 py-0.5 uppercase shrink-0 h-fit"
-            style={{ background: "rgba(201,145,61,0.2)", color: "#E8B84B", border: "1px solid rgba(201,145,61,0.3)" }}
+            style={{ background: "color-mix(in srgb, var(--color-gold) 20%, transparent)", color: "var(--color-gold)", border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)" }}
           >
             PENDING
           </span>
@@ -181,22 +181,22 @@ export function ProductCreateForm() {
       {error && (
         <div
           className="rounded-sm px-6 py-4"
-          style={{ background: "rgba(248,113,113,0.06)", border: "1px solid rgba(248,113,113,0.3)" }}
+          style={{ background: "color-mix(in srgb, var(--color-danger) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--color-danger) 30%, transparent)" }}
         >
-          <p className="font-sans text-sm text-[#f87171]">{error}</p>
+          <p className="font-sans text-sm text-[var(--color-danger)]">{error}</p>
         </div>
       )}
 
       {/* Details */}
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#d8d0c4]">
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
+        <div className="px-6 py-4 border-b border-cream-dark">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">Details</h2>
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-name" className={productFormLabelClass}>
-                Product name <span className="text-[#f87171]">*</span>
+                Product name <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 id="product-name"
@@ -212,7 +212,7 @@ export function ProductCreateForm() {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-category" className={productFormLabelClass}>
-                Category <span className="text-[#f87171]">*</span>
+                Category <span className="text-[var(--color-danger)]">*</span>
               </label>
               <select
                 id="product-category"
@@ -230,7 +230,7 @@ export function ProductCreateForm() {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-capacity" className={productFormLabelClass}>
-                Capacity <span className="text-[#727272]/70">(optional)</span>
+                Capacity <span className="text-text-muted/70">(optional)</span>
               </label>
               <input
                 id="product-capacity"
@@ -246,7 +246,7 @@ export function ProductCreateForm() {
             </div>
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-description" className={productFormLabelClass}>
-                Description <span className="text-[#727272]/70">(optional)</span>
+                Description <span className="text-text-muted/70">(optional)</span>
               </label>
               <textarea
                 id="product-description"
@@ -262,8 +262,8 @@ export function ProductCreateForm() {
             </div>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-[#d8d0c4]">
-            <h3 className="font-serif font-bold text-[14px] text-[#000000] mb-3">Variants & pricing</h3>
+          <div className="mt-6 pt-6 border-t border-cream-dark">
+            <h3 className="font-serif font-bold text-[14px] text-text-dark mb-3">Variants & pricing</h3>
             <ProductVariantsFormBlock variants={variants} onChange={setVariants} disabled={submitting} />
           </div>
         </div>
@@ -271,8 +271,8 @@ export function ProductCreateForm() {
 
       {/* Product images */}
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#d8d0c4] flex items-center justify-between gap-3">
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Product images</h2>
+        <div className="px-6 py-4 border-b border-cream-dark flex items-center justify-between gap-3">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">Product images</h2>
           <input
             ref={imageInputRef}
             type="file"
@@ -287,14 +287,14 @@ export function ProductCreateForm() {
             onClick={() => imageInputRef.current?.click()}
             disabled={submitting}
             className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-            style={{ background: "#000000", color: "white" }}
+            style={{ background: "var(--color-ink)", color: "white" }}
           >
             Add image
           </button>
         </div>
         <div className="p-6">
           {stagedImages.length === 0 ? (
-            <p className="font-sans text-sm text-[#727272]">
+            <p className="font-sans text-sm text-text-muted">
               No images yet. Click "Add image" to upload (JPEG, PNG or WebP).
             </p>
           ) : (
@@ -303,7 +303,7 @@ export function ProductCreateForm() {
                 <div
                   key={img.id}
                   className="relative group rounded-sm overflow-hidden shrink-0"
-                  style={{ width: 120, height: 120, border: "1px solid #d8d0c4" }}
+                  style={{ width: 120, height: 120, border: "1px solid var(--color-cream-dark)" }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.preview} alt="" className="w-full h-full object-cover" />
@@ -312,7 +312,7 @@ export function ProductCreateForm() {
                     onClick={() => removeImage(img.id)}
                     disabled={submitting}
                     className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-60"
-                    style={{ background: "rgba(0,0,0,0.65)" }}
+                    style={{ background: "color-mix(in srgb, var(--color-ink) 65%, transparent)" }}
                   >
                     <X size={12} color="white" />
                   </button>
@@ -325,13 +325,13 @@ export function ProductCreateForm() {
 
       {/* Certifications */}
       <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#d8d0c4]">
-          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
-          <p className="font-sans text-[11px] text-[#727272] mt-0.5">
+        <div className="px-6 py-4 border-b border-cream-dark">
+          <h2 className="font-serif font-bold text-[15px] text-text-dark">Certifications</h2>
+          <p className="font-sans text-[11px] text-text-muted mt-0.5">
             Add product-level certification documents (PDF or image). Each will be submitted for admin review.
           </p>
         </div>
-        <div className="px-6 py-4 border-b border-[#d8d0c4]">
+        <div className="px-6 py-4 border-b border-cream-dark">
           <div className="flex flex-wrap items-center gap-2">
             <input
               type="text"
@@ -339,8 +339,8 @@ export function ProductCreateForm() {
               value={certName}
               onChange={(e) => { setCertName(e.target.value); setCertError(null); }}
               disabled={submitting}
-              className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-44 disabled:opacity-60"
-              style={{ background: "#FAFAF8" }}
+              className="font-sans text-sm rounded-sm px-3 py-2 border border-cream-dark w-44 disabled:opacity-60"
+              style={{ background: "var(--color-paper)" }}
             />
             <input
               ref={certInputRef}
@@ -355,37 +355,37 @@ export function ProductCreateForm() {
               onClick={() => { setCertError(null); certInputRef.current?.click(); }}
               disabled={submitting}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
-              style={{ background: "#000000", color: "white" }}
+              style={{ background: "var(--color-ink)", color: "white" }}
             >
               Upload certification
             </button>
           </div>
-          <p className="font-sans text-[11px] text-[#727272] mt-1.5">PDF or image only (JPEG, PNG, WebP). Max 10 MB.</p>
-          {certError && <p className="font-sans text-[12px] text-[#f87171] mt-1" role="alert">{certError}</p>}
+          <p className="font-sans text-[11px] text-text-muted mt-1.5">PDF or image only (JPEG, PNG, WebP). Max 10 MB.</p>
+          {certError && <p className="font-sans text-[12px] text-[var(--color-danger)] mt-1" role="alert">{certError}</p>}
         </div>
         <div className="p-6">
           {stagedCerts.length === 0 ? (
-            <p className="font-sans text-sm text-[#727272]">No certifications added yet.</p>
+            <p className="font-sans text-sm text-text-muted">No certifications added yet.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {stagedCerts.map((cert) => (
                 <li
                   key={cert.id}
                   className="flex items-center justify-between gap-3 rounded-sm px-4 py-3"
-                  style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
+                  style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}
                 >
                   <div className="min-w-0">
-                    <p className="font-sans font-semibold text-sm text-[#000000] truncate">{cert.name}</p>
-                    <p className="font-sans text-[11px] text-[#727272] truncate">{cert.file.name}</p>
+                    <p className="font-sans font-semibold text-sm text-text-dark truncate">{cert.name}</p>
+                    <p className="font-sans text-[11px] text-text-muted truncate">{cert.file.name}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => removeCert(cert.id)}
                     disabled={submitting}
                     className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-colors disabled:opacity-60"
-                    style={{ background: "rgba(248,113,113,0.12)" }}
+                    style={{ background: "color-mix(in srgb, var(--color-danger) 12%, transparent)" }}
                   >
-                    <X size={12} color="#f87171" />
+                    <X size={12} color="var(--color-danger)" />
                   </button>
                 </li>
               ))}
@@ -403,13 +403,13 @@ export function ProductCreateForm() {
           type="submit"
           disabled={submitting}
           className="font-sans font-semibold text-sm text-white rounded-sm px-6 py-3 transition-colors disabled:opacity-60 min-w-[160px]"
-          style={{ background: "#000000" }}
+          style={{ background: "var(--color-ink)" }}
         >
           {uploadStatus ?? "Create product"}
         </button>
         <Link
           href="/artisan/products"
-          className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors"
+          className="font-sans text-sm font-medium text-text-muted hover:text-text-dark transition-colors"
         >
           Cancel
         </Link>

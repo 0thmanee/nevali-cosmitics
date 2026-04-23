@@ -49,7 +49,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 								className="block h-4 w-auto"
 								src="/assets/logo-white.svg"
 							/>
-							<span className="mt-[3px] block font-sans font-semibold text-[#C9913D] text-[9px] uppercase tracking-[0.1em]">
+							<span className="mt-[3px] block font-sans font-semibold text-[var(--color-gold)] text-[9px] uppercase tracking-[0.1em]">
 								Buyer
 							</span>
 						</div>
@@ -68,7 +68,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 							<Link
 								className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 transition-colors ${
 									isActive
-										? "border border-[#727272]/25 bg-[#727272]/15"
+										? "border border-[var(--color-text-muted)]/25 bg-[var(--color-text-muted)]/15"
 										: "border border-transparent bg-transparent"
 								}`}
 								href={item.href}
@@ -78,7 +78,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 								<span
 									className={`flex-1 font-sans text-sm leading-none ${
 										isActive
-											? "font-semibold text-[#E8B84B]"
+											? "font-semibold text-[var(--color-gold)]"
 											: "font-normal text-white/60"
 									}`}
 								>
@@ -88,7 +88,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 									<span
 										className={`rounded-full px-2 py-0.5 font-bold font-sans text-[10px] leading-none ${
 											isActive
-												? "bg-[#C9913D]/30 text-[#E8B84B]"
+												? "bg-[var(--color-gold)]/30 text-[var(--color-gold)]"
 												: "bg-white/10 text-white/50"
 										}`}
 									>
@@ -121,7 +121,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 			</aside>
 
 			<div className="flex h-screen min-w-0 flex-1 flex-col">
-				<header className="z-10 flex shrink-0 items-center justify-between border-[#d8d0c4] border-b bg-white px-6 py-3.5 lg:px-8">
+				<header className="z-10 flex shrink-0 items-center justify-between border-cream-dark border-b bg-white px-6 py-3.5 lg:px-8">
 					<div>
 						<h1 className="font-bold font-serif text-[18px] text-forest-mid leading-tight">
 							{title}

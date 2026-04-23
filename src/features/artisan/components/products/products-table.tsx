@@ -24,7 +24,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
     return (
       <div
         className="rounded-sm overflow-hidden flex flex-col items-center justify-center py-16 gap-4"
-        style={{ background: "white", border: "1px solid #d8d0c4" }}
+        style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
       >
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect
@@ -33,7 +33,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
             width="24"
             height="28"
             rx="4"
-            stroke="#d4c4a0"
+            stroke="color-mix(in srgb, var(--color-gold) 45%, var(--color-cream-dark))"
             strokeWidth="2"
           />
           <line
@@ -41,7 +41,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
             y1="15"
             x2="26"
             y2="15"
-            stroke="#d4c4a0"
+            stroke="color-mix(in srgb, var(--color-gold) 45%, var(--color-cream-dark))"
             strokeWidth="2"
             strokeLinecap="round"
           />
@@ -50,16 +50,16 @@ export function ProductsTable({ products }: ProductsTableProps) {
             y1="21"
             x2="22"
             y2="21"
-            stroke="#d4c4a0"
+            stroke="color-mix(in srgb, var(--color-gold) 45%, var(--color-cream-dark))"
             strokeWidth="2"
             strokeLinecap="round"
           />
         </svg>
-        <p className="font-sans text-sm text-[#727272]">No products found</p>
+        <p className="font-sans text-sm text-text-muted">No products found</p>
         <Link
           href="/artisan/products/new"
           className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
-          style={{ background: "#000000", color: "white" }}
+          style={{ background: "var(--color-ink)", color: "white" }}
         >
           Add a new product
         </Link>
@@ -70,14 +70,14 @@ export function ProductsTable({ products }: ProductsTableProps) {
   return (
     <div
       className="rounded-sm overflow-hidden"
-      style={{ background: "white", border: "1px solid #d8d0c4" }}
+      style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
     >
       <div
-        className="grid px-5 py-3 text-[10px] font-bold tracking-[0.14em] text-[#727272] uppercase"
+        className="grid px-5 py-3 text-[10px] font-bold tracking-[0.14em] text-text-muted uppercase"
         style={{
           gridTemplateColumns: "auto 2fr 1fr 1fr 1fr auto",
-          borderBottom: "1px solid #d8d0c4",
-          background: "#ffffff",
+          borderBottom: "1px solid var(--color-cream-dark)",
+          background: "var(--color-paper)",
         }}
       >
         <span className="w-9">Image</span>
@@ -95,7 +95,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
             className="grid items-center px-5 py-3.5"
             style={{
               gridTemplateColumns: "auto 2fr 1fr 1fr 1fr auto",
-              borderTop: i > 0 ? "1px solid #d8d0c4" : "none",
+              borderTop: i > 0 ? "1px solid var(--color-cream-dark)" : "none",
             }}
           >
             <div className="px-4 py-3">
@@ -103,18 +103,18 @@ export function ProductsTable({ products }: ProductsTableProps) {
             </div>
             <div className="flex items-center gap-3 min-w-0">
               <div className="min-w-0">
-                <p className="font-sans font-semibold text-sm text-[#000000] leading-tight truncate">
+                <p className="font-sans font-semibold text-sm text-text-dark leading-tight truncate">
                   {p.name}
                 </p>
-                <p className="font-sans text-[11px] text-[#727272] mt-0.5">
+                <p className="font-sans text-[11px] text-text-muted mt-0.5">
                   {p.category} · {formatProductUpdatedAt(p.updatedAt)}
                 </p>
               </div>
             </div>
-            <span className="font-sans text-sm text-[#000000]">
+            <span className="font-sans text-sm text-text-dark">
               {p.variantCount}
             </span>
-            <span className="font-sans text-sm text-[#000000]">
+            <span className="font-sans text-sm text-text-dark">
               {p.fromPrice ? formatPriceMad(p.fromPrice) : "—"}
             </span>
             <div className="flex flex-col gap-0.5">
@@ -125,7 +125,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 {p.status}
               </span>
               {p.status === "REJECTED" && p.rejectionReason?.trim() && (
-                <span className="font-sans text-[11px] text-[#f87171]/80 max-w-[180px] truncate" title={p.rejectionReason}>
+                <span className="font-sans text-[11px] text-[var(--color-danger)]/80 max-w-[180px] truncate" title={p.rejectionReason}>
                   {p.rejectionReason}
                 </span>
               )}
@@ -135,9 +135,9 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 href={`/artisan/products/${p.id}/edit`}
                 className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
                 style={{
-                  background: "#ffffff",
-                  color: "#000000",
-                  border: "1px solid #d8d0c4",
+                  background: "var(--color-paper)",
+                  color: "var(--color-ink)",
+                  border: "1px solid var(--color-cream-dark)",
                 }}
               >
                 Edit
@@ -146,9 +146,9 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 href={`/artisan/products/${p.id}`}
                 className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
                 style={{
-                  background: "#ffffff",
-                  color: "#000000",
-                  border: "1px solid #d8d0c4",
+                  background: "var(--color-paper)",
+                  color: "var(--color-ink)",
+                  border: "1px solid var(--color-cream-dark)",
                 }}
               >
                 View

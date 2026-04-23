@@ -42,21 +42,21 @@ export const SUPPORT_FAQ: ReadonlyArray<{ q: string; a: string }> = [
 
 export const TICKET_STATUS_STYLE = {
 	OPEN: {
-		background: "rgba(96,165,250,0.12)",
-		color: "#60A5FA",
-		border: "1px solid rgba(96,165,250,0.25)",
+		background: "color-mix(in srgb, var(--color-info) 12%, transparent)",
+		color: "var(--color-info)",
+		border: "1px solid color-mix(in srgb, var(--color-info) 25%, transparent)",
 		label: "Open",
 	},
 	IN_REVIEW: {
-		background: "rgba(201,145,61,0.15)",
-		color: "#E8B84B",
-		border: "1px solid rgba(201,145,61,0.3)",
+		background: "color-mix(in srgb, var(--color-gold) 15%, transparent)",
+		color: "var(--color-gold)",
+		border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)",
 		label: "In Review",
 	},
 	RESOLVED: {
-		background: "rgba(200,150,60,0.12)",
-		color: "#727272",
-		border: "1px solid rgba(200,150,60,0.25)",
+		background: "color-mix(in srgb, var(--color-gold) 12%, transparent)",
+		color: "var(--color-text-muted)",
+		border: "1px solid color-mix(in srgb, var(--color-gold) 25%, transparent)",
 		label: "Resolved",
 	},
 } as const;
@@ -73,7 +73,7 @@ export function getTicketStatusStyle(status: string): TicketStatusStyle {
 }
 
 export const TICKET_PRIORITY_STYLE: Record<string, { color: string }> = {
-	HIGH: { color: "#f87171" },
-	MEDIUM: { color: "#E8B84B" },
-	LOW: { color: "#727272" },
+	HIGH: { color: "var(--color-danger)" },
+	MEDIUM: { color: "var(--color-gold)" },
+	LOW: { color: "var(--color-text-muted)" },
 };

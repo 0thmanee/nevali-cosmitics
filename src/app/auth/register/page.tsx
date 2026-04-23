@@ -16,13 +16,13 @@ export default function RegisterPage() {
 				<div className="mt-10 flex flex-wrap items-center justify-center gap-3">
 					<Link
 						href="/products"
-						className="inline-flex rounded-sm bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+						className="inline-flex rounded-sm bg-primary px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
 					>
 						Shop products
 					</Link>
 					<Link
 						href="/auth/register-buyer"
-						className="inline-flex rounded-sm border border-cream-dark bg-white px-6 py-3 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
+						className="inline-flex rounded-sm border border-primary/30 bg-white px-6 py-3 font-sans text-sm font-semibold text-primary-dark transition-colors hover:bg-primary/10"
 					>
 						Create buyer account
 					</Link>
