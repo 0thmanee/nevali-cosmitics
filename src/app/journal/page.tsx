@@ -9,7 +9,7 @@ import Navbar from "~/app/Navbar";
 export const metadata: Metadata = {
 	title: "Journal — nevali",
 	description:
-		"Stories and formulation notes from Moroccan beauty producers on nevali.",
+		"Stories and formulation notes from Nevali — Moroccan beauty, our studio.",
 };
 
 function formatStoryDate(d: Date): string {
@@ -34,8 +34,8 @@ export default async function JournalIndexPage() {
 					Stories &amp; formulation
 				</h1>
 				<p className="mt-3 max-w-2xl font-sans text-base text-text-muted leading-relaxed">
-					Longer reads from verified producers—compliance notes, ingredient
-					spotlights, and how products are made.
+					Longer reads from Nevali—compliance notes, ingredient spotlights, and how our products are
+					made.
 				</p>
 
 				{articles.length === 0 ? (

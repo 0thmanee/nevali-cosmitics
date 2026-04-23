@@ -6,6 +6,7 @@ import {
 	listApprovedProductsForPublicRepo,
 } from "~/app/api/products/repo/products.repo";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 type MosaicProduct = {
@@ -64,7 +65,9 @@ export default async function CollectionsSection() {
 						to your shelf
 					</h2>
 					<p className="max-w-md font-sans text-base leading-relaxed text-text-muted">
-						Live picks from the catalog—tap through for ingredients, brand story, variants, and guest-friendly checkout.
+						{SHOW_MULTI_PRODUCER_EXPERIENCE
+							? "Live picks from the catalog—tap through for ingredients, brand story, variants, and guest-friendly checkout."
+							: `Live picks from ${NEVALI_HOUSE_BRAND.legalName}—ingredients, how we formulate, variants, and guest-friendly checkout.`}
 					</p>
 				</AnimateOnScroll>
 
@@ -76,7 +79,7 @@ export default async function CollectionsSection() {
 						<p className="max-w-md font-sans text-sm text-text-muted">
 							{SHOW_MULTI_PRODUCER_EXPERIENCE
 								? "When partners publish approved listings, they will show here automatically."
-								: "When new SKUs are approved, they will show here automatically."}
+								: "When new Nevali SKUs go live, they will show here automatically."}
 						</p>
 						<Link
 							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"

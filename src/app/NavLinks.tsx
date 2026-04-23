@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import {
   PLATFORM_OWNED_ORG_SLUG,
   SHOW_MULTI_PRODUCER_EXPERIENCE,
@@ -11,7 +12,7 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   ...(SHOW_MULTI_PRODUCER_EXPERIENCE
     ? [{ label: "Brands", href: "/artisans" as const }]
-    : [{ label: "Our brand", href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` as const }]),
+    : [{ label: NEVALI_HOUSE_BRAND.navBrandLabel, href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` as const }]),
   { label: "Our story", href: "/artisan-process" },
   { label: "Training", href: "/training" },
   { label: "Shop", href: "/products" },

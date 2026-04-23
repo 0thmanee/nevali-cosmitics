@@ -65,7 +65,7 @@ export function ProductCertificateDocument({ data }: { data: ProductCertificateD
         </View>
         <Text style={styles.title}>Product Certification</Text>
         <Text style={styles.subtitle}>
-          This certifies that the following cosmetics listing has been approved on the nevali marketplace.
+          This certifies that the following cosmetics listing has been approved in the Nevali public catalog.
         </Text>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Product</Text>

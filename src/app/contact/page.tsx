@@ -3,13 +3,16 @@ import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { env } from "~/env";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const DEFAULT_CONTACT_EMAIL = "hello@nevali-cosmetics.ma";
 
 export const metadata = {
 	title: "Contact — nevali",
-	description:
-		"Reach the nevali team for brand partnerships, press, and platform support.",
+	description: SHOW_MULTI_PRODUCER_EXPERIENCE
+		? "Reach the nevali team for brand partnerships, press, and platform support."
+		: `Contact ${NEVALI_HOUSE_BRAND.legalName} for wholesale, press, orders, and product questions.`,
 };
 
 export default function ContactPage() {
@@ -21,7 +24,7 @@ export default function ContactPage() {
 			<Navbar />
 			<div className="pt-[56px]" />
 
-			<section className="mx-auto flex max-w-2xl flex-col gap-8 px-6 py-16">
+			<section className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16">
 				<AnimateOnScroll className="flex flex-col gap-8" direction="up" scale>
 				<div className="flex flex-col gap-3">
 					<span className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.2em]">
@@ -31,18 +34,30 @@ export default function ContactPage() {
 						Talk to nevali
 					</h1>
 					<p className="font-sans text-[15px] text-text-muted leading-relaxed">
-						We help Moroccan cosmetics brands list compliant products and reach shoppers who care about bio-minded, original formulas. For onboarding, technical issues, or press enquiries, use the channel below that fits best.
+						{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+							<>
+								We help Moroccan cosmetics brands list compliant products and reach shoppers who care about
+								bio-minded, original formulas. For onboarding, technical issues, or press enquiries, use the
+								channel below that fits best.
+							</>
+						) : (
+							<>
+								Questions about {NEVALI_HOUSE_BRAND.legalName} products, wholesale, or your order? Reach our team
+								on the channel below that fits best.
+							</>
+						)}
 					</p>
 				</div>
 
 				<div className="flex flex-col gap-6 rounded-sm border border-cream-dark bg-white p-8">
 					<div>
 						<h2 className="mb-1 font-sans font-semibold text-sm text-text-dark">
-							Brand &amp; partner support
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Brand & partner support" : "NEVALI team & wholesale"}
 						</h2>
 						<p className="mb-2 font-sans text-sm text-text-muted">
-							Signed-in partners can open tickets from the dashboard for faster
-							routing.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE
+								? "Signed-in partners can open tickets from the dashboard for faster routing."
+								: "Signed-in studio accounts can open support tickets from the dashboard for faster routing."}
 						</p>
 						<Link
 							className="font-medium font-sans text-forest-light text-sm hover:underline"
@@ -82,7 +97,7 @@ export default function ContactPage() {
 			</section>
 
 			<section
-				className="mx-auto flex max-w-2xl flex-col gap-4 border-cream-dark border-t px-6 py-12"
+				className="mx-auto flex max-w-7xl flex-col gap-4 border-cream-dark border-t px-6 py-12"
 				id="privacy"
 			>
 				<AnimateOnScroll className="flex flex-col gap-4" delay={40} direction="up">
@@ -158,7 +173,7 @@ export default function ContactPage() {
 			</section>
 
 			<section
-				className="mx-auto flex max-w-2xl flex-col gap-4 px-6 pb-20"
+				className="mx-auto flex max-w-7xl flex-col gap-4 px-6 pb-20"
 				id="terms"
 			>
 				<AnimateOnScroll className="flex flex-col gap-4" delay={40} direction="up">
@@ -191,13 +206,22 @@ export default function ContactPage() {
 					</div>
 					<div>
 						<h3 className="mb-1 font-semibold text-text-dark">
-							Marketplace conduct
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Marketplace conduct" : "Orders & community conduct"}
 						</h3>
 						<p>
-							Users must negotiate in good faith, avoid fraudulent listings or
-							inquiries, and comply with export and sanctions laws applicable to
-							their trade. nevali may suspend access for violations or risk
-							to other users.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+								<>
+									Users must negotiate in good faith, avoid fraudulent listings or inquiries, and comply with export and
+									sanctions laws applicable to their trade. nevali may suspend access for violations or risk to other
+									users.
+								</>
+							) : (
+								<>
+									Customers, wholesale partners, and our team must interact in good faith, avoid fraudulent orders or
+									inquiries, and comply with export and sanctions laws applicable to their trade. nevali may suspend
+									access for violations or risk to others.
+								</>
+							)}
 						</p>
 					</div>
 					<div>

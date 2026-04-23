@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { getApprovedProductForPublicByIdRepo } from "~/app/api/products/repo/products.repo";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { PublicProductDetailView } from "./public-product-detail-view";
 
 type Props = { params: Promise<{ id: string }> };
@@ -15,7 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 	const desc =
 		product.description?.trim().slice(0, 155) ||
-		`${product.name} — Moroccan cosmetics by ${product.organizationName} on nevali. Original formulas, transparent checkout.`;
+		(SHOW_MULTI_PRODUCER_EXPERIENCE
+			? `${product.name} — Moroccan cosmetics by ${product.organizationName} on nevali. Original formulas, transparent checkout.`
+			: `${product.name} — ${NEVALI_HOUSE_BRAND.legalName}. Moroccan cosmetics, transparent checkout.`);
 	return {
 		title: `${product.name} — nevali`,
 		description: desc,

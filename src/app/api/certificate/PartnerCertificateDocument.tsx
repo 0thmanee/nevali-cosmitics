@@ -152,7 +152,7 @@ export function PartnerCertificateDocument({ data }: { data: CertificateData }) 
 
         <Text style={styles.title}>Partner Certificate</Text>
         <Text style={styles.subtitle}>
-          This certifies that the following is a registered Moroccan cosmetics partner on the nevali marketplace.
+          This certifies that the following is a registered Moroccan cosmetics producer profile in the Nevali system.
         </Text>
 
         <View style={styles.card}>

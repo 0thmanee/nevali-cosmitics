@@ -26,7 +26,7 @@ export async function generateMetadata({
     title: `${profile.entityName} — Brands — nevali`,
     description:
       profile.publicTagline?.trim() ||
-      `Verified nevali cosmetics brand in ${profile.city}, ${profile.region}. Browse approved listings and certifications.`,
+      `Verified Nevali brand in ${profile.city}, ${profile.region}. Browse approved listings and certifications.`,
   };
 }
 

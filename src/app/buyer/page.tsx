@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { env } from "~/env";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { PLATFORM_OWNED_ORG_SLUG, SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const DEFAULT_CONTACT_EMAIL = "hello@nevali-cosmetics.ma";
@@ -40,7 +41,7 @@ export default function BuyerHomePage() {
 						SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : `/artisans/${PLATFORM_OWNED_ORG_SLUG}`
 					}
 				>
-					{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Our brands" : "Our brand"}
+					{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Our brands" : NEVALI_HOUSE_BRAND.navBrandLabel}
 				</Link>
 			</div>
 

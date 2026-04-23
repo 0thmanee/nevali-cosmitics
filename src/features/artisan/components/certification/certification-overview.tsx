@@ -2,6 +2,8 @@
 
 import React from "react";
 import { Award, CheckCircle, Clock, XCircle } from "lucide-react";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { useCertifications } from "~/features/artisan/hooks/use-certifications";
 import { useCertifiedProducts } from "~/features/artisan/hooks/use-products";
 
@@ -234,7 +236,11 @@ export function CertificationOverview() {
               <span className="font-sans text-[12px] text-text-muted mb-1">product{certifiedCount !== 1 ? "s" : ""} approved</span>
             </div>
             <p className="font-sans text-[11px] text-text-muted leading-relaxed">
-              Products approved by the admin appear in the public marketplace under your partner profile.
+              {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                <>Products approved by the admin appear in the public marketplace under your partner profile.</>
+              ) : (
+                <>Products approved by the admin appear in the public catalog under your {NEVALI_HOUSE_BRAND.legalName} studio profile.</>
+              )}
             </p>
           </div>
 

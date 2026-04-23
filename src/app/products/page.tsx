@@ -8,11 +8,14 @@ import {
   listApprovedProductsForPublicPaginatedRepo,
   listApprovedProductCategoriesRepo,
 } from "~/app/api/products/repo/products.repo";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export const metadata = {
-  title: "Products — nevali",
-  description:
-    "Browse verified Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, certified partners, and checkout-ready listings.",
+  title: SHOW_MULTI_PRODUCER_EXPERIENCE ? "Products — nevali" : `Shop — ${NEVALI_HOUSE_BRAND.legalName} | nevali`,
+  description: SHOW_MULTI_PRODUCER_EXPERIENCE
+    ? "Browse verified Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, certified partners, and checkout-ready listings."
+    : `Browse ${NEVALI_HOUSE_BRAND.legalName} Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, studio certifications, and checkout-ready listings.`,
 };
 
 // ── Pagination ────────────────────────────────────────────────────────────────
@@ -154,7 +157,9 @@ export default async function ProductsPage({
           <div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
             <AnimateOnScroll direction="up" delay={0}>
               <p className="mb-5 font-sans text-xs uppercase tracking-[0.2em] text-primary/80">
-                Certified Marketplace — {total} Products
+                {SHOW_MULTI_PRODUCER_EXPERIENCE
+                  ? `Certified Marketplace — ${total} Products`
+                  : `${NEVALI_HOUSE_BRAND.legalName} catalog — ${total} products`}
               </p>
               <h1
                 className="font-serif font-bold uppercase leading-none text-text-dark"
@@ -166,8 +171,17 @@ export default async function ProductsPage({
 
             <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
               <p className="mb-8 font-sans text-sm leading-relaxed text-text-muted">
-                Every SKU comes from a verified Moroccan beauty brand with clear ingredients,
-                imagery, and fulfilment rules—shop as a guest or save lists with a buyer account.
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                  <>
+                    Every SKU comes from a verified Moroccan beauty brand with clear ingredients, imagery, and fulfilment
+                    rules—shop as a guest or save lists with a buyer account.
+                  </>
+                ) : (
+                  <>
+                    Every SKU is prepared by {NEVALI_HOUSE_BRAND.legalName} with clear ingredients, imagery, and fulfilment
+                    rules—shop as a guest or save lists with a buyer account.
+                  </>
+                )}
               </p>
               <div className="grid grid-cols-3 divide-x divide-cream-dark border border-cream-dark bg-white/60">
                 {[
@@ -258,7 +272,9 @@ export default async function ProductsPage({
               <p className="font-sans text-stone-400 text-base max-w-xs">
                 {currentCategory
                   ? `No listings in "${currentCategory}" yet.`
-                  : "Verified brands are adding new cosmetics to the catalog—check back soon."}
+                  : SHOW_MULTI_PRODUCER_EXPERIENCE
+                    ? "Verified brands are adding new cosmetics to the catalog—check back soon."
+                    : `${NEVALI_HOUSE_BRAND.legalName} is adding new cosmetics to the catalog—check back soon.`}
               </p>
               {currentCategory && (
                 <Link

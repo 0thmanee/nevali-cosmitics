@@ -5,9 +5,9 @@ import { Fraunces, Roboto_Mono } from "next/font/google";
 import { QueryProvider } from "~/components/providers/query-provider";
 
 export const metadata: Metadata = {
-  title: "NEVALI — Premium Moroccan cosmetics",
+  title: "Nevali — Moroccan skincare & beauty",
   description:
-    "Purity, elegance, and modern refinement. Skincare from Morocco crafted with natural, organic, and ethically sourced ingredients—transparent, traceable, and held to rigorous quality standards.",
+    "Nevali: Moroccan skincare and beauty from our own studio—transparent labels, traceable ingredients, and quality you can shop with confidence.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

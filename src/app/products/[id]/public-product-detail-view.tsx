@@ -12,7 +12,8 @@ import type { PublicProductDetail } from "~/app/api/products/schemas/products.sc
 import { useCart } from "~/features/cart/cart-context";
 import { formatPriceMad, paymentOptionLabel } from "~/lib/format-price";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { PLATFORM_OWNED_ORG_SLUG, SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import {
   cosmeticsCategoryLabel,
   parseIngredientList,
@@ -179,10 +180,21 @@ function BuyBlock({
         <p className="mt-6 font-sans text-base leading-relaxed text-text-dark/85">{lead}</p>
       ) : (
         <p className="mt-6 font-sans text-sm leading-relaxed text-text-muted">
-          Listed by {product.organizationName}.
-          {product.variants.length > 1
-            ? " Choose a format above for price and minimum order."
-            : " Guest checkout is available where enabled."}
+          {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+            <>
+              Listed by {product.organizationName}.
+              {product.variants.length > 1
+                ? " Choose a format above for price and minimum order."
+                : " Guest checkout is available where enabled."}
+            </>
+          ) : (
+            <>
+              From {NEVALI_HOUSE_BRAND.legalName}.
+              {product.variants.length > 1
+                ? " Choose a format above for price and minimum order."
+                : " Guest checkout is available where enabled."}
+            </>
+          )}
         </p>
       )}
 
@@ -282,7 +294,10 @@ function BuyBlock({
         </div>
 
         <p className="mt-5 max-w-md font-sans text-xs leading-relaxed text-text-muted">
-          Bulk terms, certificates, and lead times: use wholesale inquiry. The studio is notified by email.
+          Bulk terms, certificates, and lead times: use wholesale inquiry.{" "}
+          {SHOW_MULTI_PRODUCER_EXPERIENCE
+            ? "The studio is notified by email."
+            : NEVALI_HOUSE_BRAND.wholesaleNotify}
         </p>
       </div>
 
@@ -482,20 +497,30 @@ export function PublicProductDetailView({ product }: Props) {
           <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
             <nav className="font-sans text-[11px] text-text-muted" aria-label="Breadcrumb">
               {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-                <Link href="/artisans" className="hover:text-text-dark">
-                  Artisans
-                </Link>
+                <>
+                  <Link href="/artisans" className="hover:text-text-dark">
+                    Artisans
+                  </Link>
+                  <span className="mx-1.5 text-cream-dark">/</span>
+                  <Link href={`/artisans/${product.organizationSlug}`} className="hover:text-text-dark">
+                    {product.organizationName}
+                  </Link>
+                  <span className="mx-1.5 text-cream-dark">/</span>
+                  <span className="text-text-dark">{product.name}</span>
+                </>
               ) : (
-                <Link href="/products" className="hover:text-text-dark">
-                  Shop
-                </Link>
+                <>
+                  <Link href="/products" className="hover:text-text-dark">
+                    Shop
+                  </Link>
+                  <span className="mx-1.5 text-cream-dark">/</span>
+                  <Link href={`/artisans/${PLATFORM_OWNED_ORG_SLUG}`} className="hover:text-text-dark">
+                    {NEVALI_HOUSE_BRAND.legalName}
+                  </Link>
+                  <span className="mx-1.5 text-cream-dark">/</span>
+                  <span className="text-text-dark">{product.name}</span>
+                </>
               )}
-              <span className="mx-1.5 text-cream-dark">/</span>
-              <Link href={`/artisans/${product.organizationSlug}`} className="hover:text-text-dark">
-                {product.organizationName}
-              </Link>
-              <span className="mx-1.5 text-cream-dark">/</span>
-              <span className="text-text-dark">{product.name}</span>
             </nav>
           </div>
         </header>
@@ -627,9 +652,13 @@ export function PublicProductDetailView({ product }: Props) {
         <section id="trust" className="scroll-mt-32 border-b border-cream-dark bg-cream">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:gap-6 lg:py-14">
             <div>
-              <p className="font-serif text-lg font-semibold text-text-dark">Verified partner</p>
+              <p className="font-serif text-lg font-semibold text-text-dark">
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Verified partner" : NEVALI_HOUSE_BRAND.verifiedHeadline}
+              </p>
               <p className="mt-2 font-sans text-sm leading-relaxed text-text-muted">
-                Listing approved on nevali. Producer profile, formats, and checkout rules are transparent.
+                {SHOW_MULTI_PRODUCER_EXPERIENCE
+                  ? "Listing approved on nevali. Producer profile, formats, and checkout rules are transparent."
+                  : NEVALI_HOUSE_BRAND.verifiedBody}
               </p>
             </div>
             <div>
@@ -650,7 +679,9 @@ export function PublicProductDetailView({ product }: Props) {
               <p className="mt-2 font-sans text-sm leading-relaxed text-text-muted">
                 {product.certifications.length > 0
                   ? `${product.certifications.length} approved document${product.certifications.length === 1 ? "" : "s"} in the certificates section.`
-                  : "Ask the producer for COA, MSDS, or audit documentation via wholesale inquiry."}
+                  : SHOW_MULTI_PRODUCER_EXPERIENCE
+                    ? "Ask the producer for COA, MSDS, or audit documentation via wholesale inquiry."
+                    : `Ask ${NEVALI_HOUSE_BRAND.legalName} for COA, MSDS, or audit documentation via wholesale inquiry.`}
               </p>
             </div>
           </div>
@@ -662,7 +693,9 @@ export function PublicProductDetailView({ product }: Props) {
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
               <h2 className="font-serif text-2xl font-semibold text-text-dark sm:text-3xl">Visual reference</h2>
               <p className="mt-2 max-w-2xl font-sans text-sm leading-relaxed text-text-muted">
-                Scroll the grid—texture, packaging, and shade context as supplied by the producer.
+                {SHOW_MULTI_PRODUCER_EXPERIENCE
+                  ? "Scroll the grid—texture, packaging, and shade context as supplied by the producer."
+                  : NEVALI_HOUSE_BRAND.galleryCredit}
               </p>
               <div
                 className={`mt-10 grid gap-2 sm:gap-3 ${
@@ -776,7 +809,9 @@ export function PublicProductDetailView({ product }: Props) {
                   ))}
                 </div>
                 <p className="mt-4 max-w-2xl font-sans text-xs leading-relaxed text-text-muted">
-                  INCI-style lists are provided by the producer. Always patch-test new formulas.
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE
+                    ? "INCI-style lists are provided by the producer. Always patch-test new formulas."
+                    : NEVALI_HOUSE_BRAND.ingredientsNote}
                 </p>
               </div>
             ) : null}
@@ -789,7 +824,9 @@ export function PublicProductDetailView({ product }: Props) {
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
               <h2 className="font-serif text-2xl font-semibold text-text-dark sm:text-3xl">Certificates &amp; docs</h2>
               <p className="mt-2 max-w-2xl font-sans text-sm text-text-muted">
-                Approved PDFs from the partner—product-specific or studio-wide quality systems.
+                {SHOW_MULTI_PRODUCER_EXPERIENCE
+                  ? "Approved PDFs from the partner—product-specific or studio-wide quality systems."
+                  : NEVALI_HOUSE_BRAND.certsIntro}
               </p>
               <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {product.certifications.map((c) => (
@@ -798,7 +835,7 @@ export function PublicProductDetailView({ product }: Props) {
                     className="flex flex-col border border-cream-dark bg-cream/30 p-5 transition hover:bg-cream/50"
                   >
                     <p className="font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-                      {c.kind === "product" ? "This product" : "Partner"}
+                      {c.kind === "product" ? "This product" : SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partner" : NEVALI_HOUSE_BRAND.certStudioBadge}
                     </p>
                     <p className="mt-2 font-serif text-lg font-semibold leading-snug text-text-dark">{c.name}</p>
                     <a
@@ -834,7 +871,9 @@ export function PublicProductDetailView({ product }: Props) {
                   <ul className="mt-8 space-y-4 font-sans text-sm leading-relaxed text-text-dark/90">
                     {[
                       "Transparent formats and MOQ per line.",
-                      "Producer profile linked from this page.",
+                      SHOW_MULTI_PRODUCER_EXPERIENCE
+                        ? "Producer profile linked from this page."
+                        : NEVALI_HOUSE_BRAND.profileBullet,
                       "Checkout respects payment options set for this listing.",
                     ].map((b) => (
                       <li key={b} className="border-l-2 border-text-dark pl-4">
@@ -856,8 +895,9 @@ export function PublicProductDetailView({ product }: Props) {
                   </div>
                 ) : (
                   <p className="mt-8 font-sans text-sm leading-relaxed text-text-muted">
-                    The producer has not yet published long-form copy. Use visuals, ingredients, and wholesale
-                    inquiry for deeper questions.
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE
+                      ? "The producer has not yet published long-form copy. Use visuals, ingredients, and wholesale inquiry for deeper questions."
+                      : NEVALI_HOUSE_BRAND.emptyLongDescription}
                   </p>
                 )}
 
@@ -876,16 +916,18 @@ export function PublicProductDetailView({ product }: Props) {
                     ) : null}
                     <div>
                       <p className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
-                        Crafted by
+                        {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Crafted by" : "Made by"}
                       </p>
-                      <p className="mt-1 font-serif text-xl font-semibold text-text-dark">{product.organizationName}</p>
+                      <p className="mt-1 font-serif text-xl font-semibold text-text-dark">
+                        {SHOW_MULTI_PRODUCER_EXPERIENCE ? product.organizationName : NEVALI_HOUSE_BRAND.legalName}
+                      </p>
                     </div>
                   </div>
                   <Link
                     href={`/artisans/${product.organizationSlug}`}
                     className="inline-flex w-fit items-center justify-center border border-cream-dark bg-cream px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wide text-text-dark transition hover:bg-paper"
                   >
-                    View studio
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE ? "View studio" : NEVALI_HOUSE_BRAND.viewBrandCta}
                   </Link>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 const FAQS_MULTI = [
@@ -34,15 +35,15 @@ const FAQS_MULTI = [
 const FAQS_SINGLE_BRAND = [
 	{
 		q: "What is nevali?",
-		a: "nevali is Moroccan skincare and cosmetics from our own lab and trusted supply chain—bio-minded where it matters, transparent labels, and checkout-ready listings with guest-friendly payment options.",
+		a: `${NEVALI_HOUSE_BRAND.legalName} is our Moroccan skincare and cosmetics line—formulated in our studio, bio-minded where it matters, with transparent labels and guest-friendly checkout (card and/or cash on delivery where enabled).`,
 	},
 	{
-		q: "How are products chosen and described?",
-		a: "Every SKU is reviewed for clarity: INCI-style ingredients, imagery, variants, and payment options (card and/or cash on delivery). Certifications and lab notes are published when relevant so you know what you are applying.",
+		q: "How are products described?",
+		a: `Every SKU is prepared for the shop with clear INCI-style ingredients, photography, variants, and payment options. Certifications and lab notes are published when relevant so you know exactly what you are buying from ${NEVALI_HOUSE_BRAND.legalName}.`,
 	},
 	{
 		q: "What kinds of products can I find?",
-		a: "Skincare, haircare, body and hammam rituals, botanical oils (including argan), fragrances, and accessories—focused on Moroccan origin and responsible formulation.",
+		a: "Skincare, haircare, body and hammam rituals, botanical oils (including argan), fragrances, and accessories—Moroccan origin and responsible formulation, all under the Nevali line.",
 	},
 	{
 		q: "Do I need an account to buy?",
@@ -50,7 +51,7 @@ const FAQS_SINGLE_BRAND = [
 	},
 	{
 		q: "How can I verify a product?",
-		a: "Each product page highlights ingredients, capacity, and origin. Certifications and documents appear on our public brand profile when available.",
+		a: `Each product page highlights ingredients, capacity, and origin. Certificates and documents for ${NEVALI_HOUSE_BRAND.legalName} appear on our public profile when available.`,
 	},
 	{
 		q: "What are the fees?",
@@ -99,7 +100,7 @@ export default function FAQSection() {
 					<p className="max-w-[480px] font-sans text-lg text-text-muted leading-relaxed">
 						{SHOW_MULTI_PRODUCER_EXPERIENCE
 							? "For shoppers discovering Moroccan beauty, and for brands joining the nevali marketplace."
-							: "For shoppers discovering Moroccan beauty—straight from the nevali house brand."}
+							: `For shoppers discovering Moroccan beauty—directly from ${NEVALI_HOUSE_BRAND.legalName}.`}
 					</p>
 				</AnimateOnScroll>
 

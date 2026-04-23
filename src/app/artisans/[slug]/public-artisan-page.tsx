@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import Footer from "~/app/Footer";
 import type { PublicProducerProfile } from "~/app/api/profile/schemas/profile.schema";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 type Props = {
@@ -42,7 +43,7 @@ export function PublicArtisanPage({ producer }: Props) {
                 className="font-body text-[10px] font-bold uppercase tracking-[0.2em] border px-2.5 py-1"
                 style={{ borderColor: "color-mix(in srgb, var(--color-text-muted) 50%, transparent)", color: "var(--color-text-muted)" }}
               >
-                Verified Artisan
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Verified artisan" : NEVALI_HOUSE_BRAND.publicProfileBadge}
               </span>
               {producer.entityType && (
                 <span className="font-body text-[11px] text-white/40 uppercase tracking-widest">

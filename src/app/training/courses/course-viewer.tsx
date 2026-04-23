@@ -156,10 +156,16 @@ export function CourseViewer({ course }: { course: Course }) {
               </p>
               <p className="font-sans text-sm text-text-muted">
                 {lang === "ar"
-                  ? "تشارك مع nevali للوصول إلى المنهج الكامل وعرض منتجاتك في الأسواق العالمية."
+                  ? SHOW_MULTI_PRODUCER_EXPERIENCE
+                    ? "تشارك مع nevali للوصول إلى المنهج الكامل وعرض منتجاتك في الأسواق العالمية."
+                    : "سجّل الدخول بحساب فريق nevali للوصول إلى المنهج الكامل ومتابعة تقدّم تدريبكم."
                   : lang === "fr"
-                  ? "Rejoignez nevali pour accéder à tout le curriculum et lister vos produits sur les marchés mondiaux."
-                  : "Partner with nevali to unlock the full curriculum and list your products globally."}
+                    ? SHOW_MULTI_PRODUCER_EXPERIENCE
+                      ? "Rejoignez nevali pour accéder à tout le curriculum et lister vos produits sur les marchés mondiaux."
+                      : "Connectez-vous avec un compte studio nevali pour débloquer tout le curriculum et suivre la progression de votre équipe."
+                    : SHOW_MULTI_PRODUCER_EXPERIENCE
+                      ? "Partner with nevali to unlock the full curriculum and list your products globally."
+                      : "Sign in with a Nevali studio account to unlock the full curriculum and track your team’s progress."}
               </p>
             </div>
             {SHOW_MULTI_PRODUCER_EXPERIENCE ? (

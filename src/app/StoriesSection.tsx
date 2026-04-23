@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import { listPublishedArticlesForHome } from "~/app/api/articles/actions";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 function formatStoryDate(d: Date): string {
 	return new Intl.DateTimeFormat("en-US", {
@@ -35,8 +37,17 @@ export default async function StoriesSection() {
 							Stories &amp; formulation
 						</h2>
 						<p className="mt-2 max-w-md font-sans text-base text-text-muted leading-relaxed">
-							Notes from verified producers on nevali—ingredient spotlights,
-							founder journeys, and how we keep the marketplace bio-minded.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+								<>
+									Notes from verified producers on nevali—ingredient spotlights, founder journeys, and how we keep
+									the marketplace bio-minded.
+								</>
+							) : (
+								<>
+									Notes from our studio on nevali—ingredient spotlights, formulation diaries, and how we keep every
+									batch bio-minded.
+								</>
+							)}
 						</p>
 					</div>
 					<Link
@@ -51,9 +62,17 @@ export default async function StoriesSection() {
 				{articles.length === 0 ? (
 					<div className="rounded-sm border border-cream-dark bg-white px-6 py-14 text-center">
 						<p className="mx-auto max-w-lg font-sans text-sm text-text-muted leading-relaxed">
-							Journal posts from our producers will appear here once published.
-							Browse the catalog meanwhile, or open the full journal when
-							stories go live.
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+								<>
+									Journal posts from our producers will appear here once published. Browse the catalog meanwhile, or
+									open the full journal when stories go live.
+								</>
+							) : (
+								<>
+									Journal posts from {NEVALI_HOUSE_BRAND.legalName} will appear here once published. Browse the catalog
+									meanwhile, or open the full journal when stories go live.
+								</>
+							)}
 						</p>
 						<div className="mt-6 flex flex-wrap justify-center gap-3">
 							<Link

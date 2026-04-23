@@ -210,8 +210,17 @@ export default async function HeroSection() {
             softly reimagined
           </h1>
           <p className="font-sans text-base leading-relaxed text-text-muted">
-            A calm marketplace for high-quality Moroccan cosmetics with transparent labels, ethical
-            sourcing, and a gentle shopping experience designed for modern women.
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <>
+                A calm marketplace for high-quality Moroccan cosmetics with transparent labels, ethical sourcing,
+                and a gentle shopping experience designed for modern women.
+              </>
+            ) : (
+              <>
+                Nevali brings Moroccan skincare and beauty from our studio—transparent labels, ethical
+                sourcing, and a calm checkout experience designed for modern routines.
+              </>
+            )}
           </p>
         </AnimateOnScroll>
         <AnimateOnScroll className="shrink-0" delay={120} direction="left">

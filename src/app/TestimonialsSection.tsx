@@ -1,4 +1,6 @@
 import React from "react";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 // ── Location icons ────────────────────────────────────────────────────────────
 
@@ -152,13 +154,30 @@ export default function TestimonialsSection() {
           </div>
 
           <h2 className="font-serif font-bold text-text-dark leading-tight text-4xl md:text-5xl">
-            Trusted by makers
-            <br />
-            and beauty buyers
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <>
+                Trusted by makers
+                <br />
+                and beauty buyers
+              </>
+            ) : (
+              <>
+                From our studio
+                <br />
+                to beauty buyers
+              </>
+            )}
           </h2>
 
           <p className="font-sans text-text-muted text-lg max-w-[480px] leading-relaxed">
-            Moroccan labs, cooperatives, and retailers growing together on the nevali marketplace.
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <>Moroccan labs, cooperatives, and retailers growing together on the nevali marketplace.</>
+            ) : (
+              <>
+                Moroccan labs, cooperatives, and retailers who collaborate with {NEVALI_HOUSE_BRAND.legalName} on formulations,
+                packaging, and distribution.
+              </>
+            )}
           </p>
         </div>
 

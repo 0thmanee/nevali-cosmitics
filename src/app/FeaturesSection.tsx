@@ -1,4 +1,6 @@
 import React from "react";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 // ── Pillar header icons ───────────────────────────────────────────────────────
 
@@ -256,6 +258,30 @@ function IconAnalytics() {
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
+const traceabilityDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
+  ? "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify."
+  : `Every SKU links to ${NEVALI_HOUSE_BRAND.legalName}'s ingredients, optional batch data, and certification IDs—easy for shoppers to verify.`;
+
+const guestCheckoutDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
+  ? "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment."
+  : `Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. ${NEVALI_HOUSE_BRAND.legalName} receives structured order lines for fulfilment.`;
+
+const brandDiscoveryTitle = SHOW_MULTI_PRODUCER_EXPERIENCE ? "Brand discovery" : "Collection & editorial";
+
+const brandDiscoveryDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
+  ? "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes."
+  : `Editorial layouts, search, and saved lists help customers explore the ${NEVALI_HOUSE_BRAND.legalName} line—from argan serums to hammam rituals.`;
+
+const pillar2Label = SHOW_MULTI_PRODUCER_EXPERIENCE ? "PILLAR 2 — MARKETPLACE ACCESS" : "PILLAR 2 — SHOP & CHECKOUT";
+
+const legalGuidanceDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
+  ? "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request."
+  : "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every customer and studio request.";
+
+const analyticsReportingDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
+  ? "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot."
+  : "Dashboards for admins and our studio: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.";
+
 const pillars = [
   {
     label: "PILLAR 1 — TRUST & COMPLIANCE",
@@ -296,7 +322,7 @@ const pillars = [
         cardBorder: "var(--color-paper)",
         dark: false,
         title: "Traceability & QR Verification",
-        desc: "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify.",
+        desc: traceabilityDesc,
         tags: [
           {
             label: "QR SCANNABLE",
@@ -346,7 +372,7 @@ const pillars = [
     ],
   },
   {
-    label: "PILLAR 2 — MARKETPLACE ACCESS",
+    label: pillar2Label,
     pillarIcon: <IconPillar2 />,
     pillarIconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
     cards: [
@@ -376,7 +402,7 @@ const pillars = [
         cardBorder: "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
         dark: false,
         title: "Guest checkout & cart",
-        desc: "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment.",
+        desc: guestCheckoutDesc,
         tags: [
           {
             label: "NO LOGIN REQUIRED",
@@ -394,8 +420,8 @@ const pillars = [
         cardBg: "var(--color-ink)",
         cardBorder: "var(--color-ink)",
         dark: true,
-        title: "Brand discovery",
-        desc: "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes.",
+        title: brandDiscoveryTitle,
+        desc: brandDiscoveryDesc,
         tags: [
           {
             label: "CURATED DIRECTORY",
@@ -440,7 +466,7 @@ const pillars = [
         cardBorder: "var(--color-paper)",
         dark: false,
         title: "Legal & export guidance",
-        desc: "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request.",
+        desc: legalGuidanceDesc,
         tags: [
           {
             label: "REAL-TIME STATUS",
@@ -459,7 +485,7 @@ const pillars = [
         cardBorder: "var(--color-paper)",
         dark: false,
         title: "Analytics & reporting",
-        desc: "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.",
+        desc: analyticsReportingDesc,
         tags: [
           {
             label: "EXPORT PDF / XLS",
@@ -497,8 +523,17 @@ export default function FeaturesSection() {
             </h2>
           </div>
           <p className="font-sans text-text-muted text-lg leading-relaxed max-w-[340px] lg:text-right lg:pt-14">
-            Compliance, catalog reach, and founder education—everything nevali bundles so bio-minded
-            Moroccan cosmetics can shine at home and abroad.
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+              <>
+                Compliance, catalog reach, and founder education—everything nevali bundles so bio-minded Moroccan cosmetics can
+                shine at home and abroad.
+              </>
+            ) : (
+              <>
+                Compliance, our shop experience, and studio training—everything {NEVALI_HOUSE_BRAND.legalName} bundles so
+                bio-minded Moroccan cosmetics can shine at home and abroad.
+              </>
+            )}
           </p>
         </div>
 

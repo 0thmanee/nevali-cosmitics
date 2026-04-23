@@ -1,5 +1,5 @@
 /**
- * nevali seed — single producer (NEVALI Cosmetics), diverse APPROVED catalog + Unsplash images.
+ * nevali seed — single producer (Nevali), diverse APPROVED catalog + Unsplash images.
  * Resets org-scoped data and all users except the superadmin, then rebuilds demo accounts.
  * Run: pnpm prisma db seed
  */
@@ -30,7 +30,7 @@ const PARTNER_EMAIL = "studio@nevali-cosmetics.local";
 const BUYER_EMAIL = "buyer@nevali-cosmetics.local";
 
 const ORG_SLUG = "nevali-cosmetics";
-const ORG_NAME = "NEVALI Cosmetics";
+const ORG_NAME = "Nevali";
 
 /** Verified Unsplash photo ids (same set as `src/lib/cosmetics-image-placeholders.ts`). */
 function cosmeticsPhoto(photoId: string, width: number): string {
@@ -651,7 +651,7 @@ async function main() {
 			publicTagline:
 				"Moroccan lab, global standards — traceable formulas from Casablanca.",
 			businessDescription:
-				"NEVALI Cosmetics formulates and fills skincare, hair, and body products with Moroccan actives (argan, ghassoul, rose, prickly pear). This database seed populates a realistic catalog for demos and QA.",
+				"Nevali formulates and fills skincare, hair, and body products with Moroccan actives (argan, ghassoul, rose, prickly pear). This database seed populates a realistic catalog for demos and QA.",
 			exportMarkets:
 				"European Union, United Kingdom, Gulf Cooperation Council, North America",
 			valuesHighlight:

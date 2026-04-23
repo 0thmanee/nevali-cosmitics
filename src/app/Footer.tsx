@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import {
 	PLATFORM_OWNED_ORG_SLUG,
 	SHOW_MULTI_PRODUCER_EXPERIENCE,
@@ -13,7 +14,7 @@ function buildFooterLinks(): Record<string, { label: string; href: string }[]> {
 				{ label: "Sell on nevali", href: "/auth/register" },
 			]
 		: [
-				{ label: "Our brand", href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` },
+				{ label: NEVALI_HOUSE_BRAND.navBrandLabel, href: `/artisans/${PLATFORM_OWNED_ORG_SLUG}` },
 				{ label: "Shop cosmetics", href: "/products" },
 			];
 
@@ -69,7 +70,7 @@ export default function Footer() {
 								className="font-sans text-xs uppercase tracking-[0.2em]"
 								style={{ color: "var(--color-primary-dark)" }}
 							>
-								soft beauty marketplace
+								{SHOW_MULTI_PRODUCER_EXPERIENCE ? "soft beauty marketplace" : NEVALI_HOUSE_BRAND.lineUnderLogo}
 							</span>
 						</Link>
 						<p
@@ -78,7 +79,7 @@ export default function Footer() {
 						>
 							{SHOW_MULTI_PRODUCER_EXPERIENCE
 								? "A gentler way to discover Moroccan cosmetics by women-led and values-led brands."
-								: "A gentler way to discover Moroccan cosmetics with calm rituals and transparent sourcing."}
+								: NEVALI_HOUSE_BRAND.footerBlurb}
 						</p>
 						{/* Social */}
 						<div className="mt-1 flex items-center gap-3">

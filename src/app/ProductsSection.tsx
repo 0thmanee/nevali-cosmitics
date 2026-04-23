@@ -5,6 +5,7 @@ import {
 	listApprovedProductsForPublicRepo,
 } from "~/app/api/products/repo/products.repo";
 import { PublicProductCard } from "~/components/public-product-card";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 
 export default async function ProductsSection() {
 	const hero = await getFeaturedHomeHeroProductRepo().catch(() => null);
@@ -31,8 +32,8 @@ export default async function ProductsSection() {
 							No live listings yet
 						</p>
 						<p className="max-w-md font-sans text-sm leading-relaxed text-text-muted">
-							Approved products from verified partners will appear here. Open the
-							catalog to see what is available today.
+							New {NEVALI_HOUSE_BRAND.legalName} listings will appear here as soon as they are live. Open the
+							catalog to see everything available today.
 						</p>
 						<Link
 							className="rounded-sm bg-primary px-5 py-2.5 font-sans text-xs font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"

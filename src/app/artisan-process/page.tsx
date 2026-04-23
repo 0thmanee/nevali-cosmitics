@@ -3,18 +3,27 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import { COSMETICS_MARKETING } from "~/lib/cosmetics-image-placeholders";
 import Footer from "~/app/Footer";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { AnimateOnScroll } from "./animate-on-scroll";
 
 // ─── Value chain data ─────────────────────────────────────────────────────────
 
-const CHAIN = [
+const CHAIN_MULTI = [
   { actor: "Moroccan brand", cut: 42, color: "var(--color-ink)", detail: "Keeps the lion’s share when selling direct on nevali" },
   { actor: "Ingredients & lab time", cut: 22, color: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))", detail: "Botanicals, stability testing, compounding labor" },
   { actor: "Packaging & fulfilment", cut: 18, color: "var(--color-text-muted)", detail: "Bottles, labels, cold chain or COD logistics" },
   { actor: "Platform & compliance", cut: 12, color: "var(--color-text-muted)", detail: "Payments, reviews, certification workflows" },
   { actor: "Retail markup (elsewhere)", cut: 6, color: "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))", detail: "What department stores often add on top" },
-];
+] as const;
+
+const CHAIN_SINGLE = [
+  { actor: "NEVALI Cosmetics", cut: 42, color: "var(--color-ink)", detail: "Our studio keeps the lion’s share when you shop direct on nevali" },
+  { actor: "Ingredients & lab time", cut: 22, color: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))", detail: "Botanicals, stability testing, compounding labor" },
+  { actor: "Packaging & fulfilment", cut: 18, color: "var(--color-text-muted)", detail: "Bottles, labels, cold chain or COD logistics" },
+  { actor: "Platform & compliance", cut: 12, color: "var(--color-text-muted)", detail: "Payments, reviews, certification workflows" },
+  { actor: "Retail markup (elsewhere)", cut: 6, color: "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))", detail: "What department stores often add on top" },
+] as const;
 
 const FORMULATION_STEPS = [
   { month: "Week 1–2", title: "Sourcing botanicals", body: "Cold-pressed oils, clays, and hydrosols move from cooperatives into quarantine—COA checks, moisture specs, and scent panels before a gram is blended." },
@@ -23,14 +32,23 @@ const FORMULATION_STEPS = [
   { month: "Week 7+", title: "Launch on nevali", body: "Approved SKUs go live with photography, reviews, and guest checkout—COD or card—so the story stays with the maker." },
 ];
 
-const IMPACT = [
+const IMPACT_MULTI = [
   { value: "3×", label: "Faster listing velocity vs. offline trade fairs for indie Moroccan beauty brands" },
   { value: "68%", label: "Target share of catalog revenue returned to partner brands after fulfilment costs" },
   { value: "40+", label: "Cities (and counting) where shoppers have received nevali orders" },
   { value: "0", label: "Opaque RFQ chains between you and the customer" },
-];
+] as const;
+
+const IMPACT_SINGLE = [
+  { value: "3×", label: "Faster path from our lab to your shelf than traditional retail layers" },
+  { value: "68%", label: "Target share of catalog revenue retained by NEVALI Cosmetics after fulfilment costs" },
+  { value: "40+", label: "Cities (and counting) where shoppers have received NEVALI Cosmetics orders" },
+  { value: "0", label: "Opaque RFQ chains between you and our studio" },
+] as const;
 
 export default function ArtisanProcessPage() {
+  const impact = SHOW_MULTI_PRODUCER_EXPERIENCE ? IMPACT_MULTI : IMPACT_SINGLE;
+  const chain = SHOW_MULTI_PRODUCER_EXPERIENCE ? CHAIN_MULTI : CHAIN_SINGLE;
   return (
     <>
       <Navbar />
@@ -212,7 +230,7 @@ export default function ArtisanProcessPage() {
 
             {/* Chain bars */}
             <div className="flex flex-col gap-0 border border-cream-dark divide-y divide-cream-dark">
-              {CHAIN.map((link, i) => (
+              {chain.map((link, i) => (
                 <AnimateOnScroll key={i} direction="up" delay={i * 80}>
                   <div className="flex items-center gap-6 px-6 py-5 bg-white hover:bg-cream transition-colors">
                     {/* Actor */}
@@ -309,14 +327,33 @@ export default function ArtisanProcessPage() {
                   </h2>
 
                   <p className="font-sans text-text-muted text-base leading-relaxed mb-5">
-                    nevali connects verified Moroccan beauty brands directly to shoppers—guest checkout,
-                    COD or card, and structured order lines. Brands set pricing and inventory; customers see the
-                    real story on every PDP.
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                      <>
+                        nevali connects verified Moroccan beauty brands directly to shoppers—guest checkout, COD or
+                        card, and structured order lines. Brands set pricing and inventory; customers see the real story
+                        on every PDP.
+                      </>
+                    ) : (
+                      <>
+                        {NEVALI_HOUSE_BRAND.legalName} brings Moroccan skincare and beauty from our studio to you—guest
+                        checkout, COD or card where enabled, and product pages written in our voice, with ingredients and
+                        imagery you can trust.
+                      </>
+                    )}
                   </p>
 
                   <p className="font-sans text-text-muted text-base leading-relaxed mb-10">
-                    We layer compliance tooling, certification uploads, training, and support tickets so labs can
-                    focus on what they do best: bio-original formulas that feel unmistakably Moroccan.
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                      <>
+                        We layer compliance tooling, certification uploads, training, and support tickets so labs can
+                        focus on what they do best: bio-original formulas that feel unmistakably Moroccan.
+                      </>
+                    ) : (
+                      <>
+                        We invest in compliance, certifications, training, and support tooling so our lab can focus on
+                        what we do best: bio-original formulas that feel unmistakably Moroccan.
+                      </>
+                    )}
                   </p>
 
                   {/* Before / After */}
@@ -327,9 +364,15 @@ export default function ArtisanProcessPage() {
                       <p className="font-sans text-xs text-text-muted mt-1">of retail value to maker (typical broker path)</p>
                     </div>
                     <div className="p-5 bg-cream">
-                      <p className="font-sans text-xs tracking-[0.15em] uppercase text-text-muted mb-3">With nevali</p>
+                      <p className="font-sans text-xs tracking-[0.15em] uppercase text-text-muted mb-3">
+                        {SHOW_MULTI_PRODUCER_EXPERIENCE ? "With nevali" : `With ${NEVALI_HOUSE_BRAND.legalName}`}
+                      </p>
                       <p className="font-serif font-bold text-[32px] text-forest-light leading-none">68%</p>
-                      <p className="font-sans text-xs text-text-muted mt-1">target share returned to partner brands</p>
+                      <p className="font-sans text-xs text-text-muted mt-1">
+                        {SHOW_MULTI_PRODUCER_EXPERIENCE
+                          ? "target share returned to partner brands"
+                          : `target share retained by ${NEVALI_HOUSE_BRAND.legalName} on direct sales`}
+                      </p>
                     </div>
                   </div>
 
@@ -364,10 +407,21 @@ export default function ArtisanProcessPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
                   <p className="font-serif italic text-white text-lg leading-relaxed">
-                    &ldquo;For the first time, shoppers read our INCI list in our words—and checkout stays with us.&rdquo;
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
+                      <>
+                        &ldquo;For the first time, shoppers read our INCI list in our words—and checkout stays with
+                        us.&rdquo;
+                      </>
+                    ) : (
+                      <>
+                        &ldquo;We write every INCI list in our own words—and checkout stays with {NEVALI_HOUSE_BRAND.legalName}.&rdquo;
+                      </>
+                    )}
                   </p>
                   <p className="font-sans text-xs text-white/60 mt-3 tracking-[0.08em] uppercase">
-                    — Khadija, nevali partner brand since 2024
+                    {SHOW_MULTI_PRODUCER_EXPERIENCE
+                      ? "— Khadija, nevali partner brand since 2024"
+                      : `— ${NEVALI_HOUSE_BRAND.legalName}`}
                   </p>
                 </div>
               </div>
@@ -379,7 +433,7 @@ export default function ArtisanProcessPage() {
         <section className="bg-cream border-b border-cream-dark">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-y sm:divide-y-0 divide-x divide-cream-dark border border-cream-dark">
-              {IMPACT.map((item, i) => (
+              {impact.map((item, i) => (
                 <AnimateOnScroll key={i} direction="up" delay={i * 100} className="px-8 py-12 text-center">
                   <p className="font-serif font-bold text-primary leading-none"
                     style={{ fontSize: "clamp(36px, 4vw, 56px)" }}

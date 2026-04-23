@@ -2,6 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
+import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { useCertifications } from "~/features/artisan/hooks/use-certifications";
 import type { CertificationRow } from "~/app/api/certifications/schemas/certifications.schema";
 
@@ -30,7 +32,9 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
       <div className="rounded-sm overflow-hidden" style={{ background: "var(--color-ink)" }}>
         <div className="px-5 py-4 border-b border-white/8">
           <h3 className="font-display font-bold uppercase text-[15px] text-white tracking-wide">Artisan status</h3>
-          <p className="font-sans text-[11px] text-white/40 mt-0.5">nevali verified brand</p>
+          <p className="font-sans text-[11px] text-white/40 mt-0.5">
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? "nevali verified brand" : `${NEVALI_HOUSE_BRAND.legalName} studio profile`}
+          </p>
         </div>
         <div className="p-5 flex flex-col gap-4">
           <div className="flex items-center gap-3">
@@ -44,7 +48,9 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
             </div>
             <div>
               <p className="font-sans font-bold text-sm text-text-muted">Active & Certified</p>
-              <p className="font-sans text-[11px] text-white/40">Registered artisan on the platform</p>
+              <p className="font-sans text-[11px] text-white/40">
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Registered artisan on the platform" : `Registered producer for ${NEVALI_HOUSE_BRAND.legalName}`}
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-2">
