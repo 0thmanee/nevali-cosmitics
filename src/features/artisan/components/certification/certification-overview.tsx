@@ -55,11 +55,11 @@ function CertTypeRow({
   emptyHint: string;
 }) {
   return (
-    <div className="flex flex-col gap-3 p-4 rounded-xl" style={{ border: "1px solid #d8d0c4", background: "#ffffff" }}>
+    <div className="flex flex-col gap-3 p-4 rounded-sm" style={{ border: "1px solid #d8d0c4", background: "#ffffff" }}>
       {/* Header */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: accentColor + "18" }}>
+          <div className="w-7 h-7 rounded-sm flex items-center justify-center shrink-0" style={{ background: accentColor + "18" }}>
             {icon}
           </div>
           <span className="font-sans font-semibold text-[13px] text-[#000000]">{label}</span>
@@ -126,7 +126,7 @@ export function CertificationOverview() {
 
   if (isLoading) {
     return (
-      <div className="rounded-xl py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <p className="font-sans text-[13px] text-[#727272]">Loading…</p>
       </div>
     );
@@ -143,8 +143,8 @@ export function CertificationOverview() {
           { value: totalPending,   label: "Pending review",     icon: <Clock       size={18} strokeWidth={1.5} />, bg: "rgba(201,145,61,0.08)", color: "#727272" },
           { value: totalRejected,  label: "Rejected",           icon: <XCircle     size={18} strokeWidth={1.5} />, bg: "rgba(220,38,38,0.08)",  color: "#dc2626" },
         ] as const).map(({ value, label, icon, bg, color }) => (
-          <div key={label} className="rounded-xl px-4 py-3.5 flex items-center gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: bg, color }}>
+          <div key={label} className="rounded-sm px-4 py-3.5 flex items-center gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+            <div className="w-9 h-9 rounded-sm flex items-center justify-center shrink-0" style={{ background: bg, color }}>
               {icon}
             </div>
             <div>
@@ -159,7 +159,7 @@ export function CertificationOverview() {
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-4">
 
         {/* Left: breakdown card */}
-        <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+        <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
           <div className="px-5 py-4 border-b flex items-center gap-2" style={{ borderColor: "#d8d0c4" }}>
             <h3 className="font-serif font-bold text-[15px] text-[#000000]">Certification breakdown</h3>
           </div>
@@ -204,7 +204,7 @@ export function CertificationOverview() {
 
           {/* Rejection alert */}
           {totalRejected > 0 && (
-            <div className="rounded-xl px-4 py-4 flex flex-col gap-2" style={{ background: "rgba(220,38,38,0.05)", border: "1px solid rgba(220,38,38,0.18)" }}>
+            <div className="rounded-sm px-4 py-4 flex flex-col gap-2" style={{ background: "rgba(220,38,38,0.05)", border: "1px solid rgba(220,38,38,0.18)" }}>
               <div className="flex items-center gap-2">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <circle cx="7" cy="7" r="5.5" stroke="#dc2626" strokeWidth="1.2" />
@@ -220,9 +220,9 @@ export function CertificationOverview() {
           )}
 
           {/* Certified products */}
-          <div className="rounded-xl px-4 py-4 flex flex-col gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+          <div className="rounded-sm px-4 py-4 flex flex-col gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
             <div className="flex items-center gap-2 pb-3 border-b" style={{ borderColor: "#d8d0c4" }}>
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(0,0,0,0.10)" }}>
+              <div className="w-7 h-7 rounded-sm flex items-center justify-center shrink-0" style={{ background: "rgba(0,0,0,0.10)" }}>
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path d="M7 1l1.6 4H13L9.5 7.5l1.3 4L7 9.4l-3.8 2.1 1.3-4L1 5h4.4L7 1z" stroke="#000000" strokeWidth="1.2" strokeLinejoin="round" />
                 </svg>
@@ -239,7 +239,7 @@ export function CertificationOverview() {
           </div>
 
           {/* Renewal tip */}
-          <div className="rounded-xl px-4 py-4 flex flex-col gap-2" style={{ background: "rgba(201,145,61,0.06)", border: "1px solid rgba(201,145,61,0.20)" }}>
+          <div className="rounded-sm px-4 py-4 flex flex-col gap-2" style={{ background: "rgba(201,145,61,0.06)", border: "1px solid rgba(201,145,61,0.20)" }}>
             <div className="flex items-center gap-2">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                 <circle cx="7" cy="7" r="5.5" stroke="#727272" strokeWidth="1.2" />

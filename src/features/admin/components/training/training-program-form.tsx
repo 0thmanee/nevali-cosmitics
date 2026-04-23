@@ -65,13 +65,13 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl overflow-hidden shadow-sm" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <form onSubmit={handleSubmit} className="rounded-sm overflow-hidden shadow-sm" style={{ background: "white", border: "1px solid #d8d0c4" }}>
       <div className="px-6 py-4 border-b border-[#d8d0c4]">
         <h2 className="font-serif font-bold text-[15px] text-[#000000]">{program ? "Edit program" : "New program"}</h2>
       </div>
       <div className="p-6 flex flex-col gap-4">
         {error && (
-          <div className="rounded-xl px-4 py-3" style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)" }}>
+          <div className="rounded-sm px-4 py-3" style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)" }}>
             <p className="font-sans text-sm text-[#f87171]">{error}</p>
           </div>
         )}
@@ -81,7 +81,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+            className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
             placeholder="e.g. Export Documentation Mastery"
             maxLength={200}
           />
@@ -91,7 +91,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] min-h-[80px]"
+            className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] min-h-[80px]"
             placeholder="Short description of the program"
             maxLength={2000}
           />
@@ -103,7 +103,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
               type="text"
               value={provider}
               onChange={(e) => setProvider(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+              className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               maxLength={100}
             />
           </div>
@@ -113,7 +113,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+              className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               placeholder="e.g. Export & Trade"
               maxLength={100}
             />
@@ -126,7 +126,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
               type="text"
               value={durationLabel}
               onChange={(e) => setDurationLabel(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+              className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               placeholder="e.g. 10 modules · ~6 hours"
               maxLength={100}
             />
@@ -136,7 +136,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
             <select
               value={level}
               onChange={(e) => setLevel(e.target.value as (typeof TRAINING_LEVELS)[number])}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+              className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
             >
               {TRAINING_LEVELS.map((l) => (
                 <option key={l} value={l}>{getTrainingLevelLabel(l)}</option>
@@ -149,7 +149,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as (typeof TRAINING_PROGRAM_STATUSES)[number])}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+            className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
           >
             {TRAINING_PROGRAM_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -160,7 +160,7 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
           <button
             type="submit"
             disabled={isPending}
-            className="font-sans text-sm font-semibold rounded-xl px-6 py-2.5 transition-colors disabled:opacity-60"
+            className="font-sans text-sm font-semibold rounded-sm px-6 py-2.5 transition-colors disabled:opacity-60"
             style={{ background: "#000000", color: "white" }}
           >
             {isPending ? "Saving…" : program ? "Save changes" : "Create program"}

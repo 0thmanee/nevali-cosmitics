@@ -48,7 +48,7 @@ export function ShopOrdersList() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center rounded-2xl border border-cream-dark bg-white px-5 py-12">
+      <div className="flex items-center justify-center rounded-sm border border-cream-dark bg-white px-5 py-12">
         <p className="font-sans text-sm text-stone-500">Loading orders…</p>
       </div>
     );
@@ -56,7 +56,7 @@ export function ShopOrdersList() {
 
   if (isError) {
     return (
-      <div className="rounded-2xl border border-cream-dark bg-white px-5 py-6">
+      <div className="rounded-sm border border-cream-dark bg-white px-5 py-6">
         <p className="font-sans text-sm text-red-600">
           {error instanceof Error ? error.message : "Failed to load orders."}
         </p>
@@ -66,7 +66,7 @@ export function ShopOrdersList() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="overflow-hidden rounded-2xl border border-cream-dark bg-white">
+      <div className="overflow-hidden rounded-sm border border-cream-dark bg-white">
         <div className="border-b border-cream-dark px-5 py-4">
           <h2 className="font-serif text-[15px] font-bold text-text-dark">Catalog checkout orders</h2>
           <p className="mt-0.5 font-sans text-[11px] text-stone-500">
@@ -116,7 +116,7 @@ export function ShopOrdersList() {
                   </div>
                 </div>
 
-                <ul className="flex flex-col gap-2 rounded-xl border border-cream-dark bg-cream px-3 py-2">
+                <ul className="flex flex-col gap-2 rounded-sm border border-cream-dark bg-cream px-3 py-2">
                   {order.lines.map((line) => (
                     <li
                       className="flex flex-wrap justify-between gap-2 font-sans text-[12px] text-text-dark"

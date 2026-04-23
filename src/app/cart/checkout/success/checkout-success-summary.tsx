@@ -23,7 +23,7 @@ export function CheckoutSuccessSummary({ orderId }: { orderId: string | undefine
   if (!data) return null;
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-cream-dark bg-white px-5 py-4 text-left shadow-sm">
+    <div className="w-full max-w-md rounded-sm border border-cream-dark bg-white px-5 py-4 text-left shadow-sm">
       <h2 className="mb-3 font-serif text-base font-bold text-text-dark">Order details you submitted</h2>
       <dl className="space-y-3 font-sans text-sm text-text-dark">
         <div>

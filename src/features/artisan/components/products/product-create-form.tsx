@@ -158,7 +158,7 @@ export function ProductCreateForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       {/* Header card */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">Add new product</h1>
@@ -180,7 +180,7 @@ export function ProductCreateForm() {
 
       {error && (
         <div
-          className="rounded-2xl px-6 py-4"
+          className="rounded-sm px-6 py-4"
           style={{ background: "rgba(248,113,113,0.06)", border: "1px solid rgba(248,113,113,0.3)" }}
         >
           <p className="font-sans text-sm text-[#f87171]">{error}</p>
@@ -188,7 +188,7 @@ export function ProductCreateForm() {
       )}
 
       {/* Details */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
         </div>
@@ -270,7 +270,7 @@ export function ProductCreateForm() {
       </div>
 
       {/* Product images */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4] flex items-center justify-between gap-3">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Product images</h2>
           <input
@@ -286,7 +286,7 @@ export function ProductCreateForm() {
             type="button"
             onClick={() => imageInputRef.current?.click()}
             disabled={submitting}
-            className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+            className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
             style={{ background: "#000000", color: "white" }}
           >
             Add image
@@ -302,7 +302,7 @@ export function ProductCreateForm() {
               {stagedImages.map((img) => (
                 <div
                   key={img.id}
-                  className="relative group rounded-xl overflow-hidden shrink-0"
+                  className="relative group rounded-sm overflow-hidden shrink-0"
                   style={{ width: 120, height: 120, border: "1px solid #d8d0c4" }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -324,7 +324,7 @@ export function ProductCreateForm() {
       </div>
 
       {/* Certifications */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -339,7 +339,7 @@ export function ProductCreateForm() {
               value={certName}
               onChange={(e) => { setCertName(e.target.value); setCertError(null); }}
               disabled={submitting}
-              className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] w-44 disabled:opacity-60"
+              className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-44 disabled:opacity-60"
               style={{ background: "#FAFAF8" }}
             />
             <input
@@ -354,7 +354,7 @@ export function ProductCreateForm() {
               type="button"
               onClick={() => { setCertError(null); certInputRef.current?.click(); }}
               disabled={submitting}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
               style={{ background: "#000000", color: "white" }}
             >
               Upload certification
@@ -371,7 +371,7 @@ export function ProductCreateForm() {
               {stagedCerts.map((cert) => (
                 <li
                   key={cert.id}
-                  className="flex items-center justify-between gap-3 rounded-xl px-4 py-3"
+                  className="flex items-center justify-between gap-3 rounded-sm px-4 py-3"
                   style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                 >
                   <div className="min-w-0">
@@ -396,13 +396,13 @@ export function ProductCreateForm() {
 
       {/* Actions */}
       <div
-        className="rounded-2xl overflow-hidden shadow-sm px-6 py-5 flex flex-wrap items-center gap-4"
+        className="rounded-sm overflow-hidden shadow-sm px-6 py-5 flex flex-wrap items-center gap-4"
         style={cardStyle}
       >
         <button
           type="submit"
           disabled={submitting}
-          className="font-sans font-semibold text-sm text-white rounded-xl px-6 py-3 transition-colors disabled:opacity-60 min-w-[160px]"
+          className="font-sans font-semibold text-sm text-white rounded-sm px-6 py-3 transition-colors disabled:opacity-60 min-w-[160px]"
           style={{ background: "#000000" }}
         >
           {uploadStatus ?? "Create product"}

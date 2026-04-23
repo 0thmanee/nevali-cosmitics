@@ -509,7 +509,7 @@ export default function FeaturesSection() {
               {/* Pillar header row */}
               <div className="flex items-center gap-3">
                 <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                  className="w-8 h-8 rounded-sm flex items-center justify-center shrink-0"
                   style={{ background: pillar.pillarIconBg }}
                 >
                   {pillar.pillarIcon}
@@ -525,7 +525,7 @@ export default function FeaturesSection() {
                 {pillar.cards.map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-2xl p-7 flex flex-col gap-4"
+                    className="rounded-sm p-7 flex flex-col gap-4"
                     style={{
                       background: card.cardBg,
                       border: `1px solid ${card.cardBorder}`,
@@ -533,7 +533,7 @@ export default function FeaturesSection() {
                   >
                     {/* Icon */}
                     <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                      className="w-11 h-11 rounded-sm flex items-center justify-center shrink-0"
                       style={{ background: card.iconBg }}
                     >
                       {card.icon}

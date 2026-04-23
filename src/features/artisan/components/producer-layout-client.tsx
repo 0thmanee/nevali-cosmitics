@@ -185,7 +185,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
                 key={item.href}
                 href={item.href}
                 onMouseEnter={() => router.prefetch(item.href)}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2 w-full transition-colors ${
+                className={`flex items-center gap-3 rounded-sm px-3 py-2 w-full transition-colors ${
                   isActive
                     ? "bg-[#727272]/15 border border-[#727272]/25"
                     : "bg-transparent border border-transparent"

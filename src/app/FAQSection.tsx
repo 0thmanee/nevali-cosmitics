@@ -134,7 +134,7 @@ export default function FAQSection() {
 					))}
 
 					<div
-						className="mt-8 flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+						className="mt-8 flex flex-col gap-4 rounded-sm px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
 						style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
 					>
 						<div>
@@ -146,7 +146,7 @@ export default function FAQSection() {
 							</p>
 						</div>
 						<button
-							className="flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 font-sans font-semibold text-sm text-white transition-colors"
+							className="flex shrink-0 items-center gap-2 rounded-sm px-6 py-3 font-sans font-semibold text-sm text-white transition-colors"
 							style={{ background: "#000000" }}
 							type="button"
 						>

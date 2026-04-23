@@ -93,7 +93,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 			style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
 			onClick={(e) => e.target === overlayRef.current && onClose()}
 		>
-			<div className="relative flex w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+			<div className="relative flex w-full max-w-md flex-col overflow-hidden rounded-sm bg-white shadow-2xl">
 				<button
 					onClick={onClose}
 					className="absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/5 transition-colors hover:bg-black/10"
@@ -131,7 +131,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 						</div>
 						<button
 							onClick={onClose}
-							className="rounded-xl px-8 py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90"
+							className="rounded-sm px-8 py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90"
 							style={{ background: "#000000" }}
 							type="button"
 						>
@@ -141,7 +141,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 				) : (
 					<>
 						<div className="flex items-center gap-4 border-cream-dark border-b p-5">
-							<div className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-cream">
+							<div className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-cream">
 								<Image
 									alt={product.name}
 									className="object-cover"
@@ -176,7 +176,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 									</label>
 									<input
 										required
-										className="w-full rounded-xl border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
+										className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 										onChange={(e) => setName(e.target.value)}
 										placeholder="Jane Doe"
 										value={name}
@@ -188,7 +188,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 									</label>
 									<input
 										required
-										className="w-full rounded-xl border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
+										className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 										onChange={(e) => setEmail(e.target.value)}
 										placeholder="you@company.com"
 										type="email"
@@ -208,7 +208,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 								</label>
 								<input
 									required
-									className="w-full rounded-xl border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
+									className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 									onChange={(e) => setQuantity(e.target.value)}
 									placeholder={product.orderHint ? `e.g. ${product.orderHint}` : "e.g. 50kg, 100L"}
 									value={quantity}
@@ -221,7 +221,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 									<span className="ml-1.5 font-normal normal-case tracking-normal text-text-muted">(optional)</span>
 								</label>
 								<textarea
-									className="w-full resize-none rounded-xl border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
+									className="w-full resize-none rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 									onChange={(e) => setMessage(e.target.value)}
 									placeholder={
 										isB2B
@@ -239,13 +239,13 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							</p>
 
 							{state === "error" ? (
-								<p className="rounded-lg bg-red-50 px-3 py-2 font-sans text-red-500 text-xs">
+								<p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-red-500 text-xs">
 									Something went wrong. Please try again.
 								</p>
 							) : null}
 
 							<button
-								className="flex w-full items-center justify-center gap-2 rounded-xl py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+								className="flex w-full items-center justify-center gap-2 rounded-sm py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 								disabled={state === "loading"}
 								style={{ background: "#000000" }}
 								type="submit"

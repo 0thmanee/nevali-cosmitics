@@ -57,7 +57,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
   if (isLoading) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+        <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
           <div className="px-5 py-12 flex items-center justify-center">
             <p className="font-sans text-sm text-[#727272]">Loading ticket…</p>
           </div>
@@ -69,7 +69,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
   if (isError || !ticket) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-xl overflow-hidden px-5 py-6" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+        <div className="rounded-sm overflow-hidden px-5 py-6" style={{ background: "white", border: "1px solid #d8d0c4" }}>
           <p className="font-sans text-sm text-red-600">
             {error instanceof Error ? error.message : "Ticket not found."}
           </p>
@@ -97,7 +97,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
         </Link>
       </div>
 
-      <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <div className="px-5 py-4 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderColor: "#d8d0c4" }}>
           <div>
             <h2 className="font-serif font-bold text-[15px] text-[#000000]">{t.subject}</h2>
@@ -116,7 +116,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
               value={t.status}
               onChange={(e) => handleStatusChange(e.target.value as "OPEN" | "IN_REVIEW" | "RESOLVED")}
               disabled={updateStatusMutation.isPending}
-              className="font-sans text-[12px] font-semibold rounded-xl px-3 py-1.5 border"
+              className="font-sans text-[12px] font-semibold rounded-sm px-3 py-1.5 border"
               style={{ borderColor: "#d8d0c4", background: "#ffffff", color: "#000000" }}
             >
               <option value="OPEN">Open</option>
@@ -129,7 +129,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
         <div className="p-5 flex flex-col gap-6">
           <section>
             <h3 className="font-sans text-[10px] font-bold tracking-wider text-[#727272] uppercase mb-2">Message</h3>
-            <div className="rounded-xl px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+            <div className="rounded-sm px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
               <p className="font-sans text-[13px] text-[#000000] leading-relaxed whitespace-pre-wrap">{t.message}</p>
             </div>
           </section>
@@ -142,7 +142,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
               onBlur={() => notesDirty && handleSaveNotes()}
               placeholder="Add internal notes (only visible to admins)…"
               rows={4}
-              className="font-sans text-[13px] text-[#000000] w-full rounded-xl px-4 py-3 outline-none resize-y"
+              className="font-sans text-[13px] text-[#000000] w-full rounded-sm px-4 py-3 outline-none resize-y"
               style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
             />
             {notesDirty && (
@@ -151,7 +151,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
                   type="button"
                   onClick={handleSaveNotes}
                   disabled={notesSaving}
-                  className="font-sans text-[12px] font-semibold rounded-xl px-3 py-1.5 transition-colors disabled:opacity-60"
+                  className="font-sans text-[12px] font-semibold rounded-sm px-3 py-1.5 transition-colors disabled:opacity-60"
                   style={{ background: "#000000", color: "white" }}
                 >
                   {notesSaving ? "Saving…" : "Save notes"}
@@ -171,7 +171,7 @@ export function SupportTicketDetail({ ticketId }: Props) {
           {t.statusEvents.length > 0 && (
             <section>
               <h3 className="font-sans text-[10px] font-bold tracking-wider text-[#727272] uppercase mb-2">Status history</h3>
-              <ul className="rounded-xl overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
+              <ul className="rounded-sm overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
                 {t.statusEvents.map((evt) => (
                   <li
                     key={evt.id}

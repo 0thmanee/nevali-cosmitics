@@ -75,17 +75,17 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
   };
 
   return (
-    <div className="bg-white border border-cream-dark rounded-xl p-6">
+    <div className="bg-white border border-cream-dark rounded-sm p-6">
       <h3 className="font-serif font-bold text-lg text-text-dark mb-4">Leave a Review</h3>
 
       {success && (
-        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-sm">
           <p className="font-sans text-sm text-green-700">Thank you! Your review has been submitted.</p>
         </div>
       )}
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-sm">
           <p className="font-sans text-sm text-red-700">{error}</p>
         </div>
       )}
@@ -105,7 +105,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
                   type="button"
                   onClick={() => setRating(ratingValue)}
                   disabled={submitting}
-                  className={`p-2 rounded-lg transition-all ${
+                  className={`p-2 rounded-sm transition-all ${
                     rating === ratingValue
                       ? "bg-primary text-white"
                       : "bg-cream border border-cream-dark hover:border-primary"
@@ -133,7 +133,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
             placeholder="Enter your name"
-            className="w-full px-3 py-2 border border-cream-dark rounded-lg font-sans text-sm focus:outline-none focus:border-primary"
+            className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             maxLength={100}
             disabled={submitting}
           />
@@ -150,7 +150,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
             value={buyerEmail}
             onChange={(e) => setBuyerEmail(e.target.value)}
             placeholder="your@email.com"
-            className="w-full px-3 py-2 border border-cream-dark rounded-lg font-sans text-sm focus:outline-none focus:border-primary"
+            className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             disabled={submitting}
           />
         </div>
@@ -166,7 +166,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Summarize your experience..."
-            className="w-full px-3 py-2 border border-cream-dark rounded-lg font-sans text-sm focus:outline-none focus:border-primary"
+            className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             maxLength={200}
             disabled={submitting}
           />
@@ -183,7 +183,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
             onChange={(e) => setBody(e.target.value)}
             placeholder="Tell us more about your experience with this product..."
             rows={4}
-            className="w-full px-3 py-2 border border-cream-dark rounded-lg font-sans text-sm focus:outline-none focus:border-primary resize-none"
+            className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary resize-none"
             maxLength={5000}
             disabled={submitting}
           />
@@ -195,7 +195,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full px-4 py-2 bg-primary text-white font-sans font-semibold rounded-lg hover:opacity-90 disabled:opacity-60 transition-opacity"
+          className="w-full px-4 py-2 bg-primary text-white font-sans font-semibold rounded-sm hover:opacity-90 disabled:opacity-60 transition-opacity"
         >
           {submitting ? "Submitting..." : "Submit Review"}
         </button>

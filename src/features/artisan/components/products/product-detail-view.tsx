@@ -21,7 +21,7 @@ export function ProductDetailView({ productId }: Props) {
   if (isLoading) {
     return (
       <div
-        className="rounded-2xl overflow-hidden flex items-center justify-center py-20"
+        className="rounded-sm overflow-hidden flex items-center justify-center py-20"
         style={cardStyle}
       >
         <p className="font-sans text-sm text-[#727272]">Loading product…</p>
@@ -32,7 +32,7 @@ export function ProductDetailView({ productId }: Props) {
   if (isError || !product) {
     return (
       <div
-        className="rounded-2xl overflow-hidden px-6 py-12 text-center"
+        className="rounded-sm overflow-hidden px-6 py-12 text-center"
         style={cardStyle}
       >
         <p className="font-sans text-sm text-[#f87171]">
@@ -54,7 +54,7 @@ export function ProductDetailView({ productId }: Props) {
     <div className="flex flex-col gap-6">
       {/* Header card */}
       <div
-        className="rounded-2xl overflow-hidden shadow-sm"
+        className="rounded-sm overflow-hidden shadow-sm"
         style={cardStyle}
       >
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
@@ -78,7 +78,7 @@ export function ProductDetailView({ productId }: Props) {
             </span>
             <Link
               href={`/artisan/products/${productId}/edit`}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
               style={{
                 background: "#000000",
                 color: "white",
@@ -102,7 +102,7 @@ export function ProductDetailView({ productId }: Props) {
 
       {/* Details card */}
       <div
-        className="rounded-2xl overflow-hidden shadow-sm"
+        className="rounded-sm overflow-hidden shadow-sm"
         style={cardStyle}
       >
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
@@ -112,7 +112,7 @@ export function ProductDetailView({ productId }: Props) {
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
               <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Minimum order quantity
               </p>
@@ -120,7 +120,7 @@ export function ProductDetailView({ productId }: Props) {
                 {product.moq ?? "—"}
               </p>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
               <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Capacity
               </p>
@@ -131,7 +131,7 @@ export function ProductDetailView({ productId }: Props) {
           </div>
           {product.status === "REJECTED" && product.rejectionReason?.trim() && (
             <div
-              className="rounded-xl px-4 py-3 flex flex-col gap-1"
+              className="rounded-sm px-4 py-3 flex flex-col gap-1"
               style={{
                 background: "rgba(248,113,113,0.08)",
                 border: "1px solid rgba(248,113,113,0.2)",

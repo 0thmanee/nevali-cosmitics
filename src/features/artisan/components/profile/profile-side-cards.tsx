@@ -27,7 +27,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
   const { data: certifications = [], isLoading, isError } = useCertifications();
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-xl overflow-hidden" style={{ background: "#000000" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "#000000" }}>
         <div className="px-5 py-4 border-b border-white/8">
           <h3 className="font-display font-bold uppercase text-[15px] text-white tracking-wide">Artisan status</h3>
           <p className="font-sans text-[11px] text-white/40 mt-0.5">nevali verified brand</p>
@@ -35,7 +35,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
         <div className="p-5 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+              className="w-10 h-10 rounded-sm flex items-center justify-center shrink-0"
               style={{ background: "rgba(200,150,60,0.1)", border: "1px solid rgba(200,150,60,0.2)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -61,7 +61,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
             href="/api/certificate"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full font-sans text-[12px] font-semibold rounded-xl py-2 transition-colors text-center block hover:opacity-90"
+            className="w-full font-sans text-[12px] font-semibold rounded-sm py-2 transition-colors text-center block hover:opacity-90"
             style={{ background: "rgba(200,150,60,0.12)", color: "#727272", border: "1px solid rgba(200,150,60,0.2)" }}
           >
             Download Certificate
@@ -69,7 +69,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
         </div>
       </div>
 
-      <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
           <h3 className="font-display font-bold uppercase text-[15px] text-[#000000] tracking-wide">Documents</h3>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">Certification files on record</p>
@@ -123,7 +123,7 @@ export function ProfileSideCards({ partnerId, partnerSince }: CertificationCardP
             })}
           <Link
             href="/artisan/certification"
-            className="w-full font-sans text-[12px] font-medium rounded-xl py-2 mt-1 transition-colors text-center block hover:opacity-90"
+            className="w-full font-sans text-[12px] font-medium rounded-sm py-2 mt-1 transition-colors text-center block hover:opacity-90"
             style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
           >
             + Upload Document

@@ -30,7 +30,7 @@ export function SupportNewTicketForm({
     return (
       <div className="max-w-2xl">
         <div
-          className="rounded-xl px-6 py-10 flex flex-col items-center gap-4 text-center"
+          className="rounded-sm px-6 py-10 flex flex-col items-center gap-4 text-center"
           style={{ background: "white", border: "1px solid #d8d0c4" }}
         >
           <div
@@ -67,7 +67,7 @@ export function SupportNewTicketForm({
           <button
             type="button"
             onClick={onViewTickets}
-            className="font-sans text-sm font-semibold rounded-xl px-6 py-2.5 transition-colors"
+            className="font-sans text-sm font-semibold rounded-sm px-6 py-2.5 transition-colors"
             style={{ background: "#000000", color: "white" }}
           >
             View My Tickets
@@ -80,7 +80,7 @@ export function SupportNewTicketForm({
   return (
     <div className="max-w-2xl">
       <div
-        className="rounded-xl overflow-hidden"
+        className="rounded-sm overflow-hidden"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
@@ -101,7 +101,7 @@ export function SupportNewTicketForm({
               placeholder="Brief description of your issue"
               value={form.subject}
               onChange={(e) => onFormChange({ ...form, subject: e.target.value })}
-              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full"
+              className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 outline-none w-full"
               style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
             />
           </div>
@@ -113,7 +113,7 @@ export function SupportNewTicketForm({
               <select
                 value={form.category}
                 onChange={(e) => onFormChange({ ...form, category: e.target.value })}
-                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full appearance-none"
+                className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 outline-none w-full appearance-none"
                 style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               >
                 <option value="">Select category</option>
@@ -131,7 +131,7 @@ export function SupportNewTicketForm({
               <select
                 value={form.priority}
                 onChange={(e) => onFormChange({ ...form, priority: e.target.value })}
-                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full appearance-none"
+                className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 outline-none w-full appearance-none"
                 style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               >
                 {SUPPORT_PRIORITIES.map((p) => (
@@ -151,7 +151,7 @@ export function SupportNewTicketForm({
               value={form.message}
               onChange={(e) => onFormChange({ ...form, message: e.target.value })}
               rows={5}
-              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
+              className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 outline-none w-full resize-none"
               style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
             />
           </div>
@@ -159,7 +159,7 @@ export function SupportNewTicketForm({
             type="button"
             onClick={onSubmit}
             disabled={!canSubmit || isSubmitting}
-            className="font-sans font-semibold text-sm text-white rounded-xl px-6 py-3 transition-colors self-start disabled:opacity-50"
+            className="font-sans font-semibold text-sm text-white rounded-sm px-6 py-3 transition-colors self-start disabled:opacity-50"
             style={{
               background: canSubmit && !isSubmitting ? "#000000" : "#727272",
             }}

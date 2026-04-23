@@ -29,13 +29,13 @@ export default function BuyerHomePage() {
 			</p>
 			<div className="flex flex-wrap gap-3">
 				<Link
-					className="rounded-xl bg-forest-mid px-5 py-2.5 font-medium font-sans text-sm text-white transition-opacity hover:opacity-90"
+					className="rounded-sm bg-forest-mid px-5 py-2.5 font-medium font-sans text-sm text-white transition-opacity hover:opacity-90"
 					href="/products"
 				>
 					Browse products
 				</Link>
 				<Link
-					className="rounded-xl border border-cream-dark px-5 py-2.5 font-medium font-sans text-sm text-text-dark transition-colors hover:bg-cream"
+					className="rounded-sm border border-cream-dark px-5 py-2.5 font-medium font-sans text-sm text-text-dark transition-colors hover:bg-cream"
 					href={
 						SHOW_MULTI_PRODUCER_EXPERIENCE ? "/artisans" : `/artisans/${PLATFORM_OWNED_ORG_SLUG}`
 					}
@@ -44,7 +44,7 @@ export default function BuyerHomePage() {
 				</Link>
 			</div>
 
-			<div className="rounded-xl border border-cream-dark bg-white p-5">
+			<div className="rounded-sm border border-cream-dark bg-white p-5">
 				<h2 className="font-bold font-serif text-text-dark">Buying teams &amp; organizations</h2>
 				<p className="mt-2 font-sans text-sm text-text-muted leading-relaxed">
 					Shared buyer workspaces (multiple colleagues on one account, approvals, and procurement

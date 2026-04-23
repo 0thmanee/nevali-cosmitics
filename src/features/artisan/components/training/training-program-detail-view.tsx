@@ -17,7 +17,7 @@ function MediaBlock({ media }: { media: TrainingProgramMediaRow }) {
 
   if (media.mediaType === "VIDEO") {
     return (
-      <div className="rounded-xl overflow-hidden bg-black">
+      <div className="rounded-sm overflow-hidden bg-black">
         <video
           src={media.fileUrl}
           controls
@@ -30,7 +30,7 @@ function MediaBlock({ media }: { media: TrainingProgramMediaRow }) {
   }
   if (media.mediaType === "PDF") {
     return (
-      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
         <iframe src={media.fileUrl} title={title} className="w-full h-[400px]" />
         <a href={media.fileUrl} target="_blank" rel="noopener noreferrer" className="block font-sans text-[12px] font-medium text-[#000000] hover:underline px-3 py-2">
           Open PDF: {title}
@@ -39,7 +39,7 @@ function MediaBlock({ media }: { media: TrainingProgramMediaRow }) {
     );
   }
   return (
-    <div className="rounded-xl overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #d8d0c4" }}>
       <a href={media.fileUrl} target="_blank" rel="noopener noreferrer" className="block">
         <img src={media.fileUrl} alt={title} className="w-full max-h-[400px] object-contain bg-[#ffffff]" />
       </a>
@@ -85,7 +85,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
         <span className="font-sans font-medium text-[#000000] truncate">{program.name}</span>
       </nav>
 
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">{program.name}</h1>
@@ -98,7 +98,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
               type="button"
               onClick={() => enrollMutation.mutate(programId)}
               disabled={enrollMutation.isPending}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60 shrink-0"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60 shrink-0"
               style={{ background: "#000000", color: "white" }}
             >
               {enrollMutation.isPending ? "Enrolling…" : "Enroll"}
@@ -124,7 +124,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
       </div>
 
       {programMedia.length > 0 && (
-        <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
           <div className="px-6 py-4 border-b border-[#d8d0c4]">
             <h2 className="font-serif font-bold text-[15px] text-[#000000]">Program materials</h2>
           </div>
@@ -137,7 +137,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
       )}
 
       {program.modules.length > 0 && (
-        <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
           <div className="px-6 py-4 border-b border-[#d8d0c4]">
             <h2 className="font-serif font-bold text-[15px] text-[#000000]">Modules</h2>
           </div>
@@ -166,7 +166,7 @@ export function TrainingProgramDetailView({ programId }: Props) {
                           type="button"
                           onClick={() => updateProgressMutation.mutate({ enrollmentId: enrollment.id, modulesCompleted: index + 1 })}
                           disabled={updateProgressMutation.isPending}
-                          className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+                          className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
                           style={{ background: "#000000", color: "white" }}
                         >
                           {updateProgressMutation.isPending ? "Saving…" : "Mark complete"}

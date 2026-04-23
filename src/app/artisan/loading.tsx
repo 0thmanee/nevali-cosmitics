@@ -10,9 +10,9 @@ export default function ProducerPageLoading() {
           >
             <div className="flex flex-col gap-2.5">
               <div className="h-2 w-20 bg-[#d8d0c4] rounded-full animate-pulse" />
-              <div className="h-8 w-10 bg-[#d8d0c4] rounded-lg animate-pulse" />
+              <div className="h-8 w-10 bg-[#d8d0c4] rounded-sm animate-pulse" />
             </div>
-            <div className="w-11 h-11 rounded-xl bg-[#d8d0c4] animate-pulse shrink-0" />
+            <div className="w-11 h-11 rounded-sm bg-[#d8d0c4] animate-pulse shrink-0" />
           </div>
         ))}
       </div>
@@ -20,10 +20,10 @@ export default function ProducerPageLoading() {
       {/* Main content grid */}
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-4">
         {/* Table card */}
-        <div className="bg-white border border-[#d8d0c4] rounded-2xl overflow-hidden">
+        <div className="bg-white border border-[#d8d0c4] rounded-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-[#F0F4F1]">
             <div className="h-4 w-32 bg-[#d8d0c4] rounded-full animate-pulse" />
-            <div className="h-8 w-24 bg-[#d8d0c4] rounded-lg animate-pulse" />
+            <div className="h-8 w-24 bg-[#d8d0c4] rounded-sm animate-pulse" />
           </div>
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-center gap-4 px-5 py-3.5 border-b border-[#F5F5F3] last:border-0">
@@ -40,12 +40,12 @@ export default function ProducerPageLoading() {
         {/* Sidebar cards */}
         <div className="flex flex-col gap-4">
           {[0, 1].map((i) => (
-            <div key={i} className="bg-white border border-[#d8d0c4] rounded-2xl p-5">
+            <div key={i} className="bg-white border border-[#d8d0c4] rounded-sm p-5">
               <div className="h-4 w-28 bg-[#d8d0c4] rounded-full animate-pulse mb-4" />
               <div className="flex flex-col gap-3">
                 {[0, 1, 2].map((j) => (
                   <div key={j} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#d8d0c4] animate-pulse shrink-0" />
+                    <div className="w-8 h-8 rounded-sm bg-[#d8d0c4] animate-pulse shrink-0" />
                     <div className="flex-1 flex flex-col gap-1.5">
                       <div className="h-3 w-full bg-[#d8d0c4] rounded-full animate-pulse" />
                       <div className="h-2 w-3/4 bg-[#d8d0c4] rounded-full animate-pulse" />

@@ -16,19 +16,19 @@ export default function RegisterPage() {
 				<div className="mt-10 flex flex-wrap items-center justify-center gap-3">
 					<Link
 						href="/products"
-						className="inline-flex rounded-xl bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+						className="inline-flex rounded-sm bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
 					>
 						Shop products
 					</Link>
 					<Link
 						href="/auth/register-buyer"
-						className="inline-flex rounded-xl border border-cream-dark bg-white px-6 py-3 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
+						className="inline-flex rounded-sm border border-cream-dark bg-white px-6 py-3 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
 					>
 						Create buyer account
 					</Link>
 					<Link
 						href="/auth/login"
-						className="inline-flex rounded-xl px-6 py-3 font-sans text-sm font-medium text-text-muted underline-offset-4 hover:underline"
+						className="inline-flex rounded-sm px-6 py-3 font-sans text-sm font-medium text-text-muted underline-offset-4 hover:underline"
 					>
 						Sign in
 					</Link>

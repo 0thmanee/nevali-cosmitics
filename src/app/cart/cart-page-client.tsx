@@ -22,7 +22,7 @@ export function CartPageClient() {
           Browse products and add items you want to include in checkout.
         </p>
         <Link
-          className="mt-8 inline-flex rounded-xl bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-8 inline-flex rounded-sm bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
           href="/products"
         >
           Browse products
@@ -43,9 +43,9 @@ export function CartPageClient() {
           return (
             <div
               key={cartLineKey(line)}
-              className="flex gap-4 rounded-2xl border border-cream-dark bg-white p-5"
+              className="flex gap-4 rounded-sm border border-cream-dark bg-white p-5"
             >
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-cream">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-sm bg-cream">
                 <Image alt="" className="object-cover" fill sizes="80px" src={thumbSrc} />
               </div>
 
@@ -66,7 +66,7 @@ export function CartPageClient() {
 
                 <div className="mt-3 flex items-center gap-2">
                   <button
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-cream-dark bg-cream font-bold text-text-dark transition-colors hover:bg-cream-dark"
+                    className="flex h-8 w-8 items-center justify-center rounded-sm border border-cream-dark bg-cream font-bold text-text-dark transition-colors hover:bg-cream-dark"
                     onClick={() =>
                       setQuantity(
                         line.productId,
@@ -79,7 +79,7 @@ export function CartPageClient() {
                     −
                   </button>
                   <input
-                    className="h-8 w-12 rounded-lg border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-[#000000]"
+                    className="h-8 w-12 rounded-sm border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-[#000000]"
                     max={999}
                     min={1}
                     onChange={(e) =>
@@ -93,7 +93,7 @@ export function CartPageClient() {
                     value={line.quantity}
                   />
                   <button
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-cream-dark bg-cream font-bold text-text-dark transition-colors hover:bg-cream-dark"
+                    className="flex h-8 w-8 items-center justify-center rounded-sm border border-cream-dark bg-cream font-bold text-text-dark transition-colors hover:bg-cream-dark"
                     onClick={() =>
                       setQuantity(
                         line.productId,
@@ -135,7 +135,7 @@ export function CartPageClient() {
       </div>
 
       <aside className="lg:sticky lg:top-28 lg:col-span-5">
-        <div className="flex flex-col gap-5 rounded-2xl border border-cream-dark bg-white p-6">
+        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
             Summary
           </p>
@@ -170,7 +170,7 @@ export function CartPageClient() {
           </div>
 
           <Link
-            className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
             href="/cart/checkout"
             style={{ background: "#000000" }}
           >

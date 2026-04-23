@@ -48,7 +48,7 @@ function MessageBubble({
 				{segment.label}
 			</span>
 			<div
-				className="whitespace-pre-wrap rounded-xl px-4 py-3 font-sans text-[#000000] text-[13px] leading-relaxed"
+				className="whitespace-pre-wrap rounded-sm px-4 py-3 font-sans text-[#000000] text-[13px] leading-relaxed"
 				style={{
 					background: isFirst ? "rgba(0,0,0,0.06)" : "white",
 					border: "1px solid #d8d0c4",
@@ -154,7 +154,7 @@ export function SupportTicketDetail({
 						</h2>
 						<div className="flex flex-wrap items-center gap-3">
 							<span
-								className="rounded-md px-2 py-0.5 font-sans font-semibold text-[10px]"
+								className="rounded-sm px-2 py-0.5 font-sans font-semibold text-[10px]"
 								style={{ background: "rgba(0,0,0,0.07)", color: "#727272" }}
 							>
 								{ticket.category}
@@ -195,7 +195,7 @@ export function SupportTicketDetail({
 				>
 					{isResolved ? (
 						<div
-							className="flex items-center gap-2 rounded-xl px-4 py-3"
+							className="flex items-center gap-2 rounded-sm px-4 py-3"
 							style={{
 								background: "rgba(0,0,0,0.06)",
 								border: "1px solid rgba(0,0,0,0.14)",
@@ -218,7 +218,7 @@ export function SupportTicketDetail({
 					) : (
 						<form className="flex flex-col gap-3" onSubmit={handleSubmit}>
 							<textarea
-								className="w-full resize-none rounded-xl border px-4 py-3 font-sans text-[#000000] text-[13px] transition-colors placeholder:text-[#9BB0A0] focus:outline-none"
+								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-[#000000] text-[13px] transition-colors placeholder:text-[#9BB0A0] focus:outline-none"
 								onChange={(e) => setReply(e.target.value)}
 								placeholder="Add a follow-up message…"
 								ref={textareaRef}
@@ -234,7 +234,7 @@ export function SupportTicketDetail({
 									The support team will review your follow-up.
 								</p>
 								<button
-									className="flex items-center gap-2 rounded-xl px-5 py-2.5 font-sans font-semibold text-[13px] transition-opacity disabled:opacity-50"
+									className="flex items-center gap-2 rounded-sm px-5 py-2.5 font-sans font-semibold text-[13px] transition-opacity disabled:opacity-50"
 									disabled={!reply.trim() || replyMutation.isPending}
 									style={{ background: "#000000", color: "white" }}
 									type="submit"

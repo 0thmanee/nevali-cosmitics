@@ -152,7 +152,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-4">
           <div className="flex flex-col gap-4">
             {/* Personal Information */}
-            <div className="rounded-xl overflow-hidden" style={cardStyle}>
+            <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
                 <h3 className="font-serif font-bold text-[15px] text-[#000000]">Personal Information</h3>
                 <p className="font-sans text-[11px] text-[#727272] mt-0.5">Your account and contact details</p>
@@ -181,7 +181,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                           type="button"
                           onClick={openPhotoPicker}
                           disabled={photoUploading}
-                          className="font-sans text-sm font-medium rounded-xl px-4 py-2 transition-colors disabled:opacity-50 w-fit"
+                          className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors disabled:opacity-50 w-fit"
                           style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
                         >
                           {photoUploading ? "Uploading…" : "Change photo"}
@@ -225,7 +225,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                 </div>
                 <div>
                   <label className={labelClassName}>Email Address</label>
-                  <div className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5" style={fieldStyle}>
+                  <div className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5" style={fieldStyle}>
                     {user.email}
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
             </div>
 
             {/* Business Information */}
-            <div className="rounded-xl overflow-hidden" style={cardStyle}>
+            <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
                 <h3 className="font-serif font-bold text-[15px] text-[#000000]">Business Information</h3>
                 <p className="font-sans text-[11px] text-[#727272] mt-0.5">Your cooperative and legal details</p>
@@ -368,7 +368,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
                           key={cat.label}
                           type="button"
                           onClick={() => toggleCategory(cat.label)}
-                          className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-all"
+                          className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-all"
                           style={
                             selected
                               ? { background: cat.color, color: "#000000", border: `1px solid ${cat.color}` }
@@ -414,7 +414,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
               </div>
             </div>
 
-            <div className="rounded-xl overflow-hidden" style={cardStyle}>
+            <div className="rounded-sm overflow-hidden" style={cardStyle}>
               <div className="px-5 py-4 border-b" style={cardHeaderBorder}>
                 <h3 className="font-serif font-bold text-[15px] text-[#000000]">Public business profile</h3>
                 <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -487,7 +487,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
 
             {error && (
               <div
-                className="rounded-xl px-4 py-3 font-sans text-sm text-red-600"
+                className="rounded-sm px-4 py-3 font-sans text-sm text-red-600"
                 style={{ background: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.25)" }}
               >
                 {error}
@@ -497,7 +497,7 @@ export function ProfileEditView({ user, profile, memberSince, partnerId }: Props
             <button
               type="submit"
               disabled={submitting}
-              className="font-sans font-semibold text-sm rounded-xl px-8 py-3 transition-colors disabled:opacity-60 w-fit"
+              className="font-sans font-semibold text-sm rounded-sm px-8 py-3 transition-colors disabled:opacity-60 w-fit"
               style={{ background: "#000000", color: "#ffffff", border: "1px solid #000000" }}
             >
               {submitting ? "Saving…" : "Save changes"}

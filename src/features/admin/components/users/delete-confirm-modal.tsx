@@ -23,7 +23,7 @@ export function DeleteConfirmModal({ user, onClose, onConfirm, isDeleting }: Pro
       aria-labelledby="delete-partner-title"
     >
       <div
-        className="w-full max-w-sm rounded-xl overflow-hidden"
+        className="w-full max-w-sm rounded-sm overflow-hidden"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -43,7 +43,7 @@ export function DeleteConfirmModal({ user, onClose, onConfirm, isDeleting }: Pro
             <button
               type="button"
               onClick={onClose}
-              className="font-sans text-sm font-medium rounded-xl px-4 py-2.5 transition-colors"
+              className="font-sans text-sm font-medium rounded-sm px-4 py-2.5 transition-colors"
               style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
             >
               Cancel
@@ -52,7 +52,7 @@ export function DeleteConfirmModal({ user, onClose, onConfirm, isDeleting }: Pro
               type="button"
               onClick={() => onConfirm(user.id)}
               disabled={isDeleting}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2.5 transition-colors disabled:opacity-60"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2.5 transition-colors disabled:opacity-60"
               style={{
                 background: "rgba(248,113,113,0.15)",
                 color: "#dc2626",

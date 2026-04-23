@@ -96,12 +96,12 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
       />
 
       {/* Modules */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Modules</h2>
           <Link
             href={`/admin/training/${programId}/modules/new`}
-            className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors inline-block"
+            className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors inline-block"
             style={{ background: "#000000", color: "white" }}
           >
             Add module
@@ -115,7 +115,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
               {(modules as TrainingModuleRow[]).map((mod, i) => (
                 <li
                   key={mod.id}
-                  className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 group"
+                  className="flex items-center justify-between gap-3 rounded-sm px-4 py-3 group"
                   style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                 >
                   <Link
@@ -144,7 +144,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
       </div>
 
       {/* Program-level documents only; module docs are uploaded from each module page */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Program-level documents</h2>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -167,14 +167,14 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
                 value={mediaTitle}
                 onChange={(e) => setMediaTitle(e.target.value)}
                 placeholder="e.g. Program intro"
-                className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] w-40 bg-[#ffffff]"
+                className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-40 bg-[#ffffff]"
               />
             </div>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={addMediaMutation.isPending}
-              className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 disabled:opacity-60"
+              className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 disabled:opacity-60"
               style={{ background: "#000000", color: "white" }}
             >
               {addMediaMutation.isPending ? "Uploading…" : "Upload file"}
@@ -188,7 +188,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
             ) : (
             <ul className="flex flex-col gap-2">
               {programMedia.map((m) => (
-                <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                <li key={m.id} className="flex items-center justify-between gap-3 rounded-sm px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                   <div className="min-w-0">
                     <span className="font-sans text-[10px] font-bold tracking-wide text-[#727272] uppercase">{m.mediaType}</span>
                     {m.title && <span className="font-sans text-sm text-[#000000] ml-2">{m.title}</span>}
@@ -211,7 +211,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
       </div>
 
       {/* Assign to organization */}
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Assign to partner</h2>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">Assign this program to an organization. They will see it in their Training page.</p>
@@ -220,7 +220,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
           <select
             value={assignOrgId}
             onChange={(e) => setAssignOrgId(e.target.value)}
-            className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] bg-[#ffffff] min-w-[200px]"
+            className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] bg-[#ffffff] min-w-[200px]"
           >
             <option value="">Select organization</option>
             {organizations.map((org) => (
@@ -235,7 +235,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
               }
             }}
             disabled={!assignOrgId || assignMutation.isPending}
-            className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 disabled:opacity-60"
+            className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 disabled:opacity-60"
             style={{ background: "#000000", color: "white" }}
           >
             {assignMutation.isPending ? "Assigning…" : "Assign"}

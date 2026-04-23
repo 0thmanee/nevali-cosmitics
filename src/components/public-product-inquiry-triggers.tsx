@@ -105,7 +105,7 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 			</div>
 			{justAdded ? (
 				<div
-					className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 font-sans text-emerald-900 text-xs"
+					className="mt-2 rounded-sm border border-emerald-200 bg-emerald-50 px-3 py-2 font-sans text-emerald-900 text-xs"
 					aria-live="polite"
 					role="status"
 				>

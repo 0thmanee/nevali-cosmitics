@@ -42,21 +42,21 @@ export function BuyerSavedView() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="rounded-xl border border-cream-dark bg-white p-5">
+			<div className="rounded-sm border border-cream-dark bg-white p-5">
 				<h2 className="font-bold font-serif text-text-dark">Create a list</h2>
 				<p className="mt-1 font-sans text-sm text-text-muted">
 					Organize products you want to compare or shortlist for sourcing.
 				</p>
 				<div className="mt-3 flex flex-wrap gap-2">
 					<input
-						className="min-w-[200px] flex-1 rounded-lg border border-cream-dark px-3 py-2 font-sans text-sm"
+						className="min-w-[200px] flex-1 rounded-sm border border-cream-dark px-3 py-2 font-sans text-sm"
 						maxLength={80}
 						onChange={(e) => setNewListName(e.target.value)}
 						placeholder="List name"
 						value={newListName}
 					/>
 					<button
-						className="rounded-lg bg-forest-mid px-4 py-2 font-sans font-semibold text-sm text-white disabled:opacity-50"
+						className="rounded-sm bg-forest-mid px-4 py-2 font-sans font-semibold text-sm text-white disabled:opacity-50"
 						disabled={!newListName.trim() || createList.isPending}
 						onClick={async () => {
 							const res = await createList.mutateAsync(newListName);
@@ -72,7 +72,7 @@ export function BuyerSavedView() {
 
 			{rows.map((list) => (
 				<div
-					className="overflow-hidden rounded-xl border border-cream-dark bg-white"
+					className="overflow-hidden rounded-sm border border-cream-dark bg-white"
 					key={list.id}
 				>
 					<div className="flex flex-col gap-2 border-cream-dark border-b bg-cream px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
@@ -114,7 +114,7 @@ export function BuyerSavedView() {
 								>
 									<div className="flex min-w-0 flex-1 items-center gap-3">
 										<div
-											className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-cream-dark bg-cream"
+											className="h-14 w-14 shrink-0 overflow-hidden rounded-sm border border-cream-dark bg-cream"
 											style={
 												it.firstImageUrl
 													? {
@@ -139,13 +139,13 @@ export function BuyerSavedView() {
 									</div>
 									<div className="flex shrink-0 gap-2">
 										<Link
-											className="rounded-lg border border-cream-dark px-3 py-1.5 font-medium font-sans text-forest-mid text-xs hover:bg-cream"
+											className="rounded-sm border border-cream-dark px-3 py-1.5 font-medium font-sans text-forest-mid text-xs hover:bg-cream"
 											href={`/artisans/${it.organizationSlug}`}
 										>
 											Artisan
 										</Link>
 										<button
-											className="rounded-lg px-3 py-1.5 font-sans text-text-muted text-xs hover:text-red-700"
+											className="rounded-sm px-3 py-1.5 font-sans text-text-muted text-xs hover:text-red-700"
 											disabled={removeItem.isPending}
 											onClick={async () => {
 												const res = await removeItem.mutateAsync({
@@ -202,13 +202,13 @@ function RenameListInline({
 	return (
 		<div className="flex flex-wrap items-center gap-2">
 			<input
-				className="min-w-[160px] rounded-lg border border-cream-dark px-2 py-1 font-sans text-sm"
+				className="min-w-[160px] rounded-sm border border-cream-dark px-2 py-1 font-sans text-sm"
 				maxLength={80}
 				onChange={(e) => setValue(e.target.value)}
 				value={value}
 			/>
 			<button
-				className="rounded-lg bg-forest-mid px-3 py-1 font-sans font-semibold text-white text-xs"
+				className="rounded-sm bg-forest-mid px-3 py-1 font-sans font-semibold text-white text-xs"
 				disabled={disabled}
 				onClick={async () => {
 					await onSave(value);

@@ -55,18 +55,18 @@ export function ProductsPageClient() {
         action={
           <Link
             href="/artisan/products/new"
-            className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors bg-forest-dark text-white"
+            className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors bg-forest-dark text-white"
           >
             Add product
           </Link>
         }
       />
       {isLoading ? (
-        <div className="bg-white border border-[#d8d0c4] rounded-xl py-12 text-center font-sans text-sm text-text-muted">
+        <div className="bg-white border border-[#d8d0c4] rounded-sm py-12 text-center font-sans text-sm text-text-muted">
           Loading products…
         </div>
       ) : isError ? (
-        <div className="bg-white border border-[#d8d0c4] rounded-xl py-12 text-center font-sans text-sm text-red-500">
+        <div className="bg-white border border-[#d8d0c4] rounded-sm py-12 text-center font-sans text-sm text-red-500">
           Failed to load products.
         </div>
       ) : (

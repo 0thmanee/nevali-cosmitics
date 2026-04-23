@@ -91,7 +91,7 @@ export function AdminProductDetailView() {
   if (!productId) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-2xl overflow-hidden px-6 py-12 text-center" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden px-6 py-12 text-center" style={cardStyle}>
           <p className="font-sans text-sm text-[#f87171]">Invalid product.</p>
           <Link href="/admin/products" className="mt-4 inline-block font-sans text-sm font-medium text-[#000000] underline">
             ← Back to products
@@ -104,7 +104,7 @@ export function AdminProductDetailView() {
   if (isLoading) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-2xl overflow-hidden flex items-center justify-center py-20" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden flex items-center justify-center py-20" style={cardStyle}>
           <p className="font-sans text-sm text-[#727272]">Loading product…</p>
         </div>
       </div>
@@ -114,7 +114,7 @@ export function AdminProductDetailView() {
   if (isError || !product) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-2xl overflow-hidden px-6 py-12 text-center" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden px-6 py-12 text-center" style={cardStyle}>
           <p className="font-sans text-sm text-[#f87171]">
             {error instanceof Error ? error.message : "Product not found."}
           </p>
@@ -130,7 +130,7 @@ export function AdminProductDetailView() {
 
   return (
     <div className="p-4 lg:p-6 flex flex-col gap-6">
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">
@@ -154,7 +154,7 @@ export function AdminProductDetailView() {
                   type="button"
                   onClick={() => setShowApproveModal(true)}
                   disabled={setStatusMutation.isPending}
-                  className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+                  className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
                   style={{ background: "#000000", color: "white" }}
                 >
                   Approve
@@ -163,7 +163,7 @@ export function AdminProductDetailView() {
                   type="button"
                   onClick={() => setShowRejectModal(true)}
                   disabled={setStatusMutation.isPending}
-                  className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+                  className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
                   style={{
                     background: "rgba(180,30,30,0.12)",
                     color: "#b91c1c",
@@ -181,7 +181,7 @@ export function AdminProductDetailView() {
       <ProductGallery images={product.images ?? []} alt={product.name} />
 
       {(product.variants?.length ?? 0) > 0 && (
-        <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
           <div className="px-6 py-4 border-b border-[#d8d0c4]">
             <h2 className="font-serif font-bold text-[15px] text-[#000000]">Variants & pricing</h2>
           </div>
@@ -189,7 +189,7 @@ export function AdminProductDetailView() {
             {(product.variants ?? []).map((v) => (
               <li
                 key={v.id}
-                className="font-sans text-sm text-[#000000] rounded-xl px-4 py-3 flex flex-wrap justify-between gap-2"
+                className="font-sans text-sm text-[#000000] rounded-sm px-4 py-3 flex flex-wrap justify-between gap-2"
                 style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               >
                 <span className="font-semibold">{v.name}</span>
@@ -204,7 +204,7 @@ export function AdminProductDetailView() {
         </div>
       )}
 
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -223,7 +223,7 @@ export function AdminProductDetailView() {
                 return (
                   <li
                     key={c.id}
-                    className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-4 py-3"
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-sm px-4 py-3"
                     style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                   >
                     <div className="min-w-0">
@@ -260,7 +260,7 @@ export function AdminProductDetailView() {
                             type="button"
                             onClick={() => handleCertApprove(c.id)}
                             disabled={setCertStatusMutation.isPending}
-                            className="font-sans text-[11px] font-semibold rounded-lg px-2.5 py-1.5 transition-colors disabled:opacity-60"
+                            className="font-sans text-[11px] font-semibold rounded-sm px-2.5 py-1.5 transition-colors disabled:opacity-60"
                             style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
                           >
                             Approve
@@ -269,7 +269,7 @@ export function AdminProductDetailView() {
                             type="button"
                             onClick={() => setRejectingCert(c)}
                             disabled={setCertStatusMutation.isPending}
-                            className="font-sans text-[11px] font-semibold rounded-lg px-2.5 py-1.5 transition-colors disabled:opacity-60"
+                            className="font-sans text-[11px] font-semibold rounded-sm px-2.5 py-1.5 transition-colors disabled:opacity-60"
                             style={{ background: "rgba(180,30,30,0.12)", color: "#b91c1c", border: "1px solid rgba(180,30,30,0.3)" }}
                           >
                             Reject
@@ -285,26 +285,26 @@ export function AdminProductDetailView() {
         </div>
       </div>
 
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
               <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Minimum order quantity
               </p>
               <p className="font-sans text-[15px] font-semibold text-[#000000]">{product.moq ?? "—"}</p>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+            <div className="rounded-sm p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
               <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Capacity
               </p>
               <p className="font-sans text-[15px] font-semibold text-[#000000]">{product.capacity ?? "—"}</p>
             </div>
             {product.status === "APPROVED" && (
-              <div className="rounded-xl p-4 sm:col-span-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+              <div className="rounded-sm p-4 sm:col-span-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                 <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                   Checkout payment options
                 </p>
@@ -316,7 +316,7 @@ export function AdminProductDetailView() {
           </div>
           {product.status === "REJECTED" && product.rejectionReason?.trim() && (
             <div
-              className="rounded-xl px-4 py-3 flex flex-col gap-1"
+              className="rounded-sm px-4 py-3 flex flex-col gap-1"
               style={{
                 background: "rgba(248,113,113,0.08)",
                 border: "1px solid rgba(248,113,113,0.2)",

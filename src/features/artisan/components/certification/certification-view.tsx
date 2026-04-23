@@ -28,7 +28,7 @@ export function CertificationView() {
             key={s.key}
             type="button"
             onClick={() => setActiveSection(s.key)}
-            className="font-sans text-[12px] font-semibold rounded-xl px-4 py-1.5 transition-colors"
+            className="font-sans text-[12px] font-semibold rounded-sm px-4 py-1.5 transition-colors"
             style={
               activeSection === s.key
                 ? { background: "#000000", color: "white" }

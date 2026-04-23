@@ -20,7 +20,7 @@ export function SupportTicketList({
   if (isLoading) {
     return (
       <div
-        className="rounded-xl px-5 py-12 text-center"
+        className="rounded-sm px-5 py-12 text-center"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <p className="font-sans text-sm text-[#727272]">Loading tickets…</p>
@@ -40,7 +40,7 @@ export function SupportTicketList({
       <button
         type="button"
         onClick={onOpenNewTicket}
-        className="font-sans text-sm font-semibold rounded-xl py-3 transition-colors w-full"
+        className="font-sans text-sm font-semibold rounded-sm py-3 transition-colors w-full"
         style={{
           background: "#ffffff",
           color: "#000000",

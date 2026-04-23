@@ -44,7 +44,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
   ];
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+    <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
       <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-serif font-bold text-[15px] text-[#000000]">Product images</h2>
         <input
@@ -58,7 +58,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={addMutation.isPending}
-          className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+          className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
           style={{ background: "#000000", color: "white" }}
         >
           {addMutation.isPending ? "Uploading…" : "Add image"}
@@ -84,7 +84,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
                   style={{ width: 200, maxWidth: "100%" }}
                 >
                   <div
-                    className="relative group rounded-xl overflow-hidden"
+                    className="relative group rounded-sm overflow-hidden"
                     style={{ width: "100%", height: 120, border: "1px solid #d8d0c4" }}
                   >
                     <img src={img.url} alt="" className="w-full h-full object-cover" />
@@ -111,7 +111,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
                           });
                         }}
                         disabled={variantMutation.isPending}
-                        className="font-sans text-[11px] font-medium normal-case tracking-normal rounded-lg border border-[#d8d0c4] px-2 py-1.5 text-[#000000] bg-white"
+                        className="font-sans text-[11px] font-medium normal-case tracking-normal rounded-sm border border-[#d8d0c4] px-2 py-1.5 text-[#000000] bg-white"
                       >
                         {variantOptions.map((o) => (
                           <option key={o.value || "all"} value={o.value}>

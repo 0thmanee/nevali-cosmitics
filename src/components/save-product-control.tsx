@@ -31,13 +31,13 @@ export function SaveProductControl({ productId }: Props) {
 	const effectiveListId = listId || lists[0]?.id || "";
 
 	return (
-		<div className="flex max-w-md flex-col gap-2 rounded-xl border border-stone-200 bg-stone-50/80 p-4">
+		<div className="flex max-w-md flex-col gap-2 rounded-sm border border-stone-200 bg-stone-50/80 p-4">
 			<p className="font-sans font-semibold text-stone-600 text-xs uppercase tracking-wide">
 				Save to a list
 			</p>
 			<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 				<select
-					className="flex-1 rounded-lg border border-stone-200 bg-white px-3 py-2 font-sans text-sm text-stone-800"
+					className="flex-1 rounded-sm border border-stone-200 bg-white px-3 py-2 font-sans text-sm text-stone-800"
 					onChange={(e) => setListId(e.target.value)}
 					value={effectiveListId}
 				>
@@ -48,7 +48,7 @@ export function SaveProductControl({ productId }: Props) {
 					))}
 				</select>
 				<button
-					className="rounded-lg bg-[#000000] px-4 py-2 font-sans font-semibold text-sm text-white hover:opacity-90 disabled:opacity-50"
+					className="rounded-sm bg-[#000000] px-4 py-2 font-sans font-semibold text-sm text-white hover:opacity-90 disabled:opacity-50"
 					disabled={addProduct.isPending || !effectiveListId}
 					onClick={async () => {
 						const res = await addProduct.mutateAsync({

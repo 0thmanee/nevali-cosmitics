@@ -12,6 +12,6 @@ export const fieldStyle = {
 };
 
 export const inputClassName =
-  "font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full outline-none transition-colors focus:border-[#727272] focus:ring-1 focus:ring-[#727272]/30";
+  "font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 w-full outline-none transition-colors focus:border-[#727272] focus:ring-1 focus:ring-[#727272]/30";
 export const labelClassName =
   "font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5";

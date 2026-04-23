@@ -76,7 +76,7 @@ export function TrainingView() {
             key={tab}
             type="button"
             onClick={() => { setActiveTab(tab); setExpanded(null); }}
-            className="font-sans text-[12px] font-semibold rounded-xl px-4 py-1.5 transition-colors"
+            className="font-sans text-[12px] font-semibold rounded-sm px-4 py-1.5 transition-colors"
             style={activeTab === tab ? { background: "#000000", color: "white" } : { background: "white", color: "#727272", border: "1px solid #d8d0c4" }}
           >
             {tab}
@@ -91,7 +91,7 @@ export function TrainingView() {
       </div>
       <div className="flex flex-col gap-3">
         {filtered.length === 0 ? (
-          <div className="rounded-xl px-5 py-8 text-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+          <div className="rounded-sm px-5 py-8 text-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
             <p className="font-sans text-sm text-[#727272]">
               {programs.length === 0
                 ? "No training programs available yet. The admin will publish programs and assign them to your organization."
@@ -108,7 +108,7 @@ export function TrainingView() {
             const progress = program.enrollment?.progress ?? 0;
 
             return (
-              <div key={program.id} className="rounded-xl overflow-hidden transition-all" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+              <div key={program.id} className="rounded-sm overflow-hidden transition-all" style={{ background: "white", border: "1px solid #d8d0c4" }}>
                 <div className="px-5 py-4 flex items-start gap-4">
                   <div className="w-1 self-stretch rounded-full shrink-0" style={{ background: color, minHeight: 40 }} />
                   <div className="flex-1 min-w-0">
@@ -122,7 +122,7 @@ export function TrainingView() {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         {status === "IN_PROGRESS" && (
-                          <Link href={`/artisan/training/${program.id}`} className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors inline-block" style={{ background: "#000000", color: "white" }}>Continue →</Link>
+                          <Link href={`/artisan/training/${program.id}`} className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors inline-block" style={{ background: "#000000", color: "white" }}>Continue →</Link>
                         )}
                         {status === "AVAILABLE" && (
                           <button
@@ -133,16 +133,16 @@ export function TrainingView() {
                               })
                             }
                             disabled={enrollMutation.isPending}
-                            className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+                            className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
                             style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
                           >
                             {enrollMutation.isPending ? "Starting…" : "Start"}
                           </button>
                         )}
                         {status === "COMPLETED" && (
-                          <span className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 inline-block" style={{ background: "rgba(200,150,60,0.1)", color: "#727272", border: "1px solid rgba(200,150,60,0.2)" }}>Completed</span>
+                          <span className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 inline-block" style={{ background: "rgba(200,150,60,0.1)", color: "#727272", border: "1px solid rgba(200,150,60,0.2)" }}>Completed</span>
                         )}
-                        <button type="button" onClick={() => setExpanded(isExpanded ? null : program.id)} className="w-8 h-8 rounded-xl flex items-center justify-center transition-colors" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                        <button type="button" onClick={() => setExpanded(isExpanded ? null : program.id)} className="w-8 h-8 rounded-sm flex items-center justify-center transition-colors" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
                             <path d="M2 4l4 4 4-4" stroke="#727272" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
@@ -185,7 +185,7 @@ export function TrainingView() {
                           { label: "Level", value: getTrainingLevelLabel(program.level) },
                           { label: "Provider", value: program.provider },
                         ].map((d) => (
-                          <div key={d.label} className="rounded-xl px-3 py-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                          <div key={d.label} className="rounded-sm px-3 py-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                             <p className="font-sans text-[9px] font-bold tracking-wider text-[#727272] uppercase">{d.label}</p>
                             <p className="font-sans text-[12px] font-semibold text-[#000000] mt-0.5">{d.value}</p>
                           </div>
@@ -200,7 +200,7 @@ export function TrainingView() {
                             })
                           }
                           disabled={enrollMutation.isPending}
-                          className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 w-fit transition-colors disabled:opacity-60"
+                          className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 w-fit transition-colors disabled:opacity-60"
                           style={{ background: "#000000", color: "white" }}
                         >
                           {enrollMutation.isPending ? "Starting…" : "Enroll and start"}

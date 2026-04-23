@@ -21,7 +21,7 @@ export function SupportTabList({
           key={tab}
           type="button"
           onClick={() => onTabChange(tab)}
-          className="font-sans text-[12px] font-semibold rounded-xl px-4 py-1.5 transition-colors"
+          className="font-sans text-[12px] font-semibold rounded-sm px-4 py-1.5 transition-colors"
           style={
             activeTab === tab
               ? { background: "#000000", color: "white" }

@@ -133,7 +133,7 @@ export function CheckoutPageClient({
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
       {cancelled ? (
         <div
-          className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-sm text-amber-950"
+          className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-sm text-amber-950"
           role="status"
         >
           Card checkout was cancelled. Your cart is unchanged — you can adjust items and try again.
@@ -141,7 +141,7 @@ export function CheckoutPageClient({
       ) : null}
       <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
       <form className="flex min-w-0 flex-1 flex-col gap-4" onSubmit={onSubmit}>
-        <div className="flex flex-col gap-5 rounded-2xl border border-cream-dark bg-white p-6">
+        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <div className="flex items-center gap-3">
             <span className={stepCircleClass} style={stepCircleStyle}>
               1
@@ -184,7 +184,7 @@ export function CheckoutPageClient({
           </label>
         </div>
 
-        <div className="flex flex-col gap-5 rounded-2xl border border-cream-dark bg-white p-6">
+        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <div className="flex items-center gap-3">
             <span className={stepCircleClass} style={stepCircleStyle}>
               2
@@ -266,7 +266,7 @@ export function CheckoutPageClient({
           </label>
         </div>
 
-        <div className="flex flex-col gap-5 rounded-2xl border border-cream-dark bg-white p-6">
+        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <div className="flex items-center gap-3">
             <span className={stepCircleClass} style={stepCircleStyle}>
               3
@@ -368,7 +368,7 @@ export function CheckoutPageClient({
       </form>
 
       <aside className="lg:sticky lg:top-28 lg:w-96 lg:shrink-0 lg:self-start">
-        <div className="flex flex-col gap-5 rounded-2xl border border-cream-dark bg-white p-6">
+        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
             Order summary
           </p>
@@ -381,7 +381,7 @@ export function CheckoutPageClient({
                 productPlaceholderImageUrl(`${l.productId}:${l.category}`, 96);
               return (
                 <li className="flex items-start gap-3" key={`${l.productId}:${l.productVariantId}`}>
-                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-cream">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-sm bg-cream">
                     <Image alt="" className="object-cover" fill sizes="48px" src={thumbSrc} />
                   </div>
                   <div className="min-w-0 flex-1">

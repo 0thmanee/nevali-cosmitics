@@ -78,7 +78,7 @@ export function RegisterBuyerForm() {
           </AuthField>
           <label className="flex items-start gap-3 cursor-pointer">
             <div
-              className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+              className="w-5 h-5 rounded-sm flex items-center justify-center shrink-0 mt-0.5 transition-colors"
               style={
                 agreeTerms
                   ? { background: "#000000", border: "1px solid #000000" }
@@ -117,7 +117,7 @@ export function RegisterBuyerForm() {
 
         {submitError && (
           <div
-            className="rounded-xl px-4 py-3 font-sans text-sm text-[#f87171]"
+            className="rounded-sm px-4 py-3 font-sans text-sm text-[#f87171]"
             style={{
               background: "rgba(248,113,113,0.1)",
               border: "1px solid rgba(248,113,113,0.25)",
@@ -155,7 +155,7 @@ export function RegisterBuyerForm() {
               router.push("/buyer");
               router.refresh();
             }}
-            className="font-sans font-semibold text-sm rounded-xl px-8 py-3.5 transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full"
+            className="font-sans font-semibold text-sm rounded-sm px-8 py-3.5 transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full"
             style={
               canSubmit && !submitting
                 ? { background: "#000000", color: "#fff" }

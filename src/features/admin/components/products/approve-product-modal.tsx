@@ -33,7 +33,7 @@ export function ApproveProductModal({
       aria-labelledby="approve-modal-title"
     >
       <div
-        className="rounded-xl w-full max-w-md overflow-hidden"
+        className="rounded-sm w-full max-w-md overflow-hidden"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
@@ -50,7 +50,7 @@ export function ApproveProductModal({
             {OPTIONS.map((opt) => (
               <label
                 key={opt.value}
-                className={`flex items-start gap-3 rounded-xl border px-3.5 py-3 cursor-pointer transition-colors ${
+                className={`flex items-start gap-3 rounded-sm border px-3.5 py-3 cursor-pointer transition-colors ${
                   paymentOption === opt.value
                     ? "border-[#000000] bg-[#ffffff]"
                     : "border-[#d8d0c4] hover:border-[#d4c4a0]"
@@ -77,7 +77,7 @@ export function ApproveProductModal({
               type="button"
               onClick={() => onConfirm(paymentOption)}
               disabled={isSubmitting}
-              className="font-sans font-semibold text-sm text-white rounded-xl px-4 py-2.5 transition-colors disabled:opacity-60"
+              className="font-sans font-semibold text-sm text-white rounded-sm px-4 py-2.5 transition-colors disabled:opacity-60"
               style={{ background: "#000000" }}
             >
               {isSubmitting ? "Approving…" : "Approve product"}

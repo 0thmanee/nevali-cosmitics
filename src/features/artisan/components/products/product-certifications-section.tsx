@@ -61,7 +61,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
   };
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+    <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
       <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-col gap-1">
         <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
         <p className="font-sans text-[11px] text-[#727272]">
@@ -86,7 +86,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
                 setName(e.target.value);
                 setFileError(null);
               }}
-              className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] w-40"
+              className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-40"
             />
             <button
               type="button"
@@ -95,7 +95,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
                 inputRef.current?.click();
               }}
               disabled={addMutation.isPending}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
               style={{ background: "#000000", color: "white" }}
             >
               {addMutation.isPending ? "Uploading…" : "Upload certification"}
@@ -121,7 +121,7 @@ export function ProductCertificationsSection({ productId, productName, certifica
               return (
                 <li
                   key={c.id}
-                  className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-4 py-3"
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-sm px-4 py-3"
                   style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                 >
                   <div className="min-w-0">

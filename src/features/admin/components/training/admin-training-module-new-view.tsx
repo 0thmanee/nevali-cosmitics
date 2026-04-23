@@ -114,7 +114,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
 
       {/* Module form — show until module is created */}
       {!createdModule ? (
-        <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
           <div className="px-6 py-4 border-b border-[#d8d0c4]">
             <h2 className="font-serif font-bold text-[15px] text-[#000000]">New module</h2>
             <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -123,7 +123,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
           </div>
           <form onSubmit={handleCreateModule} className="p-6 flex flex-col gap-4">
             {formError && (
-              <div className="rounded-xl px-4 py-3" style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)" }}>
+              <div className="rounded-sm px-4 py-3" style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)" }}>
                 <p className="font-sans text-sm text-[#f87171]">{formError}</p>
               </div>
             )}
@@ -134,7 +134,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Introduction to export documentation"
-                className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
+                className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
                 maxLength={200}
               />
             </div>
@@ -144,7 +144,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What this module covers"
-                className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] min-h-[100px]"
+                className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] min-h-[100px]"
                 maxLength={2000}
               />
             </div>
@@ -156,7 +156,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
                 placeholder="0"
-                className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] max-w-[120px]"
+                className="font-sans text-sm w-full rounded-sm px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] max-w-[120px]"
               />
               <p className="font-sans text-[11px] text-[#727272] mt-1">Leave empty to add at the end.</p>
             </div>
@@ -164,7 +164,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
               <button
                 type="submit"
                 disabled={createModuleMutation.isPending}
-                className="font-sans text-sm font-semibold rounded-xl px-6 py-2.5 transition-colors disabled:opacity-60"
+                className="font-sans text-sm font-semibold rounded-sm px-6 py-2.5 transition-colors disabled:opacity-60"
                 style={{ background: "#000000", color: "white" }}
               >
                 {createModuleMutation.isPending ? "Creating…" : "Create module"}
@@ -178,7 +178,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
       ) : (
         <>
           {/* Module created — show summary + documents */}
-          <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+          <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
             <div className="px-6 py-4 border-b border-[#d8d0c4] flex items-center justify-between gap-3">
               <div>
                 <h2 className="font-serif font-bold text-[15px] text-[#000000]">{createdModule.title}</h2>
@@ -191,7 +191,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
           </div>
 
           {/* Documents for this module */}
-          <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+          <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
             <div className="px-6 py-4 border-b border-[#d8d0c4]">
               <h2 className="font-serif font-bold text-[15px] text-[#000000]">Documents & media</h2>
               <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -214,14 +214,14 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
                     value={mediaTitle}
                     onChange={(e) => setMediaTitle(e.target.value)}
                     placeholder="e.g. Intro video"
-                    className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] w-48 bg-[#ffffff]"
+                    className="font-sans text-sm rounded-sm px-3 py-2 border border-[#d8d0c4] w-48 bg-[#ffffff]"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={addMediaMutation.isPending}
-                  className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 disabled:opacity-60"
+                  className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 disabled:opacity-60"
                   style={{ background: "#000000", color: "white" }}
                 >
                   {addMediaMutation.isPending ? "Uploading…" : "Upload file"}
@@ -233,7 +233,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
               ) : (
                 <ul className="flex flex-col gap-2">
                   {moduleMedia.map((m) => (
-                    <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                    <li key={m.id} className="flex items-center justify-between gap-3 rounded-sm px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                       <div className="min-w-0">
                         <span className="font-sans text-[10px] font-bold tracking-wide text-[#727272] uppercase">{m.mediaType}</span>
                         {m.title && <span className="font-sans text-sm text-[#000000] ml-2">{m.title}</span>}
@@ -256,7 +256,7 @@ export function AdminTrainingModuleNewView({ programId }: Props) {
 
           <Link
             href={`/admin/training/${programId}`}
-            className="font-sans text-sm font-semibold rounded-xl px-4 py-2 w-fit transition-colors inline-block"
+            className="font-sans text-sm font-semibold rounded-sm px-4 py-2 w-fit transition-colors inline-block"
             style={{ background: "#000000", color: "white" }}
           >
             ← Back to program

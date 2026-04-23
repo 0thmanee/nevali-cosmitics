@@ -66,7 +66,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 						const showBadge = badge !== null && badge > 0;
 						return (
 							<Link
-								className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 transition-colors ${
+								className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 transition-colors ${
 									isActive
 										? "border border-[#727272]/25 bg-[#727272]/15"
 										: "border border-transparent bg-transparent"

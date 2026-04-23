@@ -26,7 +26,7 @@ export function RejectProductModal({
       aria-labelledby="reject-modal-title"
     >
       <div
-        className="rounded-xl w-full max-w-md overflow-hidden"
+        className="rounded-sm w-full max-w-md overflow-hidden"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
@@ -51,7 +51,7 @@ export function RejectProductModal({
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Missing GMP documentation. Please upload and resubmit."
               rows={3}
-              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
+              className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 outline-none w-full resize-none"
               style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               maxLength={500}
             />
@@ -60,7 +60,7 @@ export function RejectProductModal({
             <button
               type="button"
               onClick={() => onConfirm(reason.trim() || "")}
-              className="font-sans font-semibold text-sm text-white rounded-xl px-4 py-2.5 transition-colors"
+              className="font-sans font-semibold text-sm text-white rounded-sm px-4 py-2.5 transition-colors"
               style={{ background: "#b91c1c" }}
             >
               Reject product

@@ -15,7 +15,7 @@ export type ProductsTableProps = {
 function ProductThumb({ firstImageUrl, seed }: { firstImageUrl: string | null; seed: string }) {
   const src = firstImageUrl ?? productPlaceholderImageUrl(seed, 144);
   return (
-    <img src={src} alt="" className="w-9 h-9 rounded-xl object-cover shrink-0 bg-cream" />
+    <img src={src} alt="" className="w-9 h-9 rounded-sm object-cover shrink-0 bg-cream" />
   );
 }
 
@@ -23,7 +23,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
   if (products.length === 0) {
     return (
       <div
-        className="rounded-xl overflow-hidden flex flex-col items-center justify-center py-16 gap-4"
+        className="rounded-sm overflow-hidden flex flex-col items-center justify-center py-16 gap-4"
         style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -58,7 +58,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
         <p className="font-sans text-sm text-[#727272]">No products found</p>
         <Link
           href="/artisan/products/new"
-          className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+          className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
           style={{ background: "#000000", color: "white" }}
         >
           Add a new product
@@ -69,7 +69,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
 
   return (
     <div
-      className="rounded-xl overflow-hidden"
+      className="rounded-sm overflow-hidden"
       style={{ background: "white", border: "1px solid #d8d0c4" }}
     >
       <div
@@ -133,7 +133,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
             <div className="flex items-center gap-2">
               <Link
                 href={`/artisan/products/${p.id}/edit`}
-                className="font-sans text-[12px] font-medium rounded-xl px-3 py-1.5 transition-colors inline-block"
+                className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
                 style={{
                   background: "#ffffff",
                   color: "#000000",
@@ -144,7 +144,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
               </Link>
               <Link
                 href={`/artisan/products/${p.id}`}
-                className="font-sans text-[12px] font-medium rounded-xl px-3 py-1.5 transition-colors inline-block"
+                className="font-sans text-[12px] font-medium rounded-sm px-3 py-1.5 transition-colors inline-block"
                 style={{
                   background: "#ffffff",
                   color: "#000000",

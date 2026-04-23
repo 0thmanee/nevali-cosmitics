@@ -25,7 +25,7 @@ export function ProfilePublicShowcaseSection({
     (valuesHighlight?.trim() ?? "") !== "";
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
       <div className="px-5 py-4 border-b flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3" style={{ borderColor: "#d8d0c4" }}>
         <div>
           <h3 className="font-serif font-bold text-[15px] text-[#000000]">Public business profile</h3>
@@ -38,7 +38,7 @@ export function ProfilePublicShowcaseSection({
             href={publicProfilePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-sans text-[11px] font-semibold shrink-0 rounded-lg px-3 py-1.5 transition-colors hover:opacity-90"
+            className="font-sans text-[11px] font-semibold shrink-0 rounded-sm px-3 py-1.5 transition-colors hover:opacity-90"
             style={{ background: "#000000", color: "white" }}
           >
             View public page →

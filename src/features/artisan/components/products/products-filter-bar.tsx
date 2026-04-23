@@ -24,7 +24,7 @@ export function ProductsFilterBar({
 }: ProductsFilterBarProps) {
   return (
     <div
-      className="rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3"
+      className="rounded-sm px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3"
       style={{ background: "white", border: "1px solid #d8d0c4" }}
     >
       <div className="flex flex-1 items-center gap-3">
@@ -49,7 +49,7 @@ export function ProductsFilterBar({
             placeholder="Search products..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full font-sans text-sm text-[#000000] pl-8 pr-4 py-2 rounded-xl outline-none"
+            className="w-full font-sans text-sm text-[#000000] pl-8 pr-4 py-2 rounded-sm outline-none"
             style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
           />
         </div>
@@ -59,7 +59,7 @@ export function ProductsFilterBar({
               key={tab}
               type="button"
               onClick={() => onTabChange(tab)}
-              className="font-sans text-[12px] font-semibold rounded-xl px-3.5 py-1.5 transition-colors"
+              className="font-sans text-[12px] font-semibold rounded-sm px-3.5 py-1.5 transition-colors"
               style={
                 activeTab === tab
                   ? { background: "#000000", color: "white" }

@@ -20,11 +20,11 @@ export function ProductGallery({ images, alt = "Product" }: Props) {
   if (images.length === 0) {
     return (
       <div
-        className="rounded-2xl overflow-hidden flex flex-col items-center justify-center py-16 gap-3"
+        className="rounded-sm overflow-hidden flex flex-col items-center justify-center py-16 gap-3"
         style={cardStyle}
       >
         <div
-          className="w-24 h-24 rounded-2xl flex items-center justify-center"
+          className="w-24 h-24 rounded-sm flex items-center justify-center"
           style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
         >
           <svg
@@ -45,7 +45,7 @@ export function ProductGallery({ images, alt = "Product" }: Props) {
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+    <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
       <div className="px-6 py-4 border-b border-[#d8d0c4]">
         <h2 className="font-serif font-bold text-[15px] text-[#000000]">Gallery</h2>
       </div>
@@ -58,7 +58,7 @@ export function ProductGallery({ images, alt = "Product" }: Props) {
                 key={img.id}
                 type="button"
                 onClick={() => setSelectedIndex(i)}
-                className="w-auto h-48 rounded-lg overflow-hidden shrink-0 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#000000]/30"
+                className="w-auto h-48 rounded-sm overflow-hidden shrink-0 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#000000]/30"
                 style={{
                   border: selectedIndex === i ? "2px solid #000000" : "1px solid #d8d0c4",
                   opacity: selectedIndex === i ? 1 : 0.85,

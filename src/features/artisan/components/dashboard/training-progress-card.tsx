@@ -18,7 +18,7 @@ export function TrainingProgressCard() {
 
   if (isLoading) {
     return (
-      <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <div className="px-5 py-3.5 border-b" style={{ borderColor: "#d8d0c4" }}>
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Training Progress</h2>
           <p className="font-sans text-[12px] text-[#727272] mt-0.5">Loading…</p>
@@ -28,7 +28,7 @@ export function TrainingProgressCard() {
   }
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
       <div className="px-5 py-3.5 border-b flex items-center justify-between" style={{ borderColor: "#d8d0c4" }}>
         <div>
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Training Progress</h2>

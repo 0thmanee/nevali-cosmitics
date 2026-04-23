@@ -26,7 +26,7 @@ export function ProfileView({ user, profile, memberSince, partnerId, publicProfi
     return (
       <div>
         <div
-          className="rounded-xl p-8 text-center"
+          className="rounded-sm p-8 text-center"
           style={{ background: "white", border: "1px solid #d8d0c4" }}
         >
           <p className="font-sans text-[#727272]">No profile data yet. Complete onboarding to see your profile here.</p>

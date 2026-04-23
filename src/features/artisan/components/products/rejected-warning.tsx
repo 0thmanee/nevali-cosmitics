@@ -16,7 +16,7 @@ export function RejectedWarning({ count, rejectedProducts = [] }: RejectedWarnin
 
   return (
     <div
-      className="rounded-xl px-5 py-4 flex items-start gap-3"
+      className="rounded-sm px-5 py-4 flex items-start gap-3"
       style={{
         background: "rgba(248,113,113,0.06)",
         border: "1px solid rgba(248,113,113,0.18)",

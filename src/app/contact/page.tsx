@@ -33,7 +33,7 @@ export default function ContactPage() {
 					</p>
 				</div>
 
-				<div className="flex flex-col gap-6 rounded-2xl border border-cream-dark bg-white p-8">
+				<div className="flex flex-col gap-6 rounded-sm border border-cream-dark bg-white p-8">
 					<div>
 						<h2 className="mb-1 font-sans font-semibold text-sm text-text-dark">
 							Brand &amp; partner support

@@ -23,7 +23,7 @@ export function SupportTicketCard({
 
 	return (
 		<div
-			className="flex flex-col items-start gap-4 rounded-xl px-5 py-4 sm:flex-row sm:items-center"
+			className="flex flex-col items-start gap-4 rounded-sm px-5 py-4 sm:flex-row sm:items-center"
 			style={{ background: "white", border: "1px solid #d8d0c4" }}
 		>
 			<div className="min-w-0 flex-1">
@@ -55,7 +55,7 @@ export function SupportTicketCard({
 			</div>
 			{onViewOrReply && (
 				<button
-					className="shrink-0 rounded-xl px-4 py-2 font-sans font-semibold text-[12px] transition-colors"
+					className="shrink-0 rounded-sm px-4 py-2 font-sans font-semibold text-[12px] transition-colors"
 					onClick={onViewOrReply}
 					style={
 						ticket.status === "RESOLVED"

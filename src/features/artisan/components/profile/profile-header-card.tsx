@@ -52,7 +52,7 @@ export function ProfileHeaderCard({
   const displayError = error ?? (uploadMutation.isError && uploadMutation.error instanceof Error ? uploadMutation.error.message : null);
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
       <div
         className="h-20"
         style={{
@@ -92,7 +92,7 @@ export function ProfileHeaderCard({
           </div>
           <Link
             href="/artisan/profile/edit"
-            className="font-sans text-sm font-medium rounded-xl px-4 py-2 transition-colors inline-block"
+            className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors inline-block"
             style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
           >
             Edit Profile

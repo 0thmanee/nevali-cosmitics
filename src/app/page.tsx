@@ -1,8 +1,6 @@
 import Navbar from "./Navbar";
 import HeroSection from "./HeroSection";
-import EcosystemSection from "./EcosystemSection";
 import NewFutureSection from "./NewFutureSection";
-import FeaturedCategorySection from "./FeaturedCategorySection";
 import CollectionsSection from "./CollectionsSection";
 import QuoteSection from "./QuoteSection";
 import ProductsSection from "./ProductsSection";
@@ -16,12 +14,10 @@ export default function HomePage() {
       <div className="pt-[56px]" />
       <HeroSection />
       <NewFutureSection />
-      <EcosystemSection />
-      <QuoteSection />
-      <StoriesSection />
-      <FeaturedCategorySection />
       <CollectionsSection />
       <ProductsSection />
+      <QuoteSection />
+      <StoriesSection />
       <Footer />
     </main>
   );

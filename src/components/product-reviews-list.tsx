@@ -68,7 +68,7 @@ export function ProductReviewsList({ productId }: Props) {
 
   if (loading) {
     return (
-      <div className="bg-white border border-cream-dark rounded-xl p-6">
+      <div className="bg-white border border-cream-dark rounded-sm p-6">
         <p className="font-sans text-sm text-text-muted">Loading reviews...</p>
       </div>
     );
@@ -76,7 +76,7 @@ export function ProductReviewsList({ productId }: Props) {
 
   if (error) {
     return (
-      <div className="bg-white border border-cream-dark rounded-xl p-6">
+      <div className="bg-white border border-cream-dark rounded-sm p-6">
         <p className="font-sans text-sm text-red-600">{error}</p>
       </div>
     );
@@ -96,7 +96,7 @@ export function ProductReviewsList({ productId }: Props) {
   });
 
   return (
-    <div className="bg-white border border-cream-dark rounded-xl p-6">
+    <div className="bg-white border border-cream-dark rounded-sm p-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
           <h3 className="font-serif font-bold text-lg text-text-dark">Customer Reviews</h3>
@@ -126,7 +126,7 @@ export function ProductReviewsList({ productId }: Props) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-3 py-2 border border-cream-dark rounded-lg font-sans text-sm focus:outline-none focus:border-primary"
+            className="px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
           >
             <option value="recent">Most Recent</option>
             <option value="helpful">Most Helpful</option>
@@ -235,7 +235,7 @@ export function ProductReviewsList({ productId }: Props) {
       {stats && sortedReviews.length < stats.totalReviews && (
         <button
           onClick={() => setLimit((prev) => prev + 10)}
-          className="w-full mt-6 px-4 py-2 border border-cream-dark text-text-dark font-sans font-semibold rounded-lg hover:bg-cream transition-colors"
+          className="w-full mt-6 px-4 py-2 border border-cream-dark text-text-dark font-sans font-semibold rounded-sm hover:bg-cream transition-colors"
         >
           Load More Reviews
         </button>

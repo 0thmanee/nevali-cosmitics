@@ -24,7 +24,7 @@ export function CatalogOrdersView() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center rounded-2xl border border-cream-dark bg-white px-5 py-12">
+      <div className="flex items-center justify-center rounded-sm border border-cream-dark bg-white px-5 py-12">
         <p className="font-sans text-sm text-stone-500">Loading order stats…</p>
       </div>
     );
@@ -32,7 +32,7 @@ export function CatalogOrdersView() {
 
   if (isError) {
     return (
-      <div className="rounded-2xl border border-cream-dark bg-white px-5 py-6">
+      <div className="rounded-sm border border-cream-dark bg-white px-5 py-6">
         <p className="font-sans text-sm text-red-600">
           {error instanceof Error ? error.message : "Failed to load order stats."}
         </p>
@@ -43,19 +43,19 @@ export function CatalogOrdersView() {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-cream-dark bg-white p-4">
+        <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Total product-orders
           </p>
           <p className="mt-1 font-serif text-2xl font-bold text-[#000000]">{totalOrders}</p>
         </div>
-        <div className="rounded-2xl border border-cream-dark bg-white p-4">
+        <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Units sold
           </p>
           <p className="mt-1 font-serif text-2xl font-bold text-[#000000]">{totalUnits}</p>
         </div>
-        <div className="rounded-2xl border border-cream-dark bg-white p-4">
+        <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
             Revenue
           </p>
@@ -65,7 +65,7 @@ export function CatalogOrdersView() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-cream-dark bg-white">
+      <div className="overflow-hidden rounded-sm border border-cream-dark bg-white">
         <div className="border-b border-cream-dark px-5 py-4">
           <h2 className="font-serif text-[15px] font-bold text-text-dark">Catalog orders by product</h2>
           <p className="mt-0.5 font-sans text-[11px] text-stone-500">

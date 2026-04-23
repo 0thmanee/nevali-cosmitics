@@ -57,7 +57,7 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         <>
           <div className="fixed inset-0 z-40" aria-hidden onClick={() => setMenuOpen(false)} />
           <div
-            className="absolute right-0 top-full mt-2 py-2 w-48 rounded-xl bg-white border border-cream-dark shadow-lg z-50"
+            className="absolute right-0 top-full mt-2 py-2 w-48 rounded-sm bg-white border border-cream-dark shadow-lg z-50"
             role="menu"
           >
             <div className="px-4 py-2 border-b border-cream-dark">

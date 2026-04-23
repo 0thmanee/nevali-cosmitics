@@ -93,14 +93,14 @@ export function NotificationsInboxView({ dashboardHref }: Props) {
 				</div>
 				<div className="flex flex-wrap gap-2">
 					<Link
-						className="rounded-lg border border-cream-dark bg-white px-3 py-1.5 font-sans text-sm text-text-muted transition-colors hover:bg-cream"
+						className="rounded-sm border border-cream-dark bg-white px-3 py-1.5 font-sans text-sm text-text-muted transition-colors hover:bg-cream"
 						href={dashboardHref}
 					>
 						← Dashboard
 					</Link>
 					{items.some((n) => !n.readAt) ? (
 						<button
-							className="rounded-lg border border-cream-dark bg-white px-3 py-1.5 font-sans text-forest-mid text-sm transition-colors hover:bg-cream disabled:opacity-50"
+							className="rounded-sm border border-cream-dark bg-white px-3 py-1.5 font-sans text-forest-mid text-sm transition-colors hover:bg-cream disabled:opacity-50"
 							disabled={markAll.isPending}
 							onClick={() => markAll.mutate()}
 							type="button"
@@ -111,7 +111,7 @@ export function NotificationsInboxView({ dashboardHref }: Props) {
 				</div>
 			</div>
 
-			<div className="rounded-xl border border-cream-dark bg-white p-4">
+			<div className="rounded-sm border border-cream-dark bg-white p-4">
 				<p className="mb-2 font-sans font-semibold text-sm text-text-dark">
 					Email for thread activity
 				</p>
@@ -137,7 +137,7 @@ export function NotificationsInboxView({ dashboardHref }: Props) {
 					Could not load alerts. Try refreshing.
 				</p>
 			) : items.length === 0 ? (
-				<div className="rounded-xl border border-cream-dark bg-white p-8 text-center">
+				<div className="rounded-sm border border-cream-dark bg-white p-8 text-center">
 					<p className="font-sans text-sm text-text-muted">
 						No alerts yet. When someone posts in an RFQ thread you are involved
 						in, a notice will appear here (and you may get email if Resend is
@@ -177,7 +177,7 @@ function NotificationRow({
 
 	return (
 		<li
-			className={`rounded-xl border px-4 py-3 ${
+			className={`rounded-sm border px-4 py-3 ${
 				unread
 					? "border-forest-mid/20 bg-white"
 					: "border-cream-dark bg-cream/40"

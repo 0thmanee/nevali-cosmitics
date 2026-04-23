@@ -39,7 +39,7 @@ export default async function CartCheckoutSuccessPage({
           <h1 className="font-serif text-3xl font-bold text-text-dark">Order placed successfully</h1>
           <p
             aria-live="polite"
-            className="rounded-xl border border-[#727272]/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-[#000000]"
+            className="rounded-sm border border-[#727272]/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-[#000000]"
             role="status"
           >
             Success: your order has been confirmed.

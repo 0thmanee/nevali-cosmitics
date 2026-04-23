@@ -7,7 +7,7 @@ import { PublicProductCard } from "~/components/public-product-card";
 
 export default async function ProductsSection() {
 	const hero = await getFeaturedHomeHeroProductRepo().catch(() => null);
-	const dbProducts = await listApprovedProductsForPublicRepo(12, {
+	const dbProducts = await listApprovedProductsForPublicRepo(6, {
 		excludeIds: hero?.id ? [hero.id] : undefined,
 	}).catch(() => []);
 
@@ -21,7 +21,7 @@ export default async function ProductsSection() {
 						letterSpacing: "0.05em",
 					}}
 				>
-					Our Products
+					Recent products
 				</h2>
 
 				{dbProducts.length === 0 ? (
@@ -38,15 +38,26 @@ export default async function ProductsSection() {
 							href="/products"
 							style={{ background: "#000000" }}
 						>
-							Open catalog
+							View all products
 						</Link>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-						{dbProducts.map((p) => (
-							<PublicProductCard key={p.id} product={p} />
-						))}
-					</div>
+					<>
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+							{dbProducts.map((p) => (
+								<PublicProductCard key={p.id} product={p} />
+							))}
+						</div>
+						<div className="mt-10 flex justify-center">
+							<Link
+								href="/products"
+								className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-6 py-3 transition-opacity hover:opacity-90"
+								style={{ background: "#000000" }}
+							>
+								View all products
+							</Link>
+						</div>
+					</>
 				)}
 			</div>
 		</section>

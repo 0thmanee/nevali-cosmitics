@@ -79,7 +79,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
           type="button"
           onClick={add}
           disabled={disabled}
-          className="shrink-0 inline-flex items-center gap-1 font-sans text-xs font-semibold text-[#000000] border border-[#d8d0c4] rounded-lg px-3 py-1.5 hover:bg-[#ffffff] disabled:opacity-50"
+          className="shrink-0 inline-flex items-center gap-1 font-sans text-xs font-semibold text-[#000000] border border-[#d8d0c4] rounded-sm px-3 py-1.5 hover:bg-[#ffffff] disabled:opacity-50"
         >
           <Plus size={14} aria-hidden />
           Add variant
@@ -89,7 +89,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
       {variants.map((v, idx) => (
         <div
           key={v.key}
-          className="rounded-xl p-4 flex flex-col gap-3"
+          className="rounded-sm p-4 flex flex-col gap-3"
           style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
         >
           <div className="flex items-center justify-between gap-2">
@@ -101,7 +101,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 type="button"
                 onClick={() => remove(v.key)}
                 disabled={disabled}
-                className="p-1 rounded-lg text-[#f87171] hover:bg-red-50 disabled:opacity-40"
+                className="p-1 rounded-sm text-[#f87171] hover:bg-red-50 disabled:opacity-40"
                 aria-label="Remove variant"
               >
                 <Trash2 size={16} />

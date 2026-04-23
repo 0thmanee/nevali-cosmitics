@@ -45,7 +45,7 @@ export default async function CartCheckoutPage({
             Enter your details and shipping address. Pay by card (Stripe) when enabled, or choose cash
             on delivery. Sellers ship your cosmetics directly.
           </p>
-          <p className="mb-8 max-w-2xl rounded-lg border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-stone-600">
+          <p className="mb-8 max-w-2xl rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-stone-600">
             <span className="font-semibold text-text-dark">No account required.</span> This is guest
             checkout—you are not asked to sign in. Creating a buyer account is optional if you want
             order history in the app.

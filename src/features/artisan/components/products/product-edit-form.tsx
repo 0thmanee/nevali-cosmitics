@@ -115,7 +115,7 @@ export function ProductEditForm({ productId }: Props) {
   if (loadingProduct || !product) {
     return (
       <div
-        className="rounded-2xl overflow-hidden flex items-center justify-center py-20"
+        className="rounded-sm overflow-hidden flex items-center justify-center py-20"
         style={cardStyle}
       >
         {isError ? (
@@ -141,7 +141,7 @@ export function ProductEditForm({ productId }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">
@@ -163,7 +163,7 @@ export function ProductEditForm({ productId }: Props) {
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href={`/artisan/products/${productId}`}
-              className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+              className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
               style={{ background: "#000000", color: "white" }}
             >
               View
@@ -174,7 +174,7 @@ export function ProductEditForm({ productId }: Props) {
 
       {validationError && (
         <div
-          className="rounded-2xl overflow-hidden px-6 py-4"
+          className="rounded-sm overflow-hidden px-6 py-4"
           style={{ ...cardStyle, background: "rgba(248,113,113,0.06)", borderColor: "rgba(248,113,113,0.3)" }}
         >
           <p className="font-sans text-sm text-[#f87171]">{validationError}</p>
@@ -193,7 +193,7 @@ export function ProductEditForm({ productId }: Props) {
         certifications={product.certifications ?? []}
       />
 
-      <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-4 border-b border-[#d8d0c4]">
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
         </div>
@@ -270,7 +270,7 @@ export function ProductEditForm({ productId }: Props) {
           </div>
 
           {product.status === "APPROVED" ? (
-            <div className="mt-6 rounded-xl border border-[#d8d0c4] bg-[#faf8f5] px-4 py-4 sm:col-span-2">
+            <div className="mt-6 rounded-sm border border-[#d8d0c4] bg-[#faf8f5] px-4 py-4 sm:col-span-2">
               <label className="flex cursor-pointer items-start gap-3">
                 <input
                   type="checkbox"
@@ -303,13 +303,13 @@ export function ProductEditForm({ productId }: Props) {
       </div>
 
       <div
-        className="rounded-2xl overflow-hidden shadow-sm px-6 py-5 flex flex-wrap items-center gap-4"
+        className="rounded-sm overflow-hidden shadow-sm px-6 py-5 flex flex-wrap items-center gap-4"
         style={cardStyle}
       >
         <button
           type="submit"
           disabled={isLoading}
-          className="font-sans font-semibold text-sm text-white rounded-xl px-6 py-3 transition-colors disabled:opacity-60 min-w-[140px]"
+          className="font-sans font-semibold text-sm text-white rounded-sm px-6 py-3 transition-colors disabled:opacity-60 min-w-[140px]"
           style={{ background: "#000000" }}
         >
           {isLoading ? "Saving…" : "Save changes"}

@@ -20,7 +20,7 @@ export function SupportFaqSection({
       {SUPPORT_FAQ.map((faq, i) => (
         <div
           key={i}
-          className="rounded-xl overflow-hidden"
+          className="rounded-sm overflow-hidden"
           style={{ background: "white", border: "1px solid #d8d0c4" }}
         >
           <button
@@ -54,7 +54,7 @@ export function SupportFaqSection({
         </div>
       ))}
       <div
-        className="rounded-xl px-5 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+        className="rounded-sm px-5 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
       >
         <div>
@@ -68,7 +68,7 @@ export function SupportFaqSection({
         <button
           type="button"
           onClick={onOpenTicket}
-          className="font-sans font-semibold text-sm text-white rounded-xl px-5 py-2.5 shrink-0 transition-colors flex items-center gap-2"
+          className="font-sans font-semibold text-sm text-white rounded-sm px-5 py-2.5 shrink-0 transition-colors flex items-center gap-2"
           style={{ background: "#000000" }}
         >
           Open a Ticket

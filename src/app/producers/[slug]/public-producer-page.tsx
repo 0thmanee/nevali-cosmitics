@@ -30,7 +30,7 @@ export function PublicProducerPage({ producer }: Props) {
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12">
         <div
-          className="rounded-2xl overflow-hidden border"
+          className="rounded-sm overflow-hidden border"
           style={{ background: "white", borderColor: "#d8d0c4" }}
         >
           <div
@@ -43,7 +43,7 @@ export function PublicProducerPage({ producer }: Props) {
           <div className="px-6 sm:px-8 pb-8 -mt-12">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
               <div
-                className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-4 border-white overflow-hidden shrink-0 shadow-sm"
+                className="w-24 h-24 sm:w-28 sm:h-28 rounded-sm border-4 border-white overflow-hidden shrink-0 shadow-sm"
                 style={{ background: "#ffffff" }}
               >
                 {producer.profileImage ? (
@@ -151,7 +151,7 @@ export function PublicProducerPage({ producer }: Props) {
             )}
 
             <div
-              className="mt-10 rounded-xl p-5"
+              className="mt-10 rounded-sm p-5"
               style={{ background: "#d8d0c4", border: "1px solid #e8d8c8" }}
             >
               <p className="font-sans text-sm text-[#000000] leading-relaxed">
@@ -160,14 +160,14 @@ export function PublicProducerPage({ producer }: Props) {
               <div className="flex flex-wrap gap-3 mt-4">
                 <Link
                   href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
-                  className="font-sans text-sm font-semibold rounded-xl px-5 py-2.5 text-white transition-colors hover:opacity-90"
+                  className="font-sans text-sm font-semibold rounded-sm px-5 py-2.5 text-white transition-colors hover:opacity-90"
                   style={{ background: "#000000" }}
                 >
                   {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Get started" : "Create buyer account"}
                 </Link>
                 <Link
                   href="/"
-                  className="font-sans text-sm font-semibold rounded-xl px-5 py-2.5 transition-colors"
+                  className="font-sans text-sm font-semibold rounded-sm px-5 py-2.5 transition-colors"
                   style={{ background: "white", color: "#000000", border: "1px solid #d8d0c4" }}
                 >
                   Browse platform

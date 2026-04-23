@@ -27,7 +27,7 @@ function ProductThumb({
 }) {
   const src = imageUrl ?? productPlaceholderImageUrl(seed, 192);
   return (
-    <div className="relative w-12 h-12 rounded-xl shrink-0 overflow-hidden bg-cream">
+    <div className="relative w-12 h-12 rounded-sm shrink-0 overflow-hidden bg-cream">
       <Image src={src} alt={name} fill className="object-cover" sizes="48px" />
     </div>
   );
@@ -38,7 +38,7 @@ function ProductThumb({
 function CertItem({ cert }: { cert: CertifiedProductListRow["certifications"][number] }) {
   const s = STATUS_CONFIG[cert.status as keyof typeof STATUS_CONFIG] ?? STATUS_CONFIG.PENDING;
   return (
-    <div className="flex items-center gap-3 py-2.5 px-3.5 rounded-xl bg-[#ffffff] border border-[#d8d0c4]">
+    <div className="flex items-center gap-3 py-2.5 px-3.5 rounded-sm bg-[#ffffff] border border-[#d8d0c4]">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0">
         <path d="M4 2h6l3 3v9H4V2z" stroke="#727272" strokeWidth="1.3" strokeLinejoin="round" />
         <path d="M10 2v3h3" stroke="#727272" strokeWidth="1.3" strokeLinejoin="round" />
@@ -59,7 +59,7 @@ function CertItem({ cert }: { cert: CertifiedProductListRow["certifications"][nu
           href={cert.fileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-sans text-[11px] font-medium text-[#000000] bg-white border border-[#d8d0c4] rounded-lg px-2.5 py-1 hover:bg-cream transition-colors"
+          className="font-sans text-[11px] font-medium text-[#000000] bg-white border border-[#d8d0c4] rounded-sm px-2.5 py-1 hover:bg-cream transition-colors"
         >
           View
         </a>
@@ -75,7 +75,7 @@ function ProductCard({ product }: { product: CertifiedProductListRow }) {
   const approvedCount = certs.filter((c) => c.status === "APPROVED").length;
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+    <div className="rounded-sm overflow-hidden" style={{ background: "white", border: "1px solid #d8d0c4" }}>
       {/* Product header */}
       <div className="flex items-center gap-3.5 px-5 py-4" style={{ borderBottom: certs.length > 0 ? "1px solid #d8d0c4" : "none" }}>
         <ProductThumb
@@ -137,14 +137,14 @@ export function CertifiedProductsTable() {
 
   if (isLoading) {
     return (
-      <div className="rounded-xl py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm py-12 flex items-center justify-center" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <p className="font-sans text-[13px] text-[#727272]">Loading certified products…</p>
       </div>
     );
   }
   if (error) {
     return (
-      <div className="rounded-xl py-6 px-5" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm py-6 px-5" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <p className="font-sans text-[13px] text-red-500">Failed to load certified products.</p>
       </div>
     );
@@ -154,7 +154,7 @@ export function CertifiedProductsTable() {
 
   if (list.length === 0) {
     return (
-      <div className="rounded-xl py-12 flex flex-col items-center justify-center gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="rounded-sm py-12 flex flex-col items-center justify-center gap-3" style={{ background: "white", border: "1px solid #d8d0c4" }}>
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
           <rect x="3" y="14" width="30" height="18" rx="3" stroke="#CBD5CC" strokeWidth="1.4" strokeLinejoin="round" />
           <path d="M12 14v-3a6 6 0 0 1 12 0v3" stroke="#CBD5CC" strokeWidth="1.4" strokeLinecap="round" />

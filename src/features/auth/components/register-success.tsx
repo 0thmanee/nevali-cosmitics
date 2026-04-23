@@ -56,7 +56,7 @@ export function RegisterSuccess({ form }: { form: RegisterFormData }) {
           </p>
         </div>
         <div
-          className="w-full rounded-2xl p-5 flex flex-col gap-3 text-left"
+          className="w-full rounded-sm p-5 flex flex-col gap-3 text-left"
           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
         >
           {[

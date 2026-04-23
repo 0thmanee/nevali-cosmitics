@@ -26,7 +26,7 @@ type ProfileRow = { label: string; value: string | null | undefined };
 
 function ProfileSection({ title, rows }: { title: string; rows: ProfileRow[] }) {
   return (
-    <div className="rounded-xl overflow-hidden" style={cardStyle}>
+    <div className="rounded-sm overflow-hidden" style={cardStyle}>
       <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
         <h3 className="font-serif font-bold text-[15px] text-[#000000]">{title}</h3>
       </div>
@@ -81,7 +81,7 @@ export function PartnerDetailView() {
   if (isLoading) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-xl overflow-hidden px-5 py-12 text-center" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden px-5 py-12 text-center" style={cardStyle}>
           <p className="font-sans text-sm text-[#727272]">Loading artisan…</p>
         </div>
       </div>
@@ -91,7 +91,7 @@ export function PartnerDetailView() {
   if (isError || !partner) {
     return (
       <div className="p-4 lg:p-6">
-        <div className="rounded-xl overflow-hidden px-5 py-6" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden px-5 py-6" style={cardStyle}>
           <p className="font-sans text-sm text-red-600">
             {error instanceof Error ? error.message : "Artisan not found."}
           </p>
@@ -166,7 +166,7 @@ export function PartnerDetailView() {
               type="button"
               onClick={() => approveMutation.mutate(partner.id)}
               disabled={approveMutation.isPending}
-              className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
+              className="font-sans text-[12px] font-semibold rounded-sm px-4 py-2 transition-colors disabled:opacity-60"
               style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
             >
               {approveMutation.isPending ? "Activating…" : "Activate account"}
@@ -175,7 +175,7 @@ export function PartnerDetailView() {
           <button
             type="button"
             onClick={() => setShowDeleteConfirm(true)}
-            className="font-sans text-[12px] font-medium rounded-xl px-4 py-2 transition-colors"
+            className="font-sans text-[12px] font-medium rounded-sm px-4 py-2 transition-colors"
             style={{
               background: "rgba(248,113,113,0.08)",
               color: "#dc2626",
@@ -188,7 +188,7 @@ export function PartnerDetailView() {
       </div>
 
       {/* Account (editable) */}
-      <div className="rounded-xl overflow-hidden" style={cardStyle}>
+      <div className="rounded-sm overflow-hidden" style={cardStyle}>
         <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
           <h2 className="font-serif font-bold text-[15px] text-[#000000]">Account</h2>
           <p className="font-sans text-[11px] text-[#727272] mt-0.5">
@@ -207,7 +207,7 @@ export function PartnerDetailView() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
+                className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 w-full"
                 style={fieldStyle}
               />
             </div>
@@ -220,7 +220,7 @@ export function PartnerDetailView() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
+                className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 w-full"
                 style={fieldStyle}
               />
             </div>
@@ -232,7 +232,7 @@ export function PartnerDetailView() {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as "enabled" | "disabled")}
-              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
+              className="font-sans text-sm text-[#000000] rounded-sm px-3.5 py-2.5 w-full"
               style={fieldStyle}
             >
               <option value="enabled">Enabled (can access producer)</option>
@@ -242,7 +242,7 @@ export function PartnerDetailView() {
           <button
             type="submit"
             disabled={updateMutation.isPending}
-            className="font-sans text-sm font-semibold rounded-xl px-4 py-2.5 w-fit transition-colors disabled:opacity-60"
+            className="font-sans text-sm font-semibold rounded-sm px-4 py-2.5 w-fit transition-colors disabled:opacity-60"
             style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
           >
             {updateMutation.isPending ? "Saving…" : "Save account"}
@@ -254,7 +254,7 @@ export function PartnerDetailView() {
       {profile ? (
         <ProfileSection title="Profile (onboarding)" rows={profileRows} />
       ) : (
-        <div className="rounded-xl overflow-hidden px-5 py-6" style={cardStyle}>
+        <div className="rounded-sm overflow-hidden px-5 py-6" style={cardStyle}>
           <h3 className="font-serif font-bold text-[15px] text-[#000000]">Profile</h3>
           <p className="font-sans text-sm text-[#727272] mt-1">No profile data yet.</p>
         </div>

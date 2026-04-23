@@ -68,7 +68,7 @@ export function DashboardProductList() {
         </div>
         <Link
           href="/artisan/products"
-          className="font-sans text-sm font-medium rounded-xl px-4 py-2 transition-colors"
+          className="font-sans text-sm font-medium rounded-sm px-4 py-2 transition-colors"
           style={{
             background: "#ffffff",
             color: "#000000",
@@ -96,7 +96,7 @@ export function DashboardProductList() {
         )}
         {rejected && (
           <div
-            className="mx-4 mb-3 mt-1 rounded-xl px-4 py-2.5 flex items-start gap-3"
+            className="mx-4 mb-3 mt-1 rounded-sm px-4 py-2.5 flex items-start gap-3"
             style={{
               background: "rgba(248,113,113,0.08)",
               border: "1px solid rgba(248,113,113,0.2)",

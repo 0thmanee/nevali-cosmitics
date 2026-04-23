@@ -34,14 +34,14 @@ export function BuyerOrdersView() {
 
 	if (orders.length === 0) {
 		return (
-			<div className="max-w-xl space-y-4 rounded-xl border border-cream-dark bg-white p-6">
+			<div className="max-w-xl space-y-4 rounded-sm border border-cream-dark bg-white p-6">
 				<p className="font-sans text-sm text-text-muted leading-relaxed">
 					You have no orders linked to this account yet. Guest checkout never requires sign-in;
 					if you already bought as a guest, use the same email here so we can match history, or
 					start a new order from the catalog.
 				</p>
 				<Link
-					className="inline-flex rounded-xl bg-forest-mid px-5 py-2.5 font-medium font-sans text-sm text-white transition-opacity hover:opacity-90"
+					className="inline-flex rounded-sm bg-forest-mid px-5 py-2.5 font-medium font-sans text-sm text-white transition-opacity hover:opacity-90"
 					href="/products"
 				>
 					Browse cosmetics
@@ -55,7 +55,7 @@ export function BuyerOrdersView() {
 			{orders.map((o) => (
 				<li key={o.id}>
 					<Link
-						className="block rounded-xl border border-cream-dark bg-white p-4 transition-colors hover:border-forest-mid/30"
+						className="block rounded-sm border border-cream-dark bg-white p-4 transition-colors hover:border-forest-mid/30"
 						href={`/cart/checkout/success?orderId=${encodeURIComponent(o.id)}`}
 					>
 						<div className="flex flex-wrap items-baseline justify-between gap-2">
