@@ -33,7 +33,7 @@ export default async function PublicProductPage({ params }: Props) {
 	if (!product) notFound();
 
 	return (
-		<main className="flex min-h-screen w-full flex-col bg-cream">
+		<main className="flex min-h-screen w-full flex-col bg-cream pt-14">
 			<Navbar />
 			<PublicProductDetailView product={product} />
 			<Footer />

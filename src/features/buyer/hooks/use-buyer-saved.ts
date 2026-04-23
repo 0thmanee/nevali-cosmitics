@@ -25,10 +25,12 @@ export function useBuyerSavedLists() {
 	});
 }
 
-export function useBuyerSavedListsPicker() {
+export function useBuyerSavedListsPicker(options?: { enabled?: boolean }) {
 	return useQuery({
 		queryKey: buyerSavedListsPickerQueryKey,
 		queryFn: listMySavedListsForPicker,
+		/** When false, skips the server action (which redirects guests to login). */
+		enabled: options?.enabled ?? true,
 	});
 }
 

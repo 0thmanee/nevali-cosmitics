@@ -12,7 +12,10 @@ type Props = { productId: string };
 export function SaveProductControl({ productId }: Props) {
 	const { data: session, isPending: sessionLoading } = useSession();
 	const role = (session?.user as { role?: string } | undefined)?.role;
-	const { data: lists, isPending: listsLoading } = useBuyerSavedListsPicker();
+	const isBuyer = Boolean(session?.user && role === "buyer");
+	const { data: lists, isPending: listsLoading } = useBuyerSavedListsPicker({
+		enabled: !sessionLoading && isBuyer,
+	});
 	const addProduct = useAddProductToSavedList();
 	const [listId, setListId] = useState<string>("");
 
