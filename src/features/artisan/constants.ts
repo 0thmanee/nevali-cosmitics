@@ -3,24 +3,24 @@ export const PRODUCT_STATUS_STYLES: Record<
   { bg: string; color: string; border: string }
 > = {
   APPROVED: {
-    bg: "rgba(0,0,0,0.85)",
-    color: "#727272",
-    border: "1px solid rgba(200,150,60,0.3)",
+    bg: "rgba(0,0,0,0.06)",
+    color: "#000000",
+    border: "1px solid #d8d0c4",
   },
   PENDING: {
-    bg: "rgba(201,145,61,0.2)",
-    color: "#E8B84B",
-    border: "1px solid rgba(201,145,61,0.3)",
+    bg: "rgba(114,114,114,0.08)",
+    color: "#727272",
+    border: "1px solid #d8d0c4",
   },
   REJECTED: {
-    bg: "rgba(180,30,30,0.2)",
-    color: "#f87171",
-    border: "1px solid rgba(248,113,113,0.25)",
+    bg: "rgba(180,30,30,0.08)",
+    color: "#b91c1c",
+    border: "1px solid rgba(185,28,28,0.25)",
   },
 };
 
 export const STATUS_DOT_COLORS: Record<string, string> = {
-  APPROVED: "#727272",
-  PENDING: "#E8B84B",
-  REJECTED: "#f87171",
+  APPROVED: "#000000",
+  PENDING: "#727272",
+  REJECTED: "#b91c1c",
 };

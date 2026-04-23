@@ -6,13 +6,14 @@ import {
   DashboardProductList,
   TrainingProgressCard,
 } from "~/features/artisan/components/dashboard";
+import { producerDashboardStatsQueryKey } from "~/features/artisan/hooks/use-dashboard-stats";
 
 export default async function ProducerDashboard() {
   const queryClient = new QueryClient();
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ["producer", "dashboard", "stats"],
+      queryKey: producerDashboardStatsQueryKey,
       queryFn: getProducerDashboardStats,
     }),
     queryClient.prefetchQuery({

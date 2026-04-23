@@ -14,90 +14,135 @@ import type { UserDisplay, LayoutProfile } from "~/app/api/profile/schemas/profi
 
 function IconDashboard({ active }: { active?: boolean }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#C9913D" : "none"} stroke={active ? "#C9913D" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#C9913D" : "none"} stroke={active ? "#C9913D" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#C9913D" : "none"} stroke={active ? "#C9913D" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#C9913D" : "none"} stroke={active ? "#C9913D" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <rect
+        x="1.5"
+        y="1.5"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill={active ? "currentColor" : "none"}
+        fillOpacity={active ? 0.12 : 0}
+      />
+      <rect
+        x="9"
+        y="1.5"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill={active ? "currentColor" : "none"}
+        fillOpacity={active ? 0.12 : 0}
+      />
+      <rect
+        x="1.5"
+        y="9"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill={active ? "currentColor" : "none"}
+        fillOpacity={active ? 0.12 : 0}
+      />
+      <rect
+        x="9"
+        y="9"
+        width="5.5"
+        height="5.5"
+        rx="1"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill={active ? "currentColor" : "none"}
+        fillOpacity={active ? 0.12 : 0}
+      />
     </svg>
   );
 }
 
 function IconProfile() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <line x1="3" y1="4" x2="13" y2="4" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <line x1="3" y1="8" x2="13" y2="8" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <line x1="3" y1="12" x2="10" y2="12" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <line x1="3" y1="4" x2="13" y2="4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="3" y1="12" x2="10" y2="12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 function IconProducts() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="2" y="2" width="12" height="12" rx="2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" />
-      <line x1="5" y1="6" x2="11" y2="6" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <line x1="5" y1="9" x2="9" y2="9" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.2" />
+      <line x1="5" y1="6" x2="11" y2="6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="5" y1="9" x2="9" y2="9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 function IconOrders() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
       <path
         d="M1 1h2l1 8h9l2-5H4"
-        stroke="rgba(250,250,247,0.4)"
-        strokeWidth="1.3"
+        stroke="currentColor"
+        strokeWidth="1.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="6.5" cy="13.5" r="1" fill="rgba(250,250,247,0.4)" />
-      <circle cx="12" cy="13.5" r="1" fill="rgba(250,250,247,0.4)" />
+      <circle cx="6.5" cy="13.5" r="1" fill="currentColor" />
+      <circle cx="12" cy="13.5" r="1" fill="currentColor" />
     </svg>
   );
 }
 
 function IconCertification() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1.5l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.3l-3.7 2.7 1.4-4.3L2 6h4.5L8 1.5z" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinejoin="round" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <path
+        d="M8 1.5l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10.3l-3.7 2.7 1.4-4.3L2 6h4.5L8 1.5z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 function IconTraining() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <line x1="3" y1="5" x2="9" y2="5" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <line x1="3" y1="8" x2="9" y2="8" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <line x1="3" y1="11" x2="7" y2="11" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M11 7l2 2-2 2" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <line x1="3" y1="5" x2="9" y2="5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="3" y1="8" x2="9" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1="3" y1="11" x2="7" y2="11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M11 7l2 2-2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 function IconSupport() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="8" r="6" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" />
-      <path d="M6 6a2 2 0 0 1 4 0c0 1.5-2 1.5-2 3" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
-      <circle cx="8" cy="12" r="0.6" fill="rgba(250,250,247,0.4)" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
+      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M6 6a2 2 0 0 1 4 0c0 1.5-2 1.5-2 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="8" cy="12" r="0.6" fill="currentColor" />
     </svg>
   );
 }
 
 function IconNotifications() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-current">
       <path
         d="M8 2a4 4 0 0 0-4 4v2.5L3 13h10l-1-4.5V6a4 4 0 0 0-4-4z"
-        stroke="rgba(250,250,247,0.4)"
-        strokeWidth="1.3"
+        stroke="currentColor"
+        strokeWidth="1.2"
         strokeLinejoin="round"
       />
-      <path d="M6 13a2 2 0 0 0 4 0" stroke="rgba(250,250,247,0.4)" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M6 13a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -124,8 +169,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-const SIDEBAR_GRADIENT = "linear-gradient(in oklab 180deg, oklab(14% 0.045 0.025) 0%, oklab(24% 0.07 0.038) 100%)";
-
 export function ProducerLayoutClient({ user, profile, children }: Props) {
   const pathname = usePathname();
   const router = useRouter();
@@ -148,19 +191,16 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 
   return (
     <div className="h-screen flex overflow-hidden bg-cream">
-      <aside
-        className="hidden lg:flex flex-col w-[248px] shrink-0 h-screen"
-        style={{ background: SIDEBAR_GRADIENT }}
-      >
+      <aside className="hidden h-screen w-[248px] shrink-0 flex-col border-r border-cream-dark bg-[#0a0a0a] lg:flex">
         <Link
           href="/"
-          className="px-5 pt-6 pb-5 border-b border-white/[0.08] shrink-0 block hover:opacity-90 transition-opacity"
+          className="shrink-0 border-b border-white/10 px-5 pb-5 pt-6 transition-opacity hover:opacity-90"
         >
           <div className="flex items-center gap-2.5">
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/logo-white.svg" alt="nevali" className="h-8 w-auto block" />
-              <span className="block uppercase font-sans font-semibold text-[9px] tracking-[0.1em] text-[#C9913D] mt-[3px]">
+              <img src="/assets/logo-white.svg" alt="nevali" className="block h-8 w-auto" />
+              <span className="mt-[3px] block font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-cream/50">
                 Brand portal
               </span>
             </div>
@@ -185,24 +225,28 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
                 key={item.href}
                 href={item.href}
                 onMouseEnter={() => router.prefetch(item.href)}
-                className={`flex items-center gap-3 rounded-sm px-3 py-2 w-full transition-colors ${
+                className={`flex w-full items-center gap-3 rounded-sm border px-3 py-2 transition-colors ${
                   isActive
-                    ? "bg-[#727272]/15 border border-[#727272]/25"
-                    : "bg-transparent border border-transparent"
+                    ? "border-cream-dark/60 bg-cream/10 text-cream"
+                    : "border-transparent bg-transparent text-white/55 hover:bg-white/4 hover:text-cream/90"
                 }`}
               >
-                <span className="shrink-0">{Icon(isActive)}</span>
+                <span className={`shrink-0 ${isActive ? "text-cream" : "text-white/40"}`}>
+                  {Icon(isActive)}
+                </span>
                 <span
-                  className={`font-sans text-sm flex-1 leading-none ${
-                    isActive ? "text-[#E8B84B] font-semibold" : "text-white/60 font-normal"
+                  className={`flex-1 font-sans text-sm leading-none ${
+                    isActive ? "font-semibold text-cream" : "font-normal"
                   }`}
                 >
                   {item.label}
                 </span>
                 {showBadge && (
                   <span
-                    className={`font-sans text-[10px] font-bold rounded-full px-2 py-0.5 leading-none ${
-                      isActive ? "bg-[#C9913D]/30 text-[#E8B84B]" : "bg-white/10 text-white/50"
+                    className={`rounded-full border px-2 py-0.5 font-sans text-[10px] font-bold leading-none ${
+                      isActive
+                        ? "border-cream-dark/50 bg-cream/15 text-cream"
+                        : "border-white/10 bg-white/5 text-white/55"
                     }`}
                   >
                     {badge}
@@ -213,7 +257,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
           })}
         </nav>
 
-        <div className="px-4 py-4 border-t border-white/[0.08] shrink-0">
+        <div className="shrink-0 border-t border-white/10 px-4 py-4">
           <div className="flex items-center gap-3">
             <Avatar
               displayName={displayName}
@@ -230,22 +274,22 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0 h-screen">
-        <header className="shrink-0 flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-[#d8d0c4] bg-white z-10">
+        <header className="z-10 flex shrink-0 items-center justify-between border-b border-cream-dark bg-paper px-6 py-3.5 lg:px-8">
           <div>
-            <h1 className="font-serif font-bold text-[18px] text-forest-mid leading-tight">{title}</h1>
-            <p className="font-sans text-sm text-text-muted mt-0.5">{subtitle}</p>
+            <h1 className="font-serif text-[18px] font-bold leading-tight text-text-dark">{title}</h1>
+            <p className="mt-0.5 font-sans text-sm text-text-muted">{subtitle}</p>
           </div>
           <button
             type="button"
             onClick={() => signOut()}
-            className="font-sans text-sm text-text-muted hover:text-forest-mid transition-colors cursor-pointer"
+            className="cursor-pointer font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
           >
             Log out
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="px-6 lg:px-8 pt-6 pb-8">{children}</div>
+        <main className="flex-1 overflow-y-auto bg-cream">
+          <div className="px-6 pb-8 pt-6 lg:px-8">{children}</div>
         </main>
       </div>
     </div>
