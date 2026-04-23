@@ -4,28 +4,28 @@ export type StatCardVariant = "neutral" | "green" | "amber" | "red";
 
 const STYLES: Record<StatCardVariant, { accent: string; label: string; value: string; iconBg: string; iconColor: string; bg: string }> = {
   neutral: {
-    accent:    "#7A2915",
+    accent:    "#000000",
     bg:        "bg-white",
     label:     "text-text-muted",
     value:     "text-text-dark",
     iconBg:    "bg-[#f5ede3]",
-    iconColor: "#7A2915",
+    iconColor: "#000000",
   },
   green: {
-    accent:    "#7A2915",
+    accent:    "#000000",
     bg:        "bg-white",
     label:     "text-text-muted",
     value:     "text-text-dark",
     iconBg:    "bg-[#f5ede3]",
-    iconColor: "#7A2915",
+    iconColor: "#000000",
   },
   amber: {
-    accent:    "#D87708",
+    accent:    "#727272",
     bg:        "bg-white",
     label:     "text-text-muted",
-    value:     "text-[#b86000]",
+    value:     "text-[#727272]",
     iconBg:    "bg-[#fdf3e0]",
-    iconColor: "#D87708",
+    iconColor: "#727272",
   },
   red: {
     accent:    "#c0392b",
@@ -38,9 +38,9 @@ const STYLES: Record<StatCardVariant, { accent: string; label: string; value: st
 };
 
 export const STAT_ICON_COLOR: Record<StatCardVariant, string> = {
-  neutral: "#7A2915",
-  green:   "#7A2915",
-  amber:   "#D87708",
+  neutral: "#000000",
+  green:   "#000000",
+  amber:   "#727272",
   red:     "#c0392b",
 };
 

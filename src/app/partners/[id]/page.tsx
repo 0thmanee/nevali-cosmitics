@@ -34,10 +34,10 @@ function getCategories(raw: unknown): string[] {
 }
 
 const AVATAR_PALETTES = [
-  { bg: "#2e0f07", text: "#D87708" },
-  { bg: "#3d1409", text: "#e8920f" },
-  { bg: "#5c2010", text: "#D87708" },
-  { bg: "#2e0f07", text: "#c87020" },
+  { bg: "#000000", text: "#ffffff" },
+  { bg: "#1a1a1a", text: "#ede6dc" },
+  { bg: "#727272", text: "#ffffff" },
+  { bg: "#2a2a2a", text: "#ede6dc" },
 ];
 
 function avatarPalette(id: string) {

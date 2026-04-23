@@ -10,11 +10,11 @@ import { AdminPageWrapper } from "./admin-ui";
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const C = {
-  approved: "#D87708",   // amber — positive / approved
-  pending:  "#c87020",   // amber-dark — pending
+  approved: "#727272",   // amber — positive / approved
+  pending:  "#727272",   // amber-dark — pending
   rejected: "#c0392b",   // red — rejected
   draft:    "#bbb",      // gray — draft
-  primary:  "#7A2915",   // terracotta
+  primary:  "#000000",   // terracotta
 } as const;
 
 // ─── Donut chart ─────────────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ function DonutChart({
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg viewBox="0 0 100 100" width={size} height={size}>
-        <circle cx={50} cy={50} r={r} fill="none" stroke="#f0e8dc" strokeWidth={10} />
+        <circle cx={50} cy={50} r={r} fill="none" stroke="#d8d0c4" strokeWidth={10} />
         {total > 0 &&
           segments.map((seg, i) => {
             const fraction = seg.value / total;
@@ -270,7 +270,7 @@ export function AdminDashboardOverview() {
       <div className="bg-white border border-cream-dark">
         <div className="px-6 py-4 border-b border-cream-dark">
           <h2 className="font-serif font-bold text-base text-text-dark">Quick actions</h2>
-          <p className="font-sans text-xs text-text-muted mt-0.5">Partner &amp; product management, certification, analytics, training, B2B oversight.</p>
+          <p className="font-sans text-xs text-text-muted mt-0.5">Partner &amp; product management, certification, analytics, training, and wholesale oversight.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {QUICK_ACTIONS.map((action, i) => (

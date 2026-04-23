@@ -19,16 +19,16 @@ export function SupportTicketCard({
 	const statusEntry = getTicketStatusStyle(ticket.status);
 	const { label: statusLabel, ...statusPillStyle } = statusEntry;
 	const priorityColor =
-		TICKET_PRIORITY_STYLE[ticket.priority]?.color ?? "#7a4d38";
+		TICKET_PRIORITY_STYLE[ticket.priority]?.color ?? "#727272";
 
 	return (
 		<div
 			className="flex flex-col items-start gap-4 rounded-xl px-5 py-4 sm:flex-row sm:items-center"
-			style={{ background: "white", border: "1px solid #f0e8dc" }}
+			style={{ background: "white", border: "1px solid #d8d0c4" }}
 		>
 			<div className="min-w-0 flex-1">
 				<div className="mb-1 flex flex-wrap items-center gap-2">
-					<span className="font-bold font-mono font-sans text-[#7a4d38] text-[10px]">
+					<span className="font-bold font-mono font-sans text-[#727272] text-[10px]">
 						{ticket.id.slice(0, 12)}
 					</span>
 					<span
@@ -44,10 +44,10 @@ export function SupportTicketCard({
 						● {ticket.priority}
 					</span>
 				</div>
-				<p className="font-sans font-semibold text-[#2a0f05] text-sm leading-snug">
+				<p className="font-sans font-semibold text-[#000000] text-sm leading-snug">
 					{ticket.subject}
 				</p>
-				<p className="mt-1 font-sans text-[#7a4d38] text-[11px]">
+				<p className="mt-1 font-sans text-[#727272] text-[11px]">
 					{ticket.category} · Opened {ticket.created} · Last reply{" "}
 					{ticket.lastReply} · {ticket.messages} message
 					{ticket.messages !== 1 ? "s" : ""}
@@ -60,11 +60,11 @@ export function SupportTicketCard({
 					style={
 						ticket.status === "RESOLVED"
 							? {
-									background: "#F5F0E8",
-									color: "#7a4d38",
-									border: "1px solid #f0e8dc",
+									background: "#ffffff",
+									color: "#727272",
+									border: "1px solid #d8d0c4",
 								}
-							: { background: "#1a0500", color: "white" }
+							: { background: "#000000", color: "white" }
 					}
 					type="button"
 				>

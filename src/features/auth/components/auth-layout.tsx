@@ -22,10 +22,10 @@ export function AuthLayout({
 }) {
   return (
     <div className="min-h-screen flex">
-      {/* ── Left panel: terracotta brand side ── */}
+      {/* ── Left panel: brand side ── */}
       <div
         className="hidden lg:flex flex-col justify-between w-[420px] shrink-0 px-10 py-12 relative overflow-hidden"
-        style={{ background: "#7B1F0A" }}
+        style={{ background: "#000000" }}
       >
         {/* Subtle grid pattern */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.06 }} aria-hidden>
@@ -44,7 +44,7 @@ export function AuthLayout({
               nevali
             </span>
             <span className="font-sans text-[9px] font-semibold tracking-[0.22em] text-white/40 uppercase mt-1">
-              Artisan Portal
+              Partner portal
             </span>
           </Link>
 
@@ -56,22 +56,22 @@ export function AuthLayout({
               {subtitle}
             </h2>
             <p className="font-sans text-white/50 text-[13px] leading-relaxed max-w-[280px] mt-1">
-              Handcrafted by Morocco's master artisans — certified for quality, sold to the world.
+              Premium Moroccan skincare and rituals—traceable sourcing, verified listings, and a calm, refined presence online.
             </p>
           </div>
         </div>
 
-        {/* Decorative craft image placeholder */}
+        {/* Decorative panel */}
         <div className="relative z-10 my-8 rounded-sm overflow-hidden" style={{ height: "180px" }}>
           <div
             className="w-full h-full"
-            style={{ background: "linear-gradient(135deg, #C87020 0%, #A05010 40%, #7B3008 100%)" }}
+            style={{ background: "linear-gradient(135deg, #727272 0%, #333333 40%, #000000 100%)" }}
           />
           <div
             className="absolute inset-0 flex items-end p-4"
             style={{ background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }}
           >
-            <span className="font-sans text-white/60 text-[10px] uppercase tracking-widest">Moroccan Craft</span>
+            <span className="font-sans text-white/60 text-[10px] uppercase tracking-widest">NEVALI</span>
           </div>
         </div>
 
@@ -83,13 +83,13 @@ export function AuthLayout({
           >
             <div className="flex gap-0.5 mb-3">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-[#C87020] text-sm">★</span>
+                <span key={i} className="text-white/35 text-sm">★</span>
               ))}
             </div>
             <p className="font-serif italic text-[13px] text-white/75 leading-relaxed">
               &ldquo;Within weeks of listing on nevali, shoppers in Europe were reordering our argan serum—finally under our own label.&rdquo;
             </p>
-            <p className="font-sans text-[11px] text-white/40 mt-3">— Fatima O., Beni Ourain Collective</p>
+            <p className="font-sans text-[11px] text-white/40 mt-3">— Fatima O., Atlas Valley Skincare</p>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@ export function AuthLayout({
             )}
             {showLoginLink && (
               <>
-                Already an artisan?{" "}
+                Already a partner?{" "}
                 <Link href="/auth/login" className="font-semibold text-forest-light hover:underline">
                   Sign in
                 </Link>
@@ -140,4 +140,4 @@ export const inputCls =
   "font-sans text-[14px] text-text-dark bg-white border border-cream-dark rounded px-4 py-3 outline-none w-full transition-colors placeholder:text-text-muted/40";
 
 export const inputStyle = {};
-export const inputFocusStyle = { borderColor: "#7B1F0A", boxShadow: "0 0 0 2px rgba(123,31,10,0.08)" };
+export const inputFocusStyle = { borderColor: "#000000", boxShadow: "0 0 0 2px rgba(0,0,0,0.08)" };

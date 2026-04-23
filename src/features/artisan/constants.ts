@@ -3,8 +3,8 @@ export const PRODUCT_STATUS_STYLES: Record<
   { bg: string; color: string; border: string }
 > = {
   APPROVED: {
-    bg: "rgba(26,5,0,0.85)",
-    color: "#C8963C",
+    bg: "rgba(0,0,0,0.85)",
+    color: "#727272",
     border: "1px solid rgba(200,150,60,0.3)",
   },
   PENDING: {
@@ -20,7 +20,7 @@ export const PRODUCT_STATUS_STYLES: Record<
 };
 
 export const STATUS_DOT_COLORS: Record<string, string> = {
-  APPROVED: "#C8963C",
+  APPROVED: "#727272",
   PENDING: "#E8B84B",
   REJECTED: "#f87171",
 };

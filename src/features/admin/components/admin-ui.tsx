@@ -8,15 +8,15 @@ import React from "react";
 // Amber = positive/approved, to match platform palette (no green)
 
 export const STATUS_COLORS = {
-  APPROVED:  { bg: "rgba(216,119,8,0.10)", color: "#b86000", label: "Approved"  },
-  PENDING:   { bg: "rgba(216,119,8,0.06)", color: "#c87020", label: "Pending"   },
+  APPROVED:  { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Approved"  },
+  PENDING:   { bg: "rgba(114,114,114,0.06)", color: "#727272", label: "Pending"   },
   REJECTED:  { bg: "rgba(192,57,43,0.10)", color: "#c0392b", label: "Rejected"  },
-  RESOLVED:  { bg: "rgba(216,119,8,0.10)", color: "#b86000", label: "Resolved"  },
+  RESOLVED:  { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Resolved"  },
   OPEN:      { bg: "rgba(192,57,43,0.10)", color: "#c0392b", label: "Open"      },
-  IN_REVIEW: { bg: "rgba(216,119,8,0.06)", color: "#c87020", label: "In Review" },
-  ACTIVE:    { bg: "rgba(216,119,8,0.10)", color: "#b86000", label: "Active"    },
+  IN_REVIEW: { bg: "rgba(114,114,114,0.06)", color: "#727272", label: "In Review" },
+  ACTIVE:    { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Active"    },
   DRAFT:     { bg: "rgba(0,0,0,0.06)",     color: "#888",    label: "Draft"     },
-  PUBLISHED: { bg: "rgba(216,119,8,0.10)", color: "#b86000", label: "Published" },
+  PUBLISHED: { bg: "rgba(114,114,114,0.10)", color: "#727272", label: "Published" },
 } as const;
 
 export type StatusKey = keyof typeof STATUS_COLORS;

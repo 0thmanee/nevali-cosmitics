@@ -3,12 +3,12 @@ import { Document, Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { ProductCertificateData } from "./schemas/certificate.schema";
 
 const colors = {
-  primary: "#1a0500",
-  primaryLight: "#2a0f05",
-  muted: "#7a4d38",
-  border: "#f0e8dc",
-  cream: "#F5F0E8",
-  accent: "#C8963C",
+  primary: "#000000",
+  primaryLight: "#000000",
+  muted: "#727272",
+  border: "#d8d0c4",
+  cream: "#ede6dc",
+  paper: "#ffffff",
 };
 
 const styles = StyleSheet.create({
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   logo: { fontSize: 22, fontWeight: 700, color: colors.primary, letterSpacing: 0.5, marginBottom: 4 },
   tagline: { fontSize: 9, color: colors.muted, letterSpacing: 2, textTransform: "uppercase" },
   badge: { marginTop: 12, paddingVertical: 6, paddingHorizontal: 14, backgroundColor: colors.primary, borderRadius: 2 },
-  badgeText: { fontSize: 10, fontWeight: 700, color: colors.accent, letterSpacing: 1.2 },
+  badgeText: { fontSize: 10, fontWeight: 700, color: colors.paper, letterSpacing: 1.2 },
   title: { fontSize: 18, fontWeight: 700, color: colors.primaryLight, textAlign: "center", marginTop: 28, marginBottom: 8 },
   subtitle: { fontSize: 10, color: colors.muted, textAlign: "center", marginBottom: 28 },
   card: { backgroundColor: colors.cream, borderWidth: 1, borderColor: colors.border, borderRadius: 6, padding: 20, marginBottom: 16 },

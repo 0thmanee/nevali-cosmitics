@@ -26,7 +26,7 @@ export function CartNavLink() {
       {ready && totalQuantity > 0 ? (
         <span
           className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 text-white font-sans text-[10px] font-bold flex items-center justify-center"
-          style={{ background: "#7B1F0A" }}
+          style={{ background: "#000000" }}
         >
           {totalQuantity > 99 ? "99+" : totalQuantity}
         </span>

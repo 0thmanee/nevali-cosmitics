@@ -12,10 +12,10 @@ import { useAdminOrganizationFilter } from "../hooks/use-admin-organizations";
 function IconDashboard({ active }: { active?: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#D87708" : "none"} stroke={active ? "#D87708" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#D87708" : "none"} stroke={active ? "#D87708" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#D87708" : "none"} stroke={active ? "#D87708" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
-      <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#D87708" : "none"} stroke={active ? "#D87708" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+      <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+      <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+      <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
+      <rect x="9" y="9" width="5.5" height="5.5" rx="1.5" fill={active ? "#727272" : "none"} stroke={active ? "#727272" : "rgba(250,250,247,0.4)"} strokeWidth="1.3" />
     </svg>
   );
 }
@@ -237,7 +237,7 @@ export function AdminLayoutClient({ user, children }: Props) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0 h-screen">
-        <header className="shrink-0 flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-[#f0e8dc] bg-white z-10">
+        <header className="shrink-0 flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-[#d8d0c4] bg-white z-10">
           <div>
             <h1 className="font-serif font-bold text-xl text-forest-mid leading-tight">{title}</h1>
             <p className="font-sans text-sm text-text-muted mt-0.5">{subtitle}</p>

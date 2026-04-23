@@ -191,6 +191,6 @@ export function buildVerificationEmailContent(params: {
 	const { verificationUrl, productName = "nevali" } = params;
 	const safeUrl = escapeHtmlAttr(verificationUrl);
 	const text = `Verify your email for ${productName}\n\nClick the link below to verify your email:\n${verificationUrl}\n\nIf you didn't request this, you can ignore this email.`;
-	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#333;"><p>Click the link below to verify your email and complete your ${productName} account.</p><p><a href="${safeUrl}" style="color:#C8963C;font-weight:600;">Verify my email</a></p><p style="color:#666;font-size:14px;">If you didn't request this, you can ignore this email.</p></body></html>`;
+	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:#333;"><p>Click the link below to verify your email and complete your ${productName} account.</p><p><a href="${safeUrl}" style="color:#727272;font-weight:600;">Verify my email</a></p><p style="color:#666;font-size:14px;">If you didn't request this, you can ignore this email.</p></body></html>`;
 	return { text, html };
 }

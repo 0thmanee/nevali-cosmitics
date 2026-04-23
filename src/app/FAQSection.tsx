@@ -33,7 +33,7 @@ export default function FAQSection() {
 	const [open, setOpen] = useState(0);
 
 	return (
-		<section className="py-16 lg:py-24" style={{ background: "#FAFAF7" }}>
+		<section className="py-16 lg:py-24" style={{ background: "#ffffff" }}>
 			<div className="mx-auto flex w-full max-w-[1200px] flex-col gap-12 px-4 sm:px-6 lg:gap-16 lg:px-12">
 				<div className="flex flex-col items-center gap-5 text-center">
 					<div className="flex items-center gap-3">
@@ -41,7 +41,7 @@ export default function FAQSection() {
 						<svg width="18" height="18" viewBox="0 0 22 22" fill="none">
 							<path
 								d="M11 2l2 6h6l-5 3.6 1.8 6L11 14l-4.8 3.6 1.8-6L3 8h6L11 2z"
-								stroke="#C8963C"
+								stroke="#727272"
 								strokeWidth="1.8"
 								strokeLinejoin="round"
 							/>
@@ -52,7 +52,7 @@ export default function FAQSection() {
 						<svg width="18" height="18" viewBox="0 0 22 22" fill="none">
 							<path
 								d="M11 2l2 6h6l-5 3.6 1.8 6L11 14l-4.8 3.6 1.8-6L3 8h6L11 2z"
-								stroke="#C8963C"
+								stroke="#727272"
 								strokeWidth="1.8"
 								strokeLinejoin="round"
 							/>
@@ -105,7 +105,7 @@ export default function FAQSection() {
 
 					<div
 						className="mt-8 flex flex-col gap-4 rounded-2xl px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8"
-						style={{ background: "#FAF5EE", border: "1px solid #f0e8dc" }}
+						style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
 					>
 						<div>
 							<p className="mb-0.5 font-sans font-semibold text-base text-text-dark">
@@ -117,7 +117,7 @@ export default function FAQSection() {
 						</div>
 						<button
 							className="flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 font-sans font-semibold text-sm text-white transition-colors"
-							style={{ background: "#1a0500" }}
+							style={{ background: "#000000" }}
 							type="button"
 						>
 							Contact Support

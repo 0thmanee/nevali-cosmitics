@@ -21,9 +21,9 @@ export function SupportTicketList({
     return (
       <div
         className="rounded-xl px-5 py-12 text-center"
-        style={{ background: "white", border: "1px solid #f0e8dc" }}
+        style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
-        <p className="font-sans text-sm text-[#7a4d38]">Loading tickets…</p>
+        <p className="font-sans text-sm text-[#727272]">Loading tickets…</p>
       </div>
     );
   }
@@ -42,9 +42,9 @@ export function SupportTicketList({
         onClick={onOpenNewTicket}
         className="font-sans text-sm font-semibold rounded-xl py-3 transition-colors w-full"
         style={{
-          background: "#FAF5EE",
-          color: "#7b2d1e",
-          border: "1px solid #f0e8dc",
+          background: "#ffffff",
+          color: "#000000",
+          border: "1px solid #d8d0c4",
         }}
       >
         + Open a New Ticket

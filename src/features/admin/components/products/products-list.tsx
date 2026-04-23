@@ -29,29 +29,18 @@ import {
   BtnDanger,
   StatusBadge,
 } from "../admin-ui";
-
-const CATEGORY_GRADIENTS: Record<string, string> = {
-  "Oils & Extracts": "linear-gradient(135deg, #C8963C 0%, #e6b86a 100%)",
-  "Spices & Herbs": "linear-gradient(135deg, #d97706 0%, #fbbf24 100%)",
-  "Florals & Essences": "linear-gradient(135deg, #c94060 0%, #e8708a 100%)",
-  "Dried Fruits": "linear-gradient(135deg, #8b4513 0%, #c68642 100%)",
-  "Cosmetics": "linear-gradient(135deg, #6b3a9a 0%, #a06acc 100%)",
-};
-
-function getGradient(category: string): string {
-  return CATEGORY_GRADIENTS[category] ?? "linear-gradient(135deg, #7A2915 0%, #b05040 100%)";
-}
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 
 const CATEGORY_COLORS: Record<string, { bg: string; dot: string; text: string }> = {
-  "Oils & Extracts": { bg: "#fdf6ec", dot: "#C8963C", text: "#9a6820" },
-  "Spices & Herbs": { bg: "#fff7e0", dot: "#d97706", text: "#92580a" },
-  "Florals & Essences": { bg: "#fce8f0", dot: "#c94060", text: "#a03050" },
-  "Dried Fruits": { bg: "#f5ece0", dot: "#8b4513", text: "#6b3010" },
-  "Cosmetics": { bg: "#f2e8fa", dot: "#7c3aed", text: "#5b21b6" },
+  "Oils & Extracts": { bg: "#ede6dc", dot: "#727272", text: "#000000" },
+  "Spices & Herbs": { bg: "#ede6dc", dot: "#5a5a5a", text: "#000000" },
+  "Florals & Essences": { bg: "#ede6dc", dot: "#454545", text: "#000000" },
+  "Dried Fruits": { bg: "#ede6dc", dot: "#727272", text: "#000000" },
+  "Cosmetics": { bg: "#ede6dc", dot: "#000000", text: "#000000" },
 };
 
 function getCategoryStyle(category: string) {
-  return CATEGORY_COLORS[category] ?? { bg: "#fdf6ec", dot: "#7a4d38", text: "#4a2010" };
+  return CATEGORY_COLORS[category] ?? { bg: "#ede6dc", dot: "#727272", text: "#000000" };
 }
 
 const STATUS_TABS = [
@@ -177,12 +166,15 @@ export function ProductsList() {
                 </div>
 
                 <div className="[flex:2.8] flex items-center gap-3">
-                  {p.firstImageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.firstImageUrl} alt="" className="w-11 h-11 object-cover shrink-0" />
-                  ) : (
-                    <div className="w-11 h-11 shrink-0" style={{ background: getGradient(p.category) }} />
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={
+                      p.firstImageUrl ??
+                      productPlaceholderImageUrl(`${p.id}:${p.category}`, 176)
+                    }
+                    alt=""
+                    className="w-11 h-11 object-cover shrink-0 bg-cream"
+                  />
                   <div>
                     <div className="font-sans font-semibold text-sm text-text-dark leading-[1.3]">{p.name}</div>
                     <div className="font-sans text-xs text-text-muted mt-0.5">

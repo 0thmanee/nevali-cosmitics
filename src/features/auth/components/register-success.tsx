@@ -41,14 +41,14 @@ export function RegisterSuccess({ form }: { form: RegisterFormData }) {
           style={{ background: "rgba(200,150,60,0.12)", border: "1px solid rgba(200,150,60,0.25)" }}
         >
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-            <path d="M7 18l6 6 16-14" stroke="#C8963C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7 18l6 6 16-14" stroke="#727272" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
         <div>
           <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-sm" style={{ color: "#C87020" }}>★</span>
+            <span className="text-sm" style={{ color: "#727272" }}>★</span>
             <span className="font-sans text-[11px] font-semibold tracking-[0.18em] text-white/50 uppercase">Application Submitted</span>
-            <span className="text-sm" style={{ color: "#C87020" }}>★</span>
+            <span className="text-sm" style={{ color: "#727272" }}>★</span>
           </div>
           <h1 className="font-serif font-bold text-[32px] text-white leading-tight">Welcome, {form.firstName}.</h1>
           <p className="font-sans text-white/60 text-base leading-relaxed mt-3 max-w-sm">
@@ -68,7 +68,7 @@ export function RegisterSuccess({ form }: { form: RegisterFormData }) {
             <div key={s.step} className="flex items-center gap-3">
               <div
                 className="w-6 h-6 rounded-full flex items-center justify-center font-sans font-bold text-[10px] shrink-0"
-                style={{ background: "rgba(200,112,32,0.15)", border: "1px solid rgba(200,112,32,0.25)", color: "#C87020" }}
+                style={{ background: "rgba(114,114,114,0.15)", border: "1px solid rgba(114,114,114,0.25)", color: "#727272" }}
               >
                 {s.step}
               </div>
@@ -83,7 +83,7 @@ export function RegisterSuccess({ form }: { form: RegisterFormData }) {
           <Link
             href="/artisan"
             className="font-sans font-semibold text-sm text-white rounded px-8 py-3.5 transition-colors"
-            style={{ background: "#7B1F0A" }}
+            style={{ background: "#000000" }}
           >
             Go to Dashboard
           </Link>

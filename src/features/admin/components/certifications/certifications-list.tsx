@@ -40,9 +40,9 @@ const TYPE_TABS = [
 const TYPE_CONFIG = {
 	ORGANIZATION: {
 		label: "Organization",
-		pillBg: "rgba(122,41,21,0.10)",
-		pillColor: "#7A2915",
-		accent: "#7A2915",
+		pillBg: "rgba(0,0,0,0.10)",
+		pillColor: "#000000",
+		accent: "#000000",
 		iconGradient:
 			"linear-gradient(in oklab 135deg, oklab(36% 0.09 0.048) 0%, oklab(24% 0.07 0.038) 100%)",
 	},

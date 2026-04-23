@@ -7,7 +7,7 @@ function IconPillar1() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M8 1l1.5 4.5H14l-4 2.9 1.5 4.6L8 10.2 4.5 13l1.5-4.6L2 5.5h4.5L8 1z"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.3"
         strokeLinejoin="round"
       />
@@ -18,10 +18,10 @@ function IconPillar1() {
 function IconPillar2() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="8" r="6" stroke="#C8963C" strokeWidth="1.3" />
+      <circle cx="8" cy="8" r="6" stroke="#727272" strokeWidth="1.3" />
       <path
         d="M5 8h6M8 5l3 3-3 3"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -35,7 +35,7 @@ function IconPillar3() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path
         d="M2 12l4-4 3 3 5-7"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -51,7 +51,7 @@ function IconStar() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M10 2l1.8 5.5H18l-5 3.6 1.8 5.5L10 13l-4.6 3.6 1.8-5.5L2 7.5h6.2L10 2z"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
@@ -64,12 +64,12 @@ function IconCheckCircle() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M5 10l3 3 7-7"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="10" cy="10" r="8" stroke="#7b2d1e" strokeWidth="1.6" />
+      <circle cx="10" cy="10" r="8" stroke="#000000" strokeWidth="1.6" />
     </svg>
   );
 }
@@ -83,12 +83,12 @@ function IconAudit() {
         width="14"
         height="11"
         rx="1.5"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
       />
       <path
         d="M7 5V4a3 3 0 0 1 6 0v1M8 11l2 2 4-4"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -106,7 +106,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
       />
       <rect
@@ -115,7 +115,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
       />
       <rect
@@ -124,7 +124,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
       />
       <rect
@@ -133,7 +133,7 @@ function IconGrid() {
         width="6"
         height="6"
         rx="1"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
       />
     </svg>
@@ -145,13 +145,13 @@ function IconShoppingBag() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M5 7h10v11H5V7z"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
       <path
         d="M8 7V5a2 2 0 0 1 4 0v2"
-        stroke="#C8963C"
+        stroke="#727272"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -183,7 +183,7 @@ function IconTraining() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path
         d="M10 3v14M5 7l5-4 5 4M5 13l5 4 5-4"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -201,12 +201,12 @@ function IconDoc() {
         width="12"
         height="14"
         rx="1.5"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
       />
       <path
         d="M8 7h4M8 10h4M8 13h2"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -223,7 +223,7 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
       />
       <rect
@@ -232,7 +232,7 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
       />
       <rect
@@ -241,12 +241,12 @@ function IconAnalytics() {
         width="6"
         height="6"
         rx="1"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
       />
       <path
         d="M12 15h6M15 12v6"
-        stroke="#7b2d1e"
+        stroke="#000000"
         strokeWidth="1.6"
         strokeLinecap="round"
       />
@@ -260,13 +260,13 @@ const pillars = [
   {
     label: "PILLAR 1 — TRUST & COMPLIANCE",
     pillarIcon: <IconPillar1 />,
-    pillarIconBg: "#FAF5EE",
+    pillarIconBg: "#ffffff",
     cards: [
       {
         icon: <IconStar />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Quality Certification",
         desc: "Per-category quality criteria, document review, structured audit workflows, and certification expiry tracking.",
@@ -274,26 +274,26 @@ const pillars = [
           {
             label: "ISO READY",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
           {
             label: "MULTI-CATEGORY",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
       },
       {
         icon: <IconCheckCircle />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Traceability & QR Verification",
         desc: "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify.",
@@ -301,26 +301,26 @@ const pillars = [
           {
             label: "QR SCANNABLE",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
           {
             label: "BATCH LINKED",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
       },
       {
         icon: <IconAudit />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Quality Audits",
         desc: "Structured audit workflows with document upload, approval tracking, and automated expiry alerts.",
@@ -328,17 +328,17 @@ const pillars = [
           {
             label: "AUTO-ALERTS",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
           {
             label: "SECURE & AUDITABLE",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
@@ -353,7 +353,7 @@ const pillars = [
       {
         icon: <IconGrid />,
         iconBg: "#F5EDD6",
-        cardBg: "#FAFAF7",
+        cardBg: "#ffffff",
         cardBorder: "#F0E6CC",
         dark: false,
         title: "Product listings",
@@ -363,7 +363,7 @@ const pillars = [
             label: "COSMETICS FOCUS",
             style: {
               background: "#F5EDD6",
-              color: "#C8963C",
+              color: "#727272",
               border: "1px solid #e8d4a0",
             },
           },
@@ -372,7 +372,7 @@ const pillars = [
       {
         icon: <IconShoppingBag />,
         iconBg: "#F5EDD6",
-        cardBg: "#FAFAF7",
+        cardBg: "#ffffff",
         cardBorder: "#F0E6CC",
         dark: false,
         title: "Guest checkout & cart",
@@ -382,7 +382,7 @@ const pillars = [
             label: "NO LOGIN REQUIRED",
             style: {
               background: "#F5EDD6",
-              color: "#C8963C",
+              color: "#727272",
               border: "1px solid #e8d4a0",
             },
           },
@@ -390,9 +390,9 @@ const pillars = [
       },
       {
         icon: <IconMatch />,
-        iconBg: "#C8963C33",
-        cardBg: "#1a0500",
-        cardBorder: "#7b2d1e",
+        iconBg: "#72727233",
+        cardBg: "#000000",
+        cardBorder: "#000000",
         dark: true,
         title: "Brand discovery",
         desc: "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes.",
@@ -412,13 +412,13 @@ const pillars = [
   {
     label: "PILLAR 3 — GROWTH ENABLEMENT",
     pillarIcon: <IconPillar3 />,
-    pillarIconBg: "#FAF5EE",
+    pillarIconBg: "#ffffff",
     cards: [
       {
         icon: <IconTraining />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Training programs",
         desc: "Micro-learning for beauty founders: EU-style labelling, stability basics, packaging photography, and export readiness for cosmetics.",
@@ -426,18 +426,18 @@ const pillars = [
           {
             label: "PROGRESS TRACKING",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
       },
       {
         icon: <IconDoc />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Legal & export guidance",
         desc: "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request.",
@@ -445,18 +445,18 @@ const pillars = [
           {
             label: "REAL-TIME STATUS",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
       },
       {
         icon: <IconAnalytics />,
-        iconBg: "#FAF5EE",
-        cardBg: "#FAFAF7",
-        cardBorder: "#FAF5EE",
+        iconBg: "#ffffff",
+        cardBg: "#ffffff",
+        cardBorder: "#ffffff",
         dark: false,
         title: "Analytics & reporting",
         desc: "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.",
@@ -464,9 +464,9 @@ const pillars = [
           {
             label: "EXPORT PDF / XLS",
             style: {
-              background: "#FAF5EE",
-              color: "#7b2d1e",
-              border: "1px solid #f0e8dc",
+              background: "#ffffff",
+              color: "#000000",
+              border: "1px solid #d8d0c4",
             },
           },
         ],
@@ -543,7 +543,7 @@ export default function FeaturesSection() {
                     <div className="flex flex-col gap-2 flex-1">
                       <h3
                         className="font-serif font-bold text-xl leading-snug"
-                        style={{ color: card.dark ? "#FAFAF7" : "#2a0f05" }}
+                        style={{ color: card.dark ? "#ffffff" : "#000000" }}
                       >
                         {card.title}
                       </h3>
@@ -552,7 +552,7 @@ export default function FeaturesSection() {
                         style={{
                           color: card.dark
                             ? "rgba(250,250,247,0.55)"
-                            : "#7a4d38",
+                            : "#727272",
                         }}
                       >
                         {card.desc}

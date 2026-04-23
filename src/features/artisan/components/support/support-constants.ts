@@ -55,7 +55,7 @@ export const TICKET_STATUS_STYLE = {
 	},
 	RESOLVED: {
 		background: "rgba(200,150,60,0.12)",
-		color: "#C8963C",
+		color: "#727272",
 		border: "1px solid rgba(200,150,60,0.25)",
 		label: "Resolved",
 	},
@@ -75,5 +75,5 @@ export function getTicketStatusStyle(status: string): TicketStatusStyle {
 export const TICKET_PRIORITY_STYLE: Record<string, { color: string }> = {
 	HIGH: { color: "#f87171" },
 	MEDIUM: { color: "#E8B84B" },
-	LOW: { color: "#7a4d38" },
+	LOW: { color: "#727272" },
 };

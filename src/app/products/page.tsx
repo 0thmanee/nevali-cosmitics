@@ -12,7 +12,7 @@ import {
 export const metadata = {
   title: "Products — nevali",
   description:
-    "Browse certified Moroccan artisanal crafts — ceramics, leather, textiles, jewelry and more — sourced directly from verified artisans.",
+    "Browse verified Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, certified partners, and checkout-ready listings.",
 };
 
 // ── Pagination ────────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ function Pagination({
                 ? "text-white border-transparent"
                 : "text-stone-700 bg-white border-stone-200 hover:bg-stone-50"
             }`}
-            style={p === currentPage ? { background: "#7B1F0A" } : undefined}
+            style={p === currentPage ? { background: "#000000" } : undefined}
           >
             {p}
           </Link>
@@ -160,14 +160,14 @@ export default async function ProductsPage({
                 className="font-serif font-bold uppercase text-white leading-[1.0]"
                 style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
               >
-                Moroccan crafts,<br />certified<br />&amp; traceable
+                Moroccan cosmetics,<br />certified<br />&amp; traceable
               </h1>
             </AnimateOnScroll>
 
             <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
               <p className="font-sans text-white/60 leading-relaxed text-sm mb-8">
-                Every piece is sourced from a verified Moroccan artisan and carries
-                a full traceability record. Inquire directly or request a B2B quote.
+                Every SKU comes from a verified Moroccan beauty brand with clear ingredients,
+                imagery, and fulfilment rules—shop as a guest or save lists with a buyer account.
               </p>
               <div className="grid grid-cols-3 divide-x divide-white/10 border border-white/10">
                 {[
@@ -221,7 +221,7 @@ export default async function ProductsPage({
               <p className="font-sans text-sm text-stone-400">
                 Showing{" "}
                 <span className="font-semibold text-stone-700">{start}–{end}</span> of{" "}
-                <span className="font-semibold text-stone-700">{total}</span> crafts
+                <span className="font-semibold text-stone-700">{total}</span> products
                 {currentCategory && (
                   <>
                     {" "}in <span className="font-semibold text-stone-700">{currentCategory}</span>
@@ -232,7 +232,7 @@ export default async function ProductsPage({
                 <Link
                   href="/products"
                   className="font-sans text-sm font-medium flex items-center gap-1 transition-opacity hover:opacity-70"
-                  style={{ color: "#7B1F0A" }}
+                  style={{ color: "#000000" }}
                 >
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
@@ -248,26 +248,26 @@ export default async function ProductsPage({
             <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
               <div
                 className="w-16 h-16 flex items-center justify-center"
-                style={{ background: "#7B1F0A" }}
+                style={{ background: "#000000" }}
               >
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <rect x="3" y="10" width="20" height="13" rx="1.5" stroke="white" strokeWidth="1.4" />
                   <path d="M9 10V7a4 4 0 0 1 8 0v3" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
               </div>
-              <p className="font-serif font-bold text-stone-800 text-2xl">No crafts found</p>
+              <p className="font-serif font-bold text-stone-800 text-2xl">No products found</p>
               <p className="font-sans text-stone-400 text-base max-w-xs">
                 {currentCategory
-                  ? `No certified crafts in "${currentCategory}" yet.`
-                  : "Our certified artisans are preparing their catalogs. Check back soon."}
+                  ? `No listings in "${currentCategory}" yet.`
+                  : "Verified brands are adding new cosmetics to the catalog—check back soon."}
               </p>
               {currentCategory && (
                 <Link
                   href="/products"
                   className="font-sans font-semibold text-sm text-white px-6 py-3 transition-opacity hover:opacity-90"
-                  style={{ background: "#7B1F0A" }}
+                  style={{ background: "#000000" }}
                 >
-                  Browse All Crafts
+                  Browse all products
                 </Link>
               )}
             </div>

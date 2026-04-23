@@ -5,29 +5,17 @@ import Link from "next/link";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
 import { formatProductUpdatedAt } from "../../utils/format";
 import type { ProductListRow } from "~/app/api/products/schemas/products.schema";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
 
 export type ProductsTableProps = {
   products: ProductListRow[];
 };
 
-const GRADIENT_PLACEHOLDER = "linear-gradient(135deg, #C8963C 0%, #C8963C 40%, #9a5520 100%)";
-
-function ProductThumb({ firstImageUrl }: { firstImageUrl: string | null }) {
-  if (firstImageUrl) {
-    return (
-      <img
-        src={firstImageUrl}
-        alt=""
-        className="w-9 h-9 rounded-xl object-cover shrink-0"
-      />
-    );
-  }
+function ProductThumb({ firstImageUrl, seed }: { firstImageUrl: string | null; seed: string }) {
+  const src = firstImageUrl ?? productPlaceholderImageUrl(seed, 144);
   return (
-    <div
-      className="w-9 h-9 rounded-xl shrink-0"
-      style={{ background: GRADIENT_PLACEHOLDER }}
-    />
+    <img src={src} alt="" className="w-9 h-9 rounded-xl object-cover shrink-0 bg-cream" />
   );
 }
 
@@ -36,7 +24,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
     return (
       <div
         className="rounded-xl overflow-hidden flex flex-col items-center justify-center py-16 gap-4"
-        style={{ background: "white", border: "1px solid #f0e8dc" }}
+        style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect
@@ -67,11 +55,11 @@ export function ProductsTable({ products }: ProductsTableProps) {
             strokeLinecap="round"
           />
         </svg>
-        <p className="font-sans text-sm text-[#7a4d38]">No products found</p>
+        <p className="font-sans text-sm text-[#727272]">No products found</p>
         <Link
           href="/artisan/products/new"
           className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
-          style={{ background: "#1a0500", color: "white" }}
+          style={{ background: "#000000", color: "white" }}
         >
           Add a new product
         </Link>
@@ -82,14 +70,14 @@ export function ProductsTable({ products }: ProductsTableProps) {
   return (
     <div
       className="rounded-xl overflow-hidden"
-      style={{ background: "white", border: "1px solid #f0e8dc" }}
+      style={{ background: "white", border: "1px solid #d8d0c4" }}
     >
       <div
-        className="grid px-5 py-3 text-[10px] font-bold tracking-[0.14em] text-[#7a4d38] uppercase"
+        className="grid px-5 py-3 text-[10px] font-bold tracking-[0.14em] text-[#727272] uppercase"
         style={{
           gridTemplateColumns: "auto 2fr 1fr 1fr 1fr auto",
-          borderBottom: "1px solid #f0e8dc",
-          background: "#FAFAF7",
+          borderBottom: "1px solid #d8d0c4",
+          background: "#ffffff",
         }}
       >
         <span className="w-9">Image</span>
@@ -107,26 +95,26 @@ export function ProductsTable({ products }: ProductsTableProps) {
             className="grid items-center px-5 py-3.5"
             style={{
               gridTemplateColumns: "auto 2fr 1fr 1fr 1fr auto",
-              borderTop: i > 0 ? "1px solid #f0e8dc" : "none",
+              borderTop: i > 0 ? "1px solid #d8d0c4" : "none",
             }}
           >
             <div className="px-4 py-3">
-              <ProductThumb firstImageUrl={p.firstImageUrl} />
+              <ProductThumb firstImageUrl={p.firstImageUrl} seed={`${p.id}:${p.category}`} />
             </div>
             <div className="flex items-center gap-3 min-w-0">
               <div className="min-w-0">
-                <p className="font-sans font-semibold text-sm text-[#2a0f05] leading-tight truncate">
+                <p className="font-sans font-semibold text-sm text-[#000000] leading-tight truncate">
                   {p.name}
                 </p>
-                <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
+                <p className="font-sans text-[11px] text-[#727272] mt-0.5">
                   {p.category} · {formatProductUpdatedAt(p.updatedAt)}
                 </p>
               </div>
             </div>
-            <span className="font-sans text-sm text-[#2a0f05]">
+            <span className="font-sans text-sm text-[#000000]">
               {p.variantCount}
             </span>
-            <span className="font-sans text-sm text-[#2a0f05]">
+            <span className="font-sans text-sm text-[#000000]">
               {p.fromPrice ? formatPriceMad(p.fromPrice) : "—"}
             </span>
             <div className="flex flex-col gap-0.5">
@@ -147,9 +135,9 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 href={`/artisan/products/${p.id}/edit`}
                 className="font-sans text-[12px] font-medium rounded-xl px-3 py-1.5 transition-colors inline-block"
                 style={{
-                  background: "#F5F0E8",
-                  color: "#2a0f05",
-                  border: "1px solid #f0e8dc",
+                  background: "#ffffff",
+                  color: "#000000",
+                  border: "1px solid #d8d0c4",
                 }}
               >
                 Edit
@@ -158,9 +146,9 @@ export function ProductsTable({ products }: ProductsTableProps) {
                 href={`/artisan/products/${p.id}`}
                 className="font-sans text-[12px] font-medium rounded-xl px-3 py-1.5 transition-colors inline-block"
                 style={{
-                  background: "#FAF5EE",
-                  color: "#7b2d1e",
-                  border: "1px solid #f0e8dc",
+                  background: "#ffffff",
+                  color: "#000000",
+                  border: "1px solid #d8d0c4",
                 }}
               >
                 View

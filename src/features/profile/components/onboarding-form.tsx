@@ -24,7 +24,7 @@ const set =
 const labelCls =
   "font-sans text-[10px] font-bold tracking-[0.16em] text-text-muted uppercase";
 const inputCls =
-  "font-sans text-[14px] text-text-dark bg-transparent border-0 border-b border-[#d0c4b0] rounded-none px-0 py-2 outline-none w-full transition-colors placeholder:text-[#c0b4a4] focus:border-[#7B1F0A]";
+  "font-sans text-[14px] text-text-dark bg-transparent border-0 border-b border-[#d0c4b0] rounded-none px-0 py-2 outline-none w-full transition-colors placeholder:text-[#c0b4a4] focus:border-[#000000]";
 const selectCls = inputCls + " appearance-none cursor-pointer";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -42,7 +42,7 @@ function Checkbox({ checked, onToggle }: { checked: boolean; onToggle: () => voi
       className="w-4 h-4 flex items-center justify-center shrink-0 mt-0.5 cursor-pointer transition-colors"
       style={
         checked
-          ? { background: "#7B1F0A", border: "1.5px solid #7B1F0A", borderRadius: "2px" }
+          ? { background: "#000000", border: "1.5px solid #000000", borderRadius: "2px" }
           : { background: "#fff", border: "1.5px solid #d0c4b0", borderRadius: "2px" }
       }
       onClick={onToggle}
@@ -121,12 +121,12 @@ export function OnboardingForm({
 
   const stepMeta = [
     {
-      heading: "Your craft studio",
-      sub: "Legal and location details for your atelier or cooperative.",
+      heading: "Your brand & studio",
+      sub: "Legal and location details for your lab, atelier, or cooperative.",
     },
     {
-      heading: "Your crafts",
-      sub: "Select the categories you produce. Add specific listings later.",
+      heading: "Your product focus",
+      sub: "Select the categories you formulate or produce. Add SKUs and imagery after approval.",
     },
     {
       heading: "Review & submit",
@@ -160,7 +160,7 @@ export function OnboardingForm({
           </select>
         </Field>
         <Field label="Entity Name">
-          <input className={inputCls} placeholder="Atelier Tissint" value={form.entityName}
+          <input className={inputCls} placeholder="Maison NEVALI Skincare" value={form.entityName}
             onChange={(e) => setForm(set("entityName")(e.target.value))} />
         </Field>
       </div>
@@ -198,7 +198,7 @@ export function OnboardingForm({
   const step2Fields = (
     <div className="flex flex-col gap-5">
       <div>
-        <p className={labelCls + " mb-3"}>Craft Categories</p>
+        <p className={labelCls + " mb-3"}>Product categories</p>
         <div className="flex flex-wrap gap-2">
           {PRODUCT_CATEGORIES.map((cat) => {
             const selected = form.categories.includes(cat.label);
@@ -207,8 +207,8 @@ export function OnboardingForm({
                 className="font-sans text-[11px] font-medium px-3 py-1.5 transition-all"
                 style={
                   selected
-                    ? { background: "#7B1F0A", color: "#fff", border: "1.5px solid #7B1F0A", borderRadius: "2px" }
-                    : { background: "transparent", color: "#7a4d38", border: "1.5px solid #d0c4b0", borderRadius: "2px" }
+                    ? { background: "#000000", color: "#fff", border: "1.5px solid #000000", borderRadius: "2px" }
+                    : { background: "transparent", color: "#727272", border: "1.5px solid #d0c4b0", borderRadius: "2px" }
                 }>
                 {selected && "✓ "}{cat.label}
               </button>
@@ -220,7 +220,7 @@ export function OnboardingForm({
         )}
       </div>
       <Field label="Estimated Annual Capacity">
-        <input className={inputCls} placeholder="e.g. 500 pieces / year"
+        <input className={inputCls} placeholder="e.g. 50k units / year"
           value={form.annualCapacity} onChange={(e) => setForm(set("annualCapacity")(e.target.value))} />
       </Field>
       <Field label="Export Experience">
@@ -238,13 +238,13 @@ export function OnboardingForm({
       {/* Business card */}
       <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #e0d4c4" }}>
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#e0d4c4]" style={{ background: "#f5eee4" }}>
-          <span className={labelCls}>Craft Studio</span>
+          <span className={labelCls}>Brand &amp; studio</span>
           <button type="button" onClick={() => setStep(1)}
-            className="font-sans text-[11px] hover:underline" style={{ color: "#7B1F0A" }}>
+            className="font-sans text-[11px] hover:underline" style={{ color: "#000000" }}>
             Edit
           </button>
         </div>
-        <div className="px-4 py-3 grid grid-cols-2 gap-3" style={{ background: "#faf5ee" }}>
+        <div className="px-4 py-3 grid grid-cols-2 gap-3" style={{ background: "#ede6dc" }}>
           {[
             { label: "Name", value: `${form.firstName} ${form.lastName}`.trim() },
             { label: "Entity", value: form.entityName },
@@ -263,16 +263,16 @@ export function OnboardingForm({
       {/* Categories card */}
       <div className="rounded-sm overflow-hidden" style={{ border: "1px solid #e0d4c4" }}>
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#e0d4c4]" style={{ background: "#f5eee4" }}>
-          <span className={labelCls}>Crafts</span>
+          <span className={labelCls}>Categories</span>
           <button type="button" onClick={() => setStep(2)}
-            className="font-sans text-[11px] hover:underline" style={{ color: "#7B1F0A" }}>
+            className="font-sans text-[11px] hover:underline" style={{ color: "#000000" }}>
             Edit
           </button>
         </div>
-        <div className="px-4 py-3 flex flex-wrap gap-1.5" style={{ background: "#faf5ee" }}>
+        <div className="px-4 py-3 flex flex-wrap gap-1.5" style={{ background: "#ede6dc" }}>
           {form.categories.map((c) => (
             <span key={c} className="font-sans text-[11px] font-medium px-2.5 py-0.5"
-              style={{ background: "rgba(123,31,10,0.08)", color: "#7B1F0A", border: "1px solid rgba(123,31,10,0.15)", borderRadius: "2px" }}>
+              style={{ background: "rgba(0,0,0,0.08)", color: "#000000", border: "1px solid rgba(0,0,0,0.15)", borderRadius: "2px" }}>
               {c}
             </span>
           ))}
@@ -285,7 +285,7 @@ export function OnboardingForm({
           <Checkbox checked={form.agreeTerms} onToggle={() => setForm(set("agreeTerms")(!form.agreeTerms))} />
           <span className="font-sans text-[12px] text-text-muted leading-relaxed">
             I agree to the nevali Terms of Service and Privacy Policy{" "}
-            <span style={{ color: "#7B1F0A" }}>*</span>
+            <span style={{ color: "#000000" }}>*</span>
           </span>
         </label>
         <label className="flex items-start gap-2.5 cursor-pointer">
@@ -316,14 +316,14 @@ export function OnboardingForm({
             ← Back to profile
           </Link>
           <h1 className="font-serif font-bold text-[28px] text-text-dark leading-tight mt-3 mb-1">Edit profile</h1>
-          <p className="font-sans text-text-muted text-sm mb-8">Update your craft studio and contact details.</p>
+          <p className="font-sans text-text-muted text-sm mb-8">Update your brand profile and contact details.</p>
           <div className="flex gap-0 mb-8 border-b border-[#e0d4c4]">
             {ONBOARDING_STEPS.map((s) => (
               <button key={s.number} type="button" onClick={() => setStep(s.number)}
                 className="font-sans text-[11px] font-semibold uppercase tracking-wider px-5 py-3 transition-colors"
                 style={{
-                  color: step === s.number ? "#7B1F0A" : "#b0a090",
-                  borderBottom: step === s.number ? "2px solid #7B1F0A" : "2px solid transparent",
+                  color: step === s.number ? "#000000" : "#b0a090",
+                  borderBottom: step === s.number ? "2px solid #000000" : "2px solid transparent",
                   marginBottom: "-1px",
                 }}>
                 {s.label}
@@ -338,12 +338,12 @@ export function OnboardingForm({
             {step < totalSteps
               ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
-                  style={canNext() ? { background: "#7B1F0A", color: "#fff" } : { background: "rgba(123,31,10,0.12)", color: "rgba(123,31,10,0.35)" }}>
+                  style={canNext() ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
                   Continue →
                 </button>
               : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
-                  style={canNext() && !submitting ? { background: "#7B1F0A", color: "#fff" } : { background: "rgba(123,31,10,0.12)", color: "rgba(123,31,10,0.35)" }}>
+                  style={canNext() && !submitting ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
                   {submitting ? "Saving…" : "Save changes"}
                 </button>}
           </div>
@@ -354,7 +354,7 @@ export function OnboardingForm({
 
   /* ── Onboarding: full-page, no-scroll, two-panel ── */
   return (
-    <div className="h-screen flex flex-col overflow-hidden" style={{ background: "#FAF5EE" }}>
+    <div className="h-screen flex flex-col overflow-hidden" style={{ background: "#ffffff" }}>
       {/* Top bar */}
       <div className="flex items-center justify-between px-8 py-4 shrink-0" style={{ borderBottom: "1px solid #e0d4c4" }}>
         <Link href="/" className="font-display font-bold uppercase text-[16px] tracking-wide text-text-dark">
@@ -368,10 +368,10 @@ export function OnboardingForm({
                   style={{
                     width: step === s.number ? "7px" : "5px",
                     height: step === s.number ? "7px" : "5px",
-                    background: step >= s.number ? "#7B1F0A" : "#d0c4b0",
+                    background: step >= s.number ? "#000000" : "#d0c4b0",
                   }} />
                 <span className="font-sans text-[10px] uppercase tracking-widest hidden sm:block"
-                  style={{ color: step === s.number ? "#7B1F0A" : "#b8a898", fontWeight: step === s.number ? 700 : 400 }}>
+                  style={{ color: step === s.number ? "#000000" : "#b8a898", fontWeight: step === s.number ? 700 : 400 }}>
                   {s.label}
                 </span>
               </div>
@@ -385,14 +385,14 @@ export function OnboardingForm({
 
       {/* Progress bar */}
       <div className="h-px w-full shrink-0" style={{ background: "#e8ddd0" }}>
-        <div className="h-full transition-all duration-500" style={{ width: `${(step / totalSteps) * 100}%`, background: "#7B1F0A" }} />
+        <div className="h-full transition-all duration-500" style={{ width: `${(step / totalSteps) * 100}%`, background: "#000000" }} />
       </div>
 
       {/* Two-panel content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left: step context */}
         <div className="w-64 shrink-0 flex flex-col justify-center px-10 py-8" style={{ borderRight: "1px solid #e8ddd0" }}>
-          <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#C87020" }}>
+          <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "#727272" }}>
             Step {step} of {totalSteps}
           </span>
           <h1 className="font-serif font-bold text-[32px] text-text-dark leading-[1.05] mb-3">
@@ -407,9 +407,9 @@ export function OnboardingForm({
             {ONBOARDING_STEPS.map((s) => (
               <div key={s.number} className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 rounded-full shrink-0 transition-all"
-                  style={{ background: step >= s.number ? "#7B1F0A" : "#d0c4b0" }} />
+                  style={{ background: step >= s.number ? "#000000" : "#d0c4b0" }} />
                 <span className="font-sans text-[11px] uppercase tracking-wider"
-                  style={{ color: step === s.number ? "#7B1F0A" : "#c0b4a4", fontWeight: step === s.number ? 700 : 400 }}>
+                  style={{ color: step === s.number ? "#000000" : "#c0b4a4", fontWeight: step === s.number ? 700 : 400 }}>
                   {s.label}
                 </span>
               </div>
@@ -426,7 +426,7 @@ export function OnboardingForm({
       </div>
 
       {/* Bottom nav */}
-      <div className="shrink-0 flex items-center justify-between px-8 py-4" style={{ borderTop: "1px solid #e0d4c4", background: "#FAF5EE" }}>
+      <div className="shrink-0 flex items-center justify-between px-8 py-4" style={{ borderTop: "1px solid #e0d4c4", background: "#ffffff" }}>
         {step > 1
           ? <button type="button" onClick={() => setStep(step - 1)}
               className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
@@ -439,12 +439,12 @@ export function OnboardingForm({
         {step < totalSteps
           ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
-              style={canNext() ? { background: "#7B1F0A", color: "#fff" } : { background: "rgba(123,31,10,0.12)", color: "rgba(123,31,10,0.35)" }}>
+              style={canNext() ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
               Continue →
             </button>
           : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
-              style={canNext() && !submitting ? { background: "#7B1F0A", color: "#fff" } : { background: "rgba(123,31,10,0.12)", color: "rgba(123,31,10,0.35)" }}>
+              style={canNext() && !submitting ? { background: "#000000", color: "#fff" } : { background: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.35)" }}>
               {submitting ? "Saving…" : "Complete profile"}
             </button>}
       </div>

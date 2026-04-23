@@ -8,12 +8,12 @@ export default function NewProductPage() {
       <nav className="flex items-center gap-2 text-sm">
         <Link
           href="/artisan/products"
-          className="font-sans text-[#7a4d38] hover:text-[#2a0f05] transition-colors"
+          className="font-sans text-[#727272] hover:text-[#000000] transition-colors"
         >
           Products
         </Link>
-        <span className="font-sans text-[#7a4d38]/60">/</span>
-        <span className="font-sans font-medium text-[#2a0f05]">Add new</span>
+        <span className="font-sans text-[#727272]/60">/</span>
+        <span className="font-sans font-medium text-[#000000]">Add new</span>
       </nav>
       <ProductCreateForm />
     </div>

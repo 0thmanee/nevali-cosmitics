@@ -62,11 +62,11 @@ export function ProductsPageClient() {
         }
       />
       {isLoading ? (
-        <div className="bg-white border border-[#f0e8dc] rounded-xl py-12 text-center font-sans text-sm text-text-muted">
+        <div className="bg-white border border-[#d8d0c4] rounded-xl py-12 text-center font-sans text-sm text-text-muted">
           Loading products…
         </div>
       ) : isError ? (
-        <div className="bg-white border border-[#f0e8dc] rounded-xl py-12 text-center font-sans text-sm text-red-500">
+        <div className="bg-white border border-[#d8d0c4] rounded-xl py-12 text-center font-sans text-sm text-red-500">
           Failed to load products.
         </div>
       ) : (

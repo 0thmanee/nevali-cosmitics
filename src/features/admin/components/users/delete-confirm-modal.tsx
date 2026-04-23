@@ -24,19 +24,19 @@ export function DeleteConfirmModal({ user, onClose, onConfirm, isDeleting }: Pro
     >
       <div
         className="w-full max-w-sm rounded-xl overflow-hidden"
-        style={{ background: "white", border: "1px solid #f0e8dc" }}
+        style={{ background: "white", border: "1px solid #d8d0c4" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-5 py-4 border-b" style={{ borderColor: "#f0e8dc" }}>
-          <h2 id="delete-partner-title" className="font-serif font-bold text-[15px] text-[#2a0f05]">
+        <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+          <h2 id="delete-partner-title" className="font-serif font-bold text-[15px] text-[#000000]">
             Delete partner
           </h2>
-          <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
+          <p className="font-sans text-[11px] text-[#727272] mt-0.5">
             This will permanently remove the partner and their profile. This action cannot be undone.
           </p>
         </div>
         <div className="p-5">
-          <p className="font-sans text-sm text-[#2a0f05]">
+          <p className="font-sans text-sm text-[#000000]">
             <span className="font-semibold">{user.name}</span> — {user.email}
           </p>
           <div className="flex gap-3 justify-end mt-4">
@@ -44,7 +44,7 @@ export function DeleteConfirmModal({ user, onClose, onConfirm, isDeleting }: Pro
               type="button"
               onClick={onClose}
               className="font-sans text-sm font-medium rounded-xl px-4 py-2.5 transition-colors"
-              style={{ background: "#F5F0E8", color: "#2a0f05", border: "1px solid #f0e8dc" }}
+              style={{ background: "#ffffff", color: "#000000", border: "1px solid #d8d0c4" }}
             >
               Cancel
             </button>

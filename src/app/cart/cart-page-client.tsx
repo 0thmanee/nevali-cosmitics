@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "~/features/cart/cart-context";
 import { cartLineKey } from "~/features/cart/cart-types";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
-import { getCategoryGradient } from "~/lib/public-product-gradient";
 
 export function CartPageClient() {
   const { lines, ready, setQuantity, removeLine, subtotalMad } = useCart();
@@ -22,7 +22,7 @@ export function CartPageClient() {
           Browse products and add items you want to include in checkout.
         </p>
         <Link
-          className="mt-8 inline-flex rounded-xl bg-[#1a0500] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-8 inline-flex rounded-xl bg-[#000000] px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
           href="/products"
         >
           Browse products
@@ -37,24 +37,16 @@ export function CartPageClient() {
         {lines.map((line) => {
           const unitPrice = Number(line.price.replace(",", "."));
           const lineTotal = unitPrice * line.quantity;
-          const gradient = getCategoryGradient(line.category);
+          const thumbSrc =
+            line.firstImageUrl ??
+            productPlaceholderImageUrl(`${line.productId}:${line.category}`, 160);
           return (
             <div
               key={cartLineKey(line)}
               className="flex gap-4 rounded-2xl border border-cream-dark bg-white p-5"
             >
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
-                {line.firstImageUrl ? (
-                  <Image
-                    alt=""
-                    className="object-cover"
-                    fill
-                    sizes="80px"
-                    src={line.firstImageUrl}
-                  />
-                ) : (
-                  <div className="h-full w-full" style={{ backgroundImage: gradient }} />
-                )}
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-cream">
+                <Image alt="" className="object-cover" fill sizes="80px" src={thumbSrc} />
               </div>
 
               <div className="min-w-0 flex-1">
@@ -87,7 +79,7 @@ export function CartPageClient() {
                     −
                   </button>
                   <input
-                    className="h-8 w-12 rounded-lg border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-[#7B1F0A]"
+                    className="h-8 w-12 rounded-lg border border-cream-dark bg-white text-center font-sans text-sm text-text-dark focus:outline-none focus:ring-1 focus:ring-[#000000]"
                     max={999}
                     min={1}
                     onChange={(e) =>
@@ -180,7 +172,7 @@ export function CartPageClient() {
           <Link
             className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
             href="/cart/checkout"
-            style={{ background: "#1a0500" }}
+            style={{ background: "#000000" }}
           >
             Proceed to checkout →
           </Link>

@@ -8,15 +8,15 @@ import { submitShopOrder } from "~/app/api/shop-orders/actions";
 import { useCart } from "~/features/cart/cart-context";
 import { allowedCheckoutMethodsForLines } from "~/lib/checkout-payment";
 import { persistLastCheckoutConfirmation } from "~/lib/checkout-confirmation-storage";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
-import { getCategoryGradient } from "~/lib/public-product-gradient";
 
 const inputClass =
-  "w-full rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-text-dark transition-colors focus:outline-none focus:ring-2 focus:ring-[#7B1F0A]/40";
+  "w-full rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-text-dark transition-colors focus:outline-none focus:ring-2 focus:ring-[#000000]/40";
 
 const stepCircleClass =
   "flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-sans text-xs font-bold text-white";
-const stepCircleStyle = { background: "#1a0500" } as const;
+const stepCircleStyle = { background: "#000000" } as const;
 
 export function CheckoutPageClient({
   initialName,
@@ -284,19 +284,19 @@ export function CheckoutPageClient({
                 <button
                   className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
                     paymentMethod === "CARD"
-                      ? "border-[#7B1F0A] bg-cream ring-1 ring-[#7B1F0A]/20"
-                      : "border-cream-dark hover:border-[#7B1F0A]/35"
+                      ? "border-[#000000] bg-cream ring-1 ring-[#000000]/20"
+                      : "border-cream-dark hover:border-[#000000]/35"
                   }`}
                   onClick={() => setPaymentMethod("CARD")}
                   type="button"
                 >
                   <div
                     className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "CARD" ? "border-[#7B1F0A]" : "border-cream-dark"
+                      paymentMethod === "CARD" ? "border-[#000000]" : "border-cream-dark"
                     }`}
                   >
                     {paymentMethod === "CARD" ? (
-                      <div className="h-2 w-2 rounded-full bg-[#7B1F0A]" />
+                      <div className="h-2 w-2 rounded-full bg-[#000000]" />
                     ) : null}
                   </div>
                   <div>
@@ -311,19 +311,19 @@ export function CheckoutPageClient({
                 <button
                   className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
                     paymentMethod === "COD"
-                      ? "border-[#7B1F0A] bg-cream ring-1 ring-[#7B1F0A]/20"
-                      : "border-cream-dark hover:border-[#7B1F0A]/35"
+                      ? "border-[#000000] bg-cream ring-1 ring-[#000000]/20"
+                      : "border-cream-dark hover:border-[#000000]/35"
                   }`}
                   onClick={() => setPaymentMethod("COD")}
                   type="button"
                 >
                   <div
                     className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "COD" ? "border-[#7B1F0A]" : "border-cream-dark"
+                      paymentMethod === "COD" ? "border-[#000000]" : "border-cream-dark"
                     }`}
                   >
                     {paymentMethod === "COD" ? (
-                      <div className="h-2 w-2 rounded-full bg-[#7B1F0A]" />
+                      <div className="h-2 w-2 rounded-full bg-[#000000]" />
                     ) : null}
                   </div>
                   <div>
@@ -345,9 +345,9 @@ export function CheckoutPageClient({
         ) : null}
 
         <button
-          className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/55 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           disabled={pending || !canSubmit}
-          style={{ background: "#7B1F0A" }}
+          style={{ background: "#000000" }}
           type="submit"
         >
           {pending
@@ -376,21 +376,13 @@ export function CheckoutPageClient({
           <ul className="flex flex-col gap-4">
             {lines.map((l) => {
               const total = Number(l.price.replace(",", ".")) * l.quantity;
-              const gradient = getCategoryGradient(l.category);
+              const thumbSrc =
+                l.firstImageUrl ??
+                productPlaceholderImageUrl(`${l.productId}:${l.category}`, 96);
               return (
                 <li className="flex items-start gap-3" key={`${l.productId}:${l.productVariantId}`}>
-                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg">
-                    {l.firstImageUrl ? (
-                      <Image
-                        alt=""
-                        className="object-cover"
-                        fill
-                        sizes="48px"
-                        src={l.firstImageUrl}
-                      />
-                    ) : (
-                      <div className="h-full w-full" style={{ backgroundImage: gradient }} />
-                    )}
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-cream">
+                    <Image alt="" className="object-cover" fill sizes="48px" src={thumbSrc} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="line-clamp-1 font-sans text-sm font-medium text-text-dark">{l.name}</p>

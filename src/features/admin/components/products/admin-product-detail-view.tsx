@@ -15,11 +15,11 @@ import { ProductGallery } from "~/features/artisan/components/products/product-g
 
 const statusStyles: Record<string, { bg: string; color: string; border: string }> = {
   PENDING: { bg: "rgba(201,145,61,0.2)", color: "#E8B84B", border: "1px solid rgba(201,145,61,0.3)" },
-  APPROVED: { bg: "rgba(26,5,0,0.8)", color: "#C8963C", border: "1px solid rgba(200,150,60,0.25)" },
+  APPROVED: { bg: "rgba(0,0,0,0.8)", color: "#727272", border: "1px solid rgba(200,150,60,0.25)" },
   REJECTED: { bg: "rgba(180,30,30,0.2)", color: "#f87171", border: "1px solid rgba(248,113,113,0.25)" },
 };
 
-const cardStyle = { background: "white", border: "1px solid #f0e8dc" } as const;
+const cardStyle = { background: "white", border: "1px solid #d8d0c4" } as const;
 
 function formatDate(d: Date) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -93,7 +93,7 @@ export function AdminProductDetailView() {
       <div className="p-4 lg:p-6">
         <div className="rounded-2xl overflow-hidden px-6 py-12 text-center" style={cardStyle}>
           <p className="font-sans text-sm text-[#f87171]">Invalid product.</p>
-          <Link href="/admin/products" className="mt-4 inline-block font-sans text-sm font-medium text-[#2a0f05] underline">
+          <Link href="/admin/products" className="mt-4 inline-block font-sans text-sm font-medium text-[#000000] underline">
             ← Back to products
           </Link>
         </div>
@@ -105,7 +105,7 @@ export function AdminProductDetailView() {
     return (
       <div className="p-4 lg:p-6">
         <div className="rounded-2xl overflow-hidden flex items-center justify-center py-20" style={cardStyle}>
-          <p className="font-sans text-sm text-[#7a4d38]">Loading product…</p>
+          <p className="font-sans text-sm text-[#727272]">Loading product…</p>
         </div>
       </div>
     );
@@ -118,7 +118,7 @@ export function AdminProductDetailView() {
           <p className="font-sans text-sm text-[#f87171]">
             {error instanceof Error ? error.message : "Product not found."}
           </p>
-          <Link href="/admin/products" className="mt-4 inline-block font-sans text-sm font-medium text-[#2a0f05] underline">
+          <Link href="/admin/products" className="mt-4 inline-block font-sans text-sm font-medium text-[#000000] underline">
             ← Back to products
           </Link>
         </div>
@@ -133,11 +133,11 @@ export function AdminProductDetailView() {
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
         <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
-            <h1 className="font-serif font-bold text-[22px] text-[#2a0f05] leading-tight">
+            <h1 className="font-serif font-bold text-[22px] text-[#000000] leading-tight">
               {product.name}
             </h1>
-            <p className="font-sans text-[13px] text-[#7a4d38] mt-1">{product.category}</p>
-            <p className="font-sans text-[12px] text-[#7a4d38] mt-1">
+            <p className="font-sans text-[13px] text-[#727272] mt-1">{product.category}</p>
+            <p className="font-sans text-[12px] text-[#727272] mt-1">
               {product.organizationName} · Updated {formatDate(product.updatedAt)}
             </p>
           </div>
@@ -155,7 +155,7 @@ export function AdminProductDetailView() {
                   onClick={() => setShowApproveModal(true)}
                   disabled={setStatusMutation.isPending}
                   className="font-sans text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
-                  style={{ background: "#1a0500", color: "white" }}
+                  style={{ background: "#000000", color: "white" }}
                 >
                   Approve
                 </button>
@@ -182,18 +182,18 @@ export function AdminProductDetailView() {
 
       {(product.variants?.length ?? 0) > 0 && (
         <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-          <div className="px-6 py-4 border-b border-[#f0e8dc]">
-            <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Variants & pricing</h2>
+          <div className="px-6 py-4 border-b border-[#d8d0c4]">
+            <h2 className="font-serif font-bold text-[15px] text-[#000000]">Variants & pricing</h2>
           </div>
           <ul className="p-6 flex flex-col gap-2">
             {(product.variants ?? []).map((v) => (
               <li
                 key={v.id}
-                className="font-sans text-sm text-[#2a0f05] rounded-xl px-4 py-3 flex flex-wrap justify-between gap-2"
-                style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+                className="font-sans text-sm text-[#000000] rounded-xl px-4 py-3 flex flex-wrap justify-between gap-2"
+                style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               >
                 <span className="font-semibold">{v.name}</span>
-                <span className="text-[#7a4d38]">
+                <span className="text-[#727272]">
                   {v.price} MAD · MOQ {v.minOrderQuantity}
                   {v.quantityOnHand > 0 ? ` · Stock ${v.quantityOnHand}` : ""}
                   {!v.inStock ? " · Out of stock" : ""}
@@ -205,15 +205,15 @@ export function AdminProductDetailView() {
       )}
 
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#f0e8dc]">
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Certifications</h2>
-          <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
+        <div className="px-6 py-4 border-b border-[#d8d0c4]">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Certifications</h2>
+          <p className="font-sans text-[11px] text-[#727272] mt-0.5">
             The producer adds certifications on the product detail page. Approve or reject each certification here—separately from the product status.
           </p>
         </div>
         <div className="p-6">
           {(product.certifications?.length ?? 0) === 0 ? (
-            <p className="font-sans text-sm text-[#7a4d38]">
+            <p className="font-sans text-sm text-[#727272]">
               No certifications for this product yet. The producer can add documents (PDF or image) on their product detail page; they will appear here for review.
             </p>
           ) : (
@@ -224,14 +224,14 @@ export function AdminProductDetailView() {
                   <li
                     key={c.id}
                     className="flex flex-wrap items-center justify-between gap-2 rounded-xl px-4 py-3"
-                    style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+                    style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                   >
                     <div className="min-w-0">
                       <a
                         href={c.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-sans font-semibold text-sm text-[#2a0f05] hover:underline block truncate"
+                        className="font-sans font-semibold text-sm text-[#000000] hover:underline block truncate"
                       >
                         {c.name}
                       </a>
@@ -250,7 +250,7 @@ export function AdminProductDetailView() {
                         href={c.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-sans text-[12px] font-medium text-[#7b2d1e] hover:underline"
+                        className="font-sans text-[12px] font-medium text-[#000000] hover:underline"
                       >
                         View
                       </a>
@@ -261,7 +261,7 @@ export function AdminProductDetailView() {
                             onClick={() => handleCertApprove(c.id)}
                             disabled={setCertStatusMutation.isPending}
                             className="font-sans text-[11px] font-semibold rounded-lg px-2.5 py-1.5 transition-colors disabled:opacity-60"
-                            style={{ background: "#1a0500", color: "white", border: "1px solid #1a0500" }}
+                            style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
                           >
                             Approve
                           </button>
@@ -286,29 +286,29 @@ export function AdminProductDetailView() {
       </div>
 
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#f0e8dc]">
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Details</h2>
+        <div className="px-6 py-4 border-b border-[#d8d0c4]">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Details</h2>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl p-4" style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}>
-              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase mb-1">
+            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Minimum order quantity
               </p>
-              <p className="font-sans text-[15px] font-semibold text-[#2a0f05]">{product.moq ?? "—"}</p>
+              <p className="font-sans text-[15px] font-semibold text-[#000000]">{product.moq ?? "—"}</p>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}>
-              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase mb-1">
+            <div className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+              <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                 Capacity
               </p>
-              <p className="font-sans text-[15px] font-semibold text-[#2a0f05]">{product.capacity ?? "—"}</p>
+              <p className="font-sans text-[15px] font-semibold text-[#000000]">{product.capacity ?? "—"}</p>
             </div>
             {product.status === "APPROVED" && (
-              <div className="rounded-xl p-4 sm:col-span-2" style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}>
-                <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase mb-1">
+              <div className="rounded-xl p-4 sm:col-span-2" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
+                <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-1">
                   Checkout payment options
                 </p>
-                <p className="font-sans text-[15px] font-semibold text-[#2a0f05]">
+                <p className="font-sans text-[15px] font-semibold text-[#000000]">
                   {paymentOptionLabel(product.paymentOption)}
                 </p>
               </div>
@@ -325,7 +325,7 @@ export function AdminProductDetailView() {
               <p className="font-sans text-[11px] font-bold tracking-wide text-[#f87171] uppercase">
                 Rejection reason
               </p>
-              <p className="font-sans text-sm text-[#2a0f05]">{product.rejectionReason}</p>
+              <p className="font-sans text-sm text-[#000000]">{product.rejectionReason}</p>
             </div>
           )}
         </div>
@@ -333,7 +333,7 @@ export function AdminProductDetailView() {
 
       <Link
         href="/admin/products"
-        className="font-sans text-sm font-medium text-[#7a4d38] hover:text-[#2a0f05] transition-colors w-fit"
+        className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors w-fit"
       >
         ← Back to products
       </Link>

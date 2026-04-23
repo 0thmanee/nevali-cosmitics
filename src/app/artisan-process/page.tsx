@@ -1,16 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "~/app/Navbar";
+import { COSMETICS_MARKETING } from "~/lib/cosmetics-image-placeholders";
 import Footer from "~/app/Footer";
 import { AnimateOnScroll } from "./animate-on-scroll";
 
 // ─── Value chain data ─────────────────────────────────────────────────────────
 
 const CHAIN = [
-  { actor: "Moroccan brand", cut: 42, color: "#7A2915", detail: "Keeps the lion’s share when selling direct on nevali" },
-  { actor: "Ingredients & lab time", cut: 22, color: "#a33520", detail: "Botanicals, stability testing, compounding labor" },
-  { actor: "Packaging & fulfilment", cut: 18, color: "#D87708", detail: "Bottles, labels, cold chain or COD logistics" },
-  { actor: "Platform & compliance", cut: 12, color: "#c8963c", detail: "Payments, reviews, certification workflows" },
+  { actor: "Moroccan brand", cut: 42, color: "#000000", detail: "Keeps the lion’s share when selling direct on nevali" },
+  { actor: "Ingredients & lab time", cut: 22, color: "#454545", detail: "Botanicals, stability testing, compounding labor" },
+  { actor: "Packaging & fulfilment", cut: 18, color: "#727272", detail: "Bottles, labels, cold chain or COD logistics" },
+  { actor: "Platform & compliance", cut: 12, color: "#727272", detail: "Payments, reviews, certification workflows" },
   { actor: "Retail markup (elsewhere)", cut: 6, color: "#9CA3AF", detail: "What department stores often add on top" },
 ];
 
@@ -62,8 +63,8 @@ export default function ArtisanProcessPage() {
               <AnimateOnScroll direction="left" delay={200}>
                 <div className="relative h-[420px] w-full">
                   <Image
-                    src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2000&auto=format&fit=crop"
-                    alt="Moroccan botanical skincare laboratory"
+                    src={COSMETICS_MARKETING.vanityProducts}
+                    alt="Moroccan beauty brand workspace with skincare and makeup"
                     fill
                     className="object-cover"
                     priority
@@ -93,8 +94,8 @@ export default function ArtisanProcessPage() {
               {/* Image side */}
               <div className="relative min-h-[480px]">
                 <Image
-                  src="/assets/images/fatima.png"
-                  alt="Moroccan cosmetics founder in her formulation studio"
+                  src={COSMETICS_MARKETING.portrait}
+                  alt="Beauty founder in a professional setting representing Moroccan cosmetics brands"
                   fill
                   className="object-cover"
                 />
@@ -344,8 +345,8 @@ export default function ArtisanProcessPage() {
               {/* Visual */}
               <div className="relative min-h-[500px]">
                 <Image
-                  src="/assets/images/cutout.png"
-                  alt="Moroccan beauty founder with finished products"
+                  src={COSMETICS_MARKETING.spaApplication}
+                  alt="Curated Moroccan skincare and cosmetic products"
                   fill
                   className="object-cover"
                 />

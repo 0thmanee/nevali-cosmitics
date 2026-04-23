@@ -24,18 +24,18 @@ export const MOROCCAN_REGIONS = [
 ] as const;
 
 export const PRODUCT_CATEGORIES = [
-  { label: "Carpets & Rugs", color: "#8B2D1E" },
-  { label: "Pottery & Ceramics", color: "#C87040" },
-  { label: "Leather Goods", color: "#7A5030" },
-  { label: "Metal Lanterns", color: "#B8882A" },
-  { label: "Thuya Wood", color: "#7A5030" },
-  { label: "Caftans & Clothing", color: "#6A2A80" },
-  { label: "Zellige & Tiles", color: "#1A7080" },
-  { label: "Jewelry & Silver", color: "#8a8060" },
-  { label: "Basketry & Weaving", color: "#9A7050" },
-  { label: "Babouches", color: "#C87020" },
-  { label: "Embroidery", color: "#a04070" },
-  { label: "Cosmetics & Oils", color: "#C8963C" },
+  { label: "Carpets & Rugs", color: "#454545" },
+  { label: "Pottery & Ceramics", color: "#727272" },
+  { label: "Leather Goods", color: "#3a3a3a" },
+  { label: "Metal Lanterns", color: "#5c5c5c" },
+  { label: "Thuya Wood", color: "#3a3a3a" },
+  { label: "Caftans & Clothing", color: "#000000" },
+  { label: "Zellige & Tiles", color: "#4a4a4a" },
+  { label: "Jewelry & Silver", color: "#6a6a6a" },
+  { label: "Basketry & Weaving", color: "#5a5a5a" },
+  { label: "Babouches", color: "#727272" },
+  { label: "Embroidery", color: "#8a8a8a" },
+  { label: "Cosmetics & Oils", color: "#000000" },
 ] as const;
 
 export const ENTITY_TYPES = [

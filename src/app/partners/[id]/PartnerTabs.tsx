@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { PublicProductInquiryTriggers } from "~/components/public-product-inquiry-triggers";
 import type { PublicProduct } from "~/components/public-product-types";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
-import { getCategoryGradient } from "~/lib/public-product-gradient";
 import { Prisma } from "@prisma/client";
 import { buildPublicProductListRow } from "~/lib/public-product-mapper";
 import type {
@@ -70,19 +70,12 @@ function productToPublic(p: PublicPartnerProduct, organizationName: string): Pub
 }
 
 function ProductThumb({ product }: { product: PublicPartnerProduct }) {
-  const gradient = getCategoryGradient(product.category);
+  const src =
+    product.firstImageUrl ??
+    productPlaceholderImageUrl(`${product.id}:${product.category}`, 176);
   return (
-    <div
-      className="relative h-11 w-11 shrink-0 overflow-hidden border border-cream-dark"
-      style={{ backgroundImage: product.firstImageUrl ? undefined : gradient }}
-    >
-      {product.firstImageUrl ? (
-        <Image alt="" className="object-cover" fill sizes="44px" src={product.firstImageUrl} />
-      ) : (
-        <span className="absolute inset-0 flex items-center justify-center px-0.5 text-center font-body text-[8px] font-bold uppercase leading-tight text-text-dark/40">
-          {product.category.slice(0, 3)}
-        </span>
-      )}
+    <div className="relative h-11 w-11 shrink-0 overflow-hidden border border-cream-dark bg-cream">
+      <Image alt="" className="object-cover" fill sizes="44px" src={src} />
     </div>
   );
 }
@@ -127,7 +120,7 @@ function VerifiedBadge() {
   return (
     <span
       className="shrink-0 border px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wide"
-      style={{ borderColor: "#D87708", color: "#D87708", background: "rgba(216,119,8,0.07)" }}
+      style={{ borderColor: "#727272", color: "#727272", background: "rgba(114,114,114,0.07)" }}
     >
       Verified
     </span>
@@ -138,7 +131,7 @@ function ApprovedBadge() {
   return (
     <span
       className="inline-flex border px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wide"
-      style={{ borderColor: "#D87708", color: "#D87708", background: "rgba(216,119,8,0.07)" }}
+      style={{ borderColor: "#727272", color: "#727272", background: "rgba(114,114,114,0.07)" }}
     >
       Approved
     </span>
@@ -180,7 +173,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
         ) : null}
 
         {profile.valuesHighlight ? (
-          <div className="border border-cream-dark p-6 sm:p-8" style={{ background: "#faf5ee" }}>
+          <div className="border border-cream-dark p-6 sm:p-8" style={{ background: "#ede6dc" }}>
             <SectionLabel>Values & practices</SectionLabel>
             <p className="font-body text-[15px] text-text-dark leading-relaxed whitespace-pre-wrap">
               {profile.valuesHighlight}
@@ -203,7 +196,7 @@ function OverviewTab({ profile, organization, products, certifications, platform
         <div className="bg-primary border border-white/10">
           <div
             className="h-0.5 w-full"
-            style={{ background: "linear-gradient(90deg, #7A2915 0%, #D87708 100%)" }}
+            style={{ background: "linear-gradient(90deg, #000000 0%, #727272 100%)" }}
           />
           <div className="p-5">
             <p className="font-body text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase mb-4">
@@ -315,7 +308,7 @@ function CertificationsTab({ certifications }: { certifications: PublicPartnerCe
                 {c.product ? (
                   <p className="font-body text-xs text-text-muted mt-1">Product: {c.product.name}</p>
                 ) : (
-                  <p className="font-body text-xs text-text-muted mt-1 uppercase tracking-wide" style={{ color: "#D87708" }}>Organization-level</p>
+                  <p className="font-body text-xs text-text-muted mt-1 uppercase tracking-wide" style={{ color: "#727272" }}>Organization-level</p>
                 )}
               </div>
               <VerifiedBadge />
@@ -366,7 +359,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
       <div className="hidden overflow-x-auto border border-cream-dark bg-white md:block">
         <table className="w-full min-w-[800px] border-collapse text-left">
           <thead>
-            <tr className="border-b border-cream-dark" style={{ background: "#faf5ee" }}>
+            <tr className="border-b border-cream-dark" style={{ background: "#ede6dc" }}>
               {["Listing", "Category", "Price", "MOQ", "Capacity", "Status", "Listed", "Updated", "Actions"].map((h) => (
                 <th key={h} className="px-4 py-3 font-body text-[10px] font-bold uppercase tracking-widest text-text-muted">
                   {h}
@@ -412,13 +405,13 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
       {/* Mobile stacked cards */}
       <div className="flex flex-col gap-4 md:hidden">
         {products.map((product) => {
-          const gradient = getCategoryGradient(product.category);
+          const heroSrc =
+            product.firstImageUrl ??
+            productPlaceholderImageUrl(`${product.id}:${product.category}`, 800);
           return (
             <article className="overflow-hidden border border-cream-dark bg-white" key={product.id}>
-              <div className="relative h-36 border-b border-cream-dark" style={{ backgroundImage: product.firstImageUrl ? undefined : gradient }}>
-                {product.firstImageUrl ? (
-                  <Image alt="" className="object-cover" fill sizes="100vw" src={product.firstImageUrl} />
-                ) : null}
+              <div className="relative h-36 border-b border-cream-dark bg-cream">
+                <Image alt="" className="object-cover" fill sizes="100vw" src={heroSrc} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" aria-hidden />
                 <div className="absolute bottom-3 left-4 right-4">
                   <p className="font-body text-[10px] font-bold uppercase tracking-widest text-white/70">{product.category}</p>

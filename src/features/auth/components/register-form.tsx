@@ -74,7 +74,7 @@ export function RegisterForm() {
               className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 transition-colors"
               style={
                 agreeTerms
-                  ? { background: "#7B1F0A", border: "1px solid #7B1F0A" }
+                  ? { background: "#000000", border: "1px solid #000000" }
                   : {
                       background: "#fff",
                       border: "1px solid #d0c4b0",
@@ -103,7 +103,7 @@ export function RegisterForm() {
             </div>
             <span className="font-sans text-[13px] text-text-muted leading-relaxed">
               I agree to the nevali Terms of Service and Privacy Policy{" "}
-              <span style={{ color: "#7B1F0A" }}>*</span>
+              <span style={{ color: "#000000" }}>*</span>
             </span>
           </label>
         </div>
@@ -146,10 +146,10 @@ export function RegisterForm() {
             className="font-sans font-semibold text-sm rounded-xl px-8 py-3.5 transition-all disabled:opacity-60 disabled:cursor-not-allowed w-full"
             style={
               canSubmit && !submitting
-                ? { background: "#7B1F0A", color: "#fff" }
+                ? { background: "#000000", color: "#fff" }
                 : {
-                    background: "rgba(123,31,10,0.12)",
-                    color: "rgba(123,31,10,0.35)",
+                    background: "rgba(0,0,0,0.12)",
+                    color: "rgba(0,0,0,0.35)",
                     cursor: "not-allowed",
                   }
             }

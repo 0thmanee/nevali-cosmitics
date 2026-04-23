@@ -24,7 +24,7 @@ export default async function CartCheckoutSuccessPage({
           <div
             aria-hidden
             className="flex h-16 w-16 items-center justify-center rounded-full text-white"
-            style={{ background: "#1a0500" }}
+            style={{ background: "#000000" }}
           >
             <svg fill="none" height="28" viewBox="0 0 24 24" width="28">
               <path
@@ -39,7 +39,7 @@ export default async function CartCheckoutSuccessPage({
           <h1 className="font-serif text-3xl font-bold text-text-dark">Order placed successfully</h1>
           <p
             aria-live="polite"
-            className="rounded-xl border border-[#C87020]/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-[#7B1F0A]"
+            className="rounded-xl border border-[#727272]/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-[#000000]"
             role="status"
           >
             Success: your order has been confirmed.
@@ -63,7 +63,7 @@ export default async function CartCheckoutSuccessPage({
           <CheckoutSuccessSummary orderId={orderId} />
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <Link
-              className="rounded-sm bg-[#7B1F0A] px-6 py-3 text-center font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="rounded-sm bg-[#000000] px-6 py-3 text-center font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
               href="/products"
             >
               Continue shopping

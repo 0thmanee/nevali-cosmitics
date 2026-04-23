@@ -23,17 +23,17 @@ function ProductRowItem({ p }: { p: ProductRow }) {
   const dotColor = STATUS_DOT_COLORS[p.status] ?? "#E8B84B";
   return (
     <div
-      className="flex items-center gap-4 px-5 py-3 border-t border-[#f0e8dc] first:border-t-0"
+      className="flex items-center gap-4 px-5 py-3 border-t border-[#d8d0c4] first:border-t-0"
     >
       <div
         className="w-2.5 h-2.5 rounded-full shrink-0"
         style={{ background: dotColor }}
       />
       <div className="flex-1 min-w-0">
-        <p className="font-sans font-semibold text-sm text-[#2a0f05] leading-tight truncate">
+        <p className="font-sans font-semibold text-sm text-[#000000] leading-tight truncate">
           {p.name}
         </p>
-        <p className="font-sans text-[12px] text-[#7a4d38] mt-0.5">
+        <p className="font-sans text-[12px] text-[#727272] mt-0.5">
           {p.category} · {formatUpdatedAt(p.updatedAt)}
         </p>
       </div>
@@ -55,14 +55,14 @@ export function DashboardProductList() {
   return (
     <div className="flex flex-col gap-0">
       <div
-        className="rounded-t-xl px-5 py-4 flex items-center justify-between border-b border-[#f0e8dc]"
+        className="rounded-t-xl px-5 py-4 flex items-center justify-between border-b border-[#d8d0c4]"
         style={{ background: "white" }}
       >
         <div>
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">
             My Products
           </h2>
-          <p className="font-sans text-[12px] text-[#7a4d38] mt-0.5">
+          <p className="font-sans text-[12px] text-[#727272] mt-0.5">
             {products.length} listings · {approvedCount} approved
           </p>
         </div>
@@ -70,9 +70,9 @@ export function DashboardProductList() {
           href="/artisan/products"
           className="font-sans text-sm font-medium rounded-xl px-4 py-2 transition-colors"
           style={{
-            background: "#F5F0E8",
-            color: "#2a0f05",
-            border: "1px solid #f0e8dc",
+            background: "#ffffff",
+            color: "#000000",
+            border: "1px solid #d8d0c4",
           }}
         >
           View all
@@ -80,7 +80,7 @@ export function DashboardProductList() {
       </div>
       <div className="rounded-b-xl overflow-hidden" style={{ background: "white" }}>
         {isLoading ? (
-          <div className="px-5 py-8 font-sans text-sm text-[#7a4d38]">
+          <div className="px-5 py-8 font-sans text-sm text-[#727272]">
             Loading products…
           </div>
         ) : isError ? (
@@ -88,7 +88,7 @@ export function DashboardProductList() {
             Failed to load products.
           </div>
         ) : products.length === 0 ? (
-          <div className="px-5 py-8 font-sans text-sm text-[#7a4d38]">
+          <div className="px-5 py-8 font-sans text-sm text-[#727272]">
             No products yet. Add products from the Products page.
           </div>
         ) : (

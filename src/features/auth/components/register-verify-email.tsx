@@ -40,8 +40,8 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
         <div
           className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
           style={{
-            background: "rgba(123,31,10,0.08)",
-            border: "1px solid rgba(123,31,10,0.2)",
+            background: "rgba(0,0,0,0.08)",
+            border: "1px solid rgba(0,0,0,0.2)",
           }}
         >
           <svg
@@ -49,7 +49,7 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
             height="28"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#7B1F0A"
+            stroke="#000000"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -74,9 +74,9 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
             disabled={status === "sending"}
             className="font-sans font-semibold text-sm rounded px-6 py-3 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             style={{
-              background: "rgba(123,31,10,0.08)",
-              color: "#7B1F0A",
-              border: "1px solid rgba(123,31,10,0.2)",
+              background: "rgba(0,0,0,0.08)",
+              color: "#000000",
+              border: "1px solid rgba(0,0,0,0.2)",
             }}
           >
             {status === "sending"
@@ -96,7 +96,7 @@ export function RegisterVerifyEmail({ email }: { email: string }) {
           <Link
             href="/auth/login"
             className="font-sans font-semibold text-sm transition-colors"
-            style={{ color: "#7B1F0A" }}
+            style={{ color: "#000000" }}
           >
             Go to Sign in →
           </Link>

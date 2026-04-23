@@ -15,13 +15,13 @@ export function PublicProducerPage({ producer }: Props) {
     producer.valuesHighlight?.trim();
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#FAF5EE" }}>
-      <header className="border-b shrink-0" style={{ background: "white", borderColor: "#f0e8dc" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#ffffff" }}>
+      <header className="border-b shrink-0" style={{ background: "white", borderColor: "#d8d0c4" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-          <Link href="/" className="font-display font-bold uppercase text-[15px] tracking-wide text-[#2a0f05]">
+          <Link href="/" className="font-display font-bold uppercase text-[15px] tracking-wide text-[#000000]">
             nevali
           </Link>
-          <Link href="/auth/login" className="font-sans text-sm text-[#7a4d38] hover:text-[#2a0f05] transition-colors">
+          <Link href="/auth/login" className="font-sans text-sm text-[#727272] hover:text-[#000000] transition-colors">
             Artisan login
           </Link>
         </div>
@@ -30,7 +30,7 @@ export function PublicProducerPage({ producer }: Props) {
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12">
         <div
           className="rounded-2xl overflow-hidden border"
-          style={{ background: "white", borderColor: "#f0e8dc" }}
+          style={{ background: "white", borderColor: "#d8d0c4" }}
         >
           <div
             className="h-24 sm:h-28"
@@ -43,37 +43,37 @@ export function PublicProducerPage({ producer }: Props) {
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
               <div
                 className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-4 border-white overflow-hidden shrink-0 shadow-sm"
-                style={{ background: "#FAF5EE" }}
+                style={{ background: "#ffffff" }}
               >
                 {producer.profileImage ? (
                   <img src={producer.profileImage} alt="" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center font-display font-bold text-2xl text-[#7a4d38]">
+                  <div className="w-full h-full flex items-center justify-center font-display font-bold text-2xl text-[#727272]">
                     {producer.entityName.slice(0, 2).toUpperCase()}
                   </div>
                 )}
               </div>
               <div className="flex-1 min-w-0 pt-2 sm:pt-0 sm:pb-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="font-display font-bold uppercase text-2xl sm:text-3xl text-[#2a0f05] leading-tight">
+                  <h1 className="font-display font-bold uppercase text-2xl sm:text-3xl text-[#000000] leading-tight">
                     {producer.entityName}
                   </h1>
                   <span
                     className="font-sans text-[9px] font-bold tracking-wider rounded-full px-2.5 py-1 uppercase"
                     style={{
-                      background: "rgba(26,5,0,0.85)",
-                      color: "#C8963C",
+                      background: "rgba(0,0,0,0.85)",
+                      color: "#727272",
                       border: "1px solid rgba(200,150,60,0.3)",
                     }}
                   >
                     Verified artisan
                   </span>
                 </div>
-                <p className="font-sans text-sm text-[#7a4d38] mt-1">
+                <p className="font-sans text-sm text-[#727272] mt-1">
                   {producer.entityType} · {producer.city}, {producer.region}, Morocco
                 </p>
                 {producer.publicTagline?.trim() && (
-                  <p className="font-sans text-base text-[#2a0f05] font-medium mt-3 leading-snug">
+                  <p className="font-sans text-base text-[#000000] font-medium mt-3 leading-snug">
                     {producer.publicTagline}
                   </p>
                 )}
@@ -85,7 +85,7 @@ export function PublicProducerPage({ producer }: Props) {
                 <span
                   key={c}
                   className="font-sans text-[11px] font-semibold rounded-full px-3 py-1"
-                  style={{ background: "#f0e8dc", color: "#7b2d1e", border: "1px solid #e8d8c8" }}
+                  style={{ background: "#d8d0c4", color: "#000000", border: "1px solid #e8d8c8" }}
                 >
                   {c}
                 </span>
@@ -93,31 +93,31 @@ export function PublicProducerPage({ producer }: Props) {
             </div>
 
             {producer.yearEstablished?.trim() && (
-              <p className="font-sans text-sm text-[#7a4d38] mt-6">
-                <span className="font-semibold text-[#2a0f05]">Established:</span> {producer.yearEstablished}
+              <p className="font-sans text-sm text-[#727272] mt-6">
+                <span className="font-semibold text-[#000000]">Established:</span> {producer.yearEstablished}
               </p>
             )}
 
             {producer.exportExperience?.trim() && (
-              <p className="font-sans text-sm text-[#7a4d38] mt-2">
-                <span className="font-semibold text-[#2a0f05]">Export experience:</span> {producer.exportExperience}
+              <p className="font-sans text-sm text-[#727272] mt-2">
+                <span className="font-semibold text-[#000000]">Export experience:</span> {producer.exportExperience}
               </p>
             )}
 
             {producer.annualCapacity?.trim() && (
-              <p className="font-sans text-sm text-[#7a4d38] mt-2">
-                <span className="font-semibold text-[#2a0f05]">Capacity:</span> {producer.annualCapacity}
+              <p className="font-sans text-sm text-[#727272] mt-2">
+                <span className="font-semibold text-[#000000]">Capacity:</span> {producer.annualCapacity}
               </p>
             )}
 
             {producer.website?.trim() && (
               <p className="font-sans text-sm mt-2">
-                <span className="font-semibold text-[#2a0f05]">Website:</span>{" "}
+                <span className="font-semibold text-[#000000]">Website:</span>{" "}
                 <a
                   href={producer.website.startsWith("http") ? producer.website : `https://${producer.website}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#7b2d1e] underline hover:no-underline"
+                  className="text-[#000000] underline hover:no-underline"
                 >
                   {producer.website}
                 </a>
@@ -125,25 +125,25 @@ export function PublicProducerPage({ producer }: Props) {
             )}
 
             {hasStory && (
-              <div className="mt-8 pt-8 border-t" style={{ borderColor: "#f0e8dc" }}>
+              <div className="mt-8 pt-8 border-t" style={{ borderColor: "#d8d0c4" }}>
                 {producer.businessDescription?.trim() && (
                   <div className="mb-6">
-                    <h2 className="font-display font-bold uppercase text-lg text-[#2a0f05] mb-2">About</h2>
-                    <p className="font-sans text-[15px] text-[#2a0f05] leading-relaxed whitespace-pre-wrap">
+                    <h2 className="font-display font-bold uppercase text-lg text-[#000000] mb-2">About</h2>
+                    <p className="font-sans text-[15px] text-[#000000] leading-relaxed whitespace-pre-wrap">
                       {producer.businessDescription}
                     </p>
                   </div>
                 )}
                 {producer.exportMarkets?.trim() && (
                   <div className="mb-6">
-                    <h2 className="font-display font-bold uppercase text-lg text-[#2a0f05] mb-2">Export markets</h2>
-                    <p className="font-sans text-[15px] text-[#7a4d38]">{producer.exportMarkets}</p>
+                    <h2 className="font-display font-bold uppercase text-lg text-[#000000] mb-2">Export markets</h2>
+                    <p className="font-sans text-[15px] text-[#727272]">{producer.exportMarkets}</p>
                   </div>
                 )}
                 {producer.valuesHighlight?.trim() && (
                   <div>
-                    <h2 className="font-display font-bold uppercase text-lg text-[#2a0f05] mb-2">Values & practices</h2>
-                    <p className="font-sans text-[15px] text-[#7a4d38]">{producer.valuesHighlight}</p>
+                    <h2 className="font-display font-bold uppercase text-lg text-[#000000] mb-2">Values & practices</h2>
+                    <p className="font-sans text-[15px] text-[#727272]">{producer.valuesHighlight}</p>
                   </div>
                 )}
               </div>
@@ -151,23 +151,23 @@ export function PublicProducerPage({ producer }: Props) {
 
             <div
               className="mt-10 rounded-xl p-5"
-              style={{ background: "#f0e8dc", border: "1px solid #e8d8c8" }}
+              style={{ background: "#d8d0c4", border: "1px solid #e8d8c8" }}
             >
-              <p className="font-sans text-sm text-[#2a0f05] leading-relaxed">
+              <p className="font-sans text-sm text-[#000000] leading-relaxed">
                 Interested in this brand’s line? Browse nevali for Moroccan cosmetics with transparent checkout—or open a buyer account for saved lists.
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
                 <Link
                   href="/auth/register"
                   className="font-sans text-sm font-semibold rounded-xl px-5 py-2.5 text-white transition-colors hover:opacity-90"
-                  style={{ background: "#1a0500" }}
+                  style={{ background: "#000000" }}
                 >
                   Get started
                 </Link>
                 <Link
                   href="/"
                   className="font-sans text-sm font-semibold rounded-xl px-5 py-2.5 transition-colors"
-                  style={{ background: "white", color: "#2a0f05", border: "1px solid #f0e8dc" }}
+                  style={{ background: "white", color: "#000000", border: "1px solid #d8d0c4" }}
                 >
                   Browse platform
                 </Link>

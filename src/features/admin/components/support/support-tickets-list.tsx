@@ -35,11 +35,11 @@ const STATUS_TABS = [
 
 const PRIORITY_BADGE: Record<string, { bg: string; color: string }> = {
   High:   { bg: "rgba(192,57,43,0.10)", color: "#c0392b" },
-  Medium: { bg: "rgba(216,119,8,0.06)", color: "#c87020" },
+  Medium: { bg: "rgba(114,114,114,0.06)", color: "#727272" },
   Low:    { bg: "rgba(0,0,0,0.06)",     color: "#888"    },
 };
 
-const PRIORITY_DEFAULT = { bg: "rgba(216,119,8,0.06)", color: "#c87020" };
+const PRIORITY_DEFAULT = { bg: "rgba(114,114,114,0.06)", color: "#727272" };
 
 function formatRelativeTime(d: Date): string {
   const diff = Date.now() - new Date(d).getTime();

@@ -20,7 +20,7 @@ function paymentLabel(method: string) {
 }
 
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string }> = {
-  CONFIRMED: { bg: "rgba(123,31,10,0.08)", color: "#7B1F0A", border: "1px solid rgba(123,31,10,0.25)" },
+  CONFIRMED: { bg: "rgba(0,0,0,0.08)", color: "#000000", border: "1px solid rgba(0,0,0,0.25)" },
   PENDING_PAYMENT: { bg: "rgba(202,138,4,0.12)", color: "#a16207", border: "1px solid rgba(234,179,8,0.35)" },
   PENDING: { bg: "rgba(202,138,4,0.12)", color: "#a16207", border: "1px solid rgba(234,179,8,0.35)" },
   CANCELLED: { bg: "rgba(100,100,100,0.1)", color: "#6b7280", border: "1px solid rgba(107,114,128,0.25)" },

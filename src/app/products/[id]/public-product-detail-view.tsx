@@ -10,6 +10,7 @@ import { ProductReviewsList } from "~/components/product-reviews-list";
 import type { PublicProductDetail } from "~/app/api/products/schemas/products.schema";
 import { useCart } from "~/features/cart/cart-context";
 import { formatPriceMad, paymentOptionLabel } from "~/lib/format-price";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import {
   getCategoryGradient,
   orderedImagesForPublicVariant,
@@ -18,16 +19,6 @@ import {
 } from "~/lib/public-product-helpers";
 
 type Props = { product: PublicProductDetail };
-
-function ProductIconLarge() {
-  return (
-    <svg width="64" height="64" viewBox="0 0 36 36" fill="none" className="text-white/60">
-      <rect x="3" y="14" width="30" height="18" rx="3" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M12 14v-3a6 6 0 0 1 12 0v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <circle cx="18" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
 
 export function PublicProductDetailView({ product }: Props) {
   const gradient = getCategoryGradient(product.category);
@@ -89,6 +80,11 @@ export function PublicProductDetailView({ product }: Props) {
   }, [galleryImages.length]);
 
   const mainImage = galleryImages[imgIndex] ?? galleryImages[0];
+  const placeholderHero = useMemo(
+    () => productPlaceholderImageUrl(`${product.id}:${product.category}`, 1400),
+    [product.id, product.category],
+  );
+  const heroImageSrc = mainImage?.url ?? placeholderHero;
   const canBuy = selected && selected.inStock;
   const maxQty =
     selected && selected.quantityOnHand > 0 ? Math.min(999, selected.quantityOnHand) : 999;
@@ -107,7 +103,7 @@ export function PublicProductDetailView({ product }: Props) {
     category: product.category,
     organizationName: product.organizationName,
     organizationId: product.organizationId,
-    firstImageUrl: mainImage?.url ?? null,
+    firstImageUrl: heroImageSrc,
     gradient,
     orderHint: selected
       ? publicVariantOrderHint(selected)
@@ -134,7 +130,7 @@ export function PublicProductDetailView({ product }: Props) {
       unit: selected.unit,
       minOrderQuantity: selected.minOrderQuantity,
       minOrderNote: selected.minOrderNote,
-      firstImageUrl: mainImage?.url ?? null,
+      firstImageUrl: heroImageSrc,
       paymentOption: product.paymentOption,
       quantity: q,
     });
@@ -176,7 +172,7 @@ export function PublicProductDetailView({ product }: Props) {
                     {selected.inStock ? (
                       <span
                         className="font-sans text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full"
-                        style={{ background: "#7B1F0A", color: "#faf5ee" }}
+                        style={{ background: "#000000", color: "#ede6dc" }}
                       >
                         In Stock
                       </span>
@@ -228,23 +224,14 @@ export function PublicProductDetailView({ product }: Props) {
                   </>
                 ) : null}
 
-                {mainImage ? (
-                  <Image
-                    src={mainImage.url}
-                    alt={product.name}
-                    fill
-                    className="object-contain bg-[#FAFAF8]"
-                    sizes="(max-width: 1024px) 100vw, 45vw"
-                    priority
-                  />
-                ) : (
-                  <div
-                    className="absolute inset-0 flex items-center justify-center"
-                    style={{ backgroundImage: gradient }}
-                  >
-                    <ProductIconLarge />
-                  </div>
-                )}
+                <Image
+                  src={heroImageSrc}
+                  alt={product.name}
+                  fill
+                  className="object-contain bg-[#FAFAF8]"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  priority
+                />
 
                 {mainImage?.variantId ? (
                   <div className="absolute bottom-3 left-0 right-0 flex justify-center pointer-events-none">
@@ -440,7 +427,7 @@ export function PublicProductDetailView({ product }: Props) {
                         ? "text-emerald-800 bg-emerald-50 border border-emerald-200"
                         : "text-white hover:opacity-90"
                     }`}
-                    style={justAdded && canBuy ? undefined : { background: "#7B1F0A" }}
+                    style={justAdded && canBuy ? undefined : { background: "#000000" }}
                   >
                     {justAdded && canBuy ? (
                       <>Added to cart ✓</>
@@ -482,7 +469,7 @@ export function PublicProductDetailView({ product }: Props) {
                     onClick={() => setModal("b2b")}
                     className="flex items-center justify-center px-5 py-3.5 rounded-xl border border-cream-dark bg-white font-sans font-semibold text-sm text-text-dark hover:border-forest-mid/60 hover:bg-cream transition-all"
                   >
-                    Request Quote
+                    Wholesale inquiry
                   </button>
                 </div>
 
@@ -514,7 +501,7 @@ export function PublicProductDetailView({ product }: Props) {
               ) : (
                 <p className="font-sans text-text-muted text-sm leading-relaxed">
                   This listing is offered by {product.organizationName}. Choose a packaging option
-                  above for price and minimum order details, or request a B2B quote for volume and
+                  above for price and minimum order details, or send a wholesale inquiry for volume and
                   specifications.
                 </p>
               )}

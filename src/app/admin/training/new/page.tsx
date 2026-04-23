@@ -12,11 +12,11 @@ export default function NewTrainingProgramPage() {
   return (
     <div className="p-4 lg:p-6 flex flex-col gap-6">
       <nav className="flex items-center gap-2 text-sm">
-        <Link href="/admin/training" className="font-sans text-[#7a4d38] hover:text-[#2a0f05] transition-colors">
+        <Link href="/admin/training" className="font-sans text-[#727272] hover:text-[#000000] transition-colors">
           Training
         </Link>
-        <span className="font-sans text-[#7a4d38]/60">/</span>
-        <span className="font-sans font-medium text-[#2a0f05]">New program</span>
+        <span className="font-sans text-[#727272]/60">/</span>
+        <span className="font-sans font-medium text-[#000000]">New program</span>
       </nav>
       <TrainingProgramForm
         program={null}

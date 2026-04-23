@@ -27,13 +27,13 @@ export function RejectProductModal({
     >
       <div
         className="rounded-xl w-full max-w-md overflow-hidden"
-        style={{ background: "white", border: "1px solid #f0e8dc" }}
+        style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
-        <div className="px-5 py-4 border-b" style={{ borderColor: "#f0e8dc" }}>
-          <h3 id="reject-modal-title" className="font-serif font-bold text-[15px] text-[#2a0f05]">
+        <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+          <h3 id="reject-modal-title" className="font-serif font-bold text-[15px] text-[#000000]">
             Reject product
           </h3>
-          <p className="font-sans text-[12px] text-[#7a4d38] mt-0.5">
+          <p className="font-sans text-[12px] text-[#727272] mt-0.5">
             {productName}
           </p>
         </div>
@@ -41,7 +41,7 @@ export function RejectProductModal({
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="reject-reason"
-              className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase"
+              className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase"
             >
               Reason for rejection (optional but recommended)
             </label>
@@ -51,8 +51,8 @@ export function RejectProductModal({
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Missing GMP documentation. Please upload and resubmit."
               rows={3}
-              className="font-sans text-sm text-[#2a0f05] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
-              style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
+              style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               maxLength={500}
             />
           </div>
@@ -68,7 +68,7 @@ export function RejectProductModal({
             <button
               type="button"
               onClick={onCancel}
-              className="font-sans text-sm font-medium text-[#7a4d38] hover:text-[#2a0f05] transition-colors"
+              className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors"
             >
               Cancel
             </button>

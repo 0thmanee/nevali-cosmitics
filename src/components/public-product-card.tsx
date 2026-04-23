@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductInquiryModal } from "~/components/product-inquiry-modal";
 import { formatPriceMad } from "~/lib/format-price";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import {
 	getCategoryGradient,
 	orderedImagesForPublicVariant,
@@ -16,38 +17,6 @@ import type { PublicProductImage } from "~/app/api/products/schemas/products.sch
 import type { PublicProduct } from "~/components/public-product-types";
 
 export type { PublicProduct } from "~/components/public-product-types";
-
-function ProductIcon() {
-	return (
-		<svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-			<rect
-				x="3"
-				y="14"
-				width="30"
-				height="18"
-				rx="3"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				strokeOpacity="0.35"
-			/>
-			<path
-				d="M12 14v-3a6 6 0 0 1 12 0v3"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				strokeLinecap="round"
-				strokeOpacity="0.35"
-			/>
-			<circle cx="18" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.4" strokeOpacity="0.35" />
-			<path
-				d="M18 24.5v3"
-				stroke="currentColor"
-				strokeWidth="1.4"
-				strokeLinecap="round"
-				strokeOpacity="0.35"
-			/>
-		</svg>
-	);
-}
 
 export function PublicProductCard({ product }: { product: PublicProduct }) {
 	const gradient = getCategoryGradient(product.category);
@@ -107,7 +76,11 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 
 	const activeImage = gallery[slide] ?? gallery[0];
 	const displayImageUrl = activeImage?.url ?? null;
-	const hasDisplayImage = !!displayImageUrl;
+	const fallbackImageUrl = useMemo(
+		() => productPlaceholderImageUrl(`${product.id}:${product.category}`, 900),
+		[product.id, product.category],
+	);
+	const resolvedImageUrl = displayImageUrl ?? fallbackImageUrl;
 
 	const minQty = useMemo(
 		() => (selected ? Math.max(1, selected.minOrderQuantity) : 1),
@@ -146,7 +119,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 		category: product.category,
 		organizationName: product.organizationName,
 		organizationId: product.organizationId,
-		firstImageUrl: displayImageUrl,
+		firstImageUrl: resolvedImageUrl,
 		gradient,
 		orderHint: selected
 			? publicVariantOrderHint(selected)
@@ -173,7 +146,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 			unit: selected.unit,
 			minOrderQuantity: selected.minOrderQuantity,
 			minOrderNote: selected.minOrderNote,
-			firstImageUrl: displayImageUrl,
+			firstImageUrl: resolvedImageUrl,
 			paymentOption: product.paymentOption,
 			quantity: q,
 		});
@@ -188,25 +161,17 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 				<div className="relative shrink-0 overflow-hidden rounded-t-sm" style={{ height: 200 }}>
 					<Link
 						href={`/products/${product.id}`}
-						className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/45 focus-visible:ring-inset"
+						className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/45 focus-visible:ring-inset"
 						aria-label={`View details: ${product.name}`}
 					/>
-					<div
-						className="pointer-events-none relative z-[1] flex h-full items-center justify-center overflow-hidden"
-						style={{ backgroundImage: hasDisplayImage ? undefined : gradient }}
-					>
-						{hasDisplayImage ? (
-							<Image
-								src={displayImageUrl!}
-								alt=""
-								fill
-								className="pointer-events-none object-cover"
-							/>
-						) : (
-							<div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-black/8 bg-white/60 text-text-dark">
-								<ProductIcon />
-							</div>
-						)}
+					<div className="pointer-events-none relative z-[1] flex h-full items-center justify-center overflow-hidden bg-cream">
+						<Image
+							src={resolvedImageUrl}
+							alt=""
+							fill
+							className="pointer-events-none object-cover"
+							sizes="(max-width:768px) 100vw, 400px"
+						/>
 					</div>
 
 					{gallery.length > 1 ? (
@@ -215,7 +180,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								type="button"
 								aria-label="Previous photo"
 								onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
-								className="absolute top-1/2 left-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#7B1F0A]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/35"
+								className="absolute top-1/2 left-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#000000]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35"
 							>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 									<path
@@ -231,7 +196,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								type="button"
 								aria-label="Next photo"
 								onClick={() => setSlide((s) => (s + 1) % gallery.length)}
-								className="absolute top-1/2 right-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#7B1F0A]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/35"
+								className="absolute top-1/2 right-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-[#000000]/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35"
 							>
 								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 									<path
@@ -252,7 +217,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 										aria-current={i === slide ? "true" : undefined}
 										onClick={() => setSlide(i)}
 										className={`h-1.5 rounded-full transition-all ${
-											i === slide ? "w-4 bg-[#7B1F0A] shadow-sm" : "w-1.5 bg-white/55 hover:bg-white/80"
+											i === slide ? "w-4 bg-[#000000] shadow-sm" : "w-1.5 bg-white/55 hover:bg-white/80"
 										}`}
 									/>
 								))}
@@ -263,12 +228,12 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 					<div
 						className="pointer-events-none absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-[9px] font-bold tracking-widest"
 						style={{
-							background: "rgba(26,5,0,0.82)",
-							color: "#C87020",
-							border: "1px solid rgba(200,112,32,0.35)",
+							background: "rgba(0,0,0,0.82)",
+							color: "#727272",
+							border: "1px solid rgba(114,114,114,0.35)",
 						}}
 					>
-						<span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "#C87020" }} />
+						<span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "#727272" }} />
 						CERTIFIED
 					</div>
 					<div
@@ -286,7 +251,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 				<div className="flex flex-1 flex-col gap-3 p-4">
 					<Link
 						href={`/products/${product.id}`}
-						className="-mx-1 flex flex-col gap-0.5 rounded-sm px-1 py-0.5 transition-colors hover:bg-cream/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/35 focus-visible:ring-offset-2"
+						className="-mx-1 flex flex-col gap-0.5 rounded-sm px-1 py-0.5 transition-colors hover:bg-cream/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/35 focus-visible:ring-offset-2"
 					>
 						<h3 className="line-clamp-2 font-serif font-bold text-[15px] leading-snug text-text-dark transition-colors group-hover:text-forest-mid">
 							{product.name}
@@ -311,7 +276,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								<select
 									value={selectedId ?? ""}
 									onChange={(e) => setSelectedId(e.target.value || null)}
-									className="w-full rounded-sm border border-cream-dark bg-cream/40 px-2.5 py-2 text-[12px] font-medium text-text-dark focus:border-[#7B1F0A]/50 focus:outline-none focus:ring-2 focus:ring-[#7B1F0A]/25"
+									className="w-full rounded-sm border border-cream-dark bg-cream/40 px-2.5 py-2 text-[12px] font-medium text-text-dark focus:border-[#000000]/50 focus:outline-none focus:ring-2 focus:ring-[#000000]/25"
 								>
 									{product.variants.map((v) => (
 										<option key={v.id} value={v.id} disabled={!v.inStock}>
@@ -355,7 +320,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									aria-label="Decrease quantity"
 									disabled={qty <= minQty}
 									onClick={() => setQty((q) => Math.max(minQty, q - 1))}
-									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#7B1F0A]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/30 disabled:cursor-not-allowed disabled:opacity-40"
+									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#000000]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30 disabled:cursor-not-allowed disabled:opacity-40"
 								>
 									−
 								</button>
@@ -371,14 +336,14 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 										if (!Number.isFinite(n)) return;
 										setQty(Math.min(maxQty, Math.max(minQty, Math.floor(n))));
 									}}
-									className="h-8 w-10 shrink-0 rounded-sm border border-cream-dark bg-cream/40 px-1 text-center font-sans text-sm font-semibold text-text-dark [appearance:textfield] focus:border-[#7B1F0A]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#7B1F0A]/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									className="h-8 w-10 shrink-0 rounded-sm border border-cream-dark bg-cream/40 px-1 text-center font-sans text-sm font-semibold text-text-dark [appearance:textfield] focus:border-[#000000]/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#000000]/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 								/>
 								<button
 									type="button"
 									aria-label="Increase quantity"
 									disabled={qty >= maxQty}
 									onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
-									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#7B1F0A]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/30 disabled:cursor-not-allowed disabled:opacity-40"
+									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-[#000000]/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30 disabled:cursor-not-allowed disabled:opacity-40"
 								>
 									+
 								</button>
@@ -388,10 +353,10 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									disabled={justAdded}
 									className={`flex h-8 flex-1 items-center justify-center gap-2 rounded-sm font-sans text-[13px] font-semibold shadow-sm transition-opacity disabled:cursor-default ${
 										justAdded
-											? "border border-[#7B1F0A]/35 bg-cream text-[#7B1F0A]"
-											: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/55 focus-visible:ring-offset-2"
+											? "border border-[#000000]/35 bg-cream text-[#000000]"
+											: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/55 focus-visible:ring-offset-2"
 									}`}
-									style={justAdded ? undefined : { background: "#7B1F0A" }}
+									style={justAdded ? undefined : { background: "#000000" }}
 								>
 									{justAdded ? (
 										<>
@@ -428,8 +393,8 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							<button
 								type="button"
 								onClick={handleAddToCart}
-								className="flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/50 focus-visible:ring-offset-2"
-								style={{ background: "#7B1F0A" }}
+								className="flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/50 focus-visible:ring-offset-2"
+								style={{ background: "#000000" }}
 							>
 								Request pricing
 							</button>
@@ -440,9 +405,9 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 						<button
 							type="button"
 							onClick={() => setModal("b2b")}
-							className="rounded-sm py-1 text-center font-sans text-[11px] font-medium text-text-muted transition-colors hover:text-[#7B1F0A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7B1F0A]/30"
+							className="rounded-sm py-1 text-center font-sans text-[11px] font-medium text-text-muted transition-colors hover:text-[#000000] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#000000]/30"
 						>
-							Request B2B Quote →
+							Wholesale inquiry →
 						</button>
 					</div>
 				</div>

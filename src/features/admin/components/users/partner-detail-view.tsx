@@ -8,11 +8,11 @@ import { DeleteConfirmModal } from "./delete-confirm-modal";
 import type { UpdatePartnerInput } from "~/app/api/partners/schemas/partners.schema";
 
 const fieldStyle = {
-  background: "#F5F0E8",
-  border: "1px solid #f0e8dc",
+  background: "#ffffff",
+  border: "1px solid #d8d0c4",
 };
 
-const cardStyle = { background: "white", border: "1px solid #f0e8dc" };
+const cardStyle = { background: "white", border: "1px solid #d8d0c4" };
 
 function formatDate(d: Date) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -27,16 +27,16 @@ type ProfileRow = { label: string; value: string | null | undefined };
 function ProfileSection({ title, rows }: { title: string; rows: ProfileRow[] }) {
   return (
     <div className="rounded-xl overflow-hidden" style={cardStyle}>
-      <div className="px-5 py-4 border-b" style={{ borderColor: "#f0e8dc" }}>
-        <h3 className="font-serif font-bold text-[15px] text-[#2a0f05]">{title}</h3>
+      <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+        <h3 className="font-serif font-bold text-[15px] text-[#000000]">{title}</h3>
       </div>
       <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {rows.map(({ label, value }) => (
           <div key={label}>
-            <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase mb-0.5">
+            <p className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase mb-0.5">
               {label}
             </p>
-            <p className="font-sans text-sm text-[#2a0f05]">{value ?? "—"}</p>
+            <p className="font-sans text-sm text-[#000000]">{value ?? "—"}</p>
           </div>
         ))}
       </div>
@@ -70,8 +70,8 @@ export function PartnerDetailView() {
   if (!userId) {
     return (
       <div className="p-4 lg:p-6">
-        <p className="font-sans text-sm text-[#7a4d38]">Invalid artisan.</p>
-        <Link href="/admin/users" className="mt-2 inline-block font-sans text-sm text-[#2a0f05] underline">
+        <p className="font-sans text-sm text-[#727272]">Invalid artisan.</p>
+        <Link href="/admin/users" className="mt-2 inline-block font-sans text-sm text-[#000000] underline">
           ← Back to artisans
         </Link>
       </div>
@@ -82,7 +82,7 @@ export function PartnerDetailView() {
     return (
       <div className="p-4 lg:p-6">
         <div className="rounded-xl overflow-hidden px-5 py-12 text-center" style={cardStyle}>
-          <p className="font-sans text-sm text-[#7a4d38]">Loading artisan…</p>
+          <p className="font-sans text-sm text-[#727272]">Loading artisan…</p>
         </div>
       </div>
     );
@@ -95,7 +95,7 @@ export function PartnerDetailView() {
           <p className="font-sans text-sm text-red-600">
             {error instanceof Error ? error.message : "Artisan not found."}
           </p>
-          <Link href="/admin/users" className="mt-3 inline-block font-sans text-sm text-[#2a0f05] underline">
+          <Link href="/admin/users" className="mt-3 inline-block font-sans text-sm text-[#000000] underline">
             ← Back to artisans
           </Link>
         </div>
@@ -156,7 +156,7 @@ export function PartnerDetailView() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
           href="/admin/users"
-          className="font-sans text-sm text-[#7a4d38] hover:text-[#2a0f05] transition-colors"
+          className="font-sans text-sm text-[#727272] hover:text-[#000000] transition-colors"
         >
           ← Back to artisans
         </Link>
@@ -167,7 +167,7 @@ export function PartnerDetailView() {
               onClick={() => approveMutation.mutate(partner.id)}
               disabled={approveMutation.isPending}
               className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors disabled:opacity-60"
-              style={{ background: "#1a0500", color: "white", border: "1px solid #1a0500" }}
+              style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
             >
               {approveMutation.isPending ? "Activating…" : "Activate account"}
             </button>
@@ -189,9 +189,9 @@ export function PartnerDetailView() {
 
       {/* Account (editable) */}
       <div className="rounded-xl overflow-hidden" style={cardStyle}>
-        <div className="px-5 py-4 border-b" style={{ borderColor: "#f0e8dc" }}>
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Account</h2>
-          <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
+        <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Account</h2>
+          <p className="font-sans text-[11px] text-[#727272] mt-0.5">
             Edit name, email, or access status. Joined {formatDate(partner.createdAt)}
             {partner.profileCompleted && " · Profile completed"}
           </p>
@@ -199,7 +199,7 @@ export function PartnerDetailView() {
         <form onSubmit={handleSaveAccount} className="p-5 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase">
+              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase">
                 Name
               </label>
               <input
@@ -207,12 +207,12 @@ export function PartnerDetailView() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="font-sans text-sm text-[#2a0f05] rounded-xl px-3.5 py-2.5 w-full"
+                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
                 style={fieldStyle}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase">
+              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase">
                 Email
               </label>
               <input
@@ -220,19 +220,19 @@ export function PartnerDetailView() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="font-sans text-sm text-[#2a0f05] rounded-xl px-3.5 py-2.5 w-full"
+                className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
                 style={fieldStyle}
               />
             </div>
           </div>
           <div className="flex flex-col gap-1.5 max-w-xs">
-            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase">
+            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase">
               Status
             </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as "enabled" | "disabled")}
-              className="font-sans text-sm text-[#2a0f05] rounded-xl px-3.5 py-2.5 w-full"
+              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 w-full"
               style={fieldStyle}
             >
               <option value="enabled">Enabled (can access producer)</option>
@@ -243,7 +243,7 @@ export function PartnerDetailView() {
             type="submit"
             disabled={updateMutation.isPending}
             className="font-sans text-sm font-semibold rounded-xl px-4 py-2.5 w-fit transition-colors disabled:opacity-60"
-            style={{ background: "#1a0500", color: "white", border: "1px solid #1a0500" }}
+            style={{ background: "#000000", color: "white", border: "1px solid #000000" }}
           >
             {updateMutation.isPending ? "Saving…" : "Save account"}
           </button>
@@ -255,8 +255,8 @@ export function PartnerDetailView() {
         <ProfileSection title="Profile (onboarding)" rows={profileRows} />
       ) : (
         <div className="rounded-xl overflow-hidden px-5 py-6" style={cardStyle}>
-          <h3 className="font-serif font-bold text-[15px] text-[#2a0f05]">Profile</h3>
-          <p className="font-sans text-sm text-[#7a4d38] mt-1">No profile data yet.</p>
+          <h3 className="font-serif font-bold text-[15px] text-[#000000]">Profile</h3>
+          <p className="font-sans text-sm text-[#727272] mt-1">No profile data yet.</p>
         </div>
       )}
 

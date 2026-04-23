@@ -9,12 +9,12 @@ import {
 
 // Platform theme (nevali)
 const colors = {
-  primary: "#1a0500",
-  primaryLight: "#2a0f05",
-  muted: "#7a4d38",
-  border: "#f0e8dc",
-  cream: "#F5F0E8",
-  accent: "#C8963C",
+  primary: "#000000",
+  primaryLight: "#000000",
+  muted: "#727272",
+  border: "#d8d0c4",
+  cream: "#ede6dc",
+  paper: "#ffffff",
 };
 
 const styles = StyleSheet.create({
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 10,
     fontWeight: 700,
-    color: colors.accent,
+    color: colors.paper,
     letterSpacing: 1.2,
   },
   title: {

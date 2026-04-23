@@ -22,7 +22,7 @@ export default function EcosystemSection() {
         <div className="flex items-center gap-4 py-10 border-b border-stone-100">
           <span
             className="font-sans text-xs font-bold tracking-[0.25em] uppercase"
-            style={{ color: "#C87020" }}
+            style={{ color: "#727272" }}
           >
             How it works
           </span>
@@ -41,7 +41,7 @@ export default function EcosystemSection() {
           {/* Big background number */}
           <span
             className="absolute top-8 right-8 font-serif font-bold select-none pointer-events-none leading-none"
-            style={{ fontSize: "clamp(80px, 12vw, 160px)", color: "rgba(123,45,30,0.04)" }}
+            style={{ fontSize: "clamp(80px, 12vw, 160px)", color: "rgba(0,0,0,0.04)" }}
           >
             01
           </span>
@@ -49,15 +49,15 @@ export default function EcosystemSection() {
           <div className="flex flex-col gap-3 relative z-10">
             <div
               className="inline-flex items-center gap-2 self-start px-3 py-1"
-              style={{ background: "rgba(123,45,30,0.07)" }}
+              style={{ background: "rgba(0,0,0,0.06)" }}
             >
-              <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5" style={{ color: "#7B1F0A" }}>
+              <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5" style={{ color: "#000000" }}>
                 <circle cx="8" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.3" />
                 <path d="M2.5 14c0-3.038 2.462-5.5 5.5-5.5s5.5 2.462 5.5 5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               </svg>
               <span
                 className="font-sans text-xs font-bold tracking-[0.2em] uppercase"
-                style={{ color: "#7B1F0A" }}
+                style={{ color: "#000000" }}
               >
                 Brand side
               </span>
@@ -65,7 +65,7 @@ export default function EcosystemSection() {
 
             <h2
               className="font-serif font-bold leading-[1.05]"
-              style={{ fontSize: "clamp(32px, 3.5vw, 54px)", color: "#1a0500" }}
+              style={{ fontSize: "clamp(32px, 3.5vw, 54px)", color: "#000000" }}
             >
               From your hands
               <br />
@@ -83,7 +83,7 @@ export default function EcosystemSection() {
               <li key={f.label} className="flex items-start gap-3">
                 <span
                   className="mt-[3px] w-4 h-4 shrink-0 flex items-center justify-center"
-                  style={{ color: "#C87020" }}
+                  style={{ color: "#727272" }}
                 >
                   <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
                     <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -97,7 +97,7 @@ export default function EcosystemSection() {
           <Link
             href="/auth/register"
             className="relative z-10 self-start font-sans font-semibold text-sm text-white px-6 py-3 transition-opacity hover:opacity-90 inline-flex items-center gap-2"
-            style={{ background: "#7B1F0A" }}
+            style={{ background: "#000000" }}
           >
             Apply as a brand
             <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
@@ -109,12 +109,12 @@ export default function EcosystemSection() {
         {/* ── Buyer side ── */}
         <div
           className="relative px-8 lg:px-12 py-16 lg:py-20 flex flex-col gap-10"
-          style={{ background: "#FAF7F4" }}
+          style={{ background: "#ede6dc" }}
         >
           {/* Big background number */}
           <span
             className="absolute top-8 right-8 font-serif font-bold select-none pointer-events-none leading-none"
-            style={{ fontSize: "clamp(80px, 12vw, 160px)", color: "rgba(200,112,32,0.06)" }}
+            style={{ fontSize: "clamp(80px, 12vw, 160px)", color: "rgba(114,114,114,0.06)" }}
           >
             02
           </span>
@@ -122,15 +122,15 @@ export default function EcosystemSection() {
           <div className="flex flex-col gap-3 relative z-10">
             <div
               className="inline-flex items-center gap-2 self-start px-3 py-1"
-              style={{ background: "rgba(200,112,32,0.1)" }}
+              style={{ background: "rgba(114,114,114,0.1)" }}
             >
-              <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5" style={{ color: "#C87020" }}>
+              <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5" style={{ color: "#727272" }}>
                 <rect x="2" y="5" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.3" />
                 <path d="M5 5V4a3 3 0 0 1 6 0v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               </svg>
               <span
                 className="font-sans text-xs font-bold tracking-[0.2em] uppercase"
-                style={{ color: "#C87020" }}
+                style={{ color: "#727272" }}
               >
                 Buyer side
               </span>
@@ -138,7 +138,7 @@ export default function EcosystemSection() {
 
             <h2
               className="font-serif font-bold leading-[1.05]"
-              style={{ fontSize: "clamp(32px, 3.5vw, 54px)", color: "#1a0500" }}
+              style={{ fontSize: "clamp(32px, 3.5vw, 54px)", color: "#000000" }}
             >
               Shop cosmetics you
               <br />
@@ -157,7 +157,7 @@ export default function EcosystemSection() {
               <li key={f.label} className="flex items-start gap-3">
                 <span
                   className="mt-[3px] w-4 h-4 shrink-0 flex items-center justify-center"
-                  style={{ color: "#C87020" }}
+                  style={{ color: "#727272" }}
                 >
                   <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
                     <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -172,7 +172,7 @@ export default function EcosystemSection() {
             <Link
               href="/products"
               className="self-start font-sans font-semibold text-sm px-6 py-3 transition-opacity hover:opacity-90 inline-flex items-center gap-2 border"
-              style={{ color: "#1a0500", borderColor: "rgba(26,5,0,0.2)", background: "white" }}
+              style={{ color: "#000000", borderColor: "rgba(0,0,0,0.2)", background: "white" }}
             >
               Browse the catalog
               <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
@@ -182,7 +182,7 @@ export default function EcosystemSection() {
             <Link
               href="/auth/register-buyer"
               className="self-start font-sans font-semibold text-sm px-6 py-3 transition-opacity hover:opacity-90 inline-flex items-center gap-2"
-              style={{ background: "#7B1F0A", color: "#fff" }}
+              style={{ background: "#000000", color: "#fff" }}
             >
               Create buyer account
               <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4">
@@ -205,7 +205,7 @@ export default function EcosystemSection() {
             <div key={s.label} className="flex flex-col gap-1">
               <span
                 className="font-serif font-bold"
-                style={{ fontSize: "clamp(22px, 2.5vw, 36px)", color: "#1a0500" }}
+                style={{ fontSize: "clamp(22px, 2.5vw, 36px)", color: "#000000" }}
               >
                 {s.value}
               </span>

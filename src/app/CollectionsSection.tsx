@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { listApprovedProductsForPublicRepo } from "~/app/api/products/repo/products.repo";
-import { getCategoryGradient } from "~/lib/public-product-gradient";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 
 type MosaicProduct = {
 	id: string;
@@ -11,24 +11,18 @@ type MosaicProduct = {
 };
 
 function MosaicTile({ product }: { product: MosaicProduct }) {
-	const hasImage = Boolean(product.firstImageUrl);
+	const src =
+		product.firstImageUrl ??
+		productPlaceholderImageUrl(`${product.id}:${product.category}`, 900);
 	return (
 		<div className="relative h-full w-full">
-			<div
-				className="absolute inset-0"
-				style={{
-					backgroundImage: hasImage ? undefined : getCategoryGradient(product.category),
-				}}
+			<Image
+				alt={product.name}
+				className="object-cover"
+				fill
+				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
+				src={src}
 			/>
-			{hasImage && product.firstImageUrl ? (
-				<Image
-					alt={product.name}
-					className="object-cover"
-					fill
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
-					src={product.firstImageUrl}
-				/>
-			) : null}
 			<div
 				className="absolute inset-0 flex items-end p-3"
 				style={{
@@ -77,7 +71,7 @@ export default async function CollectionsSection() {
 						<Link
 							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"
 							href="/products"
-							style={{ background: "#7B1F0A" }}
+							style={{ background: "#000000" }}
 						>
 							Browse catalog
 						</Link>

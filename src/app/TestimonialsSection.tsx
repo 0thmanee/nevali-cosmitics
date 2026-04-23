@@ -7,7 +7,7 @@ function IconQuoteGreen() {
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
       <path
         d="M2 9C2 6.2 4 4 6 3L7 5C5.5 5.8 5 7 5 8v1H2V9zM8 9C8 6.2 10 4 12 3l1 2c-1.5.8-2 2-2 3v1H8V9z"
-        fill="#7b2d1e"
+        fill="#000000"
       />
     </svg>
   );
@@ -18,7 +18,7 @@ function IconQuoteGold() {
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
       <path
         d="M2 9C2 6.2 4 4 6 3L7 5C5.5 5.8 5 7 5 8v1H2V9zM8 9C8 6.2 10 4 12 3l1 2c-1.5.8-2 2-2 3v1H8V9z"
-        fill="#C8963C"
+        fill="#727272"
       />
     </svg>
   );
@@ -27,10 +27,10 @@ function IconQuoteGold() {
 function IconGlobe() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <circle cx="7" cy="7" r="5" stroke="#E8B84B" strokeWidth="1.4" />
+      <circle cx="7" cy="7" r="5" stroke="#727272" strokeWidth="1.4" />
       <path
         d="M4 7h6M7 4l3 3-3 3"
-        stroke="#E8B84B"
+        stroke="#727272"
         strokeWidth="1.4"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -46,31 +46,31 @@ const testimonials = [
     location: "SOUSS-MASSA REGION",
     locationIcon: <IconQuoteGreen />,
     locationIconStyle: {
-      background: "#FAF5EE",
+      background: "#ffffff",
       borderRadius: "10px 10px 6px 6px",
     },
     topBar:
       "linear-gradient(in oklab 90deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 50%, oklab(69.6% 0.033 0.116) 100%)",
-    cardBg: "#FAFAF7",
-    cardBorder: "1px solid #FAF5EE",
+    cardBg: "#ffffff",
+    cardBorder: "1px solid #ffffff",
     cardShadow: "#0B241712 0px 4px 32px",
     dark: false,
     quote:
       '"nevali gave our cooperative shelf-ready storytelling. Within weeks of launch we were shipping argan serums to Paris boutiques—with ingredients and batches documented the way EU buyers expect."',
     name: "Fatima Ait Benhaddou",
-    role: "Director, Coopérative Tissint — Argan & rose care",
+    role: "Director, Coopérative Souss — Argan & rose skincare",
     initials: "FA",
     avatarGradient:
       "linear-gradient(in oklab 135deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 100%)",
     badge: "PRODUCER",
-    badgeStyle: { background: "#FAF5EE", color: "#7b2d1e" },
+    badgeStyle: { background: "#ffffff", color: "#000000" },
   },
   {
     location: "AMSTERDAM, NETHERLANDS",
     locationIcon: <IconGlobe />,
     locationIconStyle: {
-      background: "#C8963C26",
-      border: "1px solid #C8963C4D",
+      background: "#72727226",
+      border: "1px solid #7272724D",
       borderRadius: "10px 10px 6px 6px",
     },
     topBar:
@@ -89,22 +89,22 @@ const testimonials = [
       "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
     badge: "BUYER",
     badgeStyle: {
-      background: "#C8963C33",
-      color: "#E8B84B",
-      border: "1px solid #C8963C59",
+      background: "#72727233",
+      color: "#ffffff",
+      border: "1px solid #72727259",
     },
   },
   {
     location: "TALIOUINE REGION",
     locationIcon: <IconQuoteGold />,
     locationIconStyle: {
-      background: "#F5EDD6",
+      background: "#ede6dc",
       borderRadius: "10px 10px 6px 6px",
     },
     topBar:
       "linear-gradient(in oklab 90deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 50%, oklab(24% 0.07 0.038) 100%)",
-    cardBg: "#FAFAF7",
-    cardBorder: "1px solid #FAF5EE",
+    cardBg: "#ffffff",
+    cardBorder: "1px solid #ffffff",
     cardShadow: "#0B241712 0px 4px 32px",
     dark: false,
     quote:
@@ -115,7 +115,7 @@ const testimonials = [
     avatarGradient:
       "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
     badge: "PRODUCER",
-    badgeStyle: { background: "#F5EDD6", color: "#C8963C" },
+    badgeStyle: { background: "#ede6dc", color: "#727272" },
   },
 ];
 
@@ -132,7 +132,7 @@ export default function TestimonialsSection() {
             <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
               <path
                 d="M11 2l2 6h6l-5 3.6 1.8 6L11 14l-4.8 3.6 1.8-6L3 8h6L11 2z"
-                stroke="#C8963C"
+                stroke="#727272"
                 strokeWidth="1.8"
                 strokeLinejoin="round"
               />
@@ -143,7 +143,7 @@ export default function TestimonialsSection() {
             <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
               <path
                 d="M11 2l2 6h6l-5 3.6 1.8 6L11 14l-4.8 3.6 1.8-6L3 8h6L11 2z"
-                stroke="#C8963C"
+                stroke="#727272"
                 strokeWidth="1.8"
                 strokeLinejoin="round"
               />
@@ -193,7 +193,7 @@ export default function TestimonialsSection() {
                   <span
                     className="font-sans text-sm font-bold tracking-[0.14em] uppercase"
                     style={{
-                      color: t.dark ? "rgba(250,250,247,0.45)" : "#7a4d38",
+                      color: t.dark ? "rgba(250,250,247,0.45)" : "#727272",
                     }}
                   >
                     {t.location}
@@ -213,7 +213,7 @@ export default function TestimonialsSection() {
                 <p
                   className="font-serif italic text-lg leading-relaxed flex-1"
                   style={{
-                    color: t.dark ? "rgba(250,250,247,0.9)" : "#2a0f05",
+                    color: t.dark ? "rgba(250,250,247,0.9)" : "#000000",
                   }}
                 >
                   {t.quote}
@@ -233,14 +233,14 @@ export default function TestimonialsSection() {
                   <div className="flex flex-col gap-0.5 flex-1 min-w-0">
                     <p
                       className="font-sans font-semibold text-sm leading-tight"
-                      style={{ color: t.dark ? "#FAFAF7" : "#2a0f05" }}
+                      style={{ color: t.dark ? "#ffffff" : "#000000" }}
                     >
                       {t.name}
                     </p>
                     <p
                       className="font-sans text-xs leading-tight"
                       style={{
-                        color: t.dark ? "rgba(250,250,247,0.45)" : "#7a4d38",
+                        color: t.dark ? "rgba(250,250,247,0.45)" : "#727272",
                       }}
                     >
                       {t.role}

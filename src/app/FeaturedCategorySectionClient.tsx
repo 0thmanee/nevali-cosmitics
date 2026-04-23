@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { FeaturedHomeProductSample } from "~/app/featured-category-samples.types";
+import { featuredCategoryPlaceholderImage } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
 
 const CATEGORIES = [
@@ -18,7 +19,7 @@ const CATEGORIES = [
       { label: "Values", value: "Cooperative + lab partnerships" },
       { label: "On platform", value: "Traceable listings & reviews" },
     ],
-    color: "linear-gradient(135deg, #8B2D1E 0%, #C04830 40%, #A03820 70%)",
+    color: "linear-gradient(135deg, #1a1a1a 0%, #454545 45%, #727272 100%)",
   },
   {
     id: "skincare",
@@ -31,7 +32,7 @@ const CATEGORIES = [
       { label: "Proof", value: "Lab notes & certifications on profile" },
       { label: "Promise", value: "Original Moroccan recipes" },
     ],
-    color: "linear-gradient(135deg, #C87040 0%, #A05020 40%, #C89060 100%)",
+    color: "linear-gradient(135deg, #2a2a2a 0%, #5a5a5a 50%, #8a8a8a 100%)",
   },
   {
     id: "hammam-body",
@@ -44,7 +45,7 @@ const CATEGORIES = [
       { label: "Use", value: "Weekly reset or daily glow" },
       { label: "Heritage", value: "Ritual, not trend-chasing" },
     ],
-    color: "linear-gradient(135deg, #5A3010 0%, #7A4820 50%, #9A6830 100%)",
+    color: "linear-gradient(135deg, #000000 0%, #3d3d3d 55%, #727272 100%)",
   },
   {
     id: "hair-fragrance",
@@ -57,7 +58,7 @@ const CATEGORIES = [
       { label: "Packaging", value: "Refillable where possible" },
       { label: "Vibe", value: "Modern Morocco, not souvenir kitsch" },
     ],
-    color: "linear-gradient(135deg, #4A1A60 0%, #7A3A90 50%, #6A2A80 100%)",
+    color: "linear-gradient(135deg, #0d0d0d 0%, #4a4a4a 40%, #9a9a9a 100%)",
   },
 ] as const;
 
@@ -75,7 +76,7 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
   const sample = samples[activeId] ?? null;
 
   return (
-    <section className="w-full py-28" style={{ background: "#F5EDE3" }}>
+    <section className="w-full py-28" style={{ background: "#ede6dc" }}>
       <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-10 lg:gap-12">
         <div className="flex-[1.2] flex flex-col gap-5">
           <h2
@@ -106,7 +107,7 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
                 onClick={() => setActiveId(cat.id)}
                 className="text-left font-sans text-sm uppercase tracking-wider px-4 py-2.5 transition-colors"
                 style={{
-                  color: activeId === cat.id ? "#7B2000" : "#7A4D38",
+                  color: activeId === cat.id ? "#7B2000" : "#727272",
                   fontWeight: activeId === cat.id ? 700 : 400,
                   borderLeft: activeId === cat.id ? "2px solid #7B2000" : "2px solid transparent",
                   marginLeft: "-2px",
@@ -131,8 +132,8 @@ export function FeaturedCategorySectionClient({ samples }: Props) {
 
             {/* 3D floating product */}
             {(() => {
-              const imgSrc = sample?.firstImageUrl ?? null;
-              if (!imgSrc) return null;
+              const imgSrc =
+                sample?.firstImageUrl ?? featuredCategoryPlaceholderImage(active.id, 900);
               return (
                 <div
                   className="absolute inset-0 flex flex-col items-center justify-center gap-0"

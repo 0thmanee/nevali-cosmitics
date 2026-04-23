@@ -65,9 +65,9 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl overflow-hidden shadow-sm" style={{ background: "white", border: "1px solid #f0e8dc" }}>
-      <div className="px-6 py-4 border-b border-[#f0e8dc]">
-        <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">{program ? "Edit program" : "New program"}</h2>
+    <form onSubmit={handleSubmit} className="rounded-2xl overflow-hidden shadow-sm" style={{ background: "white", border: "1px solid #d8d0c4" }}>
+      <div className="px-6 py-4 border-b border-[#d8d0c4]">
+        <h2 className="font-serif font-bold text-[15px] text-[#000000]">{program ? "Edit program" : "New program"}</h2>
       </div>
       <div className="p-6 flex flex-col gap-4">
         {error && (
@@ -76,44 +76,44 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
           </div>
         )}
         <div>
-          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Name *</label>
+          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Name *</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
             placeholder="e.g. Export Documentation Mastery"
             maxLength={200}
           />
         </div>
         <div>
-          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Description</label>
+          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8] min-h-[80px]"
+            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff] min-h-[80px]"
             placeholder="Short description of the program"
             maxLength={2000}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Provider</label>
+            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Provider</label>
             <input
               type="text"
               value={provider}
               onChange={(e) => setProvider(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               maxLength={100}
             />
           </div>
           <div>
-            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Category *</label>
+            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Category *</label>
             <input
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               placeholder="e.g. Export & Trade"
               maxLength={100}
             />
@@ -121,22 +121,22 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Duration label</label>
+            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Duration label</label>
             <input
               type="text"
               value={durationLabel}
               onChange={(e) => setDurationLabel(e.target.value)}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
               placeholder="e.g. 10 modules · ~6 hours"
               maxLength={100}
             />
           </div>
           <div>
-            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Level</label>
+            <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Level</label>
             <select
               value={level}
               onChange={(e) => setLevel(e.target.value as (typeof TRAINING_LEVELS)[number])}
-              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+              className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
             >
               {TRAINING_LEVELS.map((l) => (
                 <option key={l} value={l}>{getTrainingLevelLabel(l)}</option>
@@ -145,11 +145,11 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
           </div>
         </div>
         <div>
-          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Status</label>
+          <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Status</label>
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as (typeof TRAINING_PROGRAM_STATUSES)[number])}
-            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#f0e8dc] bg-[#F5F0E8]"
+            className="font-sans text-sm w-full rounded-xl px-3.5 py-2.5 border border-[#d8d0c4] bg-[#ffffff]"
           >
             {TRAINING_PROGRAM_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -161,11 +161,11 @@ export function TrainingProgramForm({ program, onSubmit, isPending, onSuccessRed
             type="submit"
             disabled={isPending}
             className="font-sans text-sm font-semibold rounded-xl px-6 py-2.5 transition-colors disabled:opacity-60"
-            style={{ background: "#1a0500", color: "white" }}
+            style={{ background: "#000000", color: "white" }}
           >
             {isPending ? "Saving…" : program ? "Save changes" : "Create program"}
           </button>
-          <Link href="/admin/training" className="font-sans text-sm font-medium text-[#7a4d38] hover:text-[#2a0f05] transition-colors">
+          <Link href="/admin/training" className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors">
             Cancel
           </Link>
         </div>

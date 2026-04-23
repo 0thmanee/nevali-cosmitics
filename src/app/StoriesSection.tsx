@@ -3,25 +3,25 @@ const STORIES = [
     title: "How Moroccan labs document INCI lists for EU-conscious shoppers",
     date: "March 10, 2027",
     tag: "Compliance",
-    color: "linear-gradient(135deg, #1A7080 0%, #0D5060 60%, #2A9090 100%)",
+    color: "linear-gradient(135deg, #0d0d0d 0%, #3d3d3d 55%, #727272 100%)",
   },
   {
     title: "Micro-learning for beauty founders on nevali",
     date: "March 10, 2027",
     tag: "Education",
-    color: "linear-gradient(135deg, #5A3010 0%, #7A4820 60%, #9A6830 100%)",
+    color: "linear-gradient(135deg, #1a1a1a 0%, #5a5a5a 50%, #9a9a9a 100%)",
   },
   {
     title: "Argan cooperatives meet modern serum science",
     date: "March 10, 2027",
     tag: "Community",
-    color: "linear-gradient(135deg, #8B2D1E 0%, #C04830 50%, #A03820 100%)",
+    color: "linear-gradient(135deg, #000000 0%, #454545 50%, #727272 100%)",
   },
 ];
 
 export default function StoriesSection() {
   return (
-    <section className="w-full py-28" style={{ background: "#FAF5EE" }}>
+    <section className="w-full py-28" style={{ background: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
@@ -71,7 +71,7 @@ export default function StoriesSection() {
                 <div className="absolute bottom-0 left-0 p-4 flex items-center gap-2 z-10">
                   <span
                     className="font-sans text-xs font-bold uppercase tracking-widest text-white px-2 py-1"
-                    style={{ background: "#C87020" }}
+                    style={{ background: "#727272" }}
                   >
                     {s.date}
                   </span>

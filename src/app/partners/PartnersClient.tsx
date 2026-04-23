@@ -8,20 +8,20 @@ import type { PublicPartnerListItem } from "~/app/partners/public-types";
 type Partner = PublicPartnerListItem;
 
 const AVATAR_PALETTES = [
-  { bg: "#f0e8dc", text: "#7A2915" },
-  { bg: "#fdf3e7", text: "#3d1409" },
-  { bg: "#f5ede3", text: "#a33520" },
-  { bg: "#faf0e8", text: "#3d1409" },
-  { bg: "#eeddd0", text: "#7A2915" },
-  { bg: "#f8ede0", text: "#a33520" },
+  { bg: "#d8d0c4", text: "#000000" },
+  { bg: "#e8e2d8", text: "#000000" },
+  { bg: "#f5ede3", text: "#454545" },
+  { bg: "#faf0e8", text: "#000000" },
+  { bg: "#eeddd0", text: "#000000" },
+  { bg: "#f8ede0", text: "#454545" },
 ];
 
 function avatarPalette(id: string) {
   let hash = 0;
   for (const c of id) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffff;
   return AVATAR_PALETTES[Math.abs(hash) % AVATAR_PALETTES.length] ?? {
-    bg: "#f0e8dc",
-    text: "#7A2915",
+    bg: "#d8d0c4",
+    text: "#000000",
   };
 }
 
@@ -44,10 +44,10 @@ function PartnerCard({ partner }: { partner: Partner }) {
 
   return (
     <article className="group relative flex flex-col overflow-hidden border border-cream-dark bg-white transition-shadow hover:shadow-md">
-      {/* Terracotta accent bar */}
+      {/* Brand accent bar */}
       <div
         className="h-1 w-full shrink-0"
-        style={{ background: "linear-gradient(90deg, #7A2915 0%, #a33520 50%, #D87708 100%)" }}
+        style={{ background: "linear-gradient(90deg, #000000 0%, #454545 50%, #727272 100%)" }}
         aria-hidden
       />
 
@@ -94,9 +94,9 @@ function PartnerCard({ partner }: { partner: Partner }) {
           <span
             className="shrink-0 border px-2.5 py-1 font-body text-[10px] font-bold uppercase tracking-widest"
             style={{
-              borderColor: "#D87708",
-              color: "#D87708",
-              background: "rgba(216,119,8,0.07)",
+              borderColor: "#727272",
+              color: "#727272",
+              background: "rgba(114,114,114,0.07)",
             }}
           >
             Verified
@@ -114,7 +114,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
         <div className="flex flex-wrap items-center gap-2">
           <span
             className="inline-flex items-center gap-1.5 px-3 py-1 font-body text-[11px] font-semibold"
-            style={{ background: "rgba(122,41,21,0.09)", color: "#7A2915" }}
+            style={{ background: "rgba(0,0,0,0.09)", color: "#000000" }}
           >
             <svg aria-hidden fill="none" height="11" viewBox="0 0 12 12" width="11">
               <rect height="7" rx="0.5" stroke="currentColor" strokeWidth="1.1" width="9" x="1.5" y="3.5" />
@@ -213,7 +213,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
             <input
               className="w-full border border-cream-dark bg-white py-2.5 pl-9 pr-4 font-body text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-primary focus:outline-none"
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search artisans, regions, crafts…"
+              placeholder="Search brands, cities, categories…"
               type="text"
               value={search}
             />
@@ -231,8 +231,8 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
                 className="border px-3.5 py-1.5 font-body text-sm transition-colors"
                 style={
                   region === r
-                    ? { background: "#7A2915", borderColor: "#7A2915", color: "#fff" }
-                    : { background: "white", borderColor: "#f0e8dc", color: "#270d06" }
+                    ? { background: "#000000", borderColor: "#000000", color: "#fff" }
+                    : { background: "white", borderColor: "#d8d0c4", color: "#270d06" }
                 }
                 onClick={() => setRegion(r)}
                 type="button"

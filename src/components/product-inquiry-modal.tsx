@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { submitProductInquiry } from "~/app/api/inquiries/actions";
+import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 
 type Mode = "cart" | "b2b";
 
@@ -29,7 +30,7 @@ type FormState = "idle" | "loading" | "success" | "error";
 const OOS_INQUIRY_BILLING =
 	"This item is not available for cart checkout right now. Your message goes to the brand by email—no account required.";
 
-const B2B_QUOTE_BILLING =
+const WHOLESALE_REQUEST_BILLING =
 	"Optional wholesale request to the brand by email. For immediate purchase, use Add to cart and guest checkout instead—no sign-in required.";
 
 function marketplaceBillingNote(): string | undefined {
@@ -80,13 +81,16 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 	}
 
 	const isB2B = mode === "b2b";
-	const submitLabel = isB2B ? "Send Quote Request" : "Send Inquiry";
+	const submitLabel = isB2B ? "Send wholesale request" : "Send inquiry";
+	const coverSrc =
+		product.firstImageUrl ??
+		productPlaceholderImageUrl(`${product.organizationId}:${product.id}:${product.category}`, 640);
 
 	return (
 		<div
 			ref={overlayRef}
 			className="fixed inset-0 z-[999] flex items-center justify-center p-4"
-			style={{ background: "rgba(10,20,14,0.55)", backdropFilter: "blur(4px)" }}
+			style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
 			onClick={(e) => e.target === overlayRef.current && onClose()}
 		>
 			<div className="relative flex w-full max-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
@@ -104,7 +108,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 					<div className="flex flex-col items-center justify-center gap-5 px-8 py-16 text-center">
 						<div
 							className="flex h-16 w-16 items-center justify-center rounded-full"
-							style={{ background: "#1a0500" }}
+							style={{ background: "#000000" }}
 						>
 							<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
 								<path
@@ -118,17 +122,17 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 						</div>
 						<div>
 							<p className="mb-1 font-serif font-bold text-xl text-text-dark">
-								{isB2B ? "Quote request sent!" : "Inquiry sent!"}
+								{isB2B ? "Wholesale request sent!" : "Inquiry sent!"}
 							</p>
 							<p className="max-w-xs font-sans text-sm leading-relaxed text-text-muted">
-								The producer will review your request and get back to you at{" "}
+								The brand will review your request and get back to you at{" "}
 								<span className="font-semibold text-text-dark">{email}</span> shortly.
 							</p>
 						</div>
 						<button
 							onClick={onClose}
 							className="rounded-xl px-8 py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90"
-							style={{ background: "#1a0500" }}
+							style={{ background: "#000000" }}
 							type="button"
 						>
 							Done
@@ -137,40 +141,14 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 				) : (
 					<>
 						<div className="flex items-center gap-4 border-cream-dark border-b p-5">
-							<div
-								className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl"
-								style={{ backgroundImage: product.firstImageUrl ? undefined : product.gradient }}
-							>
-								{product.firstImageUrl ? (
-									<Image
-										alt={product.name}
-										className="h-full w-full object-cover"
-										height={64}
-										src={product.firstImageUrl}
-										width={64}
-									/>
-								) : (
-									<svg width="24" height="24" viewBox="0 0 36 36" fill="none">
-										<rect
-											height="18"
-											rx="3"
-											stroke="currentColor"
-											strokeOpacity="0.4"
-											strokeWidth="1.4"
-											width="30"
-											x="3"
-											y="14"
-										/>
-										<path
-											d="M12 14v-3a6 6 0 0 1 12 0v3"
-											stroke="currentColor"
-											strokeOpacity="0.4"
-											strokeWidth="1.4"
-											strokeLinecap="round"
-										/>
-										<circle cx="18" cy="22" r="2.5" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.4" />
-									</svg>
-								)}
+							<div className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-cream">
+								<Image
+									alt={product.name}
+									className="object-cover"
+									fill
+									sizes="64px"
+									src={coverSrc}
+								/>
 							</div>
 							<div className="min-w-0 flex-1">
 								<div className="mb-0.5 flex items-center gap-2">
@@ -178,11 +156,11 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 										className="rounded-full px-2 py-0.5 font-sans text-[9px] font-bold tracking-widest"
 										style={
 											isB2B
-												? { background: "#EFF6FF", color: "#1D4ED8" }
-												: { background: "#F0FDF4", color: "#15803D" }
+												? { background: "#ede6dc", color: "#000000" }
+												: { background: "#f4f4f4", color: "#000000" }
 										}
 									>
-										{isB2B ? "B2B QUOTE" : "ORDER"}
+										{isB2B ? "WHOLESALE" : "ORDER"}
 									</span>
 								</div>
 								<p className="truncate font-serif font-bold text-[15px] text-text-dark leading-snug">{product.name}</p>
@@ -256,7 +234,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							</div>
 
 							<p className="font-sans text-[11px] text-text-muted leading-relaxed">
-								{isB2B ? B2B_QUOTE_BILLING : OOS_INQUIRY_BILLING}
+								{isB2B ? WHOLESALE_REQUEST_BILLING : OOS_INQUIRY_BILLING}
 								{billingExtra ? ` ${billingExtra}` : ""}
 							</p>
 
@@ -269,7 +247,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							<button
 								className="flex w-full items-center justify-center gap-2 rounded-xl py-3 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 								disabled={state === "loading"}
-								style={{ background: "#7B1F0A" }}
+								style={{ background: "#000000" }}
 								type="submit"
 							>
 								{state === "loading" ? (

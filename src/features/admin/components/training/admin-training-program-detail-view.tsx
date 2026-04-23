@@ -27,7 +27,7 @@ function mediaTypeFromMime(mime: string): "VIDEO" | "PDF" | "IMAGE" {
   return "IMAGE";
 }
 
-const cardStyle = { background: "white", border: "1px solid #f0e8dc" } as const;
+const cardStyle = { background: "white", border: "1px solid #d8d0c4" } as const;
 
 type Props = { programId: string };
 
@@ -72,7 +72,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
   if (isLoading || !data) {
     return (
       <div className="p-4 lg:p-6 flex items-center justify-center py-20">
-        <p className="font-sans text-sm text-[#7a4d38]">{isLoading ? "Loading…" : "Program not found."}</p>
+        <p className="font-sans text-sm text-[#727272]">{isLoading ? "Loading…" : "Program not found."}</p>
       </div>
     );
   }
@@ -82,11 +82,11 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
   return (
     <div className="p-4 lg:p-6 flex flex-col gap-6">
       <nav className="flex items-center gap-2 text-sm">
-        <Link href="/admin/training" className="font-sans text-[#7a4d38] hover:text-[#2a0f05] transition-colors">
+        <Link href="/admin/training" className="font-sans text-[#727272] hover:text-[#000000] transition-colors">
           Training
         </Link>
-        <span className="font-sans text-[#7a4d38]/60">/</span>
-        <span className="font-sans font-medium text-[#2a0f05] truncate">{program.name}</span>
+        <span className="font-sans text-[#727272]/60">/</span>
+        <span className="font-sans font-medium text-[#000000] truncate">{program.name}</span>
       </nav>
 
       <TrainingProgramForm
@@ -97,30 +97,30 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
 
       {/* Modules */}
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#f0e8dc] flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Modules</h2>
+        <div className="px-6 py-4 border-b border-[#d8d0c4] flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Modules</h2>
           <Link
             href={`/admin/training/${programId}/modules/new`}
             className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 transition-colors inline-block"
-            style={{ background: "#1a0500", color: "white" }}
+            style={{ background: "#000000", color: "white" }}
           >
             Add module
           </Link>
         </div>
         <div className="p-6">
           {modules.length === 0 ? (
-            <p className="font-sans text-sm text-[#7a4d38]">No modules yet. Add a module to define sections and attach documents.</p>
+            <p className="font-sans text-sm text-[#727272]">No modules yet. Add a module to define sections and attach documents.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {(modules as TrainingModuleRow[]).map((mod, i) => (
                 <li
                   key={mod.id}
                   className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 group"
-                  style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+                  style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
                 >
                   <Link
                     href={`/admin/training/${programId}/modules/${mod.id}`}
-                    className="flex-1 min-w-0 font-sans text-sm font-semibold text-[#2a0f05] hover:text-[#7b2d1e] hover:underline truncate"
+                    className="flex-1 min-w-0 font-sans text-sm font-semibold text-[#000000] hover:text-[#000000] hover:underline truncate"
                   >
                     {i + 1}. {mod.title}
                   </Link>
@@ -145,9 +145,9 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
 
       {/* Program-level documents only; module docs are uploaded from each module page */}
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#f0e8dc]">
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Program-level documents</h2>
-          <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">
+        <div className="px-6 py-4 border-b border-[#d8d0c4]">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Program-level documents</h2>
+          <p className="font-sans text-[11px] text-[#727272] mt-0.5">
             Upload videos, PDFs, or images for the whole program. To add documents to a specific module, open that module via Add module or the module page.
           </p>
         </div>
@@ -161,13 +161,13 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
           />
           <div className="flex flex-wrap items-end gap-3">
             <div>
-              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase block mb-1.5">Title (optional)</label>
+              <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase block mb-1.5">Title (optional)</label>
               <input
                 type="text"
                 value={mediaTitle}
                 onChange={(e) => setMediaTitle(e.target.value)}
                 placeholder="e.g. Program intro"
-                className="font-sans text-sm rounded-xl px-3 py-2 border border-[#f0e8dc] w-40 bg-[#F5F0E8]"
+                className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] w-40 bg-[#ffffff]"
               />
             </div>
             <button
@@ -175,7 +175,7 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
               onClick={() => fileInputRef.current?.click()}
               disabled={addMediaMutation.isPending}
               className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 disabled:opacity-60"
-              style={{ background: "#1a0500", color: "white" }}
+              style={{ background: "#000000", color: "white" }}
             >
               {addMediaMutation.isPending ? "Uploading…" : "Upload file"}
             </button>
@@ -184,15 +184,15 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
           {(() => {
             const programMedia = (media as TrainingProgramMediaRow[]).filter((m) => !m.moduleId);
             return programMedia.length === 0 ? (
-              <p className="font-sans text-sm text-[#7a4d38]">No program-level documents yet. Upload a video, PDF, or image above.</p>
+              <p className="font-sans text-sm text-[#727272]">No program-level documents yet. Upload a video, PDF, or image above.</p>
             ) : (
             <ul className="flex flex-col gap-2">
               {programMedia.map((m) => (
-                <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}>
+                <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}>
                   <div className="min-w-0">
-                    <span className="font-sans text-[10px] font-bold tracking-wide text-[#7a4d38] uppercase">{m.mediaType}</span>
-                    {m.title && <span className="font-sans text-sm text-[#2a0f05] ml-2">{m.title}</span>}
-                    <a href={m.fileUrl} target="_blank" rel="noopener noreferrer" className="block font-sans text-[12px] text-[#7b2d1e] hover:underline truncate mt-0.5">{m.fileUrl}</a>
+                    <span className="font-sans text-[10px] font-bold tracking-wide text-[#727272] uppercase">{m.mediaType}</span>
+                    {m.title && <span className="font-sans text-sm text-[#000000] ml-2">{m.title}</span>}
+                    <a href={m.fileUrl} target="_blank" rel="noopener noreferrer" className="block font-sans text-[12px] text-[#000000] hover:underline truncate mt-0.5">{m.fileUrl}</a>
                   </div>
                   <button
                     type="button"
@@ -212,15 +212,15 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
 
       {/* Assign to organization */}
       <div className="rounded-2xl overflow-hidden shadow-sm" style={cardStyle}>
-        <div className="px-6 py-4 border-b border-[#f0e8dc]">
-          <h2 className="font-serif font-bold text-[15px] text-[#2a0f05]">Assign to partner</h2>
-          <p className="font-sans text-[11px] text-[#7a4d38] mt-0.5">Assign this program to an organization. They will see it in their Training page.</p>
+        <div className="px-6 py-4 border-b border-[#d8d0c4]">
+          <h2 className="font-serif font-bold text-[15px] text-[#000000]">Assign to partner</h2>
+          <p className="font-sans text-[11px] text-[#727272] mt-0.5">Assign this program to an organization. They will see it in their Training page.</p>
         </div>
         <div className="p-6 flex flex-wrap items-center gap-3">
           <select
             value={assignOrgId}
             onChange={(e) => setAssignOrgId(e.target.value)}
-            className="font-sans text-sm rounded-xl px-3 py-2 border border-[#f0e8dc] bg-[#F5F0E8] min-w-[200px]"
+            className="font-sans text-sm rounded-xl px-3 py-2 border border-[#d8d0c4] bg-[#ffffff] min-w-[200px]"
           >
             <option value="">Select organization</option>
             {organizations.map((org) => (
@@ -236,14 +236,14 @@ export function AdminTrainingProgramDetailView({ programId }: Props) {
             }}
             disabled={!assignOrgId || assignMutation.isPending}
             className="font-sans text-[12px] font-semibold rounded-xl px-4 py-2 disabled:opacity-60"
-            style={{ background: "#1a0500", color: "white" }}
+            style={{ background: "#000000", color: "white" }}
           >
             {assignMutation.isPending ? "Assigning…" : "Assign"}
           </button>
         </div>
       </div>
 
-      <Link href="/admin/training" className="font-sans text-sm font-medium text-[#7a4d38] hover:text-[#2a0f05] transition-colors w-fit">
+      <Link href="/admin/training" className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors w-fit">
         ← Back to Training
       </Link>
     </div>

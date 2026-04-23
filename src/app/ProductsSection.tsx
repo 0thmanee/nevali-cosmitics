@@ -30,7 +30,7 @@ export default async function ProductsSection() {
 						<Link
 							className="font-sans text-xs font-semibold uppercase tracking-wide text-white px-5 py-2.5 transition-opacity hover:opacity-90"
 							href="/products"
-							style={{ background: "#7B1F0A" }}
+							style={{ background: "#000000" }}
 						>
 							Open catalog
 						</Link>

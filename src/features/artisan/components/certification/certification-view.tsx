@@ -31,11 +31,11 @@ export function CertificationView() {
             className="font-sans text-[12px] font-semibold rounded-xl px-4 py-1.5 transition-colors"
             style={
               activeSection === s.key
-                ? { background: "#1a0500", color: "white" }
+                ? { background: "#000000", color: "white" }
                 : {
                     background: "white",
-                    color: "#7a4d38",
-                    border: "1px solid #f0e8dc",
+                    color: "#727272",
+                    border: "1px solid #d8d0c4",
                   }
             }
           >

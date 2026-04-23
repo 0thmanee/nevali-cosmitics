@@ -21,19 +21,19 @@ export function RejectCertificationModal({ certificationName, onConfirm, onCance
     >
       <div
         className="rounded-xl w-full max-w-md overflow-hidden"
-        style={{ background: "white", border: "1px solid #f0e8dc" }}
+        style={{ background: "white", border: "1px solid #d8d0c4" }}
       >
-        <div className="px-5 py-4 border-b" style={{ borderColor: "#f0e8dc" }}>
-          <h3 id="reject-cert-modal-title" className="font-serif font-bold text-[15px] text-[#2a0f05]">
+        <div className="px-5 py-4 border-b" style={{ borderColor: "#d8d0c4" }}>
+          <h3 id="reject-cert-modal-title" className="font-serif font-bold text-[15px] text-[#000000]">
             Reject certification
           </h3>
-          <p className="font-sans text-[12px] text-[#7a4d38] mt-0.5">{certificationName}</p>
+          <p className="font-sans text-[12px] text-[#727272] mt-0.5">{certificationName}</p>
         </div>
         <div className="p-5 flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="reject-cert-reason"
-              className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#7a4d38] uppercase"
+              className="font-sans text-[10px] font-bold tracking-[0.12em] text-[#727272] uppercase"
             >
               Reason for rejection (optional but recommended)
             </label>
@@ -43,8 +43,8 @@ export function RejectCertificationModal({ certificationName, onConfirm, onCance
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Document expired or unclear. Please upload an updated version."
               rows={3}
-              className="font-sans text-sm text-[#2a0f05] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
-              style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+              className="font-sans text-sm text-[#000000] rounded-xl px-3.5 py-2.5 outline-none w-full resize-none"
+              style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
               maxLength={500}
             />
           </div>
@@ -60,7 +60,7 @@ export function RejectCertificationModal({ certificationName, onConfirm, onCance
             <button
               type="button"
               onClick={onCancel}
-              className="font-sans text-sm font-medium text-[#7a4d38] hover:text-[#2a0f05] transition-colors"
+              className="font-sans text-sm font-medium text-[#727272] hover:text-[#000000] transition-colors"
             >
               Cancel
             </button>

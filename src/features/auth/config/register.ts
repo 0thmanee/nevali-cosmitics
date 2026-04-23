@@ -25,15 +25,15 @@ export const MOROCCAN_REGIONS = [
 ] as const;
 
 export const REGISTER_PRODUCT_CATEGORIES = [
-  { label: "Argan Oil", color: "#C8963C" },
+  { label: "Argan Oil", color: "#727272" },
   { label: "Saffron", color: "#c02030" },
   { label: "Rose Water", color: "#F472B6" },
   { label: "Honey & Bee", color: "#E8B84B" },
   { label: "Spices", color: "#e07a20" },
   { label: "Ceramics", color: "#60A5FA" },
   { label: "Textiles", color: "#a78bfa" },
-  { label: "Cosmetic Oils", color: "#C8963C" },
-  { label: "Dried Herbs", color: "#C8963C" },
+  { label: "Cosmetic Oils", color: "#727272" },
+  { label: "Dried Herbs", color: "#727272" },
   { label: "Black Seed", color: "#4a3a2a" },
   { label: "Preserved Foods", color: "#e07a20" },
   { label: "Natural Soaps", color: "#86efac" },

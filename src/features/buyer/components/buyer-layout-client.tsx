@@ -68,7 +68,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 							<Link
 								className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 transition-colors ${
 									isActive
-										? "border border-[#C8963C]/25 bg-[#C8963C]/15"
+										? "border border-[#727272]/25 bg-[#727272]/15"
 										: "border border-transparent bg-transparent"
 								}`}
 								href={item.href}
@@ -121,7 +121,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 			</aside>
 
 			<div className="flex h-screen min-w-0 flex-1 flex-col">
-				<header className="z-10 flex shrink-0 items-center justify-between border-[#f0e8dc] border-b bg-white px-6 py-3.5 lg:px-8">
+				<header className="z-10 flex shrink-0 items-center justify-between border-[#d8d0c4] border-b bg-white px-6 py-3.5 lg:px-8">
 					<div>
 						<h1 className="font-bold font-serif text-[18px] text-forest-mid leading-tight">
 							{title}

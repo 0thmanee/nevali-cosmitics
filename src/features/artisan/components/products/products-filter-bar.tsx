@@ -25,7 +25,7 @@ export function ProductsFilterBar({
   return (
     <div
       className="rounded-xl px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3"
-      style={{ background: "white", border: "1px solid #f0e8dc" }}
+      style={{ background: "white", border: "1px solid #d8d0c4" }}
     >
       <div className="flex flex-1 items-center gap-3">
         <div className="relative w-full max-w-sm">
@@ -36,10 +36,10 @@ export function ProductsFilterBar({
             viewBox="0 0 14 14"
             fill="none"
           >
-            <circle cx="6" cy="6" r="4.5" stroke="#7a4d38" strokeWidth="1.3" />
+            <circle cx="6" cy="6" r="4.5" stroke="#727272" strokeWidth="1.3" />
             <path
               d="M9.5 9.5L12 12"
-              stroke="#7a4d38"
+              stroke="#727272"
               strokeWidth="1.3"
               strokeLinecap="round"
             />
@@ -49,8 +49,8 @@ export function ProductsFilterBar({
             placeholder="Search products..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full font-sans text-sm text-[#2a0f05] pl-8 pr-4 py-2 rounded-xl outline-none"
-            style={{ background: "#F5F0E8", border: "1px solid #f0e8dc" }}
+            className="w-full font-sans text-sm text-[#000000] pl-8 pr-4 py-2 rounded-xl outline-none"
+            style={{ background: "#ffffff", border: "1px solid #d8d0c4" }}
           />
         </div>
         <div className="flex items-center gap-1 flex-wrap">
@@ -62,11 +62,11 @@ export function ProductsFilterBar({
               className="font-sans text-[12px] font-semibold rounded-xl px-3.5 py-1.5 transition-colors"
               style={
                 activeTab === tab
-                  ? { background: "#1a0500", color: "white" }
+                  ? { background: "#000000", color: "white" }
                   : {
-                      background: "#F5F0E8",
-                      color: "#7a4d38",
-                      border: "1px solid #f0e8dc",
+                      background: "#ffffff",
+                      color: "#727272",
+                      border: "1px solid #d8d0c4",
                     }
               }
             >
@@ -79,7 +79,7 @@ export function ProductsFilterBar({
                         background: "rgba(255,255,255,0.15)",
                         color: "rgba(255,255,255,0.8)",
                       }
-                    : { background: "rgba(26,5,0,0.08)", color: "#7a4d38" }
+                    : { background: "rgba(0,0,0,0.08)", color: "#727272" }
                 }
               >
                 {counts[tab]}

@@ -40,7 +40,7 @@ export function LoginForm() {
         <>
           Welcome
           <br />
-          <span className="italic" style={{ color: "#C87020" }}>back</span>
+          <span className="italic" style={{ color: "#727272" }}>back</span>
         </>
       }
       showRegisterLink
@@ -93,7 +93,7 @@ export function LoginForm() {
             type="submit"
             disabled={loading}
             className="font-sans font-semibold text-sm text-white rounded px-8 py-3.5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed w-full"
-            style={{ background: "#7B1F0A" }}
+            style={{ background: "#000000" }}
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>

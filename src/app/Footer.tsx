@@ -26,7 +26,7 @@ const SOCIAL = [
 
 export default function Footer() {
 	return (
-		<footer style={{ background: "#1a0500" }}>
+		<footer style={{ background: "#000000" }}>
 			{/* Main grid */}
 			<div className="mx-auto max-w-7xl px-6 pt-16 pb-12">
 				<div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -38,14 +38,14 @@ export default function Footer() {
 								style={{
 									fontSize: "22px",
 									letterSpacing: "0.08em",
-									color: "#FAF5EE",
+									color: "#ffffff",
 								}}
 							>
 								nevali
 							</span>
 							<span
 								className="font-sans text-xs uppercase tracking-[0.2em]"
-								style={{ color: "#C87020" }}
+								style={{ color: "#727272" }}
 							>
 								Bio · Moroccan · Original
 							</span>
@@ -62,7 +62,7 @@ export default function Footer() {
 							{SOCIAL.map((s) => (
 								<a
 									aria-label={s.label}
-									className="border border-[rgba(250,245,238,0.2)] px-2 py-1 font-bold font-sans text-xs text-[rgba(250,245,238,0.6)] uppercase tracking-wider transition-colors duration-200 hover:border-[#C87020] hover:text-[#C87020]"
+									className="border border-[rgba(250,245,238,0.2)] px-2 py-1 font-bold font-sans text-xs text-[rgba(250,245,238,0.6)] uppercase tracking-wider transition-colors duration-200 hover:border-[#727272] hover:text-[#727272]"
 									href={s.href}
 									key={s.label}
 									rel="noopener noreferrer"
@@ -79,7 +79,7 @@ export default function Footer() {
 						<div className="flex flex-col gap-4" key={heading}>
 							<span
 								className="font-sans font-semibold text-xs uppercase tracking-[0.2em]"
-								style={{ color: "#C87020" }}
+								style={{ color: "#727272" }}
 							>
 								{heading}
 							</span>
@@ -90,7 +90,7 @@ export default function Footer() {
 										<li key={item.label}>
 											{external ? (
 												<a
-													className="font-sans text-sm text-[rgba(250,245,238,0.55)] transition-colors duration-200 hover:text-[#FAF5EE]"
+													className="font-sans text-sm text-[rgba(250,245,238,0.55)] transition-colors duration-200 hover:text-[#ffffff]"
 													href={item.href}
 													rel="noopener noreferrer"
 													target="_blank"
@@ -99,7 +99,7 @@ export default function Footer() {
 												</a>
 											) : (
 												<Link
-													className="font-sans text-sm text-[rgba(250,245,238,0.55)] transition-colors duration-200 hover:text-[#FAF5EE]"
+													className="font-sans text-sm text-[rgba(250,245,238,0.55)] transition-colors duration-200 hover:text-[#ffffff]"
 													href={item.href}
 												>
 													{item.label}
