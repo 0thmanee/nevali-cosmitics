@@ -18,6 +18,7 @@
     "dev": "NODE_OPTIONS=\"--no-warnings\" next dev --turbo",
     "preview": "next build && next start",
     "start": "next start",
+    "seed:ar": "tsx prisma/seed.ar.ts",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

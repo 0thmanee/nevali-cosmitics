@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import type { Metadata } from "next";
-import { Amiri, Fraunces, IBM_Plex_Sans_Arabic, Roboto_Mono } from "next/font/google";
+import { Amiri, Fraunces, Roboto_Mono, Tajawal } from "next/font/google";
 import { I18nProvider } from "~/components/i18n/i18n-provider";
 import { QueryProvider } from "~/components/providers/query-provider";
 import { isRtlLocale, type AppLocale } from "~/lib/i18n/config";
@@ -27,7 +27,7 @@ const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
 });
 
-/** Arabic: Amiri for display/serif (editorial), IBM Plex Sans Arabic for UI/body (premium clarity). */
+/** Arabic: Amiri for display/serif (editorial), Tajawal for elegant UI/body copy. */
 const arabicDisplay = Amiri({
   subsets: ["arabic"],
   weight: ["400", "700"],
@@ -36,9 +36,9 @@ const arabicDisplay = Amiri({
   adjustFontFallback: true,
 });
 
-const arabicUi = IBM_Plex_Sans_Arabic({
+const arabicUi = Tajawal({
   subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-arabic-ui",
   display: "swap",
   adjustFontFallback: true,

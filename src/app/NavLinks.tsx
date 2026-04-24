@@ -22,17 +22,17 @@ export function NavLinks() {
   ];
 
   return (
-    <div className="hidden items-center gap-7 md:flex">
+    <div className="hidden items-center gap-2 lg:flex">
       {NAV_LINKS.map((item) => {
         const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
         return (
           <Link
             key={item.href + item.label}
             href={item.href}
-            className={`relative pb-0.5 font-sans text-sm transition-colors ${
+            className={`rounded-sm px-3 py-2 font-sans text-sm transition-colors ${
               isActive
-                ? "font-semibold text-primary after:absolute after:bottom-0 after:start-0 after:end-0 after:h-[2px] after:bg-primary/70"
-                : "text-text-dark hover:text-primary"
+                ? "bg-primary/10 font-semibold text-primary"
+                : "text-text-muted hover:bg-cream hover:text-text-dark"
             }`}
           >
             {item.label}

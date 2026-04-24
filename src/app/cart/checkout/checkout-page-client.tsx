@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { submitShopOrder } from "~/app/api/shop-orders/actions";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCart } from "~/features/cart/cart-context";
 import { interpolate } from "~/lib/i18n/interpolate";
-import { allowedCheckoutMethodsForLines } from "~/lib/checkout-payment";
 import { persistLastCheckoutConfirmation } from "~/lib/checkout-confirmation-storage";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { useFormatPrice } from "~/components/i18n/use-format-price";
@@ -45,20 +44,7 @@ export function CheckoutPageClient({
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("Morocco");
   const [notes, setNotes] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"CARD" | "COD">("CARD");
-
-  const allowedMethods = useMemo(
-    () => allowedCheckoutMethodsForLines(lines.map((l) => l.paymentOption)),
-    [lines],
-  );
-
-  useEffect(() => {
-    if (!ready || lines.length === 0) return;
-    if (allowedMethods.length === 0) return;
-    if (!allowedMethods.includes(paymentMethod)) {
-      setPaymentMethod(allowedMethods[0]!);
-    }
-  }, [ready, lines.length, allowedMethods, paymentMethod]);
+  const paymentMethod: "COD" = "COD";
 
   useEffect(() => {
     if (ready && lines.length === 0) {
@@ -72,7 +58,7 @@ export function CheckoutPageClient({
 
   if (lines.length === 0) return null;
 
-  const canSubmit = allowedMethods.length > 0;
+  const canSubmit = lines.length > 0;
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -113,12 +99,6 @@ export function CheckoutPageClient({
           country: country.trim(),
           paymentMethod,
         };
-
-        if ("checkoutUrl" in result && result.checkoutUrl) {
-          persistLastCheckoutConfirmation(confirmationPayload);
-          window.location.assign(result.checkoutUrl);
-          return;
-        }
 
         persistLastCheckoutConfirmation(confirmationPayload);
         clearCart();
@@ -280,57 +260,14 @@ export function CheckoutPageClient({
           {!canSubmit ? (
             <p className="font-sans text-sm text-red-600">{t("checkout.paymentConflict")}</p>
           ) : (
-            <div className="flex flex-col gap-3">
-              {allowedMethods.includes("CARD") && (
-                <button
-                  className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
-                    paymentMethod === "CARD"
-                      ? "border-ink bg-cream ring-1 ring-ink/20"
-                      : "border-cream-dark hover:border-ink/35"
-                  }`}
-                  onClick={() => setPaymentMethod("CARD")}
-                  type="button"
-                >
-                  <div
-                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "CARD" ? "border-ink" : "border-cream-dark"
-                    }`}
-                  >
-                    {paymentMethod === "CARD" ? (
-                      <div className="h-2 w-2 rounded-full bg-ink" />
-                    ) : null}
-                  </div>
-                  <div>
-                    <p className="font-sans text-sm font-semibold text-text-dark">{t("checkout.cardTitle")}</p>
-                    <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.cardSubtitle")}</p>
-                  </div>
-                </button>
-              )}
-              {allowedMethods.includes("COD") && (
-                <button
-                  className={`flex items-center gap-4 rounded-sm border px-4 py-3.5 text-left transition-all ${
-                    paymentMethod === "COD"
-                      ? "border-ink bg-cream ring-1 ring-ink/20"
-                      : "border-cream-dark hover:border-ink/35"
-                  }`}
-                  onClick={() => setPaymentMethod("COD")}
-                  type="button"
-                >
-                  <div
-                    className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-                      paymentMethod === "COD" ? "border-ink" : "border-cream-dark"
-                    }`}
-                  >
-                    {paymentMethod === "COD" ? (
-                      <div className="h-2 w-2 rounded-full bg-ink" />
-                    ) : null}
-                  </div>
-                  <div>
-                    <p className="font-sans text-sm font-semibold text-text-dark">{t("checkout.codTitle")}</p>
-                    <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.codSubtitle")}</p>
-                  </div>
-                </button>
-              )}
+            <div className="flex items-center gap-4 rounded-sm border border-ink bg-cream px-4 py-3.5 ring-1 ring-ink/20">
+              <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 border-ink">
+                <div className="h-2 w-2 rounded-full bg-ink" />
+              </div>
+              <div>
+                <p className="font-sans text-sm font-semibold text-text-dark">{t("checkout.codTitle")}</p>
+                <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.codSubtitle")}</p>
+              </div>
             </div>
           )}
         </div>
@@ -347,13 +284,7 @@ export function CheckoutPageClient({
           style={{ background: "var(--color-ink)" }}
           type="submit"
         >
-          {pending
-            ? paymentMethod === "CARD"
-              ? t("checkout.submitRedirectingCard")
-              : t("checkout.submitPlacing")
-            : paymentMethod === "CARD"
-              ? t("checkout.submitContinueCard")
-              : t("checkout.submitPlaceCod")}
+          {pending ? t("checkout.submitPlacing") : t("checkout.submitPlaceCod")}
         </button>
 
         <Link

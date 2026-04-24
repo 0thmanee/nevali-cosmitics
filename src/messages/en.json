@@ -9,10 +9,10 @@
     "localeNames": { "en": "English", "fr": "Français", "ar": "العربية" },
     "dash": "—",
     "optional": "(optional)",
-    "paymentCard": "Card payment",
+    "paymentCard": "Cash on delivery",
     "paymentCod": "Cash on delivery",
-    "paymentBoth": "Card and cash on delivery",
-    "paymentCardShort": "Card",
+    "paymentBoth": "Cash on delivery",
+    "paymentCardShort": "COD",
     "perUnitSuffix": "/ unit",
     "unitsOne": "{count} unit",
     "unitsMany": "{count} units",
@@ -58,7 +58,7 @@
     "previewEllipsis": " · …",
     "status": {
       "CONFIRMED": "Confirmed",
-      "PENDING_PAYMENT": "Awaiting payment",
+      "PENDING_PAYMENT": "Pending confirmation",
       "PENDING": "Pending",
       "CANCELLED": "Cancelled"
     }
@@ -148,7 +148,7 @@
     "perUnitLine": "{price} / unit",
     "status": {
       "CONFIRMED": "Confirmed",
-      "PENDING_PAYMENT": "Pending payment",
+      "PENDING_PAYMENT": "Pending confirmation",
       "PENDING": "Pending",
       "CANCELLED": "Cancelled"
     }
@@ -382,7 +382,7 @@
       },
       {
         "q": "How do brands get listed?",
-        "a": "Partners register, submit company and product documentation, and go through admin review. Listings cover INCI-style ingredients, imagery, variants, and payment options (card and/or cash on delivery). Approved products appear in the public catalog."
+        "a": "Partners register, submit company and product documentation, and go through admin review. Listings cover INCI-style ingredients, imagery, variants, and cash on delivery details. Approved products appear in the public catalog."
       },
       {
         "q": "What kinds of products can I find?",
@@ -404,7 +404,7 @@
     "single": [
       {
         "q": "What is nevali?",
-        "a": "{brand} is our Moroccan skincare and cosmetics line—formulated in our studio, bio-minded where it matters, with transparent labels and guest-friendly checkout (card and/or cash on delivery where enabled)."
+        "a": "{brand} is our Moroccan skincare and cosmetics line—formulated in our studio, bio-minded where it matters, with transparent labels and guest-friendly checkout via cash on delivery."
       },
       {
         "q": "How are products described?",
@@ -502,8 +502,8 @@
       },
       {
         "title": "Guest checkout & cart",
-        "descMulti": "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment.",
-        "descSingle": "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. {brand} receives structured order lines for fulfilment.",
+        "descMulti": "Shoppers add to cart and place cash on delivery orders—no forced sign-in. Brands receive structured order lines for fulfilment.",
+        "descSingle": "Shoppers add to cart and place cash on delivery orders—no forced sign-in. {brand} receives structured order lines for fulfilment.",
         "tags": ["NO LOGIN REQUIRED"]
       },
       {
@@ -652,7 +652,7 @@
       {
         "month": "Week 7+",
         "title": "Launch on nevali",
-        "body": "Approved SKUs go live with photography, reviews, and guest checkout—COD or card—so the story stays with the maker."
+        "body": "Approved SKUs go live with photography, reviews, and guest checkout via cash on delivery—so the story stays with the maker."
       }
     ],
     "brokenChainKicker": "The supply chain problem",
@@ -680,8 +680,8 @@
     "solutionKicker": "The nevali model",
     "solutionTitleLine1": "We shorten the chain.",
     "solutionTitleLine2": "Not the maker.",
-    "solutionBodyMulti": "nevali connects verified Moroccan beauty brands directly to shoppers—guest checkout, COD or card, and structured order lines. Brands set pricing and inventory; customers see the real story on every PDP.",
-    "solutionBodySingle": "{brand} brings Moroccan skincare and beauty from our studio to you—guest checkout, COD or card where enabled, and product pages written in our voice, with ingredients and imagery you can trust.",
+    "solutionBodyMulti": "nevali connects verified Moroccan beauty brands directly to shoppers—guest checkout and structured order lines with cash on delivery. Brands set pricing and inventory; customers see the real story on every PDP.",
+    "solutionBodySingle": "{brand} brings Moroccan skincare and beauty from our studio to you—guest checkout with cash on delivery and product pages written in our voice, with ingredients and imagery you can trust.",
     "solutionBody2Multi": "We layer compliance tooling, certification uploads, training, and support tickets so labs can focus on what they do best: bio-original formulas that feel unmistakably Moroccan.",
     "solutionBody2Single": "We invest in compliance, certifications, training, and support tooling so our lab can focus on what we do best: bio-original formulas that feel unmistakably Moroccan.",
     "beforeLabel": "Before",
@@ -829,14 +829,14 @@
     "breadcrumbCart": "Cart",
     "breadcrumbCheckout": "Checkout",
     "title": "Checkout",
-    "intro": "Enter your details and shipping address. Pay by card (Stripe) when enabled, or choose cash on delivery. Sellers ship your cosmetics directly.",
+    "intro": "Enter your details and shipping address. Orders are placed with cash on delivery. Sellers ship your cosmetics directly.",
     "guestNoteBold": "No account required.",
     "guestNoteRest": "This is guest checkout—you are not asked to sign in. Creating a buyer account is optional if you want order history in the app."
   },
   "checkout": {
     "loading": "Loading…",
     "errorNoPayment": "No payment method is available for the items in your cart. Remove conflicting products or contact us.",
-    "cancelledBanner": "Card checkout was cancelled. Your cart is unchanged — you can adjust items and try again.",
+    "cancelledBanner": "Checkout was cancelled. Your cart is unchanged — you can adjust items and try again.",
     "attemptErrorGeneric": "Something went wrong. Please try again.",
     "stepYourDetails": "Your details",
     "stepShipping": "Shipping address",
@@ -856,15 +856,15 @@
     "notesPlaceholder": "Delivery preferences, company name, etc.",
     "stepPayment": "Payment",
     "paymentConflict": "These products do not share a common payment option. Adjust your cart and try again.",
-    "cardTitle": "Card payment",
-    "cardSubtitle": "Visa, Mastercard, and other cards accepted",
+    "cardTitle": "Cash on delivery",
+    "cardSubtitle": "Pay when your order arrives",
     "codTitle": "Cash on delivery",
     "codSubtitle": "Pay when your order arrives",
-    "paymentMethodCard": "Card payment",
+    "paymentMethodCard": "Cash on delivery",
     "paymentMethodCod": "Cash on delivery",
-    "submitRedirectingCard": "Redirecting to payment…",
+    "submitRedirectingCard": "Placing order…",
     "submitPlacing": "Placing order…",
-    "submitContinueCard": "Continue to secure payment →",
+    "submitContinueCard": "Place order →",
     "submitPlaceCod": "Place order →",
     "backToCart": "← Back to cart",
     "orderSummary": "Order summary",
@@ -882,8 +882,8 @@
     "guestNote": "You completed this as a guest—no login was required. Keep this reference in your email; register as a buyer with the same address if you would like future orders listed under My orders.",
     "continueShopping": "Continue shopping",
     "home": "Home",
-    "stripeProcessing": "Payment is still processing. If you completed checkout, you will receive a confirmation email shortly.",
-    "stripeVerifyFallback": "Could not verify payment immediately. Check your email for confirmation."
+    "stripeProcessing": "Your order is being confirmed. You will receive a confirmation email shortly.",
+    "stripeVerifyFallback": "Could not verify order confirmation immediately. Check your email for updates."
   },
   "checkoutSuccessSummary": {
     "title": "Order details you submitted",

@@ -9,7 +9,7 @@ import { ProductInquiryModal } from "./product-inquiry-modal";
 import type { PublicProduct } from "./public-product-types";
 
 const PUBLIC_BILLING_HINT =
-	"Add to cart to check out on nevali. Card (Stripe) or cash on delivery depends on the listing; the brand fulfills your order.";
+	"Add to cart to check out on nevali. Orders are confirmed with cash on delivery; the brand fulfills your order.";
 
 type Props = {
 	product: PublicProduct;

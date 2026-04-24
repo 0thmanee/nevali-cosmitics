@@ -72,7 +72,7 @@
     "listYourBrand": "Inscrire votre marque",
     "shopTheCollection": "Acheter la collection",
     "heroImageAlt": "Flacons de soins et sérums marocains dans une nature morte beauté minimaliste",
-    "paymentCard": "Paiement par carte",
+    "paymentCard": "Paiement à la livraison",
     "paymentCod": "Paiement à la livraison",
     "cosmeticsCategories": {
       "SKINCARE": "Soins du visage",
@@ -141,7 +141,7 @@
       },
       {
         "q": "Comment les marques sont-elles listées ?",
-        "a": "Les partenaires s'inscrivent, soumettent la documentation de l'entreprise et des produits, et passent par une révision administrative. Les fiches incluent les ingrédients (style INCI), des images, les variantes et les options de paiement (carte et/ou paiement à la livraison)."
+        "a": "Les partenaires s'inscrivent, soumettent la documentation de l'entreprise et des produits, et passent par une révision administrative. Les fiches incluent les ingrédients (style INCI), des images, les variantes et les détails du paiement à la livraison."
       },
       {
         "q": "Quels types de produits puis-je trouver ?",
@@ -261,8 +261,8 @@
       },
       {
         "title": "Paiement invité & panier",
-        "descMulti": "Les acheteurs paient par carte ou à la livraison — sans inscription forcée. Les marques reçoivent des lignes de commande structurées.",
-        "descSingle": "Les acheteurs paient par carte ou à la livraison — sans inscription forcée. {brand} reçoit des lignes de commande structurées.",
+        "descMulti": "Les acheteurs valident leur commande en paiement à la livraison — sans inscription forcée. Les marques reçoivent des lignes de commande structurées.",
+        "descSingle": "Les acheteurs valident leur commande en paiement à la livraison — sans inscription forcée. {brand} reçoit des lignes de commande structurées.",
         "tags": ["SANS CONNEXION"]
       },
       {
@@ -589,14 +589,14 @@
     "breadcrumbCart": "Panier",
     "breadcrumbCheckout": "Paiement",
     "title": "Paiement",
-    "intro": "Entrez vos coordonnées. Payez par carte ou choisissez le paiement à la livraison.",
+    "intro": "Entrez vos coordonnées. Les commandes se font en paiement à la livraison.",
     "guestNoteBold": "Aucun compte requis.",
     "guestNoteRest": "C'est un paiement invité. La création d'un compte est optionnelle."
   },
   "checkout": {
     "loading": "Chargement...",
     "errorNoPayment": "Aucun mode de paiement disponible pour ces articles.",
-    "cancelledBanner": "Le paiement par carte a été annulé.",
+    "cancelledBanner": "Le paiement a été annulé.",
     "attemptErrorGeneric": "Un problème est survenu. Veuillez réessayer.",
     "stepYourDetails": "Vos coordonnées",
     "stepShipping": "Adresse de livraison",
@@ -616,15 +616,15 @@
     "notesPlaceholder": "Préférences de livraison, nom d'entreprise, etc.",
     "stepPayment": "Paiement",
     "paymentConflict": "Ces produits ne partagent pas d'option de paiement commune.",
-    "cardTitle": "Paiement par carte",
-    "cardSubtitle": "Visa, Mastercard et autres cartes acceptées",
+    "cardTitle": "Paiement à la livraison",
+    "cardSubtitle": "Payez à la réception de votre commande",
     "codTitle": "Paiement à la livraison",
     "codSubtitle": "Payez à l'arrivée de votre commande",
-    "paymentMethodCard": "Carte bancaire",
+    "paymentMethodCard": "Paiement à la livraison",
     "paymentMethodCod": "Paiement à la livraison",
-    "submitRedirectingCard": "Redirection vers le paiement...",
+    "submitRedirectingCard": "Validation de la commande...",
     "submitPlacing": "Validation de la commande...",
-    "submitContinueCard": "Continuer vers le paiement sécurisé →",
+    "submitContinueCard": "Passer la commande →",
     "submitPlaceCod": "Passer la commande →",
     "backToCart": "← Retour au panier",
     "orderSummary": "Résumé de la commande",
@@ -642,8 +642,8 @@
     "guestNote": "Vous avez effectué cet achat en tant qu'invité. Conservez cette référence.",
     "continueShopping": "Continuer les achats",
     "home": "Accueil",
-    "stripeProcessing": "Le paiement est en cours de traitement.",
-    "stripeVerifyFallback": "Vérification impossible immédiatement. Consultez vos e-mails."
+    "stripeProcessing": "La commande est en cours de confirmation.",
+    "stripeVerifyFallback": "Vérification impossible immédiatement. Consultez vos e-mails pour les mises à jour."
   },
   "checkoutSuccessSummary": {
     "title": "Détails de la commande soumis",

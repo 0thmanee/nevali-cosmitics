@@ -9,7 +9,7 @@ export const submitShopOrderSchema = z.object({
   city: z.string().trim().min(1, "City is required").max(100),
   postalCode: z.string().trim().min(1, "Postal code is required").max(30),
   country: z.string().trim().min(1, "Country is required").max(100),
-  paymentMethod: z.enum(["CARD", "COD"]),
+  paymentMethod: z.literal("COD"),
   notes: z.string().trim().max(2000).optional().nullable(),
   lines: z
     .array(

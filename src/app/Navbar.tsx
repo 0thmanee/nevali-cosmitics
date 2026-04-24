@@ -5,6 +5,7 @@ import { CartNavLink } from "~/components/cart-nav-link";
 import { getTranslator } from "~/lib/i18n/server";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { NavbarUserMenu } from "./NavbarUserMenu";
+import { NavbarMobileMenu } from "./NavbarMobileMenu";
 import { NavLinks } from "./NavLinks";
 
 export default async function Navbar() {
@@ -14,15 +15,17 @@ export default async function Navbar() {
   const role = (user as { role?: string } | null)?.role;
 
   return (
-    <nav className="fixed start-0 top-0 z-50 w-full border-b border-cream-dark/80 bg-paper/85 backdrop-blur-md">
-      <div className="mx-auto flex h-[56px] w-full max-w-7xl items-center justify-between px-6">
+    <nav className="fixed inset-s-0 top-0 z-50 w-full border-b border-cream-dark/80 bg-paper/92 backdrop-blur-md">
+      <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center">
-          <img src="/assets/logo.svg" alt={t("navbar.logoAlt")} className="h-8 w-auto" />
+          <img src="/assets/logo.svg" alt={t("navbar.logoAlt")} className="h-9 w-auto" />
         </Link>
 
-        <NavLinks />
+        <div className="flex min-w-0 flex-1 items-center justify-center">
+          <NavLinks />
+        </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="ms-auto flex items-center gap-2 sm:gap-3">
           <LocaleSwitcher />
           <CartNavLink />
           {user ? (
@@ -31,18 +34,24 @@ export default async function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="font-sans text-sm text-text-dark transition-colors hover:text-forest-light"
+                className="hidden font-sans text-sm text-text-dark transition-colors hover:text-forest-light sm:inline"
               >
                 {t("navbar.signIn")}
               </Link>
               <Link
                 href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
-                className="rounded-sm border border-primary/50 bg-primary/10 px-4 py-1.5 font-sans text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                className="hidden rounded-sm border border-primary/45 bg-primary/10 px-4 py-2 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-white sm:inline-flex"
               >
                 {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("navbar.signUp") : t("navbar.createAccount")}
               </Link>
             </>
           )}
+          <NavbarMobileMenu
+            isAuthenticated={Boolean(user)}
+            role={role ?? "partner"}
+            name={user?.name ?? ""}
+            email={user?.email ?? ""}
+          />
         </div>
       </div>
     </nav>

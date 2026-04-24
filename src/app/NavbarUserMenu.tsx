@@ -23,22 +23,16 @@ export function NavbarUserMenu({ name, email, role }: Props) {
   const dash = dashboardHref(role);
 
   return (
-    <div className="relative flex items-center gap-2">
-      <Link
-        href={dash}
-        className="hidden h-10 items-center rounded-sm border border-primary/40 bg-white px-5 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10 sm:inline-flex"
-      >
-        {t("navbarUserMenu.dashboard")}
-      </Link>
+    <div className="relative flex items-center">
       <button
         type="button"
         onClick={() => setMenuOpen((o) => !o)}
-        className="flex h-10 items-center gap-2 rounded-sm border border-primary/35 bg-white px-4 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+        className="flex h-10 items-center gap-2 rounded-sm border border-primary/30 bg-white px-3 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10"
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
           {(name || email || "?").slice(0, 1).toUpperCase()}
         </span>
-        <span className="hidden max-w-[100px] truncate sm:inline">{name || email}</span>
+        <span className="hidden max-w-[88px] truncate xl:inline">{name || email}</span>
         <svg
           width="12"
           height="12"
@@ -59,7 +53,7 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         <>
           <div className="fixed inset-0 z-40" aria-hidden onClick={() => setMenuOpen(false)} />
           <div
-            className="absolute end-0 top-full z-50 mt-2 w-48 rounded-sm border border-cream-dark bg-white py-2 shadow-lg"
+            className="absolute inset-e-0 top-full z-50 mt-2 w-48 rounded-sm border border-cream-dark bg-white py-2 shadow-lg"
             role="menu"
           >
             <div className="border-b border-cream-dark px-4 py-2">

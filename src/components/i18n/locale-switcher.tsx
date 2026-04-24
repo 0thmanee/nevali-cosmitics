@@ -14,10 +14,15 @@ export function LocaleSwitcher() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const names = messages.common.localeNames as Record<string, string>;
+  const icons: Record<string, string> = {
+    en: "🇬🇧",
+    fr: "🇫🇷",
+    ar: "🇲🇦",
+  };
 
   return (
     <div
-      className="flex items-center gap-1 rounded-sm border border-cream-dark bg-white/80 px-1 py-0.5"
+      className="flex items-center gap-1 rounded-sm border border-cream-dark bg-white/80 px-1 py-1"
       title={messages.localeSwitcher.hint}
     >
       <span className="sr-only">{messages.localeSwitcher.ariaLabel}</span>
@@ -33,11 +38,13 @@ export function LocaleSwitcher() {
               router.refresh();
             });
           }}
-          className={`rounded-sm px-2 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-wider transition-colors ${
-            code === locale ? "bg-primary text-white" : "text-text-muted hover:bg-cream-dark/60"
+          className={`flex h-6 w-6 items-center justify-center rounded-sm text-sm transition-colors ${
+            code === locale ? "bg-primary/15 ring-1 ring-primary/45" : "hover:bg-cream-dark/60"
           }`}
+          aria-label={names[code] ?? code}
+          title={names[code] ?? code}
         >
-          {names[code] ?? code}
+          <span aria-hidden>{icons[code] ?? "🌐"}</span>
         </button>
       ))}
     </div>
