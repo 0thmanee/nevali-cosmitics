@@ -1,13 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
+import { getTranslator } from "~/lib/i18n/server";
 import { CheckoutSuccessStripeSync } from "./checkout-success-stripe-sync";
 import { CheckoutSuccessSummary } from "./checkout-success-summary";
 
-export const metadata = {
-  title: "Order confirmed — nevali",
-  description: "Thank you for your order.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslator();
+  return {
+    title: t("checkoutSuccess.metaTitle"),
+    description: t("checkoutSuccess.metaDescription"),
+  };
+}
 
 export default async function CartCheckoutSuccessPage({
   searchParams,
@@ -15,6 +20,7 @@ export default async function CartCheckoutSuccessPage({
   searchParams: Promise<{ orderId?: string; session_id?: string }>;
 }) {
   const { orderId, session_id: sessionId } = await searchParams;
+  const t = await getTranslator();
 
   return (
     <main className="flex min-h-screen flex-col bg-cream">
@@ -36,29 +42,22 @@ export default async function CartCheckoutSuccessPage({
               />
             </svg>
           </div>
-          <h1 className="font-serif text-3xl font-bold text-text-dark">Order placed successfully</h1>
+          <h1 className="font-serif text-3xl font-bold text-text-dark">{t("checkoutSuccess.title")}</h1>
           <p
             aria-live="polite"
             className="rounded-sm border border-text-muted/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-text-dark"
             role="status"
           >
-            Success: your order has been confirmed.
+            {t("checkoutSuccess.successBanner")}
           </p>
-          <p className="font-sans leading-relaxed text-stone-600">
-            Your order has been received. Brands will follow up by email with payment or delivery
-            details as needed.
-          </p>
+          <p className="font-sans leading-relaxed text-stone-600">{t("checkoutSuccess.body")}</p>
           {orderId ? (
             <p className="font-sans text-sm text-text-dark">
-              Reference:{" "}
+              {t("checkoutSuccess.referenceLabel")}{" "}
               <span className="break-all font-mono font-medium">{orderId}</span>
             </p>
           ) : null}
-          <p className="max-w-md font-sans text-xs text-stone-500">
-            You completed this as a guest—no login was required. Keep this reference in your email;
-            register as a buyer with the same address if you would like future orders listed under My
-            orders.
-          </p>
+          <p className="max-w-md font-sans text-xs text-stone-500">{t("checkoutSuccess.guestNote")}</p>
           <CheckoutSuccessStripeSync orderId={orderId} sessionId={sessionId} />
           <CheckoutSuccessSummary orderId={orderId} />
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -66,13 +65,13 @@ export default async function CartCheckoutSuccessPage({
               className="rounded-sm bg-ink px-6 py-3 text-center font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
               href="/products"
             >
-              Continue shopping
+              {t("checkoutSuccess.continueShopping")}
             </Link>
             <Link
               className="rounded-sm border border-cream-dark bg-white px-6 py-3 text-center font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
               href="/"
             >
-              Home
+              {t("checkoutSuccess.home")}
             </Link>
           </div>
         </div>

@@ -2,30 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCart } from "~/features/cart/cart-context";
 import { cartLineKey } from "~/features/cart/cart-types";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
 
 export function CartPageClient() {
+  const { t } = useI18n();
   const { lines, ready, setQuantity, removeLine, subtotalMad } = useCart();
 
   if (!ready) {
-    return <p className="py-16 text-center font-sans text-stone-500">Loading cart…</p>;
+    return <p className="py-16 text-center font-sans text-stone-500">{t("cart.loading")}</p>;
   }
 
   if (lines.length === 0) {
     return (
       <div className="mx-auto max-w-lg px-4 py-20 text-center">
-        <p className="font-serif text-2xl font-bold text-text-dark">Your cart is empty</p>
-        <p className="mt-3 font-sans text-sm leading-relaxed text-stone-500">
-          Browse products and add items you want to include in checkout.
-        </p>
+        <p className="font-serif text-2xl font-bold text-text-dark">{t("cart.emptyTitle")}</p>
+        <p className="mt-3 font-sans text-sm leading-relaxed text-stone-500">{t("cart.emptyBody")}</p>
         <Link
           className="mt-8 inline-flex rounded-sm bg-ink px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
           href="/products"
         >
-          Browse products
+          {t("cart.browseProducts")}
         </Link>
       </div>
     );
@@ -60,7 +60,7 @@ export function CartPageClient() {
                 </p>
                 <p className="mt-2 font-sans text-sm font-medium text-text-dark">
                   {Number.isFinite(unitPrice)
-                    ? `${formatPriceMad(unitPrice.toFixed(2))} / unit`
+                    ? `${formatPriceMad(unitPrice.toFixed(2))} ${t("cart.perUnitSuffix")}`
                     : formatPriceMad(line.price)}
                 </p>
 
@@ -106,11 +106,11 @@ export function CartPageClient() {
                     +
                   </button>
                   <button
-                    className="ml-2 font-sans text-xs text-stone-500 transition-colors hover:text-red-600"
+                    className="ms-2 font-sans text-xs text-stone-500 transition-colors hover:text-red-600"
                     onClick={() => removeLine(line.productId, line.productVariantId)}
                     type="button"
                   >
-                    Remove
+                    {t("cart.remove")}
                   </button>
                 </div>
               </div>
@@ -130,14 +130,14 @@ export function CartPageClient() {
           className="mt-1 w-fit font-sans text-sm text-stone-500 hover:text-text-dark"
           href="/products"
         >
-          ← Continue shopping
+          {t("cart.continueShopping")}
         </Link>
       </div>
 
       <aside className="lg:sticky lg:top-28 lg:col-span-5">
         <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
-            Summary
+            {t("cart.summary")}
           </p>
 
           <ul className="flex flex-col gap-3">
@@ -163,7 +163,7 @@ export function CartPageClient() {
           </ul>
 
           <div className="flex items-baseline justify-between border-t border-cream-dark pt-4">
-            <span className="font-sans text-sm text-stone-500">Subtotal</span>
+            <span className="font-sans text-sm text-stone-500">{t("cart.subtotal")}</span>
             <span className="font-serif text-2xl font-bold text-text-dark">
               {formatPriceMad(subtotalMad.toFixed(2))}
             </span>
@@ -174,7 +174,7 @@ export function CartPageClient() {
             href="/cart/checkout"
             style={{ background: "var(--color-ink)" }}
           >
-            Proceed to checkout →
+            {t("cart.proceedCheckout")}
           </Link>
         </div>
       </aside>

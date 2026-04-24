@@ -1,0 +1,963 @@
+{
+  "meta": {
+    "appTitle": "Nevali — Beauté & soins marocains",
+    "appDescription": "Nevali : La beauté et les soins marocains issus de notre propre studio — étiquettes transparentes, ingrédients traçables et une qualité que vous pouvez acheter en toute confiance."
+  },
+  "common": {
+    "home": "Accueil",
+    "breadcrumbSeparator": "/",
+    "localeNames": { "en": "English", "fr": "Français", "ar": "العربية" }
+  },
+  "nav": {
+    "home": "Accueil",
+    "brands": "Marques",
+    "ourStory": "Notre histoire",
+    "training": "Formation",
+    "shop": "Boutique",
+    "contact": "Contact"
+  },
+  "navbar": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "createAccount": "Créer un compte",
+    "logoAlt": "nevali"
+  },
+  "navbarUserMenu": {
+    "dashboard": "Tableau de bord",
+    "accountFallback": "Compte",
+    "signOut": "Se déconnecter"
+  },
+  "cart": {
+    "ariaEmpty": "Panier",
+    "ariaWithItems": "Panier, {count} articles",
+    "overflowBadge": "99+"
+  },
+  "footer": {
+    "brandWordmark": "nevali",
+    "taglineMulti": "place de marché beauté douce",
+    "columnPlatform": "Plateforme",
+    "columnCompany": "Entreprise",
+    "columnResources": "Ressources",
+    "linkOurBrands": "Nos marques",
+    "linkShopCosmetics": "Acheter des cosmétiques",
+    "linkSellOnNevali": "Vendre sur nevali",
+    "linkTraining": "Formation et préparation",
+    "linkQualityStandards": "Normes de qualité",
+    "linkPartnerProgram": "Programme partenaire",
+    "linkAbout": "À propos de nevali",
+    "linkMission": "Notre mission",
+    "linkContact": "Contact",
+    "blurbMulti": "Une façon plus douce de découvrir les cosmétiques marocains par des marques dirigées par des femmes et portées par des valeurs.",
+    "copyright": "© 2027 nevali. Tous droits réservés. Casablanca, Maroc.",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "socialInstagram": "Instagram",
+    "socialLinkedIn": "LinkedIn",
+    "socialFacebook": "Facebook"
+  },
+  "hero": {
+    "featuredEyebrow": "À la une",
+    "partnerEyebrow": "Partenaire",
+    "unavailable": "Indisponible pour le moment",
+    "variantMoreOne": "{count} autre variante sur la page du produit",
+    "variantMoreMany": "{count} autres variantes sur la page du produit",
+    "fromPrice": "À partir de",
+    "viewProduct": "Voir le produit",
+    "allProducts": "Tous les produits",
+    "fallbackKicker": "NEVALI",
+    "fallbackTitleLine1": "La beauté marocaine,",
+    "fallbackTitleLine2": "doucement réimaginée",
+    "fallbackBodyMulti": "Une place de marché sereine pour des cosmétiques marocains de haute qualité avec des étiquettes transparentes, un approvisionnement éthique et une expérience d'achat douce conçue pour les femmes modernes.",
+    "fallbackBodySingle": "Nevali apporte les soins et la beauté du Maroc depuis notre studio — étiquettes transparentes, approvisionnement éthique et une expérience de paiement sereine conçue pour les routines modernes.",
+    "listYourBrand": "Inscrire votre marque",
+    "shopTheCollection": "Acheter la collection",
+    "heroImageAlt": "Flacons de soins et sérums marocains dans une nature morte beauté minimaliste",
+    "paymentCard": "Paiement par carte",
+    "paymentCod": "Paiement à la livraison",
+    "cosmeticsCategories": {
+      "SKINCARE": "Soins du visage",
+      "MAKEUP": "Maquillage",
+      "HAIRCARE": "Soins capillaires",
+      "BODY_CARE": "Soins du corps",
+      "FRAGRANCE": "Parfums",
+      "TOOLS_ACCESSORIES": "Outils & accessoires",
+      "SUPPLEMENTS": "Compléments",
+      "OTHER": "Autre"
+    }
+  },
+  "newFuture": {
+    "titleLine1": "La beauté marocaine,",
+    "titleLine2": "rendue traçable",
+    "titleLine3": "et moderne",
+    "body": "Nous mettons en lumière les laboratoires indépendants et les coopératives qui formulent avec des ingrédients botaniques locaux — argan, rose, ghassoul et bien plus — tout en offrant aux acheteurs un parcours certifié et serein, de la découverte à la livraison.",
+    "readMore": "En savoir plus",
+    "image1Alt": "Pots de soins de luxe et compte-gouttes sur marbre",
+    "image2Alt": "Crèmes naturelles et textures de soins botaniques"
+  },
+  "collections": {
+    "titleLine1": "Des laboratoires marocains",
+    "titleLine2": "à votre étagère",
+    "subtitleMulti": "Sélections en direct du catalogue — parcourez pour découvrir les ingrédients, l'histoire de la marque, les variantes et le paiement invité.",
+    "subtitleSingle": "Sélections en direct de {brand} — ingrédients, notre formulation, variantes et paiement invité.",
+    "emptyTitle": "Pas encore de produits approuvés à mettre en avant",
+    "emptyBodyMulti": "Lorsque les partenaires publieront des annonces approuvées, elles apparaîtront ici automatiquement.",
+    "emptyBodySingle": "Lorsque de nouvelles références Nevali seront en ligne, elles apparaîtront ici automatiquement.",
+    "browseCatalog": "Parcourir le catalogue"
+  },
+  "productsSection": {
+    "title": "Produits récents",
+    "emptyTitle": "Aucune annonce en ligne pour le moment",
+    "emptyBody": "Les nouvelles annonces de {brand} apparaîtront ici dès qu'elles seront en ligne. Ouvrez le catalogue pour voir tout ce qui est disponible aujourd'hui.",
+    "viewAll": "Voir tous les produits"
+  },
+  "quote": {
+    "text": "La beauté peut être à la fois douce et forte : des rituels qui honorent la peau, l'origine et les femmes qui les créent."
+  },
+  "stories": {
+    "kicker": "Journal",
+    "titleLine1": "Histoires & formulation",
+    "introMulti": "Notes des producteurs vérifiés sur nevali — focus sur les ingrédients, parcours des fondateurs et comment nous maintenons une place de marché orientée bio.",
+    "introSingle": "Notes de notre studio sur nevali — focus sur les ingrédients, journaux de formulation et comment nous gardons chaque lot orienté bio.",
+    "viewAll": "Voir tous les articles",
+    "emptyMulti": "Les articles du journal de nos producteurs apparaîtront ici une fois publiés. En attendant, parcourez le catalogue ou ouvrez le journal complet.",
+    "emptySingle": "Les articles du journal de {brand} apparaîtront ici une fois publiés. En attendant, parcourez le catalogue ou ouvrez le journal complet.",
+    "linkJournal": "Journal",
+    "linkShop": "Boutique",
+    "readArticle": "Lire l'article"
+  },
+  "faq": {
+    "kicker": "Questions Fréquemment Posées",
+    "titleLine1": "Tout ce que vous devez",
+    "titleLine2": "savoir",
+    "introMulti": "Pour les acheteurs découvrant la beauté marocaine, et pour les marques rejoignant la place de marché nevali.",
+    "introSingle": "Pour les acheteurs découvrant la beauté marocaine — directement de {brand}.",
+    "stillTitle": "Vous avez encore des questions ?",
+    "stillBody": "Notre équipe répond généralement sous un jour ouvrable.",
+    "contactSupport": "Contacter le support",
+    "multi": [
+      {
+        "q": "Qu'est-ce que nevali ?",
+        "a": "nevali est la place de marché de cosmétiques curative du Maroc : des formules originales et bio-responsables de marques marocaines indépendantes — vendues en ligne avec paiement invité, ingrédients clairs et certifications de confiance."
+      },
+      {
+        "q": "Comment les marques sont-elles listées ?",
+        "a": "Les partenaires s'inscrivent, soumettent la documentation de l'entreprise et des produits, et passent par une révision administrative. Les fiches incluent les ingrédients (style INCI), des images, les variantes et les options de paiement (carte et/ou paiement à la livraison)."
+      },
+      {
+        "q": "Quels types de produits puis-je trouver ?",
+        "a": "Soins du visage, soins capillaires, rituels pour le corps et le hammam, huiles botaniques (dont l'argan), parfums et accessoires — axés sur l'origine marocaine et une formulation responsable."
+      },
+      {
+        "q": "Ai-je besoin d'un compte pour acheter ?",
+        "a": "Non. Vous pouvez parcourir, ajouter au panier et payer en tant qu'invité. Créer un compte acheteur gratuit est facultatif pour sauvegarder des listes ou voir l'historique de vos commandes."
+      },
+      {
+        "q": "Comment puis-je vérifier un produit ou une marque ?",
+        "a": "Chaque fiche indique la marque derrière le produit. Les partenaires peuvent télécharger des certifications et les administrateurs vérifient les documents. Les pages produits mettent en avant les ingrédients et l'origine."
+      },
+      {
+        "q": "Quels sont les frais ?",
+        "a": "La navigation est gratuite. Les acheteurs paient le prix du produit et de la livraison affichés lors du paiement — aucun frais caché."
+      }
+    ],
+    "single": [
+      {
+        "q": "Qu'est-ce que nevali ?",
+        "a": "{brand} est notre ligne de soins et cosmétiques marocains — formulée dans notre studio, bio-responsable, avec des étiquettes transparentes et un paiement facile."
+      },
+      {
+        "q": "Comment les produits sont-ils décrits ?",
+        "a": "Chaque référence est préparée pour la boutique avec des ingrédients INCI clairs, des photos et des variantes. Les notes de laboratoire et certifications sont publiées pour que vous sachiez exactement ce que vous achetez."
+      },
+      {
+        "q": "Quels types de produits puis-je trouver ?",
+        "a": "Soins du visage, soins capillaires, rituels pour le corps et le hammam, huiles botaniques, parfums et accessoires — tous sous la gamme Nevali."
+      },
+      {
+        "q": "Ai-je besoin d'un compte pour acheter ?",
+        "a": "Non. Vous pouvez payer en tant qu'invité. Un compte acheteur permet de suivre vos commandes et vos alertes."
+      },
+      {
+        "q": "Comment puis-je vérifier un produit ?",
+        "a": "Chaque page produit souligne les ingrédients, la contenance et l'origine. Les certificats de {brand} apparaissent sur notre profil public."
+      },
+      {
+        "q": "Quels sont les frais ?",
+        "a": "La navigation est gratuite. Vous ne payez que le prix du produit et de l'expédition indiqué au panier."
+      }
+    ]
+  },
+  "testimonials": {
+    "kicker": "Voix des marques",
+    "titleMultiLine1": "Approuvé par les créateurs",
+    "titleMultiLine2": "et les acheteurs de beauté",
+    "titleSingleLine1": "De notre studio",
+    "titleSingleLine2": "aux acheteurs de beauté",
+    "subtitleMulti": "Laboratoires, coopératives et détaillants marocains grandissant ensemble sur la marketplace nevali.",
+    "subtitleSingle": "Laboratoires, coopératives et détaillants marocains qui collaborent avec {brand} sur les formulations et la distribution.",
+    "cards": [
+      {
+        "variant": "green",
+        "location": "RÉGION SOUSS-MASSA",
+        "quote": "\"nevali a donné à notre coopérative une identité prête pour le marché. En quelques semaines, nous expédiions des sérums à l'argan vers des boutiques parisiennes — avec une documentation conforme aux attentes européennes.\"",
+        "name": "Fatima Ait Benhaddou",
+        "role": "Directrice, Coopérative Souss — Soins argan & rose",
+        "initials": "FA",
+        "badge": "PRODUCTEUR"
+      },
+      {
+        "variant": "globe",
+        "location": "AMSTERDAM, PAYS-BAS",
+        "quote": "\"La vérification des fournisseurs prenait des mois. nevali présente des laboratoires marocains avec documentation et photos — nous avons intégré une nouvelle gamme en moins de trois semaines.\"",
+        "name": "Lars Van der Berg",
+        "role": "Directeur des achats, NaturaBio Imports",
+        "initials": "LV",
+        "badge": "ACHETEUR"
+      },
+      {
+        "variant": "gold",
+        "location": "RÉGION DE TALIOUINE",
+        "quote": "\"Les modules de formation nous ont appris à photographier les textures et à rédiger les blocs INCI. Le support nous aide à rester conformes sans avoir besoin d'une équipe réglementaire à plein temps.\"",
+        "name": "Mohammed Benali",
+        "role": "Formulateur principal, Domaine Berbère",
+        "initials": "MB",
+        "badge": "PRODUCTEUR"
+      }
+    ]
+  },
+  "features": {
+    "kicker": "Fonctionnalités de la plateforme",
+    "titleLine1": "Trois piliers pour la",
+    "titleLine2": "beauté marocaine",
+    "blurbMulti": "Conformité, visibilité et éducation des fondateurs — tout ce que nevali regroupe pour que les cosmétiques marocains bio-responsables brillent ici et ailleurs.",
+    "blurbSingle": "Conformité, expérience boutique et formation — tout ce que {brand} regroupe pour que les cosmétiques marocains bio-responsables brillent ici et ailleurs.",
+    "pillar1Label": "PILIER 1 — CONFIANCE & CONFORMITÉ",
+    "pillar2LabelMulti": "PILIER 2 — ACCÈS AU MARCHÉ",
+    "pillar2LabelSingle": "PILIER 2 — BOUTIQUE & PAIEMENT",
+    "pillar3Label": "PILIER 3 — DÉVELOPPEMENT",
+    "pillar1Cards": [
+      {
+        "title": "Certification Qualité",
+        "desc": "Critères de qualité par catégorie, révision de documents, flux d'audit et suivi des expirations de certificats.",
+        "tags": ["PRÊT POUR ISO", "MULTI-CATÉGORIES"]
+      },
+      {
+        "title": "Traçabilité & Vérification QR",
+        "descMulti": "Chaque produit est lié à sa marque marocaine, ses ingrédients, les données de lot et les IDs de certification — facile à vérifier pour les acheteurs.",
+        "descSingle": "Chaque produit est lié aux ingrédients de {brand}, aux données de lot et aux IDs de certification — facile à vérifier.",
+        "tags": ["SCAN QR", "LIÉ AU LOT"]
+      },
+      {
+        "title": "Audits Qualité",
+        "desc": "Flux d'audit structurés avec téléchargement de documents, suivi d'approbation et alertes automatiques.",
+        "tags": ["AUTO-ALERTES", "SÉCURISÉ & AUDITABLE"]
+      }
+    ],
+    "pillar2Cards": [
+      {
+        "title": "Fiches produits",
+        "desc": "Soins du visage, cheveux, corps et rituels — organisés par catégorie avec photos, ingrédients INCI et prix en MAD.",
+        "tags": ["FOCUS COSMÉTIQUE"]
+      },
+      {
+        "title": "Paiement invité & panier",
+        "descMulti": "Les acheteurs paient par carte ou à la livraison — sans inscription forcée. Les marques reçoivent des lignes de commande structurées.",
+        "descSingle": "Les acheteurs paient par carte ou à la livraison — sans inscription forcée. {brand} reçoit des lignes de commande structurées.",
+        "tags": ["SANS CONNEXION"]
+      },
+      {
+        "titleMulti": "Découverte de marques",
+        "titleSingle": "Collection & éditorial",
+        "descMulti": "Mises en page éditoriales et recherche pour aider à trouver le bon créateur marocain — qu'il s'agisse de sérums d'argan ou de parfums de niche.",
+        "descSingle": "Mises en page éditoriales et recherche pour explorer la gamme {brand} — des sérums à l'argan aux rituels du hammam.",
+        "tagMulti": "ANNUAIRE CURATIF",
+        "tagSingle": "GAMME CURATIVE"
+      }
+    ],
+    "pillar3Cards": [
+      {
+        "title": "Programmes de formation",
+        "desc": "Micro-apprentissage pour les fondateurs : étiquetage UE, bases de stabilité, photographie et préparation à l'export.",
+        "tags": ["SUIVI DE PROGRESSION"]
+      },
+      {
+        "title": "Conseils légaux & export",
+        "descMulti": "Modèles de factures, certificats et questions réglementaires — plus un helpdesk pour chaque demande partenaire.",
+        "descSingle": "Modèles de factures, certificats et questions réglementaires — plus un helpdesk pour chaque client et studio.",
+        "tags": ["STATUT EN TEMPS RÉEL"]
+      },
+      {
+        "title": "Analyses & rapports",
+        "descMulti": "Tableaux de bord pour administrateurs et marques : volumes de commandes, revenus et statut de certification.",
+        "descSingle": "Tableaux de bord pour notre studio : volumes de commandes, revenus et statut de certification.",
+        "tags": ["EXPORT PDF / XLS"]
+      }
+    ]
+  },
+  "productsPage": {
+    "metaTitleMulti": "Produits — nevali",
+    "metaTitleSingle": "Boutique — {brand} | nevali",
+    "metaDescMulti": "Parcourez les soins, capillaires et cosmétiques marocains vérifiés — ingrédients transparents, partenaires certifiés et paiement facile.",
+    "metaDescSingle": "Parcourez les cosmétiques {brand} — ingrédients transparents, certifications du studio et fiches prêtes pour l'achat.",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbProducts": "Produits",
+    "eyebrowMulti": "Marketplace Certifiée — {total} Produits",
+    "eyebrowSingle": "Catalogue {brand} — {total} produits",
+    "titleLine1": "Cosmétiques marocains,",
+    "titleLine2": "soigneusement sélectionnés",
+    "titleLine3": "& traçables",
+    "introMulti": "Chaque référence provient d'une marque marocaine vérifiée avec des ingrédients clairs — achetez en tant qu'invité ou créez un compte pour vos listes.",
+    "introSingle": "Chaque produit est préparé par {brand} avec des ingrédients clairs — achetez en tant qu'invité ou créez un compte pour vos listes.",
+    "statProducts": "Produits",
+    "statCategories": "Catégories",
+    "statVerified": "Vérifiés",
+    "filterAll": "Tout",
+    "resultsShowing": "Affichage de",
+    "resultsOf": "sur",
+    "resultsProducts": "produits",
+    "resultsIn": "dans",
+    "clearFilter": "Effacer le filtre",
+    "emptyTitle": "Aucun produit trouvé",
+    "emptyCategory": "Aucune annonce dans \"{category}\" pour le moment.",
+    "emptyBodyMulti": "Des marques vérifiées ajoutent de nouveaux produits — repassez bientôt.",
+    "emptyBodySingle": "{brand} ajoute de nouveaux produits au catalogue — repassez bientôt.",
+    "browseAllProducts": "Voir tous les produits",
+    "paginationPrev": "Précédent",
+    "paginationNext": "Suivant"
+  },
+  "contact": {
+    "metaTitle": "Contact — nevali",
+    "metaDescMulti": "Contactez l'équipe nevali pour les partenariats, la presse et le support.",
+    "metaDescSingle": "Contactez {brand} pour la vente en gros, la presse ou vos questions produits.",
+    "kicker": "Contact",
+    "title": "Parler à nevali",
+    "introMulti": "Nous aidons les marques marocaines à lister des produits conformes. Pour l'intégration, les soucis techniques ou la presse, utilisez le canal approprié.",
+    "introSingle": "Des questions sur les produits {brand} ou votre commande ? Contactez notre équipe via le canal ci-dessous.",
+    "cardSupportTitleMulti": "Support marques & partenaires",
+    "cardSupportTitleSingle": "Équipe NEVALI & vente en gros",
+    "cardSupportBodyMulti": "Les partenaires connectés peuvent ouvrir des tickets depuis leur tableau de bord.",
+    "cardSupportBodySingle": "Les comptes studio connectés peuvent ouvrir des tickets de support depuis le tableau de bord.",
+    "cardSupportLink": "Se connecter → Support",
+    "cardGeneralTitle": "Demandes générales",
+    "envHintConfigured": "Cette adresse est configurée via CONTACT_PUBLIC_EMAIL.",
+    "envHintDefault": "Configurez CONTACT_PUBLIC_EMAIL dans le .env.",
+    "backHome": "← Retour à l'accueil",
+    "privacyTitle": "Informations sur la confidentialité",
+    "privacyOptionalLabel": "Note optionnelle de l'opérateur (LEGAL_POLICY_EFFECTIVE_DATE) : {date}.",
+    "privacyLead": "Cette section décrit comment nevali gère les données personnelles en langage clair. Ce n'est",
+    "privacyStrong": "pas",
+    "privacyTrail": "un substitut à une politique de confidentialité juridique complète adaptée à votre juridiction.",
+    "privacyCollectTitle": "Ce que nous collectons",
+    "privacyCollectBody": "Identifiants de compte (nom, email), données d'authentification, détails de profil/organisation, contenu des demandes acheteurs, tickets de support et logs techniques (IP, appareil).",
+    "privacyWhyTitle": "Pourquoi nous l'utilisons",
+    "privacyWhyBody": "Pour maintenir les comptes, mettre en relation acheteurs et artisans, envoyer des emails transactionnels, gérer les flux de devis et détecter les abus.",
+    "privacySharingTitle": "Partage & hébergement",
+    "privacySharingBody": "Nous utilisons des fournisseurs d'infrastructure et d'email pour opérer le service. Nous ne vendons pas vos données personnelles.",
+    "privacyRetentionTitle": "Rétention & vos choix",
+    "privacyRetentionBody": "Nous conservons les données tant que le compte est actif. Vous pouvez demander l'accès, la correction ou la suppression de vos données.",
+    "termsTitle": "Conditions d'utilisation (résumé)",
+    "termsOptional": "Date optionnelle identique à la confidentialité ({date}).",
+    "termsIntroLead": "En utilisant nevali, vous acceptez de suivre ces règles. Ce résumé n'est",
+    "termsIntroStrong": "pas",
+    "termsIntroTrail": "un contrat contraignant ; publiez des conditions approuvées par un conseiller juridique avant le lancement.",
+    "termsAccountsTitle": "Comptes & éligibilité",
+    "termsAccountsBody": "Vous devez fournir des informations exactes. Les comptes partenaires peuvent nécessiter une approbation.",
+    "termsConductTitleMulti": "Conduite sur la marketplace",
+    "termsConductTitleSingle": "Commandes & conduite",
+    "termsConductBodyMulti": "Les utilisateurs doivent négocier de bonne foi et respecter les lois en vigueur. nevali peut suspendre l'accès en cas de violation.",
+    "termsConductBodySingle": "Les clients et partenaires doivent interagir de bonne foi. nevali peut suspendre l'accès en cas de risque pour les autres.",
+    "termsContentTitle": "Contenu & propriété intellectuelle",
+    "termsContentBody": "Vous conservez les droits sur le contenu que vous téléchargez, mais accordez à nevali une licence pour l'héberger et l'afficher.",
+    "termsDisclaimerTitle": "Exclusion de responsabilité",
+    "termsDisclaimerBody": "La plateforme est fournie \"en l'état\". nevali n'est pas partie aux contrats entre acheteurs et artisans sauf mention contraire."
+  },
+  "artisanProcess": {
+    "breadcrumbOurStory": "Notre histoire",
+    "heroEyebrow": "Pourquoi la beauté marocaine a besoin d'une nouvelle voie",
+    "heroTitleLine1": "10 semaines.",
+    "heroTitleLine2": "Un sérum.",
+    "heroTitleAccent": "Toujours invisible",
+    "heroTitleLine3": "en ligne.",
+    "heroBody": "Des formules incroyables restent dans de petits labos pendant que des revendeurs copient l'histoire. nevali existe pour que les cosmétiques marocains atteignent les acheteurs avec des preuves et de la dignité pour le créateur.",
+    "heroImageAlt": "Espace de travail d'une marque de beauté marocaine",
+    "heroStatCaption": "vente au détail à l'étranger — pour un lot de sérum facturé 900 MAD par le labo",
+    "founderImageAlt": "Fondatrice de beauté représentant les marques marocaines",
+    "founderKicker": "Une histoire qui se répète pour les coopératives",
+    "founderTitleLine1": "Voici Yasmine.",
+    "founderTitleLine2": "Elle formule depuis l'aube.",
+    "founderP1": "Yasmine dirige un petit labo près d'Agadir. Argan pressé à froid, masques au rhassoul et sérums à la rose sortent de son atelier chaque semaine — pourtant, la plupart des acheteurs ne les voient que sous des étiquettes étrangères. Elle rencontre rarement ses clients finaux.",
+    "founderP2": "La saison dernière, elle a mis en flacon une huile éclaircissante qui a mis dix semaines à se stabiliser. Un courtier a acheté le lot pour 900 MAD le litre. La même formule est réapparue à Londres pour 48 € — histoire réécrite, origine floue.",
+    "founderQuote": "Je sais que nos ingrédients sont de classe mondiale. J'ai juste besoin d'une vitrine qui dit la vérité — avec nos propres mots.",
+    "founderAttribution": "— Yasmine, 38 ans, région d'Agadir",
+    "formulationKicker": "De l'atelier au code-barres",
+    "formulationTitleLine1": "Des semaines de science,",
+    "formulationTitleLine2": "invisibles sur l'étagère",
+    "formulationSteps": [
+      {
+        "month": "Semaine 1–2",
+        "title": "Approvisionnement",
+        "body": "Huiles, argiles et hydrolats passent en quarantaine — vérification des certificats et tests d'humidité avant tout mélange."
+      },
+      {
+        "month": "Semaine 3–4",
+        "title": "Composition au labo",
+        "body": "Les chimistes équilibrent le pH et les conservateurs. Les lots pilotes sont testés en étuve de stabilité."
+      },
+      {
+        "month": "Semaine 5–6",
+        "title": "Remplissage & conformité",
+        "body": "Codes de lot, sceaux et étiquettes. Rien ne sort sans que les listes de contrôle marocaines et d'exportation soient signées."
+      },
+      {
+        "month": "Semaine 7+",
+        "title": "Lancement sur nevali",
+        "body": "Les produits approuvés sont mis en ligne avec photos et avis, pour que l'histoire reste celle du créateur."
+      }
+    ],
+    "brokenChainKicker": "Le problème de la chaîne logistique",
+    "brokenChainTitleLine1": "Où part la marge ?",
+    "brokenChainTitleLine2": "Pas au laboratoire.",
+    "brokenChainBody": "Une huile visage à 95 €. Courtiers, reconditionneurs et comptoirs duty-free prennent chacun leur part. Le créateur marocain ne garde souvent qu'un pourcentage à un seul chiffre.",
+    "brokenChainFootnote": "* Économie illustrative pour un produit cosmétique premium. Les parts réelles varient.",
+    "emotionalTruth": [
+      {
+        "number": "1 000+",
+        "label": "Micro-labos & coopératives",
+        "body": "La scène cosmétique marocaine est fragmentée — brillante en formulation, mais écrasée par les intermédiaires."
+      },
+      {
+        "number": "78%",
+        "label": "Acheteurs demandant des preuves",
+        "body": "Les clients veulent la clarté INCI et la preuve de l'origine marocaine. Sans foyer numérique, la confiance est difficile à établir."
+      },
+      {
+        "number": "< 12%",
+        "label": "Marge typique après revente",
+        "body": "Quand les sérums passent par des courtiers anonymes, le labo capture rarement la valeur que le consommateur pense renvoyer au Maroc."
+      }
+    ],
+    "solutionKicker": "Le modèle nevali",
+    "solutionTitleLine1": "Nous raccourcissons la chaîne.",
+    "solutionTitleLine2": "Pas le créateur.",
+    "solutionBodyMulti": "nevali connecte les marques directement aux acheteurs. Les marques fixent leurs prix et stocks ; les clients voient la vraie histoire.",
+    "solutionBodySingle": "{brand} apporte les soins marocains de notre studio jusqu'à vous — avec des pages produits rédigées avec notre voix et des ingrédients de confiance.",
+    "solutionBody2Multi": "Nous ajoutons les outils de conformité et de formation pour que les labos se concentrent sur ce qu'ils font de mieux : des formules bio-originales.",
+    "solutionBody2Single": "Nous investissons dans la conformité et la formation pour que notre labo se concentre sur les formules bio-originales typiquement marocaines.",
+    "beforeLabel": "Avant",
+    "beforePercent": "8%",
+    "beforeCaption": "de la valeur au créateur (circuit courtier typique)",
+    "afterLabelMulti": "Avec nevali",
+    "afterLabelSingle": "Avec {brand}",
+    "afterPercent": "68%",
+    "afterCaptionMulti": "part cible retournée aux marques partenaires",
+    "afterCaptionSingle": "part cible conservée par {brand} sur les ventes directes",
+    "listYourBrand": "Inscrire votre marque",
+    "shopTheCatalog": "Acheter le catalogue",
+    "solutionImageAlt": "Produits cosmétiques et soins marocains sélectionnés",
+    "solutionQuoteMulti": "Pour la première fois, les clients lisent notre liste INCI avec nos mots — et la vente nous revient.",
+    "solutionQuoteSingle": "Nous rédigeons chaque liste INCI avec nos propres mots — et la vente reste chez {brand}.",
+    "solutionQuoteAttrMulti": "— Khadija, marque partenaire nevali depuis 2024",
+    "solutionQuoteAttrSingle": "— {brand}",
+    "finalKicker": "Faites partie du changement",
+    "finalTitleLine1": "Les créateurs marocains",
+    "finalTitleLine2": "méritent toute l'histoire.",
+    "finalTitleAccent": "Aidez-nous à la raconter.",
+    "shopMoroccan": "Acheter des cosmétiques marocains",
+    "chainMulti": [
+      {
+        "actor": "Marque marocaine",
+        "detail": "Garde la part du lion en vendant directement sur nevali",
+        "cut": 42,
+        "color": "var(--color-ink)"
+      },
+      {
+        "actor": "Ingrédients & labo",
+        "detail": "Botaniques, tests de stabilité, main d'œuvre",
+        "cut": 22,
+        "color": "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))"
+      },
+      {
+        "actor": "Packaging & logistique",
+        "detail": "Flacons, étiquettes, livraison à domicile",
+        "cut": 18,
+        "color": "var(--color-text-muted)"
+      },
+      {
+        "actor": "Plateforme & conformité",
+        "detail": "Paiements, avis, flux de certification",
+        "cut": 12,
+        "color": "var(--color-text-muted)"
+      },
+      {
+        "actor": "Marge de détail (ailleurs)",
+        "detail": "Ce que les grands magasins ajoutent souvent",
+        "cut": 6,
+        "color": "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))"
+      }
+    ],
+    "chainSingle": [
+      {
+        "actor": "NEVALI Cosmetics",
+        "detail": "Notre studio garde la part du lion en vendant en direct",
+        "cut": 42,
+        "color": "var(--color-ink)"
+      },
+      {
+        "actor": "Ingrédients & labo",
+        "detail": "Botaniques, tests de stabilité, main d'œuvre",
+        "cut": 22,
+        "color": "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))"
+      },
+      {
+        "actor": "Packaging & logistique",
+        "detail": "Flacons, étiquettes, livraison à domicile",
+        "cut": 18,
+        "color": "var(--color-text-muted)"
+      },
+      {
+        "actor": "Plateforme & conformité",
+        "detail": "Paiements, avis, flux de certification",
+        "cut": 12,
+        "color": "var(--color-text-muted)"
+      },
+      {
+        "actor": "Marge de détail (ailleurs)",
+        "detail": "Ce que les grands magasins ajoutent souvent",
+        "cut": 6,
+        "color": "color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))"
+      }
+    ],
+    "impactMulti": [
+      {
+        "value": "3×",
+        "label": "Mise en ligne plus rapide que les foires traditionnelles pour les marques"
+      },
+      {
+        "value": "68%",
+        "label": "Part cible des revenus retournée aux marques partenaires"
+      },
+      {
+        "value": "40+",
+        "label": "Villes où les clients ont déjà reçu des commandes nevali"
+      },
+      {
+        "value": "0",
+        "label": "Chaînes de devis opaques entre vous et le client"
+      }
+    ],
+    "impactSingle": [
+      {
+        "value": "3×",
+        "label": "Parcours plus rapide de notre labo à votre étagère"
+      },
+      {
+        "value": "68%",
+        "label": "Part cible des revenus conservée par NEVALI Cosmetics"
+      },
+      {
+        "value": "40+",
+        "label": "Villes où les clients ont déjà reçu des commandes NEVALI"
+      },
+      {
+        "value": "0",
+        "label": "Intermédiaires opaques entre vous et notre studio"
+      }
+    ]
+  },
+  "cart": {
+    "metaTitle": "Panier — nevali",
+    "metaDescription": "Consultez votre sélection avant le paiement. Aucun compte requis.",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbCart": "Panier",
+    "title": "Votre panier",
+    "intro": "Le paiement est ouvert à tous — vous n'avez pas besoin de compte. Utilisez le même email que votre profil acheteur pour le suivi.",
+    "loading": "Chargement du panier...",
+    "emptyTitle": "Votre panier est vide",
+    "emptyBody": "Parcourez les produits et ajoutez des articles.",
+    "browseProducts": "Parcourir les produits",
+    "perUnitSuffix": "/ unité",
+    "remove": "Retirer",
+    "continueShopping": "← Continuer mes achats",
+    "summary": "Résumé",
+    "subtotal": "Sous-total",
+    "proceedCheckout": "Passer au paiement →"
+  },
+  "checkoutPage": {
+    "metaTitle": "Paiement — nevali",
+    "metaDescription": "Paiement invité : contact, livraison et paiement — sans connexion requise.",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbCart": "Panier",
+    "breadcrumbCheckout": "Paiement",
+    "title": "Paiement",
+    "intro": "Entrez vos coordonnées. Payez par carte ou choisissez le paiement à la livraison.",
+    "guestNoteBold": "Aucun compte requis.",
+    "guestNoteRest": "C'est un paiement invité. La création d'un compte est optionnelle."
+  },
+  "checkout": {
+    "loading": "Chargement...",
+    "errorNoPayment": "Aucun mode de paiement disponible pour ces articles.",
+    "cancelledBanner": "Le paiement par carte a été annulé.",
+    "attemptErrorGeneric": "Un problème est survenu. Veuillez réessayer.",
+    "stepYourDetails": "Vos coordonnées",
+    "stepShipping": "Adresse de livraison",
+    "stepShippingHint": "Où devons-nous livrer votre commande ?",
+    "fullName": "Nom complet",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "optional": "(optionnel)",
+    "addressLine1": "Adresse ligne 1",
+    "addressLine1Placeholder": "Rue, bâtiment, numéro",
+    "addressLine2": "Adresse ligne 2",
+    "addressLine2Placeholder": "Appartement, étage, quartier...",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "notes": "Notes",
+    "notesPlaceholder": "Préférences de livraison, nom d'entreprise, etc.",
+    "stepPayment": "Paiement",
+    "paymentConflict": "Ces produits ne partagent pas d'option de paiement commune.",
+    "cardTitle": "Paiement par carte",
+    "cardSubtitle": "Visa, Mastercard et autres cartes acceptées",
+    "codTitle": "Paiement à la livraison",
+    "codSubtitle": "Payez à l'arrivée de votre commande",
+    "paymentMethodCard": "Carte bancaire",
+    "paymentMethodCod": "Paiement à la livraison",
+    "submitRedirectingCard": "Redirection vers le paiement...",
+    "submitPlacing": "Validation de la commande...",
+    "submitContinueCard": "Continuer vers le paiement sécurisé →",
+    "submitPlaceCod": "Passer la commande →",
+    "backToCart": "← Retour au panier",
+    "orderSummary": "Résumé de la commande",
+    "subtotal": "Sous-total",
+    "shippingNote": "Frais de livraison calculés après confirmation.",
+    "summaryLineMeta": "{variantName} · ×{quantity}"
+  },
+  "checkoutSuccess": {
+    "metaTitle": "Commande confirmée — nevali",
+    "metaDescription": "Merci pour votre commande.",
+    "title": "Commande passée avec succès",
+    "successBanner": "Succès : votre commande a été confirmée.",
+    "body": "Votre commande a été reçue. Les marques vous contacteront par e-mail pour les détails de livraison.",
+    "referenceLabel": "Référence :",
+    "guestNote": "Vous avez effectué cet achat en tant qu'invité. Conservez cette référence.",
+    "continueShopping": "Continuer les achats",
+    "home": "Accueil",
+    "stripeProcessing": "Le paiement est en cours de traitement.",
+    "stripeVerifyFallback": "Vérification impossible immédiatement. Consultez vos e-mails."
+  },
+  "checkoutSuccessSummary": {
+    "title": "Détails de la commande soumis",
+    "contact": "Contact",
+    "shippingAddress": "Adresse de livraison",
+    "payment": "Paiement",
+    "footerNote": "Enregistrez cette référence. Ce résumé ne s'affiche qu'une fois."
+  },
+  "auth": {
+    "sideTaglineMulti": "Portail partenaire",
+    "sideTaglineSingle": "nevali",
+    "sideBody": "Soins et rituels marocains premium — approvisionnement traçable et présence raffinée en ligne.",
+    "sideBadge": "NEVALI",
+    "testimonialQuote": "En quelques semaines sur nevali, des clients en Europe commandaient déjà notre sérum — enfin sous notre propre étiquette.",
+    "testimonialAttribution": "— Fatima O., Atlas Valley Skincare",
+    "newHere": "Nouveau ici ?",
+    "createAccount": "Créer un compte",
+    "createBuyerAccount": "Créer un compte acheteur",
+    "alreadyPartner": "Déjà partenaire ?",
+    "alreadyHaveAccount": "Déjà un compte ?",
+    "signIn": "Se connecter",
+    "signInLoading": "Chargement...",
+    "loginTitle": "Connexion",
+    "loginWelcomeLine1": "Bon retour",
+    "loginWelcomeLine2": "parmi nous",
+    "invalidCredentials": "Email ou mot de passe invalide.",
+    "loginHeading": "Connectez-vous à votre compte",
+    "loginPortalHint": "Entrez vos identifiants pour accéder au portail artisan.",
+    "emailAddress": "Adresse e-mail",
+    "password": "Mot de passe",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordPlaceholder": "••••••••",
+    "signingIn": "Connexion...",
+    "signInButton": "Se connecter",
+    "backToHomepage": "← Retour à l'accueil"
+  },
+  "pendingApproval": {
+    "badge": "En cours de révision",
+    "eyebrow": "Demande soumise",
+    "titleLine1": "Votre profil est",
+    "titleLine2": "en cours de révision.",
+    "body": "Un administrateur nevali examinera votre compte. Vous recevrez un accès une fois approuvé.",
+    "nextHeading": "Prochaines étapes",
+    "questionsLead": "Des questions ?",
+    "contactSupport": "Contacter le support",
+    "signOut": "Se déconnecter",
+    "backToHomepage": "Retour à l'accueil",
+    "steps": [
+      { "label": "Révision du profil", "detail": "1–2 jours ouvrables" },
+      { "label": "Activation du compte", "detail": "Le jour de l'approbation" },
+      { "label": "Accès accordé", "detail": "Portail marque complet" }
+    ]
+  },
+  "registerPaused": {
+    "title": "L'inscription partenaire est suspendue.",
+    "body": "Vous pouvez toujours parcourir le catalogue ou créer un compte acheteur.",
+    "shopProducts": "Boutique",
+    "createBuyerAccount": "Créer un compte acheteur",
+    "signIn": "Se connecter",
+    "backToHome": "← Retour à l'accueil"
+  },
+  "registerPartner": {
+    "layoutTitle": "Rejoindre la plateforme",
+    "layoutSubtitle": "Créez votre compte pour continuer.",
+    "fullName": "Nom complet",
+    "namePlaceholder": "Rida Elmazary",
+    "emailAddress": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Min. 8 caractères",
+    "confirmPassword": "Confirmer le mot de passe",
+    "repeatPasswordPlaceholder": "Répétez le mot de passe",
+    "passwordsMismatch": "Les mots de passe ne correspondent pas",
+    "agreeTerms": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
+    "requiredMark": "*",
+    "registrationFailed": "Échec de l'inscription. Réessayez.",
+    "creatingAccount": "Création du compte...",
+    "createAccount": "Créer un compte",
+    "buyingForStore": "Acheteur pro ? Créez un compte acheteur",
+    "alreadyHaveAccountSignIn": "Déjà un compte ? Se connecter",
+    "dataLawNote": "Vos données sont traitées conformément à la loi marocaine 09-08."
+  },
+  "registerBuyer": {
+    "layoutTitle": "Créer un compte acheteur",
+    "layoutSubtitleMulti": "Découvrez des artisans et demandez des devis.",
+    "layoutSubtitleSingle": "Parcourez nevali, sauvegardez vos listes et suivez vos commandes.",
+    "fullName": "Nom complet",
+    "namePlaceholder": "Votre nom",
+    "emailAddress": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Min. 8 caractères",
+    "confirmPassword": "Confirmer le mot de passe",
+    "repeatPasswordPlaceholder": "Répétez le mot de passe",
+    "passwordsMismatch": "Les mots de passe ne correspondent pas",
+    "agreeTerms": "J'accepte les Conditions d'utilisation et la Politique de confidentialité",
+    "requiredMark": "*",
+    "registrationFailed": "Échec de l'inscription. Réessayez.",
+    "creatingAccount": "Création du compte...",
+    "createBuyerAccount": "Créer un compte acheteur",
+    "artisanInstead": "Artisan ou producteur ? Inscrivez-vous comme partenaire",
+    "alreadyHaveAccountSignIn": "Déjà un compte ? Se connecter",
+    "dataLawNote": "Vos données sont traitées conformément à la loi marocaine 09-08."
+  },
+  "partnersPage": {
+    "metaTitle": "Partenaires — nevali",
+    "metaDescription": "Explorez notre réseau de coopératives et producteurs marocains certifiés.",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbPartners": "Partenaires",
+    "eyebrowVerifiedCount": "{count} Vérifiés — Artisans Marocains",
+    "eyebrowCertified": "Certifiés — Artisans Marocains",
+    "titleLine1": "Les visages",
+    "titleLine2": "derrière chaque",
+    "titleLine3": "produit vérifié",
+    "intro": "Explorez notre réseau de coopératives et artisans marocains certifiés — chacun audité pour sa qualité et sa traçabilité.",
+    "stats": [
+      { "value": "12", "label": "Régions" },
+      { "value": "96%", "label": "Taux d'audit" },
+      { "value": "3", "label": "Normes" }
+    ]
+  },
+  "partnersDirectory": {
+    "allRegions": "Toutes les régions",
+    "verified": "Vérifié",
+    "established": "Depuis {year}",
+    "listingOne": "{count} annonce",
+    "listingMany": "{count} annonces",
+    "viewProfile": "Voir le profil",
+    "searchPlaceholder": "Chercher marques, villes, catégories...",
+    "region": "Région",
+    "emptyFilters": "Aucun artisan ne correspond à vos filtres."
+  },
+  "partnerDetailPage": {
+    "metaFallbackTitle": "Marque — nevali",
+    "metaTitle": "{entityName} — Marques — nevali",
+    "metaDescription": "Marque Nevali vérifiée à {city}, {region}. Parcourez les annonces et certifications.",
+    "breadcrumbArtisans": "Artisans",
+    "breadcrumbShop": "Boutique",
+    "verifiedArtisanFallback": "Artisan vérifié",
+    "statProducts": "Produits",
+    "statCertifications": "Certifications"
+  },
+  "partnerTabs": {
+    "tabOverview": "Aperçu",
+    "tabProducts": "Produits",
+    "tabCertifications": "Certifications",
+    "verified": "Vérifié",
+    "approved": "Approuvé",
+    "aboutBusiness": "À propos de l'entreprise",
+    "exportExperience": "Expérience export",
+    "aboutEmpty": "Cette marque n'a pas encore ajouté de description complète.",
+    "exportMarkets": "Marchés d'exportation",
+    "valuesPractices": "Valeurs & pratiques",
+    "statProductLines": "Gamme de produits",
+    "statLiveProducts": "Produits en ligne",
+    "statCertifications": "Certifications",
+    "statFounded": "Fondé en",
+    "contactLegal": "Contact & légal",
+    "registeredEntity": "Entité enregistrée",
+    "contact": "Contact",
+    "phone": "Téléphone",
+    "website": "Site web",
+    "registrationNo": "N° d'enregistrement",
+    "onNevaliSince": "Sur nevali depuis",
+    "location": "Localisation",
+    "locationMoroccoSuffix": ", Maroc",
+    "annualCapacity": "Capacité annuelle",
+    "backToBrands": "← Toutes les marques",
+    "backToShop": "← Boutique",
+    "certsEmptyTitle": "Pas encore de certificats publics",
+    "certsEmptyBody": "Les documents approuvés apparaîtront ici après vérification.",
+    "statVerifiedOnFile": "Vérifié sur dossier",
+    "statEntityWide": "Niveau entité",
+    "statProductLinked": "Lié au produit",
+    "statRenewal": "Renouvellement",
+    "certProductLabel": "Produit : {name}",
+    "certOrgLevel": "Niveau organisation",
+    "certAdded": "Ajouté le {date}",
+    "viewDocument": "Voir le document →",
+    "productsEmptyTitle": "Aucun produit approuvé",
+    "productsEmptyBody": "Les cosmétiques approuvés de cette marque apparaîtront bientôt.",
+    "catalogEyebrow": "Catalogue approuvé",
+    "liveListingsTitle": "{count} annonce en ligne",
+    "liveListingsTitlePlural": "{count} annonces en ligne",
+    "catalogIntro": "Chaque ligne est une fiche catalogue approuvée.",
+    "tableListing": "Annonce",
+    "tableCategory": "Catégorie",
+    "tablePrice": "Prix",
+    "tableMoq": "Quantité min.",
+    "tableCapacity": "Capacité",
+    "tableStatus": "Statut",
+    "tableListed": "Listé",
+    "tableUpdated": "Mis à jour",
+    "tableActions": "Actions",
+    "listingId": "ID {id}",
+    "mobileListingIdLabel": "ID Annonce",
+    "publicPageLink": "Page publique →",
+    "viewPublicListing": "Voir l'annonce publique",
+    "priceFrom": "Dès {price}",
+    "dash": "—"
+  },
+  "pdp": {
+    "metaFallbackTitle": "Produit — nevali",
+    "metaTitle": "{name} — nevali",
+    "metaDescMulti": "{name} — Cosmétiques marocains par {organizationName} sur nevali.",
+    "metaDescSingle": "{name} — {brand}. Cosmétiques marocains, paiement transparent.",
+    "jumpShop": "Acheter",
+    "jumpTrust": "Confiance",
+    "jumpGallery": "Galerie",
+    "jumpFormula": "Formule",
+    "jumpCerts": "Certificats",
+    "jumpStory": "Histoire",
+    "jumpPackaging": "Formats",
+    "jumpReviews": "Avis",
+    "chooseFormat": "Choisir le format",
+    "fallbackListedBy": "Listé par {organizationName}.",
+    "fallbackFromBrand": "Par {brand}.",
+    "fallbackChooseFormat": " Choisissez un format ci-dessus pour voir le prix.",
+    "fallbackGuestCheckout": " Paiement invité disponible.",
+    "verifiedListing": "Annonce vérifiée",
+    "secureCheckout": "Paiement sécurisé",
+    "pricePerMin": "par {unit} · minimum {min} {unit}",
+    "subtotalLine": "{qty} × sous-total ",
+    "quantity": "Quantité",
+    "addedToCart": "Ajouté au panier",
+    "addToCart": "Ajouter au panier",
+    "requestAvailability": "Demander disponibilité",
+    "wholesaleInquiry": "Demande de gros",
+    "wholesaleFooterLead": "Pour les tarifs de gros et certificats : utilisez la demande de gros.",
+    "photos": "Photos",
+    "ariaJumpNav": "Sur cette page",
+    "ariaBreadcrumb": "Fil d'Ariane",
+    "breadArtisans": "Artisans",
+    "breadShop": "Boutique",
+    "inStock": "En stock",
+    "unavailable": "Indisponible",
+    "formatChip": "Format · {name}",
+    "variantFallback": "Variante",
+    "photoN": "Photo {n}",
+    "prevImage": "Image précédente",
+    "prev": "Précédent",
+    "nextImage": "Image suivante",
+    "next": "Suivant",
+    "ariaProductPhotos": "Photos du produit",
+    "trustVerifiedPartner": "Partenaire vérifié",
+    "trustListingApprovedMulti": "Annonce approuvée sur nevali. Le profil du producteur et les formats sont transparents.",
+    "securePaymentTitle": "Paiement sécurisé",
+    "paymentWhenApproved": "Les options de paiement sont fixées à l'approbation.",
+    "paymentTotalsSuffix": " Totaux confirmés avant le paiement.",
+    "realPhotoTitle": "Photographie réelle",
+    "realPhotoBody": "La galerie reflète les photos réelles fournies pour ce produit.",
+    "certsOnFileTitle": "Certificats sur dossier",
+    "certsCount": "{count} document approuvé dans la section certificats.",
+    "certsCountPlural": "{count} documents approuvés dans la section certificats.",
+    "certsAskProducer": "Demandez au producteur les fiches MSDS ou COA via la demande de gros.",
+    "certsAskBrand": "Demandez à {brand} les fiches MSDS ou COA via la demande de gros.",
+    "visualReference": "Référence visuelle",
+    "galleryIntroMulti": "Texture, emballage et contexte fournis par le producteur.",
+    "formulaTitle": "Formule & application",
+    "formulaIntro": "Ce qui va sur la peau — et le positionnement du produit.",
+    "category": "Catégorie",
+    "capacity": "Capacité",
+    "onRequest": "Sur demande",
+    "minimumOrder": "Commande minimum",
+    "seeFormatsSection": "Voir section formats",
+    "payment": "Paiement",
+    "asSetAtApproval": "Fixé à l'approbation",
+    "skinTypes": "Types de peau",
+    "keyIngredients": "Ingrédients clés",
+    "ingredientsNoteMulti": "Les listes INCI sont fournies par le producteur. Testez toujours sur une petite zone.",
+    "certsSectionTitle": "Certificats & docs",
+    "certsSectionIntroMulti": "PDF approuvés du partenaire — spécifiques au produit ou au studio.",
+    "certThisProduct": "Ce produit",
+    "certPartnerScope": "Partenaire",
+    "openDocument": "Ouvrir le document",
+    "whyFormula": "Pourquoi cette formule",
+    "bulletFormatsMoq": "Formats et MOQ transparents par ligne.",
+    "bulletProducerLinked": "Profil du producteur lié.",
+    "bulletCheckout": "Le paiement respecte les options de l'annonce.",
+    "fullDescription": "Description complète",
+    "emptyLongFormMulti": "Le producteur n'a pas encore publié de description longue.",
+    "craftedBy": "Conçu par",
+    "madeBy": "Fabriqué par",
+    "formatsPricingTitle": "Formats & tarifs",
+    "formatsPricingIntro": "Toutes les variantes disponibles pour cette annonce.",
+    "tablePackaging": "Emballage",
+    "tableUnit": "Unité",
+    "tablePrice": "Prix",
+    "tableMinimum": "Minimum",
+    "tableStock": "Stock",
+    "stockOut": "Rupture de stock",
+    "stockUnits": "{count} unités",
+    "stockAvailable": "Disponible",
+    "paymentDetails": "Détails du paiement",
+    "paymentDetailsBody": "Modes de paiement assignés lors de l'approbation.",
+    "totalsConfirmedLine": "Les totaux sont confirmés avant de payer.",
+    "shipping": "Livraison",
+    "shippingBody": "Les frais de port s'affichent au paiement selon votre adresse.",
+    "reviewsTitle": "Avis",
+    "reviewsSubtitle": "Évaluations des achats vérifiés.",
+    "submitReview": "Laisser un avis",
+    "submitReviewEmailNote": "Email optionnel pour la modération uniquement.",
+    "backToShopBlock": "Retour à la boutique",
+    "allProducts": "Tous les produits",
+    "stickyOrderRegion": "Commander",
+    "formatAria": "Format",
+    "selectFormat": "Sélectionner format",
+    "inquire": "S'informer",
+    "wholesaleShort": "Vente en gros",
+    "imageAltPhoto": "{name} — photo {n}",
+    "dash": "—"
+  },
+  "localeSwitcher": {
+    "ariaLabel": "Langue",
+    "hint": "Langue"
+  }
+}

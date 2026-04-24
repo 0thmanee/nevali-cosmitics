@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { getSession } from "~/app/api/auth/actions";
 import { redirect } from "next/navigation";
+import { getTranslator } from "~/lib/i18n/server";
 import { PendingApprovalContent } from "./PendingApprovalContent";
 
 export default async function PendingApprovalPage() {
+  const t = await getTranslator();
   const session = await getSession();
   if (!session?.user) {
     redirect("/auth/login?callbackUrl=" + encodeURIComponent("/pending-approval"));
@@ -18,7 +20,7 @@ export default async function PendingApprovalPage() {
         </Link>
         <span className="font-sans text-[11px] font-bold tracking-[0.16em] uppercase px-3 py-1 rounded-full"
           style={{ background: "color-mix(in srgb, var(--color-text-muted) 10%, transparent)", color: "var(--color-text-muted)", border: "1px solid color-mix(in srgb, var(--color-text-muted) 25%, transparent)" }}>
-          Under Review
+          {t("pendingApproval.badge")}
         </span>
       </div>
 

@@ -1,8 +1,11 @@
+import type { CSSProperties, ReactNode } from "react";
 import React from "react";
+import { getMessages } from "~/lib/i18n/load-messages";
+import { getLocale, getTranslator } from "~/lib/i18n/server";
+import type { Messages } from "~/lib/i18n/messages";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
-
-// ── Location icons ────────────────────────────────────────────────────────────
 
 function IconQuoteGreen() {
   return (
@@ -41,94 +44,110 @@ function IconGlobe() {
   );
 }
 
-// ── Data ─────────────────────────────────────────────────────────────────────
+type CardJson = Messages["testimonials"]["cards"][number];
 
-const testimonials = [
-  {
-    location: "SOUSS-MASSA REGION",
-    locationIcon: <IconQuoteGreen />,
-    locationIconStyle: {
-      background: "var(--color-paper)",
-      borderRadius: "10px 10px 6px 6px",
-    },
-    topBar:
-      "linear-gradient(in oklab 90deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 50%, oklab(69.6% 0.033 0.116) 100%)",
-    cardBg: "var(--color-paper)",
-    cardBorder: "1px solid var(--color-paper)",
-    cardShadow: "0 4px 32px color-mix(in srgb, var(--color-ink) 7%, transparent)",
-    dark: false,
-    quote:
-      '"nevali gave our cooperative shelf-ready storytelling. Within weeks of launch we were shipping argan serums to Paris boutiques—with ingredients and batches documented the way EU buyers expect."',
-    name: "Fatima Ait Benhaddou",
-    role: "Director, Coopérative Souss — Argan & rose skincare",
-    initials: "FA",
-    avatarGradient:
-      "linear-gradient(in oklab 135deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 100%)",
-    badge: "PRODUCER",
-    badgeStyle: { background: "var(--color-paper)", color: "var(--color-ink)" },
-  },
-  {
-    location: "AMSTERDAM, NETHERLANDS",
-    locationIcon: <IconGlobe />,
-    locationIconStyle: {
-      background: "color-mix(in srgb, var(--color-text-muted) 15%, transparent)",
-      border: "1px solid color-mix(in srgb, var(--color-text-muted) 30%, transparent)",
-      borderRadius: "10px 10px 6px 6px",
-    },
-    topBar:
-      "linear-gradient(in oklab 90deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 50%, oklab(69.6% 0.033 0.116) 100%)",
-    cardBg:
-      "linear-gradient(in oklab 155deg, oklab(14% 0.045 0.025) 0%, oklab(24% 0.07 0.038) 100%)",
-    cardBorder: "none",
-    cardShadow: "0 8px 48px color-mix(in srgb, var(--color-ink) 25%, transparent)",
-    dark: true,
-    quote:
-      '"Supplier diligence used to take months. nevali surfaces Moroccan labs with documentation, imagery, and checkout-ready SKUs—we onboarded a new argan line in under three weeks."',
-    name: "Lars Van der Berg",
-    role: "Procurement Director, NaturaBio Imports — Amsterdam",
-    initials: "LV",
-    avatarGradient:
-      "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
-    badge: "BUYER",
-    badgeStyle: {
-      background: "color-mix(in srgb, var(--color-text-muted) 20%, transparent)",
-      color: "var(--color-paper)",
-      border: "1px solid color-mix(in srgb, var(--color-text-muted) 35%, transparent)",
-    },
-  },
-  {
-    location: "TALIOUINE REGION",
+type TestimonialCard = {
+  location: string;
+  locationIcon: ReactNode;
+  locationIconStyle: CSSProperties;
+  topBar: string;
+  cardBg: string;
+  cardBorder: string;
+  cardShadow: string;
+  dark: boolean;
+  quote: string;
+  name: string;
+  role: string;
+  initials: string;
+  avatarGradient: string;
+  badge: string;
+  badgeStyle: CSSProperties;
+};
+
+function buildCard(data: CardJson, brand: string): TestimonialCard {
+  const quote = interpolate(data.quote, { brand });
+  const role = interpolate(data.role, { brand });
+  const name = interpolate(data.name, { brand });
+
+  if (data.variant === "green") {
+    return {
+      location: data.location,
+      locationIcon: <IconQuoteGreen />,
+      locationIconStyle: { background: "var(--color-paper)", borderRadius: "10px 10px 6px 6px" },
+      topBar:
+        "linear-gradient(in oklab 90deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 50%, oklab(69.6% 0.033 0.116) 100%)",
+      cardBg: "var(--color-paper)",
+      cardBorder: "1px solid var(--color-paper)",
+      cardShadow: "0 4px 32px color-mix(in srgb, var(--color-ink) 7%, transparent)",
+      dark: false,
+      quote,
+      name,
+      role,
+      initials: data.initials,
+      avatarGradient: "linear-gradient(in oklab 135deg, oklab(24% 0.07 0.038) 0%, oklab(36% 0.09 0.048) 100%)",
+      badge: data.badge,
+      badgeStyle: { background: "var(--color-paper)", color: "var(--color-ink)" },
+    };
+  }
+  if (data.variant === "globe") {
+    return {
+      location: data.location,
+      locationIcon: <IconGlobe />,
+      locationIconStyle: {
+        background: "color-mix(in srgb, var(--color-text-muted) 15%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--color-text-muted) 30%, transparent)",
+        borderRadius: "10px 10px 6px 6px",
+      },
+      topBar:
+        "linear-gradient(in oklab 90deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 50%, oklab(69.6% 0.033 0.116) 100%)",
+      cardBg: "linear-gradient(in oklab 155deg, oklab(14% 0.045 0.025) 0%, oklab(24% 0.07 0.038) 100%)",
+      cardBorder: "none",
+      cardShadow: "0 8px 48px color-mix(in srgb, var(--color-ink) 25%, transparent)",
+      dark: true,
+      quote,
+      name,
+      role,
+      initials: data.initials,
+      avatarGradient: "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
+      badge: data.badge,
+      badgeStyle: {
+        background: "color-mix(in srgb, var(--color-text-muted) 20%, transparent)",
+        color: "var(--color-paper)",
+        border: "1px solid color-mix(in srgb, var(--color-text-muted) 35%, transparent)",
+      },
+    };
+  }
+  return {
+    location: data.location,
     locationIcon: <IconQuoteGold />,
-    locationIconStyle: {
-      background: "var(--color-cream)",
-      borderRadius: "10px 10px 6px 6px",
-    },
+    locationIconStyle: { background: "var(--color-cream)", borderRadius: "10px 10px 6px 6px" },
     topBar:
       "linear-gradient(in oklab 90deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 50%, oklab(24% 0.07 0.038) 100%)",
     cardBg: "var(--color-paper)",
     cardBorder: "1px solid var(--color-paper)",
     cardShadow: "0 4px 32px color-mix(in srgb, var(--color-ink) 7%, transparent)",
     dark: false,
-    quote:
-      '"The training modules taught us how to photograph textures, write INCI blocks, and prep export paperwork. Support tickets keep our hammam line compliant without hiring a full-time regulatory team."',
-    name: "Mohammed Benali",
-    role: "Lead formulator, Domaine Berbère — botanical skincare, Taliouine",
-    initials: "MB",
-    avatarGradient:
-      "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
-    badge: "PRODUCER",
+    quote,
+    name,
+    role,
+    initials: data.initials,
+    avatarGradient: "linear-gradient(in oklab 135deg, oklab(69.6% 0.033 0.116) 0%, oklab(80.6% 0.012 0.135) 100%)",
+    badge: data.badge,
     badgeStyle: { background: "var(--color-cream)", color: "var(--color-text-muted)" },
-  },
-];
+  };
+}
 
-// ── Main component ────────────────────────────────────────────────────────────
+export default async function TestimonialsSection() {
+  const t = await getTranslator();
+  const locale = await getLocale();
+  const messages = getMessages(locale);
+  const brand = NEVALI_HOUSE_BRAND.legalName;
+  const testimonials = messages.testimonials.cards.map((c) => buildCard(c, brand));
 
-export default function TestimonialsSection() {
   return (
     <section className="bg-white py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col gap-12 lg:gap-16">
-        {/* ── Section header ── */}
-        <div className="flex flex-col items-center text-center gap-5">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:gap-16">
+        <div className="flex flex-col items-center gap-5 text-center">
           <div className="flex items-center gap-3">
             <div className="h-px w-10 bg-secondary/40" />
             <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
@@ -140,7 +159,7 @@ export default function TestimonialsSection() {
               />
             </svg>
             <span className="font-sans text-sm font-semibold tracking-[0.18em] text-secondary uppercase">
-              Brand voices
+              {t("testimonials.kicker")}
             </span>
             <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
               <path
@@ -153,125 +172,102 @@ export default function TestimonialsSection() {
             <div className="h-px w-10 bg-secondary/40" />
           </div>
 
-          <h2 className="font-serif font-bold text-text-dark leading-tight text-4xl md:text-5xl">
+          <h2 className="font-serif font-bold text-4xl text-text-dark leading-tight md:text-5xl">
             {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
               <>
-                Trusted by makers
+                {t("testimonials.titleMultiLine1")}
                 <br />
-                and beauty buyers
+                {t("testimonials.titleMultiLine2")}
               </>
             ) : (
               <>
-                From our studio
+                {t("testimonials.titleSingleLine1")}
                 <br />
-                to beauty buyers
+                {t("testimonials.titleSingleLine2")}
               </>
             )}
           </h2>
 
-          <p className="font-sans text-text-muted text-lg max-w-[480px] leading-relaxed">
-            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-              <>Moroccan labs, cooperatives, and retailers growing together on the nevali marketplace.</>
-            ) : (
-              <>
-                Moroccan labs, cooperatives, and retailers who collaborate with {NEVALI_HOUSE_BRAND.legalName} on formulations,
-                packaging, and distribution.
-              </>
-            )}
+          <p className="max-w-[480px] font-sans text-lg text-text-muted leading-relaxed">
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("testimonials.subtitleMulti") : t("testimonials.subtitleSingle", { brand })}
           </p>
         </div>
 
-        {/* ── Cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {testimonials.map((t) => (
+        <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
+          {testimonials.map((row) => (
             <div
-              key={t.name}
-              className="flex flex-col rounded-[20px] overflow-hidden"
+              key={row.name}
+              className="flex flex-col overflow-hidden rounded-[20px]"
               style={{
-                background: t.cardBg,
-                border: t.cardBorder,
-                boxShadow: t.cardShadow,
+                background: row.cardBg,
+                border: row.cardBorder,
+                boxShadow: row.cardShadow,
               }}
             >
-              {/* Top gradient bar */}
-              <div
-                className="h-1.5 shrink-0"
-                style={{ backgroundImage: t.topBar }}
-              />
+              <div className="h-1.5 shrink-0" style={{ backgroundImage: row.topBar }} />
 
-              {/* Card content */}
-              <div className="flex flex-col gap-6 p-9 flex-1">
-                {/* Location row */}
+              <div className="flex flex-1 flex-col gap-6 p-9">
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 flex items-center justify-center shrink-0"
-                    style={t.locationIconStyle}
-                  >
-                    {t.locationIcon}
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center" style={row.locationIconStyle}>
+                    {row.locationIcon}
                   </div>
                   <span
                     className="font-sans text-sm font-bold tracking-[0.14em] uppercase"
                     style={{
-                      color: t.dark ? "color-mix(in srgb, var(--color-paper) 45%, transparent)" : "var(--color-text-muted)",
+                      color: row.dark ? "color-mix(in srgb, var(--color-paper) 45%, transparent)" : "var(--color-text-muted)",
                     }}
                   >
-                    {t.location}
+                    {row.location}
                   </span>
                 </div>
 
-                {/* Stars */}
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-secondary text-lg leading-none">
+                    <span key={`${row.name}-star-${i}`} className="text-lg text-secondary leading-none">
                       ★
                     </span>
                   ))}
                 </div>
 
-                {/* Quote */}
                 <p
-                  className="font-serif italic text-lg leading-relaxed flex-1"
+                  className="flex-1 font-serif text-lg leading-relaxed italic"
                   style={{
-                    color: t.dark ? "color-mix(in srgb, var(--color-paper) 90%, transparent)" : "var(--color-ink)",
+                    color: row.dark ? "color-mix(in srgb, var(--color-paper) 90%, transparent)" : "var(--color-ink)",
                   }}
                 >
-                  {t.quote}
+                  {row.quote}
                 </p>
 
-                {/* Author */}
-                <div className="flex items-center gap-3">
-                  {/* Avatar */}
+                <div className="flex min-w-0 items-center gap-3">
                   <div
-                    className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 font-sans font-bold text-sm text-white"
-                    style={{ backgroundImage: t.avatarGradient }}
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-sans text-sm font-bold text-white"
+                    style={{ backgroundImage: row.avatarGradient }}
                   >
-                    {t.initials}
+                    {row.initials}
                   </div>
 
-                  {/* Name + role */}
-                  <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <p
-                      className="font-sans font-semibold text-sm leading-tight"
-                      style={{ color: t.dark ? "var(--color-paper)" : "var(--color-ink)" }}
+                      className="font-sans text-sm font-semibold leading-tight"
+                      style={{ color: row.dark ? "var(--color-paper)" : "var(--color-ink)" }}
                     >
-                      {t.name}
+                      {row.name}
                     </p>
                     <p
                       className="font-sans text-xs leading-tight"
                       style={{
-                        color: t.dark ? "color-mix(in srgb, var(--color-paper) 45%, transparent)" : "var(--color-text-muted)",
+                        color: row.dark ? "color-mix(in srgb, var(--color-paper) 45%, transparent)" : "var(--color-text-muted)",
                       }}
                     >
-                      {t.role}
+                      {row.role}
                     </p>
                   </div>
 
-                  {/* Badge */}
                   <span
-                    className="font-sans text-xs font-bold tracking-wider rounded-full px-2.5 py-1 shrink-0 uppercase"
-                    style={t.badgeStyle}
+                    className="shrink-0 rounded-full px-2.5 py-1 font-sans text-xs font-bold tracking-wider uppercase"
+                    style={row.badgeStyle}
                   >
-                    {t.badge}
+                    {row.badge}
                   </span>
                 </div>
               </div>

@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { signIn } from "~/lib/auth-client";
 import { AuthLayout, AuthInput, AuthField } from "~/features/auth";
 
 export function LoginForm() {
+  const { t } = useI18n();
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/artisan";
@@ -23,7 +25,7 @@ export function LoginForm() {
       { email, password, callbackURL: callbackUrl },
       {
         onError: (ctx) => {
-          setError(ctx.error?.message ?? "Invalid email or password.");
+          setError(ctx.error?.message ?? t("auth.invalidCredentials"));
         },
       }
     );
@@ -35,24 +37,24 @@ export function LoginForm() {
 
   return (
     <AuthLayout
-      title="Sign in"
+      showRegisterLink
       subtitle={
         <>
-          Welcome
+          {t("auth.loginWelcomeLine1")}
           <br />
-          <span className="italic" style={{ color: "var(--color-text-muted)" }}>back</span>
+          <span className="italic" style={{ color: "var(--color-text-muted)" }}>
+            {t("auth.loginWelcomeLine2")}
+          </span>
         </>
       }
-      showRegisterLink
+      title={t("auth.loginTitle")}
     >
       <div className="flex flex-col gap-6">
         <div>
           <h1 className="font-serif font-bold text-[28px] text-text-dark leading-tight">
-            Sign in to your account
+            {t("auth.loginHeading")}
           </h1>
-          <p className="font-sans text-text-muted text-sm mt-1">
-            Enter your credentials to access the Artisan Portal.
-          </p>
+          <p className="font-sans text-text-muted text-sm mt-1">{t("auth.loginPortalHint")}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -67,22 +69,22 @@ export function LoginForm() {
               <p>{error}</p>
             </div>
           )}
-          <AuthField label="Email Address">
+          <AuthField label={t("auth.emailAddress")}>
             <AuthInput
               type="email"
               name="email"
-              placeholder="you@example.com"
+              placeholder={t("auth.emailPlaceholder")}
               value={email}
               onChange={setEmail}
               required
               autoComplete="email"
             />
           </AuthField>
-          <AuthField label="Password">
+          <AuthField label={t("auth.password")}>
             <AuthInput
               type="password"
               name="password"
-              placeholder="••••••••"
+              placeholder={t("auth.passwordPlaceholder")}
               value={password}
               onChange={setPassword}
               required
@@ -95,13 +97,13 @@ export function LoginForm() {
             className="font-sans font-semibold text-sm text-white rounded px-8 py-3.5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed w-full"
             style={{ background: "var(--color-ink)" }}
           >
-            {loading ? "Signing in…" : "Sign in"}
+            {loading ? t("auth.signingIn") : t("auth.signInButton")}
           </button>
         </form>
 
         <p className="font-sans text-[11px] text-center">
           <Link href="/" className="text-text-muted/60 hover:text-text-muted">
-            ← Back to homepage
+            {t("auth.backToHomepage")}
           </Link>
         </p>
       </div>

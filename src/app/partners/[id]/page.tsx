@@ -4,6 +4,8 @@ import Link from "next/link";
 import Navbar from "~/app/Navbar";
 import Footer from "~/app/Footer";
 import { getPublicPartner } from "~/app/api/partners/public-actions";
+import { interpolate } from "~/lib/i18n/interpolate";
+import { getTranslator } from "~/lib/i18n/server";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import PartnerTabs from "./PartnerTabs";
 import type {
@@ -16,17 +18,18 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslator();
   const { id } = await params;
   const partner = await getPublicPartner(id);
   if (!partner?.profile) {
-    return { title: "Brand — nevali" };
+    return { title: t("partnerDetailPage.metaFallbackTitle") };
   }
   const { profile } = partner;
   return {
-    title: `${profile.entityName} — Brands — nevali`,
+    title: t("partnerDetailPage.metaTitle", { entityName: profile.entityName }),
     description:
       profile.publicTagline?.trim() ||
-      `Verified Nevali brand in ${profile.city}, ${profile.region}. Browse approved listings and certifications.`,
+      interpolate(t("partnerDetailPage.metaDescription"), { city: profile.city, region: profile.region }),
   };
 }
 
@@ -107,6 +110,7 @@ export default async function PartnerProfilePage({
   }));
 
   const platformSince = new Date(partner.createdAt).getFullYear().toString();
+  const t = await getTranslator();
 
   return (
     <main className="flex flex-col w-full min-h-screen bg-cream">
@@ -119,11 +123,11 @@ export default async function PartnerProfilePage({
           <nav className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10 flex-wrap">
             {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
               <Link href="/artisans" className="hover:text-white/70 transition-colors">
-                Artisans
+                {t("partnerDetailPage.breadcrumbArtisans")}
               </Link>
             ) : (
               <Link href="/products" className="hover:text-white/70 transition-colors">
-                Shop
+                {t("partnerDetailPage.breadcrumbShop")}
               </Link>
             )}
             <span>/</span>
@@ -159,7 +163,7 @@ export default async function PartnerProfilePage({
 
               <div className="flex flex-col gap-3 min-w-0">
                 <p className="font-sans text-xs tracking-[0.2em] uppercase text-secondary">
-                  {profile.entityType ?? "Verified artisan"}
+                  {profile.entityType ?? t("partnerDetailPage.verifiedArtisanFallback")}
                 </p>
                 <h1
                   className="font-serif font-bold uppercase text-white leading-[1.0]"
@@ -169,7 +173,9 @@ export default async function PartnerProfilePage({
                 </h1>
                 <p className="font-sans text-sm text-white/55">
                   {profile.city}, {profile.region}
-                  {profile.yearEstablished ? ` · Est. ${profile.yearEstablished}` : ""}
+                  {profile.yearEstablished
+                    ? ` · ${interpolate(t("partnersDirectory.established"), { year: profile.yearEstablished })}`
+                    : ""}
                 </p>
                 {categories.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-1">
@@ -192,8 +198,8 @@ export default async function PartnerProfilePage({
               ) : null}
               <dl className="flex gap-6">
                 {[
-                  { label: "Products", value: String(products.length) },
-                  { label: "Certifications", value: String(certifications.length) },
+                  { label: t("partnerDetailPage.statProducts"), value: String(products.length) },
+                  { label: t("partnerDetailPage.statCertifications"), value: String(certifications.length) },
                 ].map((s) => (
                   <div key={s.label} className="flex flex-col gap-0.5">
                     <dd className="font-serif font-bold text-secondary" style={{ fontSize: "clamp(22px, 2.5vw, 32px)" }}>{s.value}</dd>

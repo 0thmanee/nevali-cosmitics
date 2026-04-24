@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import React from "react";
 import Link from "next/link";
 import Navbar from "~/app/Navbar";
@@ -8,17 +9,22 @@ import {
   listApprovedProductsForPublicPaginatedRepo,
   listApprovedProductCategoriesRepo,
 } from "~/app/api/products/repo/products.repo";
+import type { Translator } from "~/lib/i18n/create-translator";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
+import { getTranslator } from "~/lib/i18n/server";
 
-export const metadata = {
-  title: SHOW_MULTI_PRODUCER_EXPERIENCE ? "Products — nevali" : `Shop — ${NEVALI_HOUSE_BRAND.legalName} | nevali`,
-  description: SHOW_MULTI_PRODUCER_EXPERIENCE
-    ? "Browse verified Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, certified partners, and checkout-ready listings."
-    : `Browse ${NEVALI_HOUSE_BRAND.legalName} Moroccan skincare, haircare, body care, and botanical cosmetics—transparent ingredients, studio certifications, and checkout-ready listings.`,
-};
-
-// ── Pagination ────────────────────────────────────────────────────────────────
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslator();
+  const brand = NEVALI_HOUSE_BRAND.legalName;
+  return {
+    title: SHOW_MULTI_PRODUCER_EXPERIENCE ? t("productsPage.metaTitleMulti") : t("productsPage.metaTitleSingle", { brand }),
+    description: SHOW_MULTI_PRODUCER_EXPERIENCE
+      ? t("productsPage.metaDescMulti")
+      : t("productsPage.metaDescSingle", { brand }),
+  };
+}
 
 function buildHref(page: number, category?: string) {
   const p = new URLSearchParams();
@@ -32,10 +38,12 @@ function Pagination({
   currentPage,
   totalPages,
   category,
+  t,
 }: {
   currentPage: number;
   totalPages: number;
   category?: string;
+  t: Translator;
 }) {
   if (totalPages <= 1) return null;
 
@@ -58,24 +66,27 @@ function Pagination({
   return (
     <div className="flex items-center justify-center gap-1 pt-6">
       {currentPage > 1 ? (
-        <Link href={buildHref(currentPage - 1, category)} className={`${btnBase} bg-white text-stone-700 border-stone-200 hover:bg-stone-50 gap-1.5`}>
+        <Link
+          href={buildHref(currentPage - 1, category)}
+          className={`${btnBase} gap-1.5 border-stone-200 bg-white text-stone-700 hover:bg-stone-50`}
+        >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          Prev
+          {t("productsPage.paginationPrev")}
         </Link>
       ) : (
-        <span className={`${btnBase} bg-white text-stone-300 border-stone-200 cursor-not-allowed gap-1.5`}>
+        <span className={`${btnBase} cursor-not-allowed gap-1.5 border-stone-200 bg-white text-stone-300`}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M9 3L5 7l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          Prev
+          {t("productsPage.paginationPrev")}
         </span>
       )}
 
       {range.map((p, i) =>
         p === "…" ? (
-          <span key={`ellipsis-${i}`} className="h-9 w-8 flex items-center justify-center font-sans text-sm text-stone-400">
+          <span key={`ellipsis-${i}`} className="flex h-9 w-8 items-center justify-center font-sans text-sm text-stone-400">
             …
           </span>
         ) : (
@@ -85,25 +96,28 @@ function Pagination({
             className={`${btnBase} ${
               p === currentPage
                 ? "border-transparent text-white"
-                : "text-stone-700 bg-white border-stone-200 hover:bg-stone-50"
+                : "border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
             }`}
             style={p === currentPage ? { background: "var(--color-primary)" } : undefined}
           >
             {p}
           </Link>
-        )
+        ),
       )}
 
       {currentPage < totalPages ? (
-        <Link href={buildHref(currentPage + 1, category)} className={`${btnBase} bg-white text-stone-700 border-stone-200 hover:bg-stone-50 gap-1.5`}>
-          Next
+        <Link
+          href={buildHref(currentPage + 1, category)}
+          className={`${btnBase} gap-1.5 border-stone-200 bg-white text-stone-700 hover:bg-stone-50`}
+        >
+          {t("productsPage.paginationNext")}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
       ) : (
-        <span className={`${btnBase} bg-white text-stone-300 border-stone-200 cursor-not-allowed gap-1.5`}>
-          Next
+        <span className={`${btnBase} cursor-not-allowed gap-1.5 border-stone-200 bg-white text-stone-300`}>
+          {t("productsPage.paginationNext")}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -113,8 +127,6 @@ function Pagination({
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-
 const PAGE_SIZE = 12;
 
 export default async function ProductsPage({
@@ -122,6 +134,8 @@ export default async function ProductsPage({
 }: {
   searchParams: Promise<{ page?: string; category?: string }>;
 }) {
+  const t = await getTranslator();
+  const brand = NEVALI_HOUSE_BRAND.legalName;
   const params = await searchParams;
   const currentPage = Math.max(1, Number(params.page ?? 1));
   const currentCategory = params.category ?? undefined;
@@ -139,57 +153,52 @@ export default async function ProductsPage({
   const end = Math.min(currentPage * PAGE_SIZE, total);
 
   return (
-    <main className="flex flex-col w-full min-h-screen bg-cream pt-[56px]">
+    <main className="flex min-h-screen w-full flex-col bg-cream pt-[56px]">
       <Navbar />
 
-      {/* ── Hero ── */}
       <section className="border-b border-cream-dark bg-linear-to-b from-cream to-cream-dark/40">
-        <div className="max-w-7xl mx-auto px-6">
-
-          {/* Breadcrumb */}
-          <AnimateOnScroll className="py-4 flex items-center gap-2 border-b border-cream-dark font-sans text-xs uppercase tracking-[0.08em] text-primary/70" direction="down">
-            <Link href="/" className="transition-colors hover:text-primary">Home</Link>
+        <div className="mx-auto max-w-7xl px-6">
+          <AnimateOnScroll
+            className="flex items-center gap-2 border-b border-cream-dark py-4 font-sans text-xs uppercase tracking-[0.08em] text-primary/70"
+            direction="down"
+          >
+            <Link className="transition-colors hover:text-primary" href="/">
+              {t("productsPage.breadcrumbHome")}
+            </Link>
             <span>/</span>
-            <span className="text-primary">Products</span>
+            <span className="text-primary">{t("productsPage.breadcrumbProducts")}</span>
           </AnimateOnScroll>
 
-          {/* Headline row */}
-          <div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
-            <AnimateOnScroll direction="up" delay={0}>
+          <div className="flex flex-col justify-between gap-10 py-20 md:flex-row md:items-end">
+            <AnimateOnScroll delay={0} direction="up">
               <p className="mb-5 font-sans text-xs uppercase tracking-[0.2em] text-primary/80">
                 {SHOW_MULTI_PRODUCER_EXPERIENCE
-                  ? `Certified Marketplace — ${total} Products`
-                  : `${NEVALI_HOUSE_BRAND.legalName} catalog — ${total} products`}
+                  ? interpolate(t("productsPage.eyebrowMulti"), { total: String(total) })
+                  : interpolate(t("productsPage.eyebrowSingle"), { brand, total: String(total) })}
               </p>
               <h1
-                className="font-serif font-bold uppercase leading-none text-text-dark"
+                className="font-bold font-display uppercase leading-none text-text-dark"
                 style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
               >
-                Moroccan cosmetics,<br />softly curated<br />&amp; traceable
+                {t("productsPage.titleLine1")}
+                <br />
+                {t("productsPage.titleLine2")}
+                <br />
+                {t("productsPage.titleLine3")}
               </h1>
             </AnimateOnScroll>
 
-            <AnimateOnScroll direction="up" delay={150} className="md:max-w-xs shrink-0">
+            <AnimateOnScroll className="shrink-0 md:max-w-xs" delay={150} direction="up">
               <p className="mb-8 font-sans text-sm leading-relaxed text-text-muted">
-                {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-                  <>
-                    Every SKU comes from a verified Moroccan beauty brand with clear ingredients, imagery, and fulfilment
-                    rules—shop as a guest or save lists with a buyer account.
-                  </>
-                ) : (
-                  <>
-                    Every SKU is prepared by {NEVALI_HOUSE_BRAND.legalName} with clear ingredients, imagery, and fulfilment
-                    rules—shop as a guest or save lists with a buyer account.
-                  </>
-                )}
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("productsPage.introMulti") : t("productsPage.introSingle", { brand })}
               </p>
               <div className="grid grid-cols-3 divide-x divide-cream-dark border border-cream-dark bg-white/60">
                 {[
-                  { value: String(total), label: "Products" },
-                  { value: String(categories.length), label: "Categories" },
-                  { value: "100%", label: "Verified" },
+                  { value: String(total), label: t("productsPage.statProducts") },
+                  { value: String(categories.length), label: t("productsPage.statCategories") },
+                  { value: "100%", label: t("productsPage.statVerified") },
                 ].map((stat) => (
-                  <div key={stat.label} className="flex flex-col items-center gap-1 py-4 px-3">
+                  <div key={stat.label} className="flex flex-col items-center gap-1 px-3 py-4">
                     <span className="font-serif text-2xl font-bold leading-none text-primary-dark">{stat.value}</span>
                     <span className="mt-1 font-sans text-xs uppercase tracking-[0.15em] text-text-muted">{stat.label}</span>
                   </div>
@@ -198,23 +207,22 @@ export default async function ProductsPage({
             </AnimateOnScroll>
           </div>
 
-          {/* Category filter tabs */}
           {categories.length > 0 && (
             <AnimateOnScroll className="flex flex-wrap items-center gap-0 border-t border-cream-dark" direction="down">
               <Link
                 href="/products"
-                className={`px-5 py-3 font-sans text-xs font-semibold tracking-[0.05em] uppercase transition-colors border-b-2 ${
-                  !currentCategory ? "text-primary border-primary" : "text-text-muted border-transparent hover:text-primary"
+                className={`px-5 py-3 font-sans text-xs font-semibold uppercase tracking-[0.05em] transition-colors border-b-2 ${
+                  !currentCategory ? "border-primary text-primary" : "border-transparent text-text-muted hover:text-primary"
                 }`}
               >
-                All
+                {t("productsPage.filterAll")}
               </Link>
               {categories.map((cat) => (
                 <Link
                   key={cat}
                   href={buildHref(1, cat)}
-                  className={`px-5 py-3 font-sans text-xs font-semibold tracking-[0.05em] uppercase transition-colors border-b-2 ${
-                    currentCategory === cat ? "text-primary border-primary" : "text-text-muted border-transparent hover:text-primary"
+                  className={`px-5 py-3 font-sans text-xs font-semibold uppercase tracking-[0.05em] transition-colors border-b-2 ${
+                    currentCategory === cat ? "border-primary text-primary" : "border-transparent text-text-muted hover:text-primary"
                   }`}
                 >
                   {cat}
@@ -225,24 +233,26 @@ export default async function ProductsPage({
         </div>
       </section>
 
-      {/* ── Catalogue ── */}
-      <section className="flex-1 py-12 px-6">
+      <section className="flex-1 px-6 py-12">
         <AnimateOnScroll className="mx-auto flex max-w-7xl flex-col gap-6" delay={50} direction="up" scale>
-
-          {/* Results count */}
           {total > 0 && (
             <div className="flex items-center justify-between">
               <p className="font-sans text-sm text-stone-400">
-                Showing{" "}
-                <span className="font-semibold text-stone-700">{start}–{end}</span> of{" "}
-                <span className="font-semibold text-stone-700">{total}</span> products
-                {currentCategory && (
+                {t("productsPage.resultsShowing")}{" "}
+                <span className="font-semibold text-stone-700">
+                  {start}–{end}
+                </span>{" "}
+                {t("productsPage.resultsOf")}{" "}
+                <span className="font-semibold text-stone-700">{total}</span> {t("productsPage.resultsProducts")}
+                {currentCategory ? (
                   <>
-                    {" "}in <span className="font-semibold text-stone-700">{currentCategory}</span>
+                    {" "}
+                    {t("productsPage.resultsIn")}{" "}
+                    <span className="font-semibold text-stone-700">{currentCategory}</span>
                   </>
-                )}
+                ) : null}
               </p>
-              {currentCategory && (
+              {currentCategory ? (
                 <Link
                   href="/products"
                   className="flex items-center gap-1 font-sans text-sm font-medium text-primary transition-opacity hover:opacity-70"
@@ -250,17 +260,16 @@ export default async function ProductsPage({
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                   </svg>
-                  Clear filter
+                  {t("productsPage.clearFilter")}
                 </Link>
-              )}
+              ) : null}
             </div>
           )}
 
-          {/* Grid */}
           {products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
+            <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
               <div
-                className="w-16 h-16 flex items-center justify-center"
+                className="flex h-16 w-16 items-center justify-center"
                 style={{ background: "var(--color-primary)" }}
               >
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -268,33 +277,32 @@ export default async function ProductsPage({
                   <path d="M9 10V7a4 4 0 0 1 8 0v3" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
               </div>
-              <p className="font-serif font-bold text-stone-800 text-2xl">No products found</p>
-              <p className="font-sans text-stone-400 text-base max-w-xs">
+              <p className="font-serif text-2xl font-bold text-stone-800">{t("productsPage.emptyTitle")}</p>
+              <p className="max-w-xs font-sans text-base text-stone-400">
                 {currentCategory
-                  ? `No listings in "${currentCategory}" yet.`
+                  ? interpolate(t("productsPage.emptyCategory"), { category: currentCategory })
                   : SHOW_MULTI_PRODUCER_EXPERIENCE
-                    ? "Verified brands are adding new cosmetics to the catalog—check back soon."
-                    : `${NEVALI_HOUSE_BRAND.legalName} is adding new cosmetics to the catalog—check back soon.`}
+                    ? t("productsPage.emptyBodyMulti")
+                    : t("productsPage.emptyBodySingle", { brand })}
               </p>
-              {currentCategory && (
+              {currentCategory ? (
                 <Link
                   href="/products"
                   className="rounded-full bg-primary px-6 py-3 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
-                  Browse all products
+                  {t("productsPage.browseAllProducts")}
                 </Link>
-              )}
+              ) : null}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {products.map((product) => (
                 <PublicProductCard key={product.id} product={product} />
               ))}
             </div>
           )}
 
-          {/* Pagination */}
-          <Pagination currentPage={currentPage} totalPages={totalPages} category={currentCategory} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} category={currentCategory} t={t} />
         </AnimateOnScroll>
       </section>
 

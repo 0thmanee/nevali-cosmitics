@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { signOut } from "~/lib/auth-client";
 
 type Props = {
@@ -17,6 +18,7 @@ function dashboardHref(role: string): string {
 }
 
 export function NavbarUserMenu({ name, email, role }: Props) {
+  const { t } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const dash = dashboardHref(role);
 
@@ -26,7 +28,7 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         href={dash}
         className="hidden h-10 items-center rounded-sm border border-primary/40 bg-white px-5 font-sans text-sm font-medium text-primary transition-colors hover:bg-primary/10 sm:inline-flex"
       >
-        Dashboard
+        {t("navbarUserMenu.dashboard")}
       </Link>
       <button
         type="button"
@@ -36,7 +38,7 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
           {(name || email || "?").slice(0, 1).toUpperCase()}
         </span>
-        <span className="max-w-[100px] truncate hidden sm:inline">{name || email}</span>
+        <span className="hidden max-w-[100px] truncate sm:inline">{name || email}</span>
         <svg
           width="12"
           height="12"
@@ -57,26 +59,29 @@ export function NavbarUserMenu({ name, email, role }: Props) {
         <>
           <div className="fixed inset-0 z-40" aria-hidden onClick={() => setMenuOpen(false)} />
           <div
-            className="absolute right-0 top-full z-50 mt-2 w-48 rounded-sm border border-cream-dark bg-white py-2 shadow-lg"
+            className="absolute end-0 top-full z-50 mt-2 w-48 rounded-sm border border-cream-dark bg-white py-2 shadow-lg"
             role="menu"
           >
-            <div className="px-4 py-2 border-b border-cream-dark">
-              <p className="font-sans text-sm font-semibold text-text-dark truncate">{name || "Account"}</p>
-              <p className="font-sans text-xs text-text-muted truncate">{email}</p>
+            <div className="border-b border-cream-dark px-4 py-2">
+              <p className="truncate font-sans text-sm font-semibold text-text-dark">{name || t("navbarUserMenu.accountFallback")}</p>
+              <p className="truncate font-sans text-xs text-text-muted">{email}</p>
             </div>
             <Link
               href={dash}
               className="block px-4 py-2 font-sans text-sm text-text-dark transition-colors hover:bg-cream"
               onClick={() => setMenuOpen(false)}
             >
-              Dashboard
+              {t("navbarUserMenu.dashboard")}
             </Link>
             <button
               type="button"
-              className="w-full px-4 py-2 text-left font-sans text-sm text-text-dark transition-colors hover:bg-cream"
-              onClick={() => { signOut(); setMenuOpen(false); }}
+              className="w-full px-4 py-2 text-start font-sans text-sm text-text-dark transition-colors hover:bg-cream"
+              onClick={() => {
+                signOut();
+                setMenuOpen(false);
+              }}
             >
-              Sign out
+              {t("navbarUserMenu.signOut")}
             </button>
           </div>
         </>

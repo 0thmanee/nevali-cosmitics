@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export function AuthLayout({
@@ -21,6 +22,7 @@ export function AuthLayout({
   contentClassName?: string;
   contentCenter?: boolean;
 }) {
+  const { t } = useI18n();
   return (
     <div className="min-h-screen flex">
       {/* ── Left panel: brand side ── */}
@@ -45,7 +47,7 @@ export function AuthLayout({
               nevali
             </span>
             <span className="font-sans text-[9px] font-semibold tracking-[0.22em] text-white/40 uppercase mt-1">
-              {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partner portal" : "nevali"}
+              {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("auth.sideTaglineMulti") : t("auth.sideTaglineSingle")}
             </span>
           </Link>
 
@@ -57,7 +59,7 @@ export function AuthLayout({
               {subtitle}
             </h2>
             <p className="font-sans text-white/50 text-[13px] leading-relaxed max-w-[280px] mt-1">
-              Premium Moroccan skincare and rituals—traceable sourcing, verified listings, and a calm, refined presence online.
+              {t("auth.sideBody")}
             </p>
           </div>
         </div>
@@ -72,7 +74,9 @@ export function AuthLayout({
             className="absolute inset-0 flex items-end p-4"
             style={{ background: "linear-gradient(to top, color-mix(in srgb, var(--color-ink) 50%, transparent) 0%, transparent 60%)" }}
           >
-            <span className="font-sans text-white/60 text-[10px] uppercase tracking-widest">NEVALI</span>
+            <span className="font-sans text-white/60 text-[10px] uppercase tracking-widest">
+              {t("auth.sideBadge")}
+            </span>
           </div>
         </div>
 
@@ -88,9 +92,9 @@ export function AuthLayout({
               ))}
             </div>
             <p className="font-serif italic text-[13px] text-white/75 leading-relaxed">
-              &ldquo;Within weeks of listing on nevali, shoppers in Europe were reordering our argan serum—finally under our own label.&rdquo;
+              &ldquo;{t("auth.testimonialQuote")}&rdquo;
             </p>
-            <p className="font-sans text-[11px] text-white/40 mt-3">— Fatima O., Atlas Valley Skincare</p>
+            <p className="font-sans text-[11px] text-white/40 mt-3">{t("auth.testimonialAttribution")}</p>
           </div>
         </div>
       </div>
@@ -106,20 +110,20 @@ export function AuthLayout({
           <span className="font-sans text-[13px] text-text-muted">
             {showRegisterLink && (
               <>
-                New here?{" "}
+                {t("auth.newHere")}{" "}
                 <Link
                   href={SHOW_MULTI_PRODUCER_EXPERIENCE ? "/auth/register" : "/auth/register-buyer"}
                   className="font-semibold text-forest-light hover:underline"
                 >
-                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Create account" : "Create buyer account"}
+                  {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("auth.createAccount") : t("auth.createBuyerAccount")}
                 </Link>
               </>
             )}
             {showLoginLink && (
               <>
-                {SHOW_MULTI_PRODUCER_EXPERIENCE ? "Already a partner? " : "Already have an account? "}
+                {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("auth.alreadyPartner") : t("auth.alreadyHaveAccount")}
                 <Link href="/auth/login" className="font-semibold text-forest-light hover:underline">
-                  Sign in
+                  {t("auth.signIn")}
                 </Link>
               </>
             )}

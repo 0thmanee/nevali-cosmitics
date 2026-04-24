@@ -1,8 +1,10 @@
-import React from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { getMessages } from "~/lib/i18n/load-messages";
+import { getLocale, getTranslator } from "~/lib/i18n/server";
+import type { Messages } from "~/lib/i18n/messages";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
-
-// ── Pillar header icons ───────────────────────────────────────────────────────
 
 function IconPillar1() {
   return (
@@ -46,8 +48,6 @@ function IconPillar3() {
   );
 }
 
-// ── Feature card icons ────────────────────────────────────────────────────────
-
 function IconStar() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -79,15 +79,7 @@ function IconCheckCircle() {
 function IconAudit() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect
-        x="3"
-        y="5"
-        width="14"
-        height="11"
-        rx="1.5"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-      />
+      <rect x="3" y="5" width="14" height="11" rx="1.5" stroke="var(--color-ink)" strokeWidth="1.6" />
       <path
         d="M7 5V4a3 3 0 0 1 6 0v1M8 11l2 2 4-4"
         stroke="var(--color-ink)"
@@ -102,42 +94,10 @@ function IconAudit() {
 function IconGrid() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect
-        x="2"
-        y="2"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-text-muted)"
-        strokeWidth="1.6"
-      />
-      <rect
-        x="12"
-        y="2"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-text-muted)"
-        strokeWidth="1.6"
-      />
-      <rect
-        x="2"
-        y="12"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-text-muted)"
-        strokeWidth="1.6"
-      />
-      <rect
-        x="12"
-        y="12"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-text-muted)"
-        strokeWidth="1.6"
-      />
+      <rect x="2" y="2" width="6" height="6" rx="1" stroke="var(--color-text-muted)" strokeWidth="1.6" />
+      <rect x="12" y="2" width="6" height="6" rx="1" stroke="var(--color-text-muted)" strokeWidth="1.6" />
+      <rect x="2" y="12" width="6" height="6" rx="1" stroke="var(--color-text-muted)" strokeWidth="1.6" />
+      <rect x="12" y="12" width="6" height="6" rx="1" stroke="var(--color-text-muted)" strokeWidth="1.6" />
     </svg>
   );
 }
@@ -151,12 +111,7 @@ function IconShoppingBag() {
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
-      <path
-        d="M8 7V5a2 2 0 0 1 4 0v2"
-        stroke="var(--color-text-muted)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
+      <path d="M8 7V5a2 2 0 0 1 4 0v2" stroke="var(--color-text-muted)" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -164,18 +119,8 @@ function IconShoppingBag() {
 function IconMatch() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <path
-        d="M10 3a7 7 0 1 0 0 14A7 7 0 0 0 10 3z"
-        stroke="var(--color-gold)"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M7 10l2 2 4-4"
-        stroke="var(--color-gold)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M10 3a7 7 0 1 0 0 14A7 7 0 0 0 10 3z" stroke="var(--color-gold)" strokeWidth="1.6" />
+      <path d="M7 10l2 2 4-4" stroke="var(--color-gold)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -197,21 +142,8 @@ function IconTraining() {
 function IconDoc() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect
-        x="4"
-        y="3"
-        width="12"
-        height="14"
-        rx="1.5"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M8 7h4M8 10h4M8 13h2"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
+      <rect x="4" y="3" width="12" height="14" rx="1.5" stroke="var(--color-ink)" strokeWidth="1.6" />
+      <path d="M8 7h4M8 10h4M8 13h2" stroke="var(--color-ink)" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -219,363 +151,242 @@ function IconDoc() {
 function IconAnalytics() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect
-        x="2"
-        y="2"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-      />
-      <rect
-        x="12"
-        y="2"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-      />
-      <rect
-        x="2"
-        y="12"
-        width="6"
-        height="6"
-        rx="1"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M12 15h6M15 12v6"
-        stroke="var(--color-ink)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
+      <rect x="2" y="2" width="6" height="6" rx="1" stroke="var(--color-ink)" strokeWidth="1.6" />
+      <rect x="12" y="2" width="6" height="6" rx="1" stroke="var(--color-ink)" strokeWidth="1.6" />
+      <rect x="2" y="12" width="6" height="6" rx="1" stroke="var(--color-ink)" strokeWidth="1.6" />
+      <path d="M12 15h6M15 12v6" stroke="var(--color-ink)" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+function tagStyle(label: string): CSSProperties {
+  const paperInk = {
+    background: "var(--color-paper)",
+    color: "var(--color-ink)",
+    border: "1px solid var(--color-cream-dark)",
+  } as const;
+  const cosmetics = {
+    background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+    color: "var(--color-text-muted)",
+    border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
+  } as const;
+  const noLogin = {
+    background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+    color: "var(--color-text-muted)",
+    border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
+  } as const;
+  const curated = {
+    background: "color-mix(in srgb, var(--color-gold) 20%, transparent)",
+    color: "var(--color-gold)",
+    border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)",
+  } as const;
 
-const traceabilityDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
-  ? "Every SKU links to its Moroccan brand, ingredients, optional batch data, and certification IDs—easy for shoppers to verify."
-  : `Every SKU links to ${NEVALI_HOUSE_BRAND.legalName}'s ingredients, optional batch data, and certification IDs—easy for shoppers to verify.`;
+  switch (label) {
+    case "ISO READY":
+    case "MULTI-CATEGORY":
+    case "QR SCANNABLE":
+    case "BATCH LINKED":
+    case "AUTO-ALERTS":
+    case "SECURE & AUDITABLE":
+    case "PROGRESS TRACKING":
+    case "REAL-TIME STATUS":
+    case "EXPORT PDF / XLS":
+      return paperInk;
+    case "COSMETICS FOCUS":
+      return cosmetics;
+    case "NO LOGIN REQUIRED":
+      return noLogin;
+    case "CURATED DIRECTORY":
+    case "CURATED LINE":
+      return curated;
+    default:
+      return paperInk;
+  }
+}
 
-const guestCheckoutDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
-  ? "Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. Brands receive structured order lines for fulfilment."
-  : `Shoppers add to cart and pay by card (Stripe) or cash on delivery—no forced sign-in. ${NEVALI_HOUSE_BRAND.legalName} receives structured order lines for fulfilment.`;
+type JsonCard = {
+  title?: string;
+  titleMulti?: string;
+  titleSingle?: string;
+  desc?: string;
+  descMulti?: string;
+  descSingle?: string;
+  tags?: string[];
+  tagMulti?: string;
+  tagSingle?: string;
+};
 
-const brandDiscoveryTitle = SHOW_MULTI_PRODUCER_EXPERIENCE ? "Brand discovery" : "Collection & editorial";
+function resolveDesc(card: JsonCard, brand: string): string {
+  if (card.desc) return interpolate(card.desc, { brand });
+  const raw = SHOW_MULTI_PRODUCER_EXPERIENCE ? card.descMulti : card.descSingle;
+  return interpolate(raw ?? "", { brand });
+}
 
-const brandDiscoveryDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
-  ? "Editorial layouts, search, and saved lists help customers find the right Moroccan maker—whether they want argan serums, hammam soaps, or niche perfumes."
-  : `Editorial layouts, search, and saved lists help customers explore the ${NEVALI_HOUSE_BRAND.legalName} line—from argan serums to hammam rituals.`;
+function resolveTitle(card: JsonCard, brand: string): string {
+  if (card.title) return interpolate(card.title, { brand });
+  const raw = SHOW_MULTI_PRODUCER_EXPERIENCE ? card.titleMulti : card.titleSingle;
+  return interpolate(raw ?? "", { brand });
+}
 
-const pillar2Label = SHOW_MULTI_PRODUCER_EXPERIENCE ? "PILLAR 2 — MARKETPLACE ACCESS" : "PILLAR 2 — SHOP & CHECKOUT";
+function jsonCardToUi(
+  card: JsonCard,
+  brand: string,
+  icon: ReactNode,
+  iconBg: string,
+  cardBg: string,
+  cardBorder: string,
+  dark: boolean,
+): {
+  icon: ReactNode;
+  iconBg: string;
+  cardBg: string;
+  cardBorder: string;
+  dark: boolean;
+  title: string;
+  desc: string;
+  tags: { label: string; style: CSSProperties }[];
+} {
+  const title = resolveTitle(card, brand);
+  const desc = resolveDesc(card, brand);
+  let tagLabels: string[] = card.tags ?? [];
+  if (card.tagMulti || card.tagSingle) {
+    tagLabels = [SHOW_MULTI_PRODUCER_EXPERIENCE ? (card.tagMulti ?? "") : (card.tagSingle ?? "")];
+  }
+  return {
+    icon,
+    iconBg,
+    cardBg,
+    cardBorder,
+    dark,
+    title,
+    desc,
+    tags: tagLabels.map((label) => ({ label, style: tagStyle(label) })),
+  };
+}
 
-const legalGuidanceDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
-  ? "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every partner request."
-  : "Templates for invoices, certificates, and regulatory questions—plus a ticketed helpdesk that tracks every customer and studio request.";
+function buildPillars(messages: Messages, brand: string) {
+  const f = messages.features;
+  const pillar2Label = SHOW_MULTI_PRODUCER_EXPERIENCE ? f.pillar2LabelMulti : f.pillar2LabelSingle;
 
-const analyticsReportingDesc = SHOW_MULTI_PRODUCER_EXPERIENCE
-  ? "Dashboards for admins and brands: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot."
-  : "Dashboards for admins and our studio: order volumes, revenue, certification status, and support workload—exportable when you need a snapshot.";
+  return [
+    {
+      label: f.pillar1Label,
+      pillarIcon: <IconPillar1 />,
+      pillarIconBg: "var(--color-paper)",
+      cards: [
+        jsonCardToUi(f.pillar1Cards[0] as JsonCard, brand, <IconStar />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+        jsonCardToUi(f.pillar1Cards[1] as JsonCard, brand, <IconCheckCircle />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+        jsonCardToUi(f.pillar1Cards[2] as JsonCard, brand, <IconAudit />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+      ],
+    },
+    {
+      label: pillar2Label,
+      pillarIcon: <IconPillar2 />,
+      pillarIconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+      cards: [
+        jsonCardToUi(
+          f.pillar2Cards[0] as JsonCard,
+          brand,
+          <IconGrid />,
+          "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+          "var(--color-paper)",
+          "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
+          false,
+        ),
+        jsonCardToUi(
+          f.pillar2Cards[1] as JsonCard,
+          brand,
+          <IconShoppingBag />,
+          "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
+          "var(--color-paper)",
+          "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
+          false,
+        ),
+        jsonCardToUi(
+          f.pillar2Cards[2] as JsonCard,
+          brand,
+          <IconMatch />,
+          "color-mix(in srgb, var(--color-text-muted) 20%, transparent)",
+          "var(--color-ink)",
+          "var(--color-ink)",
+          true,
+        ),
+      ],
+    },
+    {
+      label: f.pillar3Label,
+      pillarIcon: <IconPillar3 />,
+      pillarIconBg: "var(--color-paper)",
+      cards: [
+        jsonCardToUi(f.pillar3Cards[0] as JsonCard, brand, <IconTraining />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+        jsonCardToUi(f.pillar3Cards[1] as JsonCard, brand, <IconDoc />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+        jsonCardToUi(f.pillar3Cards[2] as JsonCard, brand, <IconAnalytics />, "var(--color-paper)", "var(--color-paper)", "var(--color-paper)", false),
+      ],
+    },
+  ];
+}
 
-const pillars = [
-  {
-    label: "PILLAR 1 — TRUST & COMPLIANCE",
-    pillarIcon: <IconPillar1 />,
-    pillarIconBg: "var(--color-paper)",
-    cards: [
-      {
-        icon: <IconStar />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Quality Certification",
-        desc: "Per-category quality criteria, document review, structured audit workflows, and certification expiry tracking.",
-        tags: [
-          {
-            label: "ISO READY",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-          {
-            label: "MULTI-CATEGORY",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconCheckCircle />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Traceability & QR Verification",
-        desc: traceabilityDesc,
-        tags: [
-          {
-            label: "QR SCANNABLE",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-          {
-            label: "BATCH LINKED",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconAudit />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Quality Audits",
-        desc: "Structured audit workflows with document upload, approval tracking, and automated expiry alerts.",
-        tags: [
-          {
-            label: "AUTO-ALERTS",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-          {
-            label: "SECURE & AUDITABLE",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: pillar2Label,
-    pillarIcon: <IconPillar2 />,
-    pillarIconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
-    cards: [
-      {
-        icon: <IconGrid />,
-        iconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
-        cardBg: "var(--color-paper)",
-        cardBorder: "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
-        dark: false,
-        title: "Product listings",
-        desc: "Skincare, hair, body, fragrance, and ritual care—organized by category with photos, INCI-style ingredients, and variant pricing in MAD.",
-        tags: [
-          {
-            label: "COSMETICS FOCUS",
-            style: {
-              background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
-              color: "var(--color-text-muted)",
-              border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconShoppingBag />,
-        iconBg: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
-        cardBg: "var(--color-paper)",
-        cardBorder: "color-mix(in srgb, var(--color-cream-dark) 85%, var(--color-paper))",
-        dark: false,
-        title: "Guest checkout & cart",
-        desc: guestCheckoutDesc,
-        tags: [
-          {
-            label: "NO LOGIN REQUIRED",
-            style: {
-              background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))",
-              color: "var(--color-text-muted)",
-              border: "1px solid color-mix(in srgb, var(--color-cream-dark) 70%, var(--color-gold-light))",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconMatch />,
-        iconBg: "color-mix(in srgb, var(--color-text-muted) 20%, transparent)",
-        cardBg: "var(--color-ink)",
-        cardBorder: "var(--color-ink)",
-        dark: true,
-        title: brandDiscoveryTitle,
-        desc: brandDiscoveryDesc,
-        tags: [
-          {
-            label: "CURATED DIRECTORY",
-            style: {
-              background: "color-mix(in srgb, var(--color-gold) 20%, transparent)",
-              color: "var(--color-gold)",
-              border: "1px solid color-mix(in srgb, var(--color-gold) 30%, transparent)",
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "PILLAR 3 — GROWTH ENABLEMENT",
-    pillarIcon: <IconPillar3 />,
-    pillarIconBg: "var(--color-paper)",
-    cards: [
-      {
-        icon: <IconTraining />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Training programs",
-        desc: "Micro-learning for beauty founders: EU-style labelling, stability basics, packaging photography, and export readiness for cosmetics.",
-        tags: [
-          {
-            label: "PROGRESS TRACKING",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconDoc />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Legal & export guidance",
-        desc: legalGuidanceDesc,
-        tags: [
-          {
-            label: "REAL-TIME STATUS",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-      {
-        icon: <IconAnalytics />,
-        iconBg: "var(--color-paper)",
-        cardBg: "var(--color-paper)",
-        cardBorder: "var(--color-paper)",
-        dark: false,
-        title: "Analytics & reporting",
-        desc: analyticsReportingDesc,
-        tags: [
-          {
-            label: "EXPORT PDF / XLS",
-            style: {
-              background: "var(--color-paper)",
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-cream-dark)",
-            },
-          },
-        ],
-      },
-    ],
-  },
-];
+export default async function FeaturesSection() {
+  const t = await getTranslator();
+  const locale = await getLocale();
+  const messages = getMessages(locale);
+  const brand = NEVALI_HOUSE_BRAND.legalName;
+  const pillars = buildPillars(messages, brand);
 
-// ── Main component ────────────────────────────────────────────────────────────
-
-export default function FeaturesSection() {
   return (
     <section id="how-it-works" className="bg-white py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 flex flex-col gap-12 lg:gap-16">
-        {/* ── Section header ── */}
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 lg:gap-16">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:gap-16">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="h-px w-6 bg-secondary/60" />
               <span className="font-sans text-sm font-semibold tracking-[0.18em] text-secondary uppercase">
-                Platform Features
+                {t("features.kicker")}
               </span>
             </div>
-            <h2 className="font-serif font-bold text-text-dark text-4xl md:text-5xl leading-tight">
-              Three pillars for
+            <h2 className="font-serif font-bold text-4xl text-text-dark leading-tight md:text-5xl">
+              {t("features.titleLine1")}
               <br />
-              Moroccan beauty
+              {t("features.titleLine2")}
             </h2>
           </div>
-          <p className="font-sans text-text-muted text-lg leading-relaxed max-w-[340px] lg:text-right lg:pt-14">
-            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-              <>
-                Compliance, catalog reach, and founder education—everything nevali bundles so bio-minded Moroccan cosmetics can
-                shine at home and abroad.
-              </>
-            ) : (
-              <>
-                Compliance, our shop experience, and studio training—everything {NEVALI_HOUSE_BRAND.legalName} bundles so
-                bio-minded Moroccan cosmetics can shine at home and abroad.
-              </>
-            )}
+          <p className="max-w-[340px] font-sans text-lg text-text-muted leading-relaxed lg:pt-14 lg:text-right">
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("features.blurbMulti") : t("features.blurbSingle", { brand })}
           </p>
         </div>
 
-        {/* ── Pillars ── */}
         <div className="flex flex-col gap-14">
           {pillars.map((pillar) => (
-            <div key={pillar.label} className="flex flex-col gap-6">
-              {/* Pillar header row */}
+            <div className="flex flex-col gap-6" key={pillar.label}>
               <div className="flex items-center gap-3">
                 <div
-                  className="w-8 h-8 rounded-sm flex items-center justify-center shrink-0"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm"
                   style={{ background: pillar.pillarIconBg }}
                 >
                   {pillar.pillarIcon}
                 </div>
-                <span className="font-sans text-sm font-bold tracking-[0.18em] text-text-dark uppercase">
-                  {pillar.label}
-                </span>
-                <div className="flex-1 h-px bg-cream-dark" />
+                <span className="font-sans text-sm font-bold tracking-[0.18em] text-text-dark uppercase">{pillar.label}</span>
+                <div className="h-px flex-1 bg-cream-dark" />
               </div>
 
-              {/* Cards grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 {pillar.cards.map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-sm p-7 flex flex-col gap-4"
+                    className="flex flex-col gap-4 rounded-sm p-7"
                     style={{
                       background: card.cardBg,
                       border: `1px solid ${card.cardBorder}`,
                     }}
                   >
-                    {/* Icon */}
                     <div
-                      className="w-11 h-11 rounded-sm flex items-center justify-center shrink-0"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm"
                       style={{ background: card.iconBg }}
                     >
                       {card.icon}
                     </div>
 
-                    {/* Text */}
-                    <div className="flex flex-col gap-2 flex-1">
+                    <div className="flex flex-1 flex-col gap-2">
                       <h3
                         className="font-serif font-bold text-xl leading-snug"
                         style={{ color: card.dark ? "var(--color-paper)" : "var(--color-ink)" }}
@@ -594,12 +405,11 @@ export default function FeaturesSection() {
                       </p>
                     </div>
 
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2">
                       {card.tags.map((tag) => (
                         <span
                           key={tag.label}
-                          className="font-sans text-xs font-bold tracking-wide rounded-full px-3 py-1 uppercase"
+                          className="rounded-full px-3 py-1 font-sans text-xs font-bold tracking-wide uppercase"
                           style={tag.style}
                         >
                           {tag.label}

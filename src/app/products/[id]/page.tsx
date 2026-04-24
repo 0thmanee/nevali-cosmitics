@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import { getApprovedProductForPublicByIdRepo } from "~/app/api/products/repo/products.repo";
+import { interpolate } from "~/lib/i18n/interpolate";
+import { getTranslator } from "~/lib/i18n/server";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { PublicProductDetailView } from "./public-product-detail-view";
@@ -10,18 +12,25 @@ import { PublicProductDetailView } from "./public-product-detail-view";
 type Props = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const t = await getTranslator();
 	const { id } = await params;
 	const product = await getApprovedProductForPublicByIdRepo(id);
 	if (!product) {
-		return { title: "Product — nevali" };
+		return { title: t("pdp.metaFallbackTitle") };
 	}
 	const desc =
 		product.description?.trim().slice(0, 155) ||
 		(SHOW_MULTI_PRODUCER_EXPERIENCE
-			? `${product.name} — Moroccan cosmetics by ${product.organizationName} on nevali. Original formulas, transparent checkout.`
-			: `${product.name} — ${NEVALI_HOUSE_BRAND.legalName}. Moroccan cosmetics, transparent checkout.`);
+			? interpolate(t("pdp.metaDescMulti"), {
+					name: product.name,
+					organizationName: product.organizationName,
+				})
+			: interpolate(t("pdp.metaDescSingle"), {
+					name: product.name,
+					brand: NEVALI_HOUSE_BRAND.legalName,
+				}));
 	return {
-		title: `${product.name} — nevali`,
+		title: t("pdp.metaTitle", { name: product.name }),
 		description: desc,
 		openGraph: {
 			title: product.name,

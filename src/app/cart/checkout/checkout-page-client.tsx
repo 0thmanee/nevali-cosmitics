@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { submitShopOrder } from "~/app/api/shop-orders/actions";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCart } from "~/features/cart/cart-context";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { allowedCheckoutMethodsForLines } from "~/lib/checkout-payment";
 import { persistLastCheckoutConfirmation } from "~/lib/checkout-confirmation-storage";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
@@ -27,6 +29,7 @@ export function CheckoutPageClient({
   initialEmail: string;
   cancelled?: boolean;
 }) {
+  const { t } = useI18n();
   const router = useRouter();
   const { lines, ready, clearCart, subtotalMad } = useCart();
   const [pending, startTransition] = useTransition();
@@ -63,7 +66,7 @@ export function CheckoutPageClient({
   }, [ready, lines.length, router]);
 
   if (!ready) {
-    return <p className="py-16 text-center font-sans text-stone-500">Loading…</p>;
+    return <p className="py-16 text-center font-sans text-stone-500">{t("checkout.loading")}</p>;
   }
 
   if (lines.length === 0) return null;
@@ -74,9 +77,7 @@ export function CheckoutPageClient({
     e.preventDefault();
     setError(null);
     if (!canSubmit) {
-      setError(
-        "No payment method is available for the items in your cart. Remove conflicting products or contact us.",
-      );
+      setError(t("checkout.errorNoPayment"));
       return;
     }
     startTransition(async () => {
@@ -123,7 +124,7 @@ export function CheckoutPageClient({
         router.push(`/cart/checkout/success?orderId=${encodeURIComponent(result.orderId)}`);
       } catch (err) {
         const msg =
-          err instanceof Error ? err.message : "Something went wrong. Please try again.";
+          err instanceof Error ? err.message : t("checkout.attemptErrorGeneric");
         setError(msg);
       }
     });
@@ -136,7 +137,7 @@ export function CheckoutPageClient({
           className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-sm text-amber-950"
           role="status"
         >
-          Card checkout was cancelled. Your cart is unchanged — you can adjust items and try again.
+          {t("checkout.cancelledBanner")}
         </div>
       ) : null}
       <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
@@ -146,11 +147,11 @@ export function CheckoutPageClient({
             <span className={stepCircleClass} style={stepCircleStyle}>
               1
             </span>
-            <h2 className="font-serif text-lg font-bold text-text-dark">Your details</h2>
+            <h2 className="font-serif text-lg font-bold text-text-dark">{t("checkout.stepYourDetails")}</h2>
           </div>
 
           <label className="flex flex-col gap-1.5 font-sans text-sm">
-            <span className="font-medium text-text-dark">Full name</span>
+            <span className="font-medium text-text-dark">{t("checkout.fullName")}</span>
             <input
               autoComplete="name"
               className={inputClass}
@@ -160,7 +161,7 @@ export function CheckoutPageClient({
             />
           </label>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
-            <span className="font-medium text-text-dark">Email</span>
+            <span className="font-medium text-text-dark">{t("checkout.email")}</span>
             <input
               autoComplete="email"
               className={inputClass}
@@ -172,7 +173,8 @@ export function CheckoutPageClient({
           </label>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
             <span className="font-medium text-text-dark">
-              Phone <span className="font-normal text-stone-500">(optional)</span>
+              {t("checkout.phone")}{" "}
+              <span className="font-normal text-stone-500">{t("checkout.optional")}</span>
             </span>
             <input
               autoComplete="tel"
@@ -190,39 +192,38 @@ export function CheckoutPageClient({
               2
             </span>
             <div>
-              <h2 className="font-serif text-lg font-bold text-text-dark">Shipping address</h2>
-              <p className="mt-0.5 font-sans text-xs text-stone-500">
-                Where we should deliver this order or reach you for coordination.
-              </p>
+              <h2 className="font-serif text-lg font-bold text-text-dark">{t("checkout.stepShipping")}</h2>
+              <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.stepShippingHint")}</p>
             </div>
           </div>
 
           <label className="flex flex-col gap-1.5 font-sans text-sm">
-            <span className="font-medium text-text-dark">Address line 1</span>
+            <span className="font-medium text-text-dark">{t("checkout.addressLine1")}</span>
             <input
               autoComplete="address-line1"
               className={inputClass}
               onChange={(e) => setAddressLine1(e.target.value)}
-              placeholder="Street, building, number"
+              placeholder={t("checkout.addressLine1Placeholder")}
               required
               value={addressLine1}
             />
           </label>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
             <span className="font-medium text-text-dark">
-              Address line 2 <span className="font-normal text-stone-500">(optional)</span>
+              {t("checkout.addressLine2")}{" "}
+              <span className="font-normal text-stone-500">{t("checkout.optional")}</span>
             </span>
             <input
               autoComplete="address-line2"
               className={inputClass}
               onChange={(e) => setAddressLine2(e.target.value)}
-              placeholder="Apartment, floor, district…"
+              placeholder={t("checkout.addressLine2Placeholder")}
               value={addressLine2}
             />
           </label>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5 font-sans text-sm">
-              <span className="font-medium text-text-dark">City</span>
+              <span className="font-medium text-text-dark">{t("checkout.city")}</span>
               <input
                 autoComplete="address-level2"
                 className={inputClass}
@@ -232,7 +233,7 @@ export function CheckoutPageClient({
               />
             </label>
             <label className="flex flex-col gap-1.5 font-sans text-sm">
-              <span className="font-medium text-text-dark">Postal code</span>
+              <span className="font-medium text-text-dark">{t("checkout.postalCode")}</span>
               <input
                 autoComplete="postal-code"
                 className={inputClass}
@@ -243,7 +244,7 @@ export function CheckoutPageClient({
             </label>
           </div>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
-            <span className="font-medium text-text-dark">Country</span>
+            <span className="font-medium text-text-dark">{t("checkout.country")}</span>
             <input
               autoComplete="country-name"
               className={inputClass}
@@ -254,12 +255,13 @@ export function CheckoutPageClient({
           </label>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
             <span className="font-medium text-text-dark">
-              Notes <span className="font-normal text-stone-500">(optional)</span>
+              {t("checkout.notes")}{" "}
+              <span className="font-normal text-stone-500">{t("checkout.optional")}</span>
             </span>
             <textarea
               className={`${inputClass} min-h-[80px] resize-y`}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Delivery preferences, company name, etc."
+              placeholder={t("checkout.notesPlaceholder")}
               rows={3}
               value={notes}
             />
@@ -271,13 +273,11 @@ export function CheckoutPageClient({
             <span className={stepCircleClass} style={stepCircleStyle}>
               3
             </span>
-            <h2 className="font-serif text-lg font-bold text-text-dark">Payment</h2>
+            <h2 className="font-serif text-lg font-bold text-text-dark">{t("checkout.stepPayment")}</h2>
           </div>
 
           {!canSubmit ? (
-            <p className="font-sans text-sm text-red-600">
-              These products do not share a common payment option. Adjust your cart and try again.
-            </p>
+            <p className="font-sans text-sm text-red-600">{t("checkout.paymentConflict")}</p>
           ) : (
             <div className="flex flex-col gap-3">
               {allowedMethods.includes("CARD") && (
@@ -300,10 +300,8 @@ export function CheckoutPageClient({
                     ) : null}
                   </div>
                   <div>
-                    <p className="font-sans text-sm font-semibold text-text-dark">Card payment</p>
-                    <p className="mt-0.5 font-sans text-xs text-stone-500">
-                      Visa, Mastercard, and other cards accepted
-                    </p>
+                    <p className="font-sans text-sm font-semibold text-text-dark">{t("checkout.cardTitle")}</p>
+                    <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.cardSubtitle")}</p>
                   </div>
                 </button>
               )}
@@ -327,10 +325,8 @@ export function CheckoutPageClient({
                     ) : null}
                   </div>
                   <div>
-                    <p className="font-sans text-sm font-semibold text-text-dark">Cash on delivery</p>
-                    <p className="mt-0.5 font-sans text-xs text-stone-500">
-                      Pay when your order arrives
-                    </p>
+                    <p className="font-sans text-sm font-semibold text-text-dark">{t("checkout.codTitle")}</p>
+                    <p className="mt-0.5 font-sans text-xs text-stone-500">{t("checkout.codSubtitle")}</p>
                   </div>
                 </button>
               )}
@@ -352,25 +348,25 @@ export function CheckoutPageClient({
         >
           {pending
             ? paymentMethod === "CARD"
-              ? "Redirecting to payment…"
-              : "Placing order…"
+              ? t("checkout.submitRedirectingCard")
+              : t("checkout.submitPlacing")
             : paymentMethod === "CARD"
-              ? "Continue to secure payment →"
-              : "Place order →"}
+              ? t("checkout.submitContinueCard")
+              : t("checkout.submitPlaceCod")}
         </button>
 
         <Link
           className="w-fit font-sans text-sm text-stone-500 transition-colors hover:text-text-dark"
           href="/cart"
         >
-          ← Back to cart
+          {t("checkout.backToCart")}
         </Link>
       </form>
 
       <aside className="lg:sticky lg:top-28 lg:w-96 lg:shrink-0 lg:self-start">
         <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
-            Order summary
+            {t("checkout.orderSummary")}
           </p>
 
           <ul className="flex flex-col gap-4">
@@ -387,7 +383,10 @@ export function CheckoutPageClient({
                   <div className="min-w-0 flex-1">
                     <p className="line-clamp-1 font-sans text-sm font-medium text-text-dark">{l.name}</p>
                     <p className="mt-0.5 font-sans text-xs text-stone-500">
-                      {l.variantName} · ×{l.quantity}
+                      {interpolate(t("checkout.summaryLineMeta"), {
+                        variantName: l.variantName,
+                        quantity: l.quantity,
+                      })}
                     </p>
                   </div>
                   <span className="shrink-0 font-sans text-sm font-medium text-text-dark">
@@ -400,14 +399,12 @@ export function CheckoutPageClient({
 
           <div className="flex flex-col gap-2 border-t border-cream-dark pt-4">
             <div className="flex items-baseline justify-between">
-              <span className="font-sans text-sm text-stone-500">Subtotal</span>
+              <span className="font-sans text-sm text-stone-500">{t("checkout.subtotal")}</span>
               <span className="font-serif text-2xl font-bold text-text-dark">
                 {formatPriceMad(subtotalMad.toFixed(2))}
               </span>
             </div>
-            <p className="font-sans text-xs text-stone-500">
-              Shipping calculated after order confirmation.
-            </p>
+            <p className="font-sans text-xs text-stone-500">{t("checkout.shippingNote")}</p>
           </div>
         </div>
       </aside>

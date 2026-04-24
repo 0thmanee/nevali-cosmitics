@@ -1,18 +1,23 @@
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
+import { getTranslator } from "~/lib/i18n/server";
 
-export default function QuoteSection() {
+export default async function QuoteSection() {
+  const t = await getTranslator();
   return (
     <section
-      className="w-full py-28 flex items-center justify-center text-center px-6"
-      style={{ background: "linear-gradient(180deg, color-mix(in srgb, var(--color-cream) 80%, var(--color-paper)) 0%, color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper)) 100%)" }}
+      className="flex w-full items-center justify-center px-6 py-28 text-center"
+      style={{
+        background:
+          "linear-gradient(180deg, color-mix(in srgb, var(--color-cream) 80%, var(--color-paper)) 0%, color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper)) 100%)",
+      }}
     >
       <AnimateOnScroll className="mx-auto max-w-2xl" direction="up" scale>
         <blockquote>
           <p
-            className="font-serif italic text-primary-darker leading-relaxed"
+            className="font-serif text-primary-darker leading-relaxed italic"
             style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}
           >
-            &ldquo;Beauty can be both soft and strong: rituals that honor skin, origin, and the women who create them.&rdquo;
+            &ldquo;{t("quote.text")}&rdquo;
           </p>
         </blockquote>
       </AnimateOnScroll>

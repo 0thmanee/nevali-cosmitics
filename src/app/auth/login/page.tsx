@@ -1,16 +1,5 @@
-import { Suspense } from "react";
-import { AuthLayout, LoginForm } from "~/features/auth";
+import { LoginRouteClient } from "./login-route-client";
 
 export default function LoginPage() {
-  return (
-    <Suspense
-      fallback={
-        <AuthLayout title="Sign in" subtitle="Welcome back" showRegisterLink>
-          <div className="font-sans text-white/50">Loading…</div>
-        </AuthLayout>
-      }
-    >
-      <LoginForm />
-    </Suspense>
-  );
+  return <LoginRouteClient />;
 }

@@ -5,8 +5,12 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
 import type { PublicPartnerListItem } from "~/app/partners/public-types";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { interpolate } from "~/lib/i18n/interpolate";
 
 type Partner = PublicPartnerListItem;
+
+const ALL_REGIONS = "__all__";
 
 const AVATAR_PALETTES = [
   { bg: "var(--color-cream-dark)", text: "var(--color-ink)" },
@@ -31,6 +35,7 @@ function getCategories(raw: unknown): string[] {
 }
 
 function PartnerCard({ partner }: { partner: Partner }) {
+  const { t } = useI18n();
   const profile = partner.profile;
   if (!profile) return null;
 
@@ -86,7 +91,9 @@ function PartnerCard({ partner }: { partner: Partner }) {
               ) : null}
               <p className="mt-0.5 font-body text-[12px] text-text-muted">
                 {profile.city}, {profile.region}
-                {profile.yearEstablished ? ` · Est. ${profile.yearEstablished}` : ""}
+                {profile.yearEstablished
+                  ? ` · ${interpolate(t("partnersDirectory.established"), { year: profile.yearEstablished })}`
+                  : ""}
               </p>
             </div>
           </div>
@@ -100,7 +107,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
               background: "color-mix(in srgb, var(--color-text-muted) 7%, transparent)",
             }}
           >
-            Verified
+            {t("partnersDirectory.verified")}
           </span>
         </div>
 
@@ -121,7 +128,9 @@ function PartnerCard({ partner }: { partner: Partner }) {
               <rect height="7" rx="0.5" stroke="currentColor" strokeWidth="1.1" width="9" x="1.5" y="3.5" />
               <path d="M4 3.5V2.5a2 2 0 0 1 4 0v1" stroke="currentColor" strokeLinecap="round" strokeWidth="1.1" />
             </svg>
-            {productCount} listing{productCount !== 1 ? "s" : ""}
+            {productCount === 1
+              ? interpolate(t("partnersDirectory.listingOne"), { count: productCount })
+              : interpolate(t("partnersDirectory.listingMany"), { count: productCount })}
           </span>
           {profile.entityType ? (
             <span className="font-body text-[12px] text-text-muted">{profile.entityType}</span>
@@ -158,7 +167,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
             className="inline-flex w-full items-center justify-center gap-2 bg-primary px-4 py-2.5 font-display text-[13px] font-bold uppercase tracking-[0.1em] text-white transition-opacity hover:opacity-90"
             href={`/partners/${partner.id}`}
           >
-            View Profile
+            {t("partnersDirectory.viewProfile")}
             <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
           </Link>
         </div>
@@ -168,18 +177,19 @@ function PartnerCard({ partner }: { partner: Partner }) {
 }
 
 export default function PartnersClient({ partners }: { partners: Partner[] }) {
+  const { t } = useI18n();
   const [search, setSearch] = useState("");
-  const [region, setRegion] = useState("All Regions");
+  const [region, setRegion] = useState(ALL_REGIONS);
 
   const regions = useMemo(() => {
     const set = new Set(partners.map((p) => p.profile?.region).filter(Boolean) as string[]);
-    return ["All Regions", ...Array.from(set).sort()];
+    return [ALL_REGIONS, ...Array.from(set).sort()];
   }, [partners]);
 
   const filtered = useMemo(() => {
     return partners.filter((p) => {
       if (!p.profile) return false;
-      if (region !== "All Regions" && p.profile.region !== region) return false;
+      if (region !== ALL_REGIONS && p.profile.region !== region) return false;
       if (!search.trim()) return true;
       const q = search.toLowerCase();
       const cats = getCategories(p.profile.categories).join(" ").toLowerCase();
@@ -214,7 +224,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
             <input
               className="w-full border border-cream-dark bg-white py-2.5 pl-9 pr-4 font-body text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-primary focus:outline-none"
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search brands, cities, categories…"
+              placeholder={t("partnersDirectory.searchPlaceholder")}
               type="text"
               value={search}
             />
@@ -223,8 +233,8 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
           <div className="hidden h-6 w-px shrink-0 bg-cream-dark sm:block" aria-hidden />
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="mr-1 font-body text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted">
-              Region
+            <span className="me-1 font-body text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted">
+              {t("partnersDirectory.region")}
             </span>
             {regions.map((r) => (
               <button
@@ -238,7 +248,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
                 onClick={() => setRegion(r)}
                 type="button"
               >
-                {r}
+                {r === ALL_REGIONS ? t("partnersDirectory.allRegions") : r}
               </button>
             ))}
           </div>
@@ -249,7 +259,7 @@ export default function PartnersClient({ partners }: { partners: Partner[] }) {
       <AnimateOnScroll className="mx-auto max-w-7xl px-4 py-10" delay={60} direction="up" scale>
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
-            <p className="font-body text-text-muted">No artisans match your filters.</p>
+            <p className="font-body text-text-muted">{t("partnersDirectory.emptyFilters")}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

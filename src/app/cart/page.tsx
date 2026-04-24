@@ -1,15 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
+import { getTranslator } from "~/lib/i18n/server";
 import { CartPageClient } from "./cart-page-client";
 
-export const metadata = {
-  title: "Cart — nevali",
-  description:
-    "Review your cosmetics selection before checkout. No account required—pay as a guest when you proceed.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslator();
+  return {
+    title: t("cart.metaTitle"),
+    description: t("cart.metaDescription"),
+  };
+}
 
-export default function CartPage() {
+export default async function CartPage() {
+  const t = await getTranslator();
   return (
     <main className="flex min-h-screen flex-col bg-cream">
       <Navbar />
@@ -17,16 +22,13 @@ export default function CartPage() {
         <div className="mx-auto w-full max-w-7xl">
           <nav className="mb-6 font-sans text-sm text-stone-500">
             <Link className="hover:text-text-dark" href="/">
-              Home
+              {t("cart.breadcrumbHome")}
             </Link>
             <span className="mx-2">/</span>
-            <span className="font-medium text-text-dark">Cart</span>
+            <span className="font-medium text-text-dark">{t("cart.breadcrumbCart")}</span>
           </nav>
-          <h1 className="font-serif text-3xl font-bold text-text-dark">Your cart</h1>
-          <p className="mb-8 mt-2 max-w-2xl font-sans text-sm text-stone-600">
-            Checkout is open to everyone—you do not need to create an account. Use the same email as
-            your buyer profile if you want orders to show up under My orders.
-          </p>
+          <h1 className="font-serif text-3xl font-bold text-text-dark">{t("cart.title")}</h1>
+          <p className="mb-8 mt-2 max-w-2xl font-sans text-sm text-stone-600">{t("cart.intro")}</p>
           <CartPageClient />
         </div>
       </section>

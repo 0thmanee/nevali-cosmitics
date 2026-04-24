@@ -1,38 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
-import { COSMETICS_MARKETING, productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { formatPriceMad } from "~/lib/format-price";
-import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { getFeaturedHomeHeroProductRepo } from "~/app/api/products/repo/products.repo";
 import type { ProductPaymentOptionValue } from "~/app/api/products/schemas/products.schema";
+import { COSMETICS_MARKETING, productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
+import { formatPriceMad } from "~/lib/format-price";
+import { createJsonTranslator } from "~/lib/i18n/create-translator";
+import { getMessages } from "~/lib/i18n/load-messages";
+import { getLocale, getTranslator } from "~/lib/i18n/server";
+import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 function teaser(text: string | null, max = 200): string {
   const t = text?.trim() ?? "";
   if (t.length <= max) return t;
   return `${t.slice(0, max).trim()}…`;
-}
-
-const COSMETICS_CATEGORY_LABELS: Record<string, string> = {
-  SKINCARE: "Skincare",
-  MAKEUP: "Makeup",
-  HAIRCARE: "Haircare",
-  BODY_CARE: "Body care",
-  FRAGRANCE: "Fragrance",
-  TOOLS_ACCESSORIES: "Tools & accessories",
-  SUPPLEMENTS: "Supplements",
-  OTHER: "Other",
-};
-
-function cosmeticsCategoryLabel(code: string | null): string | null {
-  if (!code) return null;
-  return (
-    COSMETICS_CATEGORY_LABELS[code] ??
-    code
-      .replace(/_/g, " ")
-      .toLowerCase()
-      .replace(/\b\w/g, (c) => c.toUpperCase())
-  );
 }
 
 function ingredientsTeaser(raw: string | null, max = 118): string | null {
@@ -48,19 +29,35 @@ function ingredientsTeaser(raw: string | null, max = 118): string | null {
   return `${joined.slice(0, max - 1).trim()}…`;
 }
 
-function paymentChips(option: ProductPaymentOptionValue | null): string[] {
-  if (!option) return [];
-  if (option === "BOTH") return ["Card checkout", "Cash on delivery"];
-  if (option === "CARD") return ["Card checkout"];
-  return ["Cash on delivery"];
-}
-
 export default async function HeroSection() {
+  const locale = await getLocale();
+  const messages = getMessages(locale);
+  const t = await getTranslator();
+  const tj = createJsonTranslator(messages);
+  const categoryLabels = tj<Record<string, string>>("hero.cosmeticsCategories");
+
+  function cosmeticsCategoryLabel(code: string | null): string | null {
+    if (!code) return null;
+    return (
+      categoryLabels[code] ??
+      code
+        .replace(/_/g, " ")
+        .toLowerCase()
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+    );
+  }
+
+  function paymentChips(option: ProductPaymentOptionValue | null): string[] {
+    if (!option) return [];
+    if (option === "BOTH") return [t("hero.paymentCard"), t("hero.paymentCod")];
+    if (option === "CARD") return [t("hero.paymentCard")];
+    return [t("hero.paymentCod")];
+  }
+
   const featured = await getFeaturedHomeHeroProductRepo();
 
   if (featured) {
-    const imageSrc =
-      featured.imageUrl ?? productPlaceholderImageUrl(`${featured.id}:hero`, 1200);
+    const imageSrc = featured.imageUrl ?? productPlaceholderImageUrl(`${featured.id}:hero`, 1200);
     const sub = teaser(featured.description);
     const typedCategory = cosmeticsCategoryLabel(featured.cosmeticsCategory);
     const ingredientLine = ingredientsTeaser(featured.ingredients);
@@ -72,9 +69,9 @@ export default async function HeroSection() {
         ? `${featured.category} · ${typedCategory}`
         : featured.category;
     const eyebrowParts = [
-      "Featured",
+      t("hero.featuredEyebrow"),
       categoryEyebrow,
-      SHOW_MULTI_PRODUCER_EXPERIENCE ? "Partner" : null,
+      SHOW_MULTI_PRODUCER_EXPERIENCE ? t("hero.partnerEyebrow") : null,
     ].filter(Boolean) as string[];
 
     return (
@@ -96,7 +93,7 @@ export default async function HeroSection() {
           </AnimateOnScroll>
 
           <AnimateOnScroll
-            className="flex flex-col justify-center border-t border-stone-200 px-6 py-14 sm:px-10 lg:border-l lg:border-t-0 lg:py-20 lg:pl-14 lg:pr-12"
+            className="flex flex-col justify-center border-t border-stone-200 px-6 py-14 sm:px-10 lg:border-s lg:border-t-0 lg:py-20 lg:ps-14 lg:pe-12"
             delay={60}
             direction="left"
           >
@@ -124,17 +121,12 @@ export default async function HeroSection() {
               {featured.variantsPreview.length > 0 ? (
                 <div className="mt-10 divide-y divide-stone-200 border-y border-stone-200">
                   {featured.variantsPreview.map((v, i) => (
-                    <div
-                      key={`${featured.id}-hero-var-${i}`}
-                      className="flex items-start justify-between gap-8 py-4"
-                    >
+                    <div key={`${featured.id}-hero-var-${i}`} className="flex items-start justify-between gap-8 py-4">
                       <div className="min-w-0">
                         <p className="font-sans text-sm leading-snug text-text-dark">{v.name}</p>
-                        <p className="mt-1 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">
-                          {v.unit}
-                        </p>
+                        <p className="mt-1 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">{v.unit}</p>
                         {!v.inStock ? (
-                          <p className="mt-1 font-sans text-xs text-text-muted">Unavailable at the moment</p>
+                          <p className="mt-1 font-sans text-xs text-text-muted">{t("hero.unavailable")}</p>
                         ) : null}
                       </div>
                       <p className="shrink-0 font-serif text-base font-medium tabular-nums text-text-dark">
@@ -146,14 +138,14 @@ export default async function HeroSection() {
               ) : null}
               {moreVariants > 0 ? (
                 <p className="mt-3 font-sans text-xs text-text-muted">
-                  {moreVariants} further variant{moreVariants === 1 ? "" : "s"} on the product page
+                  {moreVariants === 1
+                    ? t("hero.variantMoreOne", { count: String(moreVariants) })
+                    : t("hero.variantMoreMany", { count: String(moreVariants) })}
                 </p>
               ) : null}
 
               {pay.length > 0 ? (
-                <p className="mt-8 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">
-                  {pay.join(" · ")}
-                </p>
+                <p className="mt-8 font-sans text-xs uppercase tracking-[0.14em] text-text-muted">{pay.join(" · ")}</p>
               ) : null}
 
               {sub ? (
@@ -167,7 +159,7 @@ export default async function HeroSection() {
               ) : null}
 
               <p className="mt-10 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-text-muted">
-                From{" "}
+                {t("hero.fromPrice")}{" "}
                 <span className="font-serif text-2xl font-semibold normal-case tracking-normal text-text-dark sm:text-3xl">
                   {formatPriceMad(featured.fromPriceMad)}
                 </span>
@@ -178,13 +170,13 @@ export default async function HeroSection() {
                   href={`/products/${featured.id}`}
                   className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-text-dark underline underline-offset-[6px] transition-opacity hover:opacity-70"
                 >
-                  View product
+                  {t("hero.viewProduct")}
                 </Link>
                 <Link
                   href="/products"
                   className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-text-muted transition-opacity hover:opacity-70"
                 >
-                  All products
+                  {t("hero.allProducts")}
                 </Link>
               </div>
             </div>
@@ -198,29 +190,17 @@ export default async function HeroSection() {
     <section className="flex w-full flex-col bg-linear-to-b from-paper to-cream-dark/30">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pb-12 pt-12 sm:flex-row sm:items-end sm:justify-between md:pb-16 md:pt-16">
         <AnimateOnScroll className="flex max-w-xl flex-col gap-5" delay={0} direction="up">
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-primary/70">
-            NEVALI
-          </p>
+          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.28em] text-primary/70">{t("hero.fallbackKicker")}</p>
           <h1
             className="font-serif font-semibold leading-[1.08] tracking-tight text-text-dark"
             style={{ fontSize: "clamp(34px, 5.5vw, 58px)" }}
           >
-            Moroccan beauty,
+            {t("hero.fallbackTitleLine1")}
             <br />
-            softly reimagined
+            {t("hero.fallbackTitleLine2")}
           </h1>
           <p className="font-sans text-base leading-relaxed text-text-muted">
-            {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-              <>
-                A calm marketplace for high-quality Moroccan cosmetics with transparent labels, ethical sourcing,
-                and a gentle shopping experience designed for modern women.
-              </>
-            ) : (
-              <>
-                Nevali brings Moroccan skincare and beauty from our studio—transparent labels, ethical
-                sourcing, and a calm checkout experience designed for modern routines.
-              </>
-            )}
+            {SHOW_MULTI_PRODUCER_EXPERIENCE ? t("hero.fallbackBodyMulti") : t("hero.fallbackBodySingle")}
           </p>
         </AnimateOnScroll>
         <AnimateOnScroll className="shrink-0" delay={120} direction="left">
@@ -229,30 +209,38 @@ export default async function HeroSection() {
               href="/auth/register"
               className="inline-block whitespace-nowrap rounded-sm border border-primary bg-primary px-5 py-3 font-sans text-sm font-semibold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
             >
-              List your brand
+              {t("hero.listYourBrand")}
             </Link>
           ) : (
             <Link
               href="/products"
               className="inline-block whitespace-nowrap rounded-sm border border-primary bg-primary px-5 py-3 font-sans text-sm font-semibold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
             >
-              Shop the collection
+              {t("hero.shopTheCollection")}
             </Link>
           )}
         </AnimateOnScroll>
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-6 pb-14">
-        <AnimateOnScroll className="relative aspect-16/10 w-full overflow-hidden rounded-sm bg-cream-dark/45 sm:aspect-21/9" delay={80} direction="up" scale>
+        <AnimateOnScroll
+          className="relative aspect-16/10 w-full overflow-hidden rounded-sm bg-cream-dark/45 sm:aspect-21/9"
+          delay={80}
+          direction="up"
+          scale
+        >
           <Image
             src={COSMETICS_MARKETING.hero}
-            alt="Moroccan skincare and serum bottles in a minimal beauty still life"
+            alt={t("hero.heroImageAlt")}
             fill
             className="object-cover object-center"
             priority
             sizes="(max-width: 1280px) 100vw, 1280px"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-primary-darker/25 via-primary/5 to-transparent" aria-hidden />
+          <div
+            className="absolute inset-0 bg-linear-to-t from-primary-darker/25 via-primary/5 to-transparent"
+            aria-hidden
+          />
         </AnimateOnScroll>
       </div>
     </section>

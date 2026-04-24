@@ -57,6 +57,21 @@ body {
 	font-family: var(--font-body);
 }
 
+/*
+ * Arabic typography: Amiri (display/serif) + IBM Plex Sans Arabic (UI/body).
+ * Overrides theme fonts so font-serif / font-display / font-sans / font-body utilities read Arabic-first stacks.
+ */
+body.font-arabic {
+	--font-serif: var(--font-arabic-display), "Amiri", ui-serif, serif;
+	--font-display: var(--font-arabic-display), "Amiri", ui-serif, serif;
+	--font-sans: var(--font-arabic-ui), "IBM Plex Sans Arabic", system-ui, sans-serif;
+	--font-body: var(--font-arabic-ui), "IBM Plex Sans Arabic", system-ui, sans-serif;
+	font-family: var(--font-body);
+	font-optical-sizing: auto;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+
 ::selection {
 	background: color-mix(in srgb, var(--color-primary-light) 28%, var(--color-paper));
 	color: var(--color-text-dark);

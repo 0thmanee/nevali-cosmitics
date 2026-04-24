@@ -5,6 +5,8 @@ import CollectionsSection from "./CollectionsSection";
 import QuoteSection from "./QuoteSection";
 import ProductsSection from "./ProductsSection";
 import StoriesSection from "./StoriesSection";
+import FeaturesSection from "./FeaturesSection";
+import FAQSection from "./FAQSection";
 import Footer from "./Footer";
 
 export default function HomePage() {
@@ -18,6 +20,8 @@ export default function HomePage() {
       <ProductsSection />
       <QuoteSection />
       <StoriesSection />
+      <FeaturesSection />
+      <FAQSection />
       <Footer />
     </main>
   );

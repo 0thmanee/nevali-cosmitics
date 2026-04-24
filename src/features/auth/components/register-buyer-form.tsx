@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { postRegisterKind } from "~/app/api/auth/register-kind-actions";
 import { signUp } from "~/lib/auth-client";
 import { AuthLayout, AuthInput, AuthField } from "~/features/auth";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 
 export function RegisterBuyerForm() {
+  const { t } = useI18n();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,49 +31,49 @@ export function RegisterBuyerForm() {
 
   return (
     <AuthLayout
-      title="Create a buyer account"
+      contentClassName="max-w-md"
+      showLoginLink
       subtitle={
         SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-          <>Browse artisans and request quotes.</>
+          <>{t("registerBuyer.layoutSubtitleMulti")}</>
         ) : (
-          <>Browse nevali, save lists, and track orders when you sign in with the same email as checkout.</>
+          <>{t("registerBuyer.layoutSubtitleSingle")}</>
         )
       }
-      showLoginLink
-      contentClassName="max-w-md"
+      title={t("registerBuyer.layoutTitle")}
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
-          <AuthField label="Full Name">
+          <AuthField label={t("registerBuyer.fullName")}>
             <AuthInput
-              placeholder="Your name"
+              placeholder={t("registerBuyer.namePlaceholder")}
               value={name}
               onChange={(v) => setName(v)}
             />
           </AuthField>
-          <AuthField label="Email Address">
+          <AuthField label={t("registerBuyer.emailAddress")}>
             <AuthInput
               type="email"
-              placeholder="you@example.com"
+              placeholder={t("registerBuyer.emailPlaceholder")}
               value={email}
               onChange={(v) => setEmail(v)}
             />
           </AuthField>
-          <AuthField label="Password">
+          <AuthField label={t("registerBuyer.password")}>
             <AuthInput
               type="password"
-              placeholder="Min. 8 characters"
+              placeholder={t("registerBuyer.passwordPlaceholder")}
               value={password}
               onChange={(v) => setPassword(v)}
             />
           </AuthField>
           <AuthField
-            label="Confirm Password"
-            error={passwordMismatch ? "Passwords do not match" : undefined}
+            error={passwordMismatch ? t("registerBuyer.passwordsMismatch") : undefined}
+            label={t("registerBuyer.confirmPassword")}
           >
             <AuthInput
               type="password"
-              placeholder="Repeat password"
+              placeholder={t("registerBuyer.repeatPasswordPlaceholder")}
               value={confirmPassword}
               onChange={(v) => setConfirmPassword(v)}
             />
@@ -109,8 +111,8 @@ export function RegisterBuyerForm() {
               )}
             </div>
             <span className="font-sans text-[13px] text-text-muted leading-relaxed">
-              I agree to the nevali Terms of Service and Privacy Policy{" "}
-              <span style={{ color: "var(--color-ink)" }}>*</span>
+              {t("registerBuyer.agreeTerms")}{" "}
+              <span style={{ color: "var(--color-ink)" }}>{t("registerBuyer.requiredMark")}</span>
             </span>
           </label>
         </div>
@@ -142,9 +144,7 @@ export function RegisterBuyerForm() {
               });
               setSubmitting(false);
               if (res.error) {
-                setSubmitError(
-                  res.error.message ?? "Registration failed. Try again."
-                );
+                setSubmitError(res.error.message ?? t("registerBuyer.registrationFailed"));
                 return;
               }
               const tag = await postRegisterKind("buyer");
@@ -166,29 +166,26 @@ export function RegisterBuyerForm() {
                   }
             }
           >
-            {submitting ? "Creating account…" : "Create buyer account"}
+            {submitting ? t("registerBuyer.creatingAccount") : t("registerBuyer.createBuyerAccount")}
           </button>
           {SHOW_MULTI_PRODUCER_EXPERIENCE ? (
             <Link
               href="/auth/register"
               className="font-sans text-sm text-text-muted/80 hover:text-text-muted transition-colors text-center"
             >
-              Artisan or producer? Register as a partner instead
+              {t("registerBuyer.artisanInstead")}
             </Link>
           ) : null}
           <Link
             href="/auth/login"
             className="font-sans text-sm text-text-muted/60 hover:text-text-muted transition-colors text-center"
           >
-            Already have an account? Sign in
+            {t("registerBuyer.alreadyHaveAccountSignIn")}
           </Link>
         </div>
       </div>
 
-      <p className="font-sans text-[11px] text-text-muted/50 mt-6 text-center">
-        Your data is handled in accordance with Moroccan Law 09-08 on personal
-        data protection.
-      </p>
+      <p className="font-sans text-[11px] text-text-muted/50 mt-6 text-center">{t("registerBuyer.dataLawNote")}</p>
     </AuthLayout>
   );
 }
