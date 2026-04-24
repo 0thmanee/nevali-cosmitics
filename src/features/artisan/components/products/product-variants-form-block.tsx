@@ -1,6 +1,8 @@
 "use client";
 
 import { Plus, Trash2 } from "lucide-react";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { interpolate } from "~/lib/i18n/interpolate";
 import {
   productFormInputBase,
   productFormInputStyle,
@@ -58,6 +60,8 @@ type Props = {
 };
 
 export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props) {
+  const { t } = useI18n();
+
   const update = (key: string, patch: Partial<VariantDraft>) => {
     onChange(variants.map((v) => (v.key === key ? { ...v, ...patch } : v)));
   };
@@ -72,9 +76,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <p className="font-sans text-[13px] text-text-muted">
-          Packaging / SKUs: each line has its own price, stock, and minimum order. Buyers pick a variant when adding to cart.
-        </p>
+        <p className="font-sans text-[13px] text-text-muted">{t("productVariantsForm.blurb")}</p>
         <button
           type="button"
           onClick={add}
@@ -82,7 +84,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
           className="shrink-0 inline-flex items-center gap-1 font-sans text-xs font-semibold text-text-dark border border-cream-dark rounded-sm px-3 py-1.5 hover:bg-[var(--color-paper)] disabled:opacity-50"
         >
           <Plus size={14} aria-hidden />
-          Add variant
+          {t("productVariantsForm.addVariant")}
         </button>
       </div>
 
@@ -94,7 +96,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
         >
           <div className="flex items-center justify-between gap-2">
             <span className="font-sans text-[11px] font-bold text-text-muted uppercase tracking-wide">
-              Variant {idx + 1}
+              {interpolate(t("productVariantsForm.variantNumber"), { n: idx + 1 })}
             </span>
             {variants.length > 1 ? (
               <button
@@ -102,7 +104,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 onClick={() => remove(v.key)}
                 disabled={disabled}
                 className="p-1 rounded-sm text-[var(--color-danger)] hover:bg-red-50 disabled:opacity-40"
-                aria-label="Remove variant"
+                aria-label={t("productVariantsForm.removeAria")}
               >
                 <Trash2 size={16} />
               </button>
@@ -112,11 +114,11 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label className={productFormLabelClass}>
-                Packaging name <span className="text-[var(--color-danger)]">*</span>
+                {t("productVariantsForm.packagingName")} <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 type="text"
-                placeholder="e.g. 5 L jug, 1 kg bag"
+                placeholder={t("productVariantsForm.packagingPlaceholder")}
                 value={v.name}
                 onChange={(e) => update(v.key, { name: e.target.value })}
                 className={productFormInputBase}
@@ -126,10 +128,10 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className={productFormLabelClass}>Unit</label>
+              <label className={productFormLabelClass}>{t("productVariantsForm.unit")}</label>
               <input
                 type="text"
-                placeholder="item, kg, L, case…"
+                placeholder={t("productVariantsForm.unitPlaceholder")}
                 value={v.unit}
                 onChange={(e) => update(v.key, { unit: e.target.value })}
                 className={productFormInputBase}
@@ -140,12 +142,12 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
             </div>
             <div className="flex flex-col gap-1.5">
               <label className={productFormLabelClass}>
-                Price (MAD) <span className="text-[var(--color-danger)]">*</span>
+                {t("productVariantsForm.priceMad")} <span className="text-[var(--color-danger)]">*</span>
               </label>
               <input
                 type="text"
                 inputMode="decimal"
-                placeholder="e.g. 120.00"
+                placeholder={t("productVariantsForm.pricePlaceholder")}
                 value={v.price}
                 onChange={(e) => update(v.key, { price: e.target.value })}
                 className={productFormInputBase}
@@ -155,7 +157,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className={productFormLabelClass}>Min. order (units)</label>
+              <label className={productFormLabelClass}>{t("productVariantsForm.minOrderUnits")}</label>
               <input
                 type="number"
                 min={1}
@@ -168,11 +170,12 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
             </div>
             <div className="flex flex-col gap-1.5">
               <label className={productFormLabelClass}>
-                MOQ note <span className="text-text-muted/70">(optional)</span>
+                {t("productVariantsForm.moqNote")}{" "}
+                <span className="text-text-muted/70">{t("productVariantsForm.moqNoteOptional")}</span>
               </label>
               <input
                 type="text"
-                placeholder="e.g. Min 50 L — full description for buyers"
+                placeholder={t("productVariantsForm.moqNotePlaceholder")}
                 value={v.minOrderNote}
                 onChange={(e) => update(v.key, { minOrderNote: e.target.value })}
                 className={productFormInputBase}
@@ -182,7 +185,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className={productFormLabelClass}>Quantity on hand</label>
+              <label className={productFormLabelClass}>{t("productVariantsForm.qtyOnHand")}</label>
               <input
                 type="number"
                 min={0}
@@ -192,9 +195,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 style={productFormInputStyle}
                 disabled={disabled}
               />
-              <p className="font-sans text-[10px] text-text-muted/80">
-                Use 0 to skip a hard cap; when &gt; 0, checkout cannot exceed this quantity.
-              </p>
+              <p className="font-sans text-[10px] text-text-muted/80">{t("productVariantsForm.qtyOnHandHint")}</p>
             </div>
             <label className="flex items-center gap-2 font-sans text-sm text-text-dark sm:col-span-2 cursor-pointer">
               <input
@@ -204,7 +205,7 @@ export function ProductVariantsFormBlock({ variants, onChange, disabled }: Props
                 disabled={disabled}
                 className="rounded border-cream-dark"
               />
-              In stock (buyers can add this variant to cart)
+              {t("productVariantsForm.inStock")}
             </label>
           </div>
         </div>

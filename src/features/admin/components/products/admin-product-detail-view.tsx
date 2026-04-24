@@ -9,6 +9,7 @@ import { useAdminProduct, useSetProductStatus } from "../../hooks/use-admin-prod
 import { useSetCertificationStatus } from "../../hooks/use-admin-certifications";
 import { RejectProductModal } from "./reject-product-modal";
 import { ApproveProductModal } from "./approve-product-modal";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { paymentOptionLabel } from "~/lib/format-price";
 import { RejectCertificationModal } from "../certifications/reject-certification-modal";
 import { ProductGallery } from "~/features/artisan/components/products/product-gallery";
@@ -30,6 +31,7 @@ function formatDate(d: Date) {
 }
 
 export function AdminProductDetailView() {
+  const { t } = useI18n();
   const params = useParams();
   const productId = typeof params.id === "string" ? params.id : null;
   const { data: product, isLoading, isError, error } = useAdminProduct(productId);
@@ -309,7 +311,7 @@ export function AdminProductDetailView() {
                   Checkout payment options
                 </p>
                 <p className="font-sans text-[15px] font-semibold text-text-dark">
-                  {paymentOptionLabel(product.paymentOption)}
+                  {paymentOptionLabel(product.paymentOption, t)}
                 </p>
               </div>
             )}

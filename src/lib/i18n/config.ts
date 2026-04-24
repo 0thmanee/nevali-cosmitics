@@ -13,3 +13,10 @@ export function isRtlLocale(locale: AppLocale): boolean {
 export function isAppLocale(value: string | undefined | null): value is AppLocale {
   return value !== undefined && value !== null && (SUPPORTED_LOCALES as readonly string[]).includes(value);
 }
+
+/** BCP 47 locale tags for `Intl` (dates, currency) in a Morocco context. */
+export const INTL_LOCALE_TAG: Record<AppLocale, string> = {
+  en: "en-MA",
+  fr: "fr-MA",
+  ar: "ar-MA",
+};

@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
-import { formatProductUpdatedAt } from "../../utils/format";
 import { useClearHomepageHeroProduct, useSetHomepageHeroProduct } from "../../hooks/use-products";
+import { artisanProductStatusLabel, formatProductUpdatedRelative } from "../../utils/format-product-updated-i18n";
 import type { ProductListRow } from "~/app/api/products/schemas/products.schema";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { formatPriceMad } from "~/lib/format-price";
 
 export type ProductsTableProps = {
   products: ProductListRow[];
@@ -21,6 +22,8 @@ function ProductThumb({ firstImageUrl, seed }: { firstImageUrl: string | null; s
 }
 
 export function ProductsTable({ products }: ProductsTableProps) {
+  const { t } = useI18n();
+  const { formatMad } = useFormatPrice();
   const setHero = useSetHomepageHeroProduct();
   const clearHero = useClearHomepageHeroProduct();
   const [heroError, setHeroError] = useState<string | null>(null);
@@ -60,13 +63,13 @@ export function ProductsTable({ products }: ProductsTableProps) {
             strokeLinecap="round"
           />
         </svg>
-        <p className="font-sans text-sm text-text-muted">No products found</p>
+        <p className="font-sans text-sm text-text-muted">{t("artisanProductsTable.empty")}</p>
         <Link
           href="/artisan/products/new"
           className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
           style={{ background: "var(--color-ink)", color: "white" }}
         >
-          Add a new product
+          {t("artisanProductsTable.addNew")}
         </Link>
       </div>
     );
@@ -92,12 +95,12 @@ export function ProductsTable({ products }: ProductsTableProps) {
           background: "var(--color-paper)",
         }}
       >
-        <span className="w-9">Image</span>
-        <span>Product</span>
-        <span>Variants</span>
-        <span>From price</span>
-        <span>Status</span>
-        <span>Actions</span>
+        <span className="w-9">{t("artisanProductsTable.thImage")}</span>
+        <span>{t("artisanProductsTable.thProduct")}</span>
+        <span>{t("artisanProductsTable.thVariants")}</span>
+        <span>{t("artisanProductsTable.thFromPrice")}</span>
+        <span>{t("artisanProductsTable.thStatus")}</span>
+        <span>{t("artisanProductsTable.thActions")}</span>
       </div>
       {products.map((p, i) => {
         const statusStyle = PRODUCT_STATUS_STYLES[p.status] ?? PRODUCT_STATUS_STYLES.PENDING;
@@ -119,11 +122,11 @@ export function ProductsTable({ products }: ProductsTableProps) {
                   {p.name}
                 </p>
                 <p className="font-sans text-[11px] text-text-muted mt-0.5">
-                  {p.category} · {formatProductUpdatedAt(p.updatedAt)}
+                  {p.category} · {formatProductUpdatedRelative(p.updatedAt, t)}
                 </p>
                 {p.status === "APPROVED" && p.featuredOnHome ? (
                   <p className="mt-1 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-text-dark">
-                    Public homepage hero
+                    {t("artisanProductsTable.heroBadge")}
                   </p>
                 ) : null}
               </div>
@@ -132,14 +135,14 @@ export function ProductsTable({ products }: ProductsTableProps) {
               {p.variantCount}
             </span>
             <span className="font-sans text-sm text-text-dark">
-              {p.fromPrice ? formatPriceMad(p.fromPrice) : "—"}
+              {p.fromPrice ? formatMad(p.fromPrice) : t("common.dash")}
             </span>
             <div className="flex flex-col gap-0.5">
               <span
                 className="font-sans text-[10px] font-bold tracking-wide rounded-full px-3 py-1 uppercase w-fit"
                 style={statusStyle}
               >
-                {p.status}
+                {artisanProductStatusLabel(p.status, t)}
               </span>
               {p.status === "REJECTED" && p.rejectionReason?.trim() && (
                 <span className="font-sans text-[11px] text-[var(--color-danger)]/80 max-w-[180px] truncate" title={p.rejectionReason}>
@@ -158,7 +161,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
                     border: "1px solid var(--color-cream-dark)",
                   }}
                 >
-                  Edit
+                  {t("artisanProductsTable.edit")}
                 </Link>
                 <Link
                   href={`/artisan/products/${p.id}`}
@@ -169,7 +172,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
                     border: "1px solid var(--color-cream-dark)",
                   }}
                 >
-                  View
+                  {t("artisanProductsTable.view")}
                 </Link>
               </div>
               {p.status === "APPROVED" ? (
@@ -182,11 +185,11 @@ export function ProductsTable({ products }: ProductsTableProps) {
                       setHeroError(null);
                       clearHero.mutate(undefined, {
                         onError: (e) =>
-                          setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                          setHeroError(e instanceof Error ? e.message : t("artisanProductsTable.updateHomepageError")),
                       });
                     }}
                   >
-                    Remove from homepage
+                    {t("artisanProductsTable.removeFromHomepage")}
                   </button>
                 ) : (
                   <button
@@ -197,11 +200,11 @@ export function ProductsTable({ products }: ProductsTableProps) {
                       setHeroError(null);
                       setHero.mutate(p.id, {
                         onError: (e) =>
-                          setHeroError(e instanceof Error ? e.message : "Could not update homepage."),
+                          setHeroError(e instanceof Error ? e.message : t("artisanProductsTable.updateHomepageError")),
                       });
                     }}
                   >
-                    Show on homepage
+                    {t("artisanProductsTable.showOnHomepage")}
                   </button>
                 )
               ) : null}

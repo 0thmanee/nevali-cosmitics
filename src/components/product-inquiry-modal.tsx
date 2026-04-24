@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { submitProductInquiry } from "~/app/api/inquiries/actions";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 
 type Mode = "cart" | "b2b";
@@ -27,18 +29,13 @@ type Props = {
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-const OOS_INQUIRY_BILLING =
-	"This item is not available for cart checkout right now. Your message goes to the brand by email—no account required.";
-
-const WHOLESALE_REQUEST_BILLING =
-	"Optional wholesale request to the brand by email. For immediate purchase, use Add to cart and guest checkout instead—no sign-in required.";
-
 function marketplaceBillingNote(): string | undefined {
 	const raw = process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE?.trim();
 	return raw || undefined;
 }
 
 export function ProductInquiryModal({ product, mode, onClose }: Props) {
+	const { t } = useI18n();
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [quantity, setQuantity] = useState(product.orderHint ?? "");
@@ -81,10 +78,12 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 	}
 
 	const isB2B = mode === "b2b";
-	const submitLabel = isB2B ? "Send wholesale request" : "Send inquiry";
+	const submitLabel = isB2B ? t("inquiryModal.submitWholesale") : t("inquiryModal.submitInquiry");
 	const coverSrc =
 		product.firstImageUrl ??
 		productPlaceholderImageUrl(`${product.organizationId}:${product.id}:${product.category}`, 640);
+
+	const billingPrimary = isB2B ? t("inquiryModal.wholesaleBilling") : t("inquiryModal.oosBilling");
 
 	return (
 		<div
@@ -98,8 +97,9 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 					onClick={onClose}
 					className="absolute top-4 right-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/5 transition-colors hover:bg-black/10"
 					type="button"
+					aria-label={t("inquiryModal.closeAria")}
 				>
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 						<path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
 					</svg>
 				</button>
@@ -110,7 +110,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							className="flex h-16 w-16 items-center justify-center rounded-full"
 							style={{ background: "var(--color-ink)" }}
 						>
-							<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
 								<path
 									d="M6 14l6 6 10-12"
 									stroke="white"
@@ -122,11 +122,12 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 						</div>
 						<div>
 							<p className="mb-1 font-serif font-bold text-xl text-text-dark">
-								{isB2B ? "Wholesale request sent!" : "Inquiry sent!"}
+								{isB2B ? t("inquiryModal.successWholesale") : t("inquiryModal.successInquiry")}
 							</p>
 							<p className="max-w-xs font-sans text-sm leading-relaxed text-text-muted">
-								The brand will review your request and get back to you at{" "}
-								<span className="font-semibold text-text-dark">{email}</span> shortly.
+								{t("inquiryModal.successBody")}{" "}
+								<span className="font-semibold text-text-dark">{email}</span>{" "}
+								{t("inquiryModal.successBodyTrail")}
 							</p>
 						</div>
 						<button
@@ -135,7 +136,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							style={{ background: "var(--color-ink)" }}
 							type="button"
 						>
-							Done
+							{t("inquiryModal.done")}
 						</button>
 					</div>
 				) : (
@@ -153,14 +154,17 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							<div className="min-w-0 flex-1">
 								<div className="mb-0.5 flex items-center gap-2">
 									<span
-										className="rounded-full px-2 py-0.5 font-sans text-[9px] font-bold tracking-widest"
+										className="rounded-full px-2 py-0.5 font-sans text-[9px] font-bold uppercase tracking-widest"
 										style={
 											isB2B
 												? { background: "var(--color-cream)", color: "var(--color-ink)" }
-												: { background: "color-mix(in srgb, var(--color-paper) 85%, var(--color-cream-dark))", color: "var(--color-ink)" }
+												: {
+														background: "color-mix(in srgb, var(--color-paper) 85%, var(--color-cream-dark))",
+														color: "var(--color-ink)",
+													}
 										}
 									>
-										{isB2B ? "WHOLESALE" : "ORDER"}
+										{isB2B ? t("inquiryModal.badgeWholesale") : t("inquiryModal.badgeOrder")}
 									</span>
 								</div>
 								<p className="truncate font-serif font-bold text-[15px] text-text-dark leading-snug">{product.name}</p>
@@ -172,25 +176,25 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							<div className="grid grid-cols-2 gap-3">
 								<div className="flex flex-col gap-1.5">
 									<label className="font-sans text-[11px] font-semibold tracking-wide text-text-dark uppercase">
-										Your Name <span className="text-red-400">*</span>
+										{t("inquiryModal.yourName")} <span className="text-red-400">*</span>
 									</label>
 									<input
 										required
 										className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 										onChange={(e) => setName(e.target.value)}
-										placeholder="Jane Doe"
+										placeholder={t("inquiryModal.namePlaceholder")}
 										value={name}
 									/>
 								</div>
 								<div className="flex flex-col gap-1.5">
 									<label className="font-sans text-[11px] font-semibold tracking-wide text-text-dark uppercase">
-										Email <span className="text-red-400">*</span>
+										{t("inquiryModal.email")} <span className="text-red-400">*</span>
 									</label>
 									<input
 										required
 										className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 										onChange={(e) => setEmail(e.target.value)}
-										placeholder="you@company.com"
+										placeholder={t("inquiryModal.emailPlaceholder")}
 										type="email"
 										value={email}
 									/>
@@ -199,7 +203,7 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 
 							<div className="flex flex-col gap-1.5">
 								<label className="font-sans text-[11px] font-semibold tracking-wide text-text-dark uppercase">
-									Quantity <span className="text-red-400">*</span>
+									{t("inquiryModal.quantity")} <span className="text-red-400">*</span>
 									{product.orderHint ? (
 										<span className="ml-1.5 font-normal normal-case tracking-normal text-text-muted">
 											({product.orderHint})
@@ -210,23 +214,27 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 									required
 									className="w-full rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 									onChange={(e) => setQuantity(e.target.value)}
-									placeholder={product.orderHint ? `e.g. ${product.orderHint}` : "e.g. 50kg, 100L"}
+									placeholder={
+										product.orderHint
+											? interpolate(t("inquiryModal.quantityPlaceholderHint"), { hint: product.orderHint })
+											: t("inquiryModal.quantityPlaceholderGeneric")
+									}
 									value={quantity}
 								/>
 							</div>
 
 							<div className="flex flex-col gap-1.5">
 								<label className="font-sans text-[11px] font-semibold tracking-wide text-text-dark uppercase">
-									Message
-									<span className="ml-1.5 font-normal normal-case tracking-normal text-text-muted">(optional)</span>
+									{t("inquiryModal.message")}{" "}
+									<span className="ml-1.5 font-normal normal-case tracking-normal text-text-muted">
+										{t("common.optional")}
+									</span>
 								</label>
 								<textarea
 									className="w-full resize-none rounded-sm border border-cream-dark bg-cream px-3.5 py-2.5 font-sans text-sm text-text-dark placeholder:text-text-muted/50 transition-colors focus:border-forest-mid focus:outline-none"
 									onChange={(e) => setMessage(e.target.value)}
 									placeholder={
-										isB2B
-											? "Destination country, packaging requirements, delivery timeline…"
-											: "Any specific requirements or questions…"
+										isB2B ? t("inquiryModal.messagePlaceholderWholesale") : t("inquiryModal.messagePlaceholderInquiry")
 									}
 									rows={3}
 									value={message}
@@ -234,14 +242,12 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							</div>
 
 							<p className="font-sans text-[11px] text-text-muted leading-relaxed">
-								{isB2B ? WHOLESALE_REQUEST_BILLING : OOS_INQUIRY_BILLING}
+								{billingPrimary}
 								{billingExtra ? ` ${billingExtra}` : ""}
 							</p>
 
 							{state === "error" ? (
-								<p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-red-500 text-xs">
-									Something went wrong. Please try again.
-								</p>
+								<p className="rounded-sm bg-red-50 px-3 py-2 font-sans text-red-500 text-xs">{t("common.errorGeneric")}</p>
 							) : null}
 
 							<button
@@ -252,16 +258,16 @@ export function ProductInquiryModal({ product, mode, onClose }: Props) {
 							>
 								{state === "loading" ? (
 									<>
-										<svg className="animate-spin" width="14" height="14" viewBox="0 0 14 14" fill="none">
+										<svg className="animate-spin" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
 											<circle cx="7" cy="7" r="5.5" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" />
 											<path d="M7 1.5A5.5 5.5 0 0 1 12.5 7" stroke="white" strokeLinecap="round" strokeWidth="1.5" />
 										</svg>
-										Sending…
+										{t("inquiryModal.sending")}
 									</>
 								) : (
 									<>
 										{submitLabel}
-										<svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+										<svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden>
 											<path
 												d="M2 7h10M8 3l4 4-4 4"
 												stroke="currentColor"

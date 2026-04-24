@@ -4,7 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProductInquiryModal } from "~/components/product-inquiry-modal";
-import { formatPriceMad } from "~/lib/format-price";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import {
 	getCategoryGradient,
@@ -19,6 +21,8 @@ import type { PublicProduct } from "~/components/public-product-types";
 export type { PublicProduct } from "~/components/public-product-types";
 
 export function PublicProductCard({ product }: { product: PublicProduct }) {
+	const { t } = useI18n();
+	const { formatMad } = useFormatPrice();
 	const gradient = getCategoryGradient(product.category);
 	const [modal, setModal] = useState<"cart" | "b2b" | null>(null);
 	const [justAdded, setJustAdded] = useState(false);
@@ -109,8 +113,8 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 
 	useEffect(() => {
 		if (!justAdded) return;
-		const t = window.setTimeout(() => setJustAdded(false), 2600);
-		return () => window.clearTimeout(t);
+		const id = window.setTimeout(() => setJustAdded(false), 2600);
+		return () => window.clearTimeout(id);
 	}, [justAdded]);
 
 	const modalProduct = {
@@ -162,7 +166,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 					<Link
 						href={`/products/${product.id}`}
 						className="absolute inset-0 z-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-inset"
-						aria-label={`View details: ${product.name}`}
+						aria-label={interpolate(t("publicProductCard.viewDetailsAria"), { name: product.name })}
 					/>
 					<div className="pointer-events-none relative z-1 flex h-full items-center justify-center overflow-hidden bg-cream">
 						<Image
@@ -178,7 +182,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 						<>
 							<button
 								type="button"
-								aria-label="Previous photo"
+								aria-label={t("publicProductCard.prevPhoto")}
 								onClick={() => setSlide((s) => (s - 1 + gallery.length) % gallery.length)}
 								className="absolute top-1/2 left-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-primary/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
 							>
@@ -194,7 +198,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							</button>
 							<button
 								type="button"
-								aria-label="Next photo"
+								aria-label={t("publicProductCard.nextPhoto")}
 								onClick={() => setSlide((s) => (s + 1) % gallery.length)}
 								className="absolute top-1/2 right-1.5 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-cream-dark bg-white/95 text-text-dark shadow-sm transition-colors hover:border-primary/40 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
 							>
@@ -213,7 +217,10 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									<button
 										key={img.id}
 										type="button"
-										aria-label={`Photo ${i + 1} of ${gallery.length}`}
+										aria-label={interpolate(t("publicProductCard.photoIndexAria"), {
+											index: i + 1,
+											total: gallery.length,
+										})}
 										aria-current={i === slide ? "true" : undefined}
 										onClick={() => setSlide(i)}
 										className={`h-1.5 rounded-full transition-all ${
@@ -234,7 +241,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 						}}
 					>
 						<span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "var(--color-primary-dark)" }} />
-						CERTIFIED
+						{t("publicProductCard.certifiedBadge")}
 					</div>
 					<div
 						className="pointer-events-none absolute top-3 right-3 z-10 max-w-[120px] truncate rounded-full px-2.5 py-1 font-sans text-[9px] font-bold tracking-widest"
@@ -280,7 +287,8 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								>
 									{product.variants.map((v) => (
 										<option key={v.id} value={v.id} disabled={!v.inStock}>
-											{v.name} {!v.inStock ? "(out of stock)" : ""} — {formatPriceMad(v.price)}
+											{v.name}
+											{!v.inStock ? ` ${t("common.outOfStockParen")}` : ""} — {formatMad(v.price)}
 										</option>
 									))}
 								</select>
@@ -289,7 +297,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							<div className="flex items-center justify-between">
 								{selected ? (
 									<span className="font-serif font-bold text-[15px] text-text-dark">
-										{formatPriceMad(selected.price)}
+										{formatMad(selected.price)}
 										{product.variants.length === 1 && (
 											<span className="ml-1.5 font-sans font-normal text-[11px] text-text-muted">
 												· {selected.name}
@@ -298,7 +306,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 									</span>
 								) : fromPrice ? (
 									<span className="font-serif font-bold text-[15px] text-text-dark">
-										From {formatPriceMad(fromPrice)}
+										{interpolate(t("publicProductCard.fromPrice"), { price: formatMad(fromPrice) })}
 									</span>
 								) : null}
 								{selected ? (
@@ -309,7 +317,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							</div>
 						</div>
 					) : (
-						<span className="font-sans text-[11px] text-text-muted">Contact for pricing</span>
+						<span className="font-sans text-[11px] text-text-muted">{t("common.contactForPricing")}</span>
 					)}
 
 					<div className="relative z-10 mt-auto flex flex-col gap-2">
@@ -317,7 +325,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 							<div className="flex items-center gap-1.5">
 								<button
 									type="button"
-									aria-label="Decrease quantity"
+									aria-label={t("publicProductCard.decreaseQty")}
 									disabled={qty <= minQty}
 									onClick={() => setQty((q) => Math.max(minQty, q - 1))}
 									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-primary/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
@@ -340,7 +348,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								/>
 								<button
 									type="button"
-									aria-label="Increase quantity"
+									aria-label={t("publicProductCard.increaseQty")}
 									disabled={qty >= maxQty}
 									onClick={() => setQty((q) => Math.min(maxQty, q + 1))}
 									className="h-8 w-8 shrink-0 rounded-sm border border-cream-dark bg-white font-sans text-base font-semibold text-text-dark transition-colors hover:border-primary/35 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
@@ -369,7 +377,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 													strokeLinejoin="round"
 												/>
 											</svg>
-											Added
+											{t("publicProductCard.added")}
 										</>
 									) : (
 										<>
@@ -384,7 +392,7 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 												<circle cx="6" cy="12" r="0.8" fill="currentColor" />
 												<circle cx="11" cy="12" r="0.8" fill="currentColor" />
 											</svg>
-											Add to cart
+											{t("publicProductCard.addToCart")}
 										</>
 									)}
 								</button>
@@ -395,18 +403,18 @@ export function PublicProductCard({ product }: { product: PublicProduct }) {
 								onClick={handleAddToCart}
 								className="flex w-full items-center justify-center gap-2 rounded-sm bg-primary py-2.5 font-sans text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
 							>
-								Request pricing
+								{t("publicProductCard.requestPricing")}
 							</button>
 						)}
 						<span className="sr-only" aria-live="polite">
-							{justAdded && showBuyCta ? "Added to cart" : ""}
+							{justAdded && showBuyCta ? t("publicProductCard.addedToCartLive") : ""}
 						</span>
 						<button
 							type="button"
 							onClick={() => setModal("b2b")}
 							className="rounded-sm py-1 text-center font-sans text-[11px] font-medium text-text-muted transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
 						>
-							Wholesale inquiry →
+							{t("publicProductCard.wholesaleInquiryCta")}
 						</button>
 					</div>
 				</div>

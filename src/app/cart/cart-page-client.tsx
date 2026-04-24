@@ -3,13 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useI18n } from "~/components/i18n/i18n-provider";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 import { useCart } from "~/features/cart/cart-context";
 import { cartLineKey } from "~/features/cart/cart-types";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { formatPriceMad } from "~/lib/format-price";
 
 export function CartPageClient() {
   const { t } = useI18n();
+  const { formatMad } = useFormatPrice();
   const { lines, ready, setQuantity, removeLine, subtotalMad } = useCart();
 
   if (!ready) {
@@ -60,8 +61,8 @@ export function CartPageClient() {
                 </p>
                 <p className="mt-2 font-sans text-sm font-medium text-text-dark">
                   {Number.isFinite(unitPrice)
-                    ? `${formatPriceMad(unitPrice.toFixed(2))} ${t("cart.perUnitSuffix")}`
-                    : formatPriceMad(line.price)}
+                    ? `${formatMad(unitPrice.toFixed(2))} ${t("common.perUnitSuffix")}`
+                    : formatMad(line.price)}
                 </p>
 
                 <div className="mt-3 flex items-center gap-2">
@@ -118,8 +119,8 @@ export function CartPageClient() {
               <div className="shrink-0 text-right">
                 <p className="font-serif font-bold text-text-dark">
                   {Number.isFinite(lineTotal)
-                    ? formatPriceMad(lineTotal.toFixed(2))
-                    : formatPriceMad("0")}
+                    ? formatMad(lineTotal.toFixed(2))
+                    : formatMad("0")}
                 </p>
               </div>
             </div>
@@ -155,7 +156,7 @@ export function CartPageClient() {
                     <span className="font-normal text-stone-500"> × {l.quantity}</span>
                   </span>
                   <span className="shrink-0 text-stone-500">
-                    {Number.isFinite(total) ? formatPriceMad(total.toFixed(2)) : formatPriceMad("0")}
+                    {Number.isFinite(total) ? formatMad(total.toFixed(2)) : formatMad("0")}
                   </span>
                 </li>
               );
@@ -165,7 +166,7 @@ export function CartPageClient() {
           <div className="flex items-baseline justify-between border-t border-cream-dark pt-4">
             <span className="font-sans text-sm text-stone-500">{t("cart.subtotal")}</span>
             <span className="font-serif text-2xl font-bold text-text-dark">
-              {formatPriceMad(subtotalMad.toFixed(2))}
+              {formatMad(subtotalMad.toFixed(2))}
             </span>
           </div>
 

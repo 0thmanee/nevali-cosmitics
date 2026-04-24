@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useMemo } from "react";
 import {
   Bar,
@@ -13,27 +14,34 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 import type { ProducerDashboardStats } from "~/app/api/dashboard/dashboard.types";
-import { formatPriceMad } from "~/lib/format-price";
+import { INTL_LOCALE_TAG } from "~/lib/i18n/config";
+import type { AppLocale } from "~/lib/i18n/config";
+import type { Translator } from "~/lib/i18n/create-translator";
+import { interpolate } from "~/lib/i18n/interpolate";
 
 const CHART_AXIS = { fill: "var(--color-text-muted)", fontSize: 11, fontFamily: "var(--font-roboto-mono), ui-monospace, monospace" };
 const GRID = "var(--color-cream-dark)";
 const INK = "var(--color-ink)";
 const MUTED = "var(--color-text-muted)";
 
-function shortDayLabel(isoDay: string): string {
+function shortDayLabel(isoDay: string, locale: AppLocale): string {
   const d = new Date(`${isoDay}T12:00:00.000Z`);
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const tag = INTL_LOCALE_TAG[locale] ?? INTL_LOCALE_TAG.en;
+  return d.toLocaleDateString(tag, { month: "short", day: "numeric" });
 }
 
 function normalizeCatalogByStatus(
-  rows: ProducerDashboardStats["productsByStatus"]
+  rows: ProducerDashboardStats["productsByStatus"],
+  t: Translator,
 ): { label: string; count: number }[] {
   const m = new Map(rows.map((r) => [r.status, r.count]));
   return [
-    { label: "Live", count: m.get("APPROVED") ?? 0 },
-    { label: "In review", count: m.get("PENDING") ?? 0 },
-    { label: "Rejected", count: m.get("REJECTED") ?? 0 },
+    { label: t("artisanDashboardCharts.statusLive"), count: m.get("APPROVED") ?? 0 },
+    { label: t("artisanDashboardCharts.statusReview"), count: m.get("PENDING") ?? 0 },
+    { label: t("artisanDashboardCharts.statusRejected"), count: m.get("REJECTED") ?? 0 },
   ];
 }
 
@@ -58,7 +66,7 @@ function ChartFrame({
 }: {
   title: string;
   description: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="border border-cream-dark bg-paper flex flex-col min-h-[320px]">
@@ -72,25 +80,30 @@ function ChartFrame({
 }
 
 export function DashboardOverviewCharts({ stats, isLoading }: Props) {
-  const catalogBars = useMemo(() => normalizeCatalogByStatus(stats?.productsByStatus ?? []), [stats]);
+  const { locale, t } = useI18n();
+  const { formatMad } = useFormatPrice();
+
+  const catalogBars = useMemo(
+    () => normalizeCatalogByStatus(stats?.productsByStatus ?? [], t),
+    [stats?.productsByStatus, t],
+  );
 
   const orderSeries = useMemo(() => {
     const pts = stats?.orderVolumeByDay ?? [];
     return pts.map((p) => ({
       ...p,
-      label: shortDayLabel(p.day),
+      label: shortDayLabel(p.day, locale),
     }));
-  }, [stats]);
+  }, [stats?.orderVolumeByDay, locale]);
 
   const topBars = useMemo(() => {
     const rows = stats?.topProducts ?? [];
     return rows.map((r) => ({
       ...r,
-      name:
-        r.productName.length > 36 ? `${r.productName.slice(0, 34)}…` : r.productName,
+      name: r.productName.length > 36 ? `${r.productName.slice(0, 34)}…` : r.productName,
       fullName: r.productName,
     }));
-  }, [stats]);
+  }, [stats?.topProducts]);
 
   if (isLoading && !stats) {
     return (
@@ -109,93 +122,91 @@ export function DashboardOverviewCharts({ stats, isLoading }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <ChartFrame
-        title="Catalog status"
-        description="How your SKUs are distributed across listing states."
-      >
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={catalogBars} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
-            <XAxis dataKey="label" tick={CHART_AXIS} axisLine={{ stroke: GRID }} tickLine={false} />
-            <YAxis allowDecimals={false} tick={CHART_AXIS} axisLine={false} tickLine={false} width={36} />
-            <Tooltip
-              cursor={{ fill: "color-mix(in srgb, var(--color-cream-dark) 35%, transparent)" }}
-              contentStyle={tooltipBox}
-              formatter={(value) => [Number(value ?? 0), "Products"]}
-            />
-            <Bar dataKey="count" name="Products" fill={INK} radius={[2, 2, 0, 0]} maxBarSize={56} />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartFrame>
+        <ChartFrame title={t("artisanDashboardCharts.catalogTitle")} description={t("artisanDashboardCharts.catalogDesc")}>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={catalogBars} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
+              <XAxis dataKey="label" tick={CHART_AXIS} axisLine={{ stroke: GRID }} tickLine={false} />
+              <YAxis allowDecimals={false} tick={CHART_AXIS} axisLine={false} tickLine={false} width={36} />
+              <Tooltip
+                cursor={{ fill: "color-mix(in srgb, var(--color-cream-dark) 35%, transparent)" }}
+                contentStyle={tooltipBox}
+                formatter={(value) => [Number(value ?? 0), t("artisanDashboardCharts.legendProducts")]}
+              />
+              <Bar
+                dataKey="count"
+                name={t("artisanDashboardCharts.legendProducts")}
+                fill={INK}
+                radius={[2, 2, 0, 0]}
+                maxBarSize={56}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartFrame>
 
-      <ChartFrame
-        title="Confirmed orders (14 days)"
-        description="Distinct paid or COD-confirmed orders including your lines, and your attributed revenue (MAD)."
-      >
-        <ResponsiveContainer width="100%" height={260}>
-          <ComposedChart data={orderSeries} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
-            <XAxis dataKey="label" tick={CHART_AXIS} axisLine={{ stroke: GRID }} tickLine={false} />
-            <YAxis
-              yAxisId="orders"
-              allowDecimals={false}
-              tick={CHART_AXIS}
-              axisLine={false}
-              tickLine={false}
-              width={32}
-            />
-            <YAxis
-              yAxisId="mad"
-              orientation="right"
-              tick={CHART_AXIS}
-              axisLine={false}
-              tickLine={false}
-              width={44}
-              tickFormatter={(v) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v))}
-            />
-            <Tooltip
-              contentStyle={tooltipBox}
-              formatter={(value, name) => {
-                const n = Number(value ?? 0);
-                if (name === "revenueMad") return [formatPriceMad(String(n)), "Your revenue (MAD)"];
-                if (name === "orderCount") return [n, "Orders"];
-                return [n, String(name)];
-              }}
-            />
-            <Legend
-              wrapperStyle={{ fontFamily: "var(--font-roboto-mono), monospace", fontSize: 11, color: MUTED }}
-            />
-            <Bar yAxisId="orders" dataKey="orderCount" name="Orders" fill="var(--color-cream-dark)" radius={[2, 2, 0, 0]} maxBarSize={28} />
-            <Line
-              yAxisId="mad"
-              type="monotone"
-              dataKey="revenueMad"
-              name="Revenue (MAD)"
-              stroke={INK}
-              strokeWidth={2}
-              dot={{ r: 3, fill: INK, strokeWidth: 0 }}
-              activeDot={{ r: 4 }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </ChartFrame>
+        <ChartFrame title={t("artisanDashboardCharts.orders14Title")} description={t("artisanDashboardCharts.orders14Desc")}>
+          <ResponsiveContainer width="100%" height={260}>
+            <ComposedChart data={orderSeries} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
+              <XAxis dataKey="label" tick={CHART_AXIS} axisLine={{ stroke: GRID }} tickLine={false} />
+              <YAxis
+                yAxisId="orders"
+                allowDecimals={false}
+                tick={CHART_AXIS}
+                axisLine={false}
+                tickLine={false}
+                width={32}
+              />
+              <YAxis
+                yAxisId="mad"
+                orientation="right"
+                tick={CHART_AXIS}
+                axisLine={false}
+                tickLine={false}
+                width={44}
+                tickFormatter={(v) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v))}
+              />
+              <Tooltip
+                contentStyle={tooltipBox}
+                formatter={(value, name) => {
+                  const n = Number(value ?? 0);
+                  if (name === "revenueMad") return [formatMad(String(n)), t("artisanDashboardCharts.tooltipRevenueMad")];
+                  if (name === "orderCount") return [n, t("artisanDashboardCharts.tooltipOrders")];
+                  return [n, String(name)];
+                }}
+              />
+              <Legend
+                wrapperStyle={{ fontFamily: "var(--font-roboto-mono), monospace", fontSize: 11, color: MUTED }}
+              />
+              <Bar
+                yAxisId="orders"
+                dataKey="orderCount"
+                name={t("artisanDashboardCharts.legendOrders")}
+                fill="var(--color-cream-dark)"
+                radius={[2, 2, 0, 0]}
+                maxBarSize={28}
+              />
+              <Line
+                yAxisId="mad"
+                type="monotone"
+                dataKey="revenueMad"
+                name={t("artisanDashboardCharts.legendRevenue")}
+                stroke={INK}
+                strokeWidth={2}
+                dot={{ r: 3, fill: INK, strokeWidth: 0 }}
+                activeDot={{ r: 4 }}
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </ChartFrame>
       </div>
 
-      <ChartFrame
-        title="Top products by revenue"
-        description="Last 90 days, confirmed orders only — ranked by your line totals (MAD)."
-      >
+      <ChartFrame title={t("artisanDashboardCharts.topProductsTitle")} description={t("artisanDashboardCharts.topProductsDesc")}>
         {topBars.length === 0 ? (
-          <p className="py-8 text-center font-sans text-sm text-text-muted">
-            No confirmed sales yet. When buyers check out, performance will appear here.
-          </p>
+          <p className="py-8 text-center font-sans text-sm text-text-muted">{t("artisanDashboardCharts.emptySales")}</p>
         ) : (
           <ResponsiveContainer width="100%" height={Math.max(220, topBars.length * 44)}>
-            <BarChart
-              layout="vertical"
-              data={topBars}
-              margin={{ top: 4, right: 16, left: 4, bottom: 4 }}
-            >
+            <BarChart layout="vertical" data={topBars} margin={{ top: 4, right: 16, left: 4, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={GRID} horizontal={false} />
               <XAxis
                 type="number"
@@ -204,22 +215,18 @@ export function DashboardOverviewCharts({ stats, isLoading }: Props) {
                 tickLine={false}
                 tickFormatter={(v) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v))}
               />
-              <YAxis
-                type="category"
-                dataKey="name"
-                width={118}
-                tick={CHART_AXIS}
-                axisLine={false}
-                tickLine={false}
-              />
+              <YAxis type="category" dataKey="name" width={118} tick={CHART_AXIS} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={tooltipBox}
                 formatter={(value, _name, item) => {
                   const n = Number(value ?? 0);
                   const row = item?.payload as { fullName?: string; unitsSold?: number };
                   return [
-                    `${formatPriceMad(String(n))} · ${row?.unitsSold ?? 0} units`,
-                    row?.fullName ?? "Product",
+                    interpolate(t("artisanDashboardCharts.tooltipRevenueUnits"), {
+                      price: formatMad(String(n)),
+                      count: row?.unitsSold ?? 0,
+                    }),
+                    row?.fullName ?? t("artisanDashboardCharts.productFallback"),
                   ];
                 }}
               />
@@ -231,4 +238,3 @@ export function DashboardOverviewCharts({ stats, isLoading }: Props) {
     </div>
   );
 }
-

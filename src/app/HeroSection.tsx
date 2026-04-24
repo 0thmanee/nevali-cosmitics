@@ -5,6 +5,7 @@ import { getFeaturedHomeHeroProductRepo } from "~/app/api/products/repo/products
 import type { ProductPaymentOptionValue } from "~/app/api/products/schemas/products.schema";
 import { COSMETICS_MARKETING, productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { formatPriceMad } from "~/lib/format-price";
+import type { AppLocale } from "~/lib/i18n/config";
 import { createJsonTranslator } from "~/lib/i18n/create-translator";
 import { getMessages } from "~/lib/i18n/load-messages";
 import { getLocale, getTranslator } from "~/lib/i18n/server";
@@ -130,7 +131,7 @@ export default async function HeroSection() {
                         ) : null}
                       </div>
                       <p className="shrink-0 font-serif text-base font-medium tabular-nums text-text-dark">
-                        {formatPriceMad(v.priceMad)}
+                        {formatPriceMad(v.priceMad, locale as AppLocale)}
                       </p>
                     </div>
                   ))}
@@ -161,7 +162,7 @@ export default async function HeroSection() {
               <p className="mt-10 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-text-muted">
                 {t("hero.fromPrice")}{" "}
                 <span className="font-serif text-2xl font-semibold normal-case tracking-normal text-text-dark sm:text-3xl">
-                  {formatPriceMad(featured.fromPriceMad)}
+                  {formatPriceMad(featured.fromPriceMad, locale as AppLocale)}
                 </span>
               </p>
 

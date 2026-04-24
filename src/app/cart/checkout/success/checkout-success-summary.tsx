@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
+import { paymentOptionLabel } from "~/lib/format-price";
 import {
   consumeLastCheckoutConfirmation,
   type LastCheckoutConfirmationPayload,
@@ -10,12 +11,6 @@ import {
 export function CheckoutSuccessSummary({ orderId }: { orderId: string | undefined }) {
   const { t } = useI18n();
   const [data, setData] = useState<LastCheckoutConfirmationPayload | null>(null);
-
-  function paymentLabel(method: string) {
-    if (method === "COD") return t("checkout.paymentMethodCod");
-    if (method === "CARD") return t("checkout.paymentMethodCard");
-    return method;
-  }
 
   useEffect(() => {
     if (!orderId || typeof window === "undefined") return;
@@ -57,7 +52,7 @@ export function CheckoutSuccessSummary({ orderId }: { orderId: string | undefine
           <dt className="text-[10px] font-bold uppercase tracking-widest text-stone-500">
             {t("checkoutSuccessSummary.payment")}
           </dt>
-          <dd className="mt-0.5">{paymentLabel(data.paymentMethod)}</dd>
+          <dd className="mt-0.5">{paymentOptionLabel(data.paymentMethod, t)}</dd>
         </div>
       </dl>
       <p className="mt-3 border-t border-cream-dark pt-3 font-sans text-[11px] text-stone-500">

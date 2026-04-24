@@ -11,7 +11,7 @@ import { ProductReviewsList } from "~/components/product-reviews-list";
 import { ProductPdpReviewTeaser } from "~/components/product-pdp-review-teaser";
 import type { PublicProductDetail } from "~/app/api/products/schemas/products.schema";
 import { useCart } from "~/features/cart/cart-context";
-import { formatPriceMad, paymentOptionLabel } from "~/lib/format-price";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { PLATFORM_OWNED_ORG_SLUG, SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
@@ -123,6 +123,7 @@ function BuyBlock({
   handleAddToCart,
   setModal,
   paymentCopy,
+  formatMad,
   imgIndex,
   setImgIndex,
   galleryImages,
@@ -143,6 +144,7 @@ function BuyBlock({
   handleAddToCart: () => void;
   setModal: (m: "cart" | "b2b" | null) => void;
   paymentCopy: string | null;
+  formatMad: (amount: string | null | undefined) => string;
   imgIndex: number;
   setImgIndex: React.Dispatch<React.SetStateAction<number>>;
   galleryImages: { id: string; url: string; sortOrder: number; variantId: string | null }[];
@@ -205,7 +207,7 @@ function BuyBlock({
         {selected ? (
           <div>
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="font-serif text-3xl font-semibold sm:text-4xl">{formatPriceMad(selected.price)}</span>
+              <span className="font-serif text-3xl font-semibold sm:text-4xl">{formatMad(selected.price)}</span>
               <span className="font-sans text-sm text-text-muted">
                 {interpolate(t("pdp.pricePerMin"), {
                   unit: selected.unit,
@@ -321,6 +323,7 @@ function BuyBlock({
 
 export function PublicProductDetailView({ product }: Props) {
   const { t } = useI18n();
+  const { formatMad, paymentLabel } = useFormatPrice();
   const gradient = getCategoryGradient(product.category);
   const { addLine } = useCart();
   const [selectedId, setSelectedId] = useState<string | null>(
@@ -392,8 +395,8 @@ export function PublicProductDetailView({ product }: Props) {
     if (!selected || !qty) return null;
     const priceNum = Number(selected.price.replace(",", "."));
     if (!Number.isFinite(priceNum) || priceNum === 0) return null;
-    return formatPriceMad((priceNum * qty).toFixed(2));
-  }, [selected, qty]);
+    return formatMad((priceNum * qty).toFixed(2));
+  }, [selected, qty, formatMad]);
 
   const lead = useMemo(() => descriptionLead(product.description), [product.description]);
   const storyParagraphs = useMemo(
@@ -455,7 +458,7 @@ export function PublicProductDetailView({ product }: Props) {
     setJustAdded(true);
   }
 
-  const paymentCopy = product.paymentOption ? paymentOptionLabel(product.paymentOption) : null;
+  const paymentCopy = product.paymentOption ? paymentLabel(product.paymentOption) : null;
   const mosaicImages = product.images;
   const hasMultipleFormats = product.variants.length > 1;
 
@@ -645,6 +648,7 @@ export function PublicProductDetailView({ product }: Props) {
                 handleAddToCart={handleAddToCart}
                 setModal={setModal}
                 paymentCopy={paymentCopy}
+                formatMad={formatMad}
                 imgIndex={imgIndex}
                 setImgIndex={setImgIndex}
                 galleryImages={galleryImages}
@@ -953,7 +957,7 @@ export function PublicProductDetailView({ product }: Props) {
                       <tr key={v.id} className="border-b border-cream-dark last:border-0">
                         <td className="px-4 py-3.5 font-medium text-text-dark">{v.name}</td>
                         <td className="px-4 py-3.5 text-text-muted">{v.unit}</td>
-                        <td className="px-4 py-3.5 text-text-dark">{formatPriceMad(v.price)}</td>
+                        <td className="px-4 py-3.5 text-text-dark">{formatMad(v.price)}</td>
                         <td className="max-w-[220px] px-4 py-3.5 text-xs text-text-muted">
                           {publicVariantOrderHint(v)}
                         </td>
@@ -1065,7 +1069,7 @@ export function PublicProductDetailView({ product }: Props) {
                 </select>
               ) : null}
               {selected ? (
-                <span className="font-serif text-base font-semibold sm:text-lg">{formatPriceMad(selected.price)}</span>
+                <span className="font-serif text-base font-semibold sm:text-lg">{formatMad(selected.price)}</span>
               ) : (
                 <span className="font-sans text-xs text-text-muted">{t("pdp.selectFormat")}</span>
               )}

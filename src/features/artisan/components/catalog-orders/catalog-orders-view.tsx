@@ -1,12 +1,16 @@
 "use client";
 
 import React from "react";
-import { formatPriceMad } from "~/lib/format-price";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
+import { INTL_LOCALE_TAG } from "~/lib/i18n/config";
+import type { AppLocale } from "~/lib/i18n/config";
 import { useProducerProductOrderStats } from "../../hooks/use-producer-product-order-stats";
 
-function formatDate(d: Date | null) {
-  if (!d) return "—";
-  return new Intl.DateTimeFormat("en-GB", {
+function formatDate(d: Date | null, locale: AppLocale, dash: string) {
+  if (!d) return dash;
+  const tag = INTL_LOCALE_TAG[locale] ?? INTL_LOCALE_TAG.en;
+  return new Intl.DateTimeFormat(tag, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -14,18 +18,18 @@ function formatDate(d: Date | null) {
 }
 
 export function CatalogOrdersView() {
+  const { locale, t } = useI18n();
+  const { formatMad } = useFormatPrice();
   const { data: stats = [], isLoading, isError, error } = useProducerProductOrderStats();
 
   const totalOrders = stats.reduce((sum, row) => sum + row.ordersCount, 0);
   const totalUnits = stats.reduce((sum, row) => sum + row.unitsSold, 0);
-  const totalRevenue = stats
-    .reduce((sum, row) => sum + Number(row.revenueMad), 0)
-    .toFixed(2);
+  const totalRevenue = stats.reduce((sum, row) => sum + Number(row.revenueMad), 0).toFixed(2);
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center rounded-sm border border-cream-dark bg-white px-5 py-12">
-        <p className="font-sans text-sm text-stone-500">Loading order stats…</p>
+        <p className="font-sans text-sm text-stone-500">{t("catalogOrdersView.loading")}</p>
       </div>
     );
   }
@@ -34,7 +38,7 @@ export function CatalogOrdersView() {
     return (
       <div className="rounded-sm border border-cream-dark bg-white px-5 py-6">
         <p className="font-sans text-sm text-red-600">
-          {error instanceof Error ? error.message : "Failed to load order stats."}
+          {error instanceof Error ? error.message : t("catalogOrdersView.failedLoad")}
         </p>
       </div>
     );
@@ -45,39 +49,33 @@ export function CatalogOrdersView() {
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
-            Total product-orders
+            {t("catalogOrdersView.totalProductOrders")}
           </p>
           <p className="mt-1 font-serif text-2xl font-bold text-text-dark">{totalOrders}</p>
         </div>
         <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
-            Units sold
+            {t("catalogOrdersView.unitsSold")}
           </p>
           <p className="mt-1 font-serif text-2xl font-bold text-text-dark">{totalUnits}</p>
         </div>
         <div className="rounded-sm border border-cream-dark bg-white p-4">
           <p className="font-sans text-[10px] font-bold uppercase tracking-wide text-stone-500">
-            Revenue
+            {t("catalogOrdersView.revenue")}
           </p>
-          <p className="mt-1 font-serif text-2xl font-bold text-text-dark">
-            {formatPriceMad(totalRevenue)}
-          </p>
+          <p className="mt-1 font-serif text-2xl font-bold text-text-dark">{formatMad(totalRevenue)}</p>
         </div>
       </div>
 
       <div className="overflow-hidden rounded-sm border border-cream-dark bg-white">
         <div className="border-b border-cream-dark px-5 py-4">
-          <h2 className="font-serif text-[15px] font-bold text-text-dark">Catalog orders by product</h2>
-          <p className="mt-0.5 font-sans text-[11px] text-stone-500">
-            Aggregated product-level data only. Customer identity and contact details are hidden.
-          </p>
+          <h2 className="font-serif text-[15px] font-bold text-text-dark">{t("catalogOrdersView.title")}</h2>
+          <p className="mt-0.5 font-sans text-[11px] text-stone-500">{t("catalogOrdersView.subtitle")}</p>
         </div>
 
         {stats.length === 0 ? (
           <div className="px-5 py-14 text-center">
-            <p className="font-sans text-sm text-stone-500">
-              No catalog orders yet. As buyers place orders, aggregated metrics will appear here.
-            </p>
+            <p className="font-sans text-sm text-stone-500">{t("catalogOrdersView.empty")}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -85,19 +83,19 @@ export function CatalogOrdersView() {
               <thead>
                 <tr className="border-b border-cream-dark bg-cream">
                   <th className="px-5 py-3 text-left font-sans text-[10px] uppercase tracking-wide text-stone-500">
-                    Product
+                    {t("catalogOrdersView.thProduct")}
                   </th>
                   <th className="px-5 py-3 text-left font-sans text-[10px] uppercase tracking-wide text-stone-500">
-                    Orders
+                    {t("catalogOrdersView.thOrders")}
                   </th>
                   <th className="px-5 py-3 text-left font-sans text-[10px] uppercase tracking-wide text-stone-500">
-                    Units sold
+                    {t("catalogOrdersView.thUnitsSold")}
                   </th>
                   <th className="px-5 py-3 text-left font-sans text-[10px] uppercase tracking-wide text-stone-500">
-                    Revenue
+                    {t("catalogOrdersView.thRevenue")}
                   </th>
                   <th className="px-5 py-3 text-left font-sans text-[10px] uppercase tracking-wide text-stone-500">
-                    Last order
+                    {t("catalogOrdersView.thLastOrder")}
                   </th>
                 </tr>
               </thead>
@@ -107,11 +105,9 @@ export function CatalogOrdersView() {
                     <td className="px-5 py-3 font-sans text-sm text-text-dark">{row.productName}</td>
                     <td className="px-5 py-3 font-sans text-sm text-stone-600">{row.ordersCount}</td>
                     <td className="px-5 py-3 font-sans text-sm text-stone-600">{row.unitsSold}</td>
+                    <td className="px-5 py-3 font-sans text-sm text-stone-600">{formatMad(row.revenueMad)}</td>
                     <td className="px-5 py-3 font-sans text-sm text-stone-600">
-                      {formatPriceMad(row.revenueMad)}
-                    </td>
-                    <td className="px-5 py-3 font-sans text-sm text-stone-600">
-                      {formatDate(row.lastOrderedAt)}
+                      {formatDate(row.lastOrderedAt, locale, t("common.dash"))}
                     </td>
                   </tr>
                 ))}

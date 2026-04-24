@@ -11,7 +11,7 @@ import { interpolate } from "~/lib/i18n/interpolate";
 import { allowedCheckoutMethodsForLines } from "~/lib/checkout-payment";
 import { persistLastCheckoutConfirmation } from "~/lib/checkout-confirmation-storage";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { formatPriceMad } from "~/lib/format-price";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 
 const inputClass =
   "w-full rounded-sm border border-cream-dark bg-white px-4 py-3 font-sans text-sm text-text-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ink/40";
@@ -30,6 +30,7 @@ export function CheckoutPageClient({
   cancelled?: boolean;
 }) {
   const { t } = useI18n();
+  const { formatMad } = useFormatPrice();
   const router = useRouter();
   const { lines, ready, clearCart, subtotalMad } = useCart();
   const [pending, startTransition] = useTransition();
@@ -390,7 +391,7 @@ export function CheckoutPageClient({
                     </p>
                   </div>
                   <span className="shrink-0 font-sans text-sm font-medium text-text-dark">
-                    {formatPriceMad(Number.isFinite(total) ? total.toFixed(2) : "0")}
+                    {formatMad(Number.isFinite(total) ? total.toFixed(2) : "0")}
                   </span>
                 </li>
               );
@@ -401,7 +402,7 @@ export function CheckoutPageClient({
             <div className="flex items-baseline justify-between">
               <span className="font-sans text-sm text-stone-500">{t("checkout.subtotal")}</span>
               <span className="font-serif text-2xl font-bold text-text-dark">
-                {formatPriceMad(subtotalMad.toFixed(2))}
+                {formatMad(subtotalMad.toFixed(2))}
               </span>
             </div>
             <p className="font-sans text-xs text-stone-500">{t("checkout.shippingNote")}</p>

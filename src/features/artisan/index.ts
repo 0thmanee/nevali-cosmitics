@@ -47,3 +47,7 @@ export { TrainingView } from "./components/training";
 export { SupportView } from "./components/support";
 export { PRODUCT_STATUS_STYLES, STATUS_DOT_COLORS } from "./constants";
 export { formatProductUpdatedAt } from "./utils/format";
+export {
+  artisanProductStatusLabel,
+  formatProductUpdatedRelative,
+} from "./utils/format-product-updated-i18n";

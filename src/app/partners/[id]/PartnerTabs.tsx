@@ -7,7 +7,7 @@ import { useI18n } from "~/components/i18n/i18n-provider";
 import { PublicProductInquiryTriggers } from "~/components/public-product-inquiry-triggers";
 import type { PublicProduct } from "~/components/public-product-types";
 import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
-import { formatPriceMad } from "~/lib/format-price";
+import { useFormatPrice } from "~/components/i18n/use-format-price";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { Prisma } from "@prisma/client";
 import { buildPublicProductListRow } from "~/lib/public-product-mapper";
@@ -43,6 +43,7 @@ function formatListingDate(d: Date | string) {
 
 function partnerProductPriceLabel(
   p: PublicPartnerProduct,
+  formatMad: (amount: string | null | undefined) => string,
   t: (key: string, vars?: Record<string, string | number>) => string,
 ): string {
   if (p.variants.length === 0) return t("partnerTabs.dash");
@@ -52,8 +53,8 @@ function partnerProductPriceLabel(
   if (nums.length === 0) return t("partnerTabs.dash");
   const min = Math.min(...nums);
   const max = Math.max(...nums);
-  if (min === max) return formatPriceMad(min.toFixed(2));
-  return interpolate(t("partnerTabs.priceFrom"), { price: formatPriceMad(min.toFixed(2)) });
+  if (min === max) return formatMad(min.toFixed(2));
+  return interpolate(t("partnerTabs.priceFrom"), { price: formatMad(min.toFixed(2)) });
 }
 
 function productToPublic(p: PublicPartnerProduct, organizationName: string): PublicProduct {
@@ -360,6 +361,7 @@ function CertificationsTab({ certifications }: { certifications: PublicPartnerCe
 
 function ProductsTab({ products, organizationName }: { products: PublicPartnerProduct[]; organizationName: string }) {
   const { t } = useI18n();
+  const { formatMad } = useFormatPrice();
   if (products.length === 0) {
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center gap-3 border border-cream-dark bg-white p-12 text-center">
@@ -425,7 +427,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
                 </td>
                 <td className="px-4 py-3 font-body text-sm text-text-dark/90">{product.category}</td>
                 <td className="px-4 py-3 font-body text-sm font-semibold text-text-dark whitespace-nowrap">
-                  {partnerProductPriceLabel(product, t)}
+                  {partnerProductPriceLabel(product, formatMad, t)}
                 </td>
                 <td className="px-4 py-3 font-body text-sm text-text-dark">{product.moq ?? t("partnerTabs.dash")}</td>
                 <td className="px-4 py-3 font-body text-sm text-text-dark">{product.capacity ?? t("partnerTabs.dash")}</td>
@@ -465,7 +467,7 @@ function ProductsTab({ products, organizationName }: { products: PublicPartnerPr
               <div className="flex flex-col gap-3 p-4">
                 <dl className="grid grid-cols-2 gap-x-3 gap-y-2 font-body text-[12px]">
                   {[
-                    { label: t("partnerTabs.tablePrice"), value: partnerProductPriceLabel(product, t) },
+                    { label: t("partnerTabs.tablePrice"), value: partnerProductPriceLabel(product, formatMad, t) },
                     { label: t("partnerTabs.tableMoq"), value: product.moq ?? t("partnerTabs.dash") },
                     { label: t("partnerTabs.tableCapacity"), value: product.capacity ?? t("partnerTabs.dash") },
                     { label: t("partnerTabs.tableListed"), value: formatListingDate(product.createdAt) },
