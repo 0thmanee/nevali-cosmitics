@@ -5,6 +5,38 @@ import { nextCookies } from "better-auth/next-js";
 import { organization } from "better-auth/plugins";
 import { prisma } from "~/lib/db";
 
+function toOrigin(raw: string | undefined | null): string | null {
+	if (!raw) return null;
+	try {
+		return new URL(raw).origin;
+	} catch {
+		return null;
+	}
+}
+
+function parseTrustedOrigins(): string[] {
+	const out = new Set<string>();
+
+	const primary = toOrigin(process.env.BETTER_AUTH_URL);
+	if (primary) out.add(primary);
+
+	const vercel = toOrigin(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
+	if (vercel) out.add(vercel);
+
+	const extra = (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
+		.split(",")
+		.map((s) => s.trim())
+		.filter(Boolean);
+	for (const item of extra) {
+		const origin = toOrigin(item);
+		if (origin) out.add(origin);
+	}
+
+	// Local dev fallback
+	out.add("http://localhost:3000");
+	return [...out];
+}
+
 export const auth = betterAuth({
 	database: prismaAdapter(prisma, {
 		provider: "postgresql",
@@ -65,7 +97,5 @@ export const auth = betterAuth({
 		organization(),
 		nextCookies(), // must be last: required for Server Actions that set cookies
 	],
-	trustedOrigins: [
-		process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
-	].filter(Boolean),
+	trustedOrigins: parseTrustedOrigins(),
 });

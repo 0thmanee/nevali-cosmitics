@@ -11,6 +11,8 @@ export const env = createEnv({
 		DATABASE_URL: z.string().min(1),
 		BETTER_AUTH_SECRET: z.string().min(1),
 		BETTER_AUTH_URL: z.string().url(),
+		/** Optional comma-separated origins for Better Auth (e.g. https://nevali.store,https://www.nevali.store). */
+		BETTER_AUTH_TRUSTED_ORIGINS: z.string().optional(),
 		RESEND_API_KEY: z.string().optional(),
 		/** Verified sender (e.g. noreply@yourdomain.com). Defaults to Resend's test address when unset. */
 		RESEND_FROM_EMAIL: z.string().email().optional(),
@@ -71,6 +73,7 @@ export const env = createEnv({
 		DATABASE_URL: process.env.DATABASE_URL,
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
 		BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+		BETTER_AUTH_TRUSTED_ORIGINS: process.env.BETTER_AUTH_TRUSTED_ORIGINS,
 		RESEND_API_KEY: process.env.RESEND_API_KEY,
 		RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
 		REQUIRE_EMAIL_VERIFICATION: process.env.REQUIRE_EMAIL_VERIFICATION,
