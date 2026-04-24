@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import {
   ONBOARDING_STEPS,
   MOROCCAN_REGIONS,
@@ -67,6 +68,7 @@ export function OnboardingForm({
   initialData?: Partial<OnboardingFormData>;
   mode?: "onboarding" | "edit";
 }) {
+  const { t } = useI18n();
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<OnboardingFormData>({
@@ -111,7 +113,7 @@ export function OnboardingForm({
         router.refresh();
       }
     } catch (e) {
-      setSubmitError(e instanceof Error ? e.message : "Something went wrong. Try again.");
+      setSubmitError(e instanceof Error ? e.message : t("onboardingForm.errorGeneric"));
     } finally {
       setSubmitting(false);
     }
@@ -121,16 +123,16 @@ export function OnboardingForm({
 
   const stepMeta = [
     {
-      heading: "Your brand & studio",
-      sub: "Legal and location details for your lab, atelier, or cooperative.",
+      heading: t("onboardingForm.step1Heading"),
+      sub: t("onboardingForm.step1Sub"),
     },
     {
-      heading: "Your product focus",
-      sub: "Select the categories you formulate or produce. Add SKUs and imagery after approval.",
+      heading: t("onboardingForm.step2Heading"),
+      sub: t("onboardingForm.step2Sub"),
     },
     {
-      heading: "Review & submit",
-      sub: "Confirm your details before joining the platform.",
+      heading: t("onboardingForm.step3Heading"),
+      sub: t("onboardingForm.step3Sub"),
     },
   ];
 
@@ -138,57 +140,57 @@ export function OnboardingForm({
   const step1Fields = (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-5">
-        <Field label="First Name">
-          <input className={inputCls} placeholder="Rida" value={form.firstName}
+        <Field label={t("onboardingForm.firstName")}>
+          <input className={inputCls} placeholder={t("onboardingForm.firstNamePlaceholder")} value={form.firstName}
             onChange={(e) => setForm(set("firstName")(e.target.value))} />
         </Field>
-        <Field label="Last Name">
-          <input className={inputCls} placeholder="Elmazary" value={form.lastName}
+        <Field label={t("onboardingForm.lastName")}>
+          <input className={inputCls} placeholder={t("onboardingForm.lastNamePlaceholder")} value={form.lastName}
             onChange={(e) => setForm(set("lastName")(e.target.value))} />
         </Field>
       </div>
-      <Field label="Phone Number">
-        <input type="tel" className={inputCls} placeholder="+212 6XX XXX XXX"
+      <Field label={t("onboardingForm.phone")}>
+        <input type="tel" className={inputCls} placeholder={t("onboardingForm.phonePlaceholder")}
           value={form.phone} onChange={(e) => setForm(set("phone")(e.target.value))} />
       </Field>
       <div className="grid grid-cols-2 gap-5">
-        <Field label="Entity Type">
+        <Field label={t("onboardingForm.entityType")}>
           <select className={selectCls} value={form.entityType}
             onChange={(e) => setForm(set("entityType")(e.target.value))}>
-            <option value="">Select type</option>
+            <option value="">{t("onboardingForm.selectType")}</option>
             {ENTITY_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </Field>
-        <Field label="Entity Name">
-          <input className={inputCls} placeholder="Maison NEVALI Skincare" value={form.entityName}
+        <Field label={t("onboardingForm.entityName")}>
+          <input className={inputCls} placeholder={t("onboardingForm.entityNamePlaceholder")} value={form.entityName}
             onChange={(e) => setForm(set("entityName")(e.target.value))} />
         </Field>
       </div>
-      <Field label="Registration Number (RC / ICE)">
-        <input className={inputCls} placeholder="RC-XXXX-MA-XXXXX"
+      <Field label={t("onboardingForm.registrationNumber")}>
+        <input className={inputCls} placeholder={t("onboardingForm.registrationNumberPlaceholder")}
           value={form.registrationNumber}
           onChange={(e) => setForm(set("registrationNumber")(e.target.value))} />
       </Field>
       <div className="grid grid-cols-2 gap-5">
-        <Field label="Region">
+        <Field label={t("onboardingForm.region")}>
           <select className={selectCls} value={form.region}
             onChange={(e) => setForm(set("region")(e.target.value))}>
-            <option value="">Select region</option>
+            <option value="">{t("onboardingForm.selectRegion")}</option>
             {MOROCCAN_REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
           </select>
         </Field>
-        <Field label="City">
-          <input className={inputCls} placeholder="Taliouine" value={form.city}
+        <Field label={t("onboardingForm.city")}>
+          <input className={inputCls} placeholder={t("onboardingForm.cityPlaceholder")} value={form.city}
             onChange={(e) => setForm(set("city")(e.target.value))} />
         </Field>
       </div>
       <div className="grid grid-cols-2 gap-5">
-        <Field label="Year Established">
-          <input className={inputCls} placeholder="2018" value={form.yearEstablished}
+        <Field label={t("onboardingForm.yearEstablished")}>
+          <input className={inputCls} placeholder={t("onboardingForm.yearEstablishedPlaceholder")} value={form.yearEstablished}
             onChange={(e) => setForm(set("yearEstablished")(e.target.value))} />
         </Field>
-        <Field label="Website (optional)">
-          <input className={inputCls} placeholder="www.example.ma" value={form.website}
+        <Field label={t("onboardingForm.websiteOptional")}>
+          <input className={inputCls} placeholder={t("onboardingForm.websitePlaceholder")} value={form.website}
             onChange={(e) => setForm(set("website")(e.target.value))} />
         </Field>
       </div>
@@ -198,7 +200,7 @@ export function OnboardingForm({
   const step2Fields = (
     <div className="flex flex-col gap-5">
       <div>
-        <p className={labelCls + " mb-3"}>Product categories</p>
+        <p className={labelCls + " mb-3"}>{t("onboardingForm.productCategories")}</p>
         <div className="flex flex-wrap gap-2">
           {PRODUCT_CATEGORIES.map((cat) => {
             const selected = form.categories.includes(cat.label);
@@ -216,17 +218,17 @@ export function OnboardingForm({
           })}
         </div>
         {form.categories.length === 0 && (
-          <p className="font-sans text-[11px] text-text-muted/50 mt-2">Select at least one to continue.</p>
+          <p className="font-sans text-[11px] text-text-muted/50 mt-2">{t("onboardingForm.selectAtLeastOne")}</p>
         )}
       </div>
-      <Field label="Estimated Annual Capacity">
-        <input className={inputCls} placeholder="e.g. 50k units / year"
+      <Field label={t("onboardingForm.annualCapacity")}>
+        <input className={inputCls} placeholder={t("onboardingForm.annualCapacityPlaceholder")}
           value={form.annualCapacity} onChange={(e) => setForm(set("annualCapacity")(e.target.value))} />
       </Field>
-      <Field label="Export Experience">
+      <Field label={t("onboardingForm.exportExperience")}>
         <select className={selectCls} value={form.exportExperience}
           onChange={(e) => setForm(set("exportExperience")(e.target.value))}>
-          <option value="">Select experience level</option>
+          <option value="">{t("onboardingForm.selectExperienceLevel")}</option>
           {EXPORT_EXPERIENCE_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       </Field>
@@ -237,24 +239,24 @@ export function OnboardingForm({
     <div className="flex flex-col gap-4">
       {/* Business card */}
       <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-cream-dark)]" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-cream-dark" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
           <span className={labelCls}>Brand &amp; studio</span>
           <button type="button" onClick={() => setStep(1)}
             className="font-sans text-[11px] hover:underline" style={{ color: "var(--color-ink)" }}>
-            Edit
+            {t("onboardingForm.edit")}
           </button>
         </div>
         <div className="px-4 py-3 grid grid-cols-2 gap-3" style={{ background: "var(--color-cream)" }}>
           {[
-            { label: "Name", value: `${form.firstName} ${form.lastName}`.trim() },
-            { label: "Entity", value: form.entityName },
-            { label: "Type", value: form.entityType },
-            { label: "Region", value: form.region },
-            { label: "Phone", value: form.phone },
+            { label: t("onboardingForm.summaryName"), value: `${form.firstName} ${form.lastName}`.trim() },
+            { label: t("onboardingForm.summaryEntity"), value: form.entityName },
+            { label: t("onboardingForm.summaryType"), value: form.entityType },
+            { label: t("onboardingForm.summaryRegion"), value: form.region },
+            { label: t("onboardingForm.summaryPhone"), value: form.phone },
           ].map((r) => (
             <div key={r.label}>
               <p className="font-sans text-[10px] text-text-muted uppercase tracking-wider">{r.label}</p>
-              <p className="font-sans text-sm text-text-dark mt-0.5">{r.value || "—"}</p>
+              <p className="font-sans text-sm text-text-dark mt-0.5">{r.value || t("common.dash")}</p>
             </div>
           ))}
         </div>
@@ -262,11 +264,11 @@ export function OnboardingForm({
 
       {/* Categories card */}
       <div className="rounded-sm overflow-hidden" style={{ border: "1px solid var(--color-cream-dark)" }}>
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-cream-dark)]" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
-          <span className={labelCls}>Categories</span>
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-cream-dark" style={{ background: "color-mix(in srgb, var(--color-cream-dark) 55%, var(--color-paper))" }}>
+          <span className={labelCls}>{t("onboardingForm.categories")}</span>
           <button type="button" onClick={() => setStep(2)}
             className="font-sans text-[11px] hover:underline" style={{ color: "var(--color-ink)" }}>
-            Edit
+            {t("onboardingForm.edit")}
           </button>
         </div>
         <div className="px-4 py-3 flex flex-wrap gap-1.5" style={{ background: "var(--color-cream)" }}>
@@ -284,14 +286,14 @@ export function OnboardingForm({
         <label className="flex items-start gap-2.5 cursor-pointer">
           <Checkbox checked={form.agreeTerms} onToggle={() => setForm(set("agreeTerms")(!form.agreeTerms))} />
           <span className="font-sans text-[12px] text-text-muted leading-relaxed">
-            I agree to the nevali Terms of Service and Privacy Policy{" "}
+            {t("onboardingForm.agreeTerms")}{" "}
             <span style={{ color: "var(--color-ink)" }}>*</span>
           </span>
         </label>
         <label className="flex items-start gap-2.5 cursor-pointer">
           <Checkbox checked={form.agreeMarketing} onToggle={() => setForm(set("agreeMarketing")(!form.agreeMarketing))} />
           <span className="font-sans text-[12px] text-text-muted leading-relaxed">
-            I&apos;d like to receive updates about new features and export opportunities
+            {t("onboardingForm.agreeMarketing")}
           </span>
         </label>
       </div>
@@ -313,11 +315,11 @@ export function OnboardingForm({
       <div className="p-4 lg:p-6">
         <div className="max-w-xl mx-auto">
           <Link href="/artisan/profile" className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
-            ← Back to profile
+            {t("onboardingForm.backToProfile")}
           </Link>
-          <h1 className="font-serif font-bold text-[28px] text-text-dark leading-tight mt-3 mb-1">Edit profile</h1>
-          <p className="font-sans text-text-muted text-sm mb-8">Update your brand profile and contact details.</p>
-          <div className="flex gap-0 mb-8 border-b border-[var(--color-cream-dark)]">
+          <h1 className="font-serif font-bold text-[28px] text-text-dark leading-tight mt-3 mb-1">{t("onboardingForm.editProfileTitle")}</h1>
+          <p className="font-sans text-text-muted text-sm mb-8">{t("onboardingForm.editProfileSubtitle")}</p>
+          <div className="flex gap-0 mb-8 border-b border-cream-dark">
             {ONBOARDING_STEPS.map((s) => (
               <button key={s.number} type="button" onClick={() => setStep(s.number)}
                 className="font-sans text-[11px] font-semibold uppercase tracking-wider px-5 py-3 transition-colors"
@@ -333,18 +335,18 @@ export function OnboardingForm({
           {stepFields}
           <div className="flex items-center justify-between mt-8">
             {step > 1
-              ? <button type="button" onClick={() => setStep(step - 1)} className="font-sans text-sm text-text-muted hover:text-text-dark">← Back</button>
+              ? <button type="button" onClick={() => setStep(step - 1)} className="font-sans text-sm text-text-muted hover:text-text-dark">{t("onboardingForm.back")}</button>
               : <span />}
             {step < totalSteps
               ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
                   style={canNext() ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
-                  Continue →
+                  {t("onboardingForm.continue")}
                 </button>
               : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
                   className="font-sans font-semibold text-sm px-7 py-2.5 rounded-sm disabled:cursor-not-allowed"
                   style={canNext() && !submitting ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
-                  {submitting ? "Saving…" : "Save changes"}
+                  {submitting ? t("onboardingForm.saving") : t("onboardingForm.saveChanges")}
                 </button>}
           </div>
         </div>
@@ -393,7 +395,7 @@ export function OnboardingForm({
         {/* Left: step context */}
         <div className="w-64 shrink-0 flex flex-col justify-center px-10 py-8" style={{ borderRight: "1px solid var(--color-cream-dark)" }}>
           <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "var(--color-text-muted)" }}>
-            Step {step} of {totalSteps}
+            {t("onboardingForm.stepOf", { step, total: totalSteps })}
           </span>
           <h1 className="font-serif font-bold text-[32px] text-text-dark leading-[1.05] mb-3">
             {stepMeta[step - 1]!.heading}
@@ -430,22 +432,22 @@ export function OnboardingForm({
         {step > 1
           ? <button type="button" onClick={() => setStep(step - 1)}
               className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
-              ← Back
+              {t("onboardingForm.back")}
             </button>
           : <Link href="/" className="font-sans text-sm text-text-muted hover:text-text-dark transition-colors">
-              ← Homepage
+              {t("onboardingForm.backHome")}
             </Link>}
 
         {step < totalSteps
           ? <button type="button" onClick={() => canNext() && setStep(step + 1)} disabled={!canNext()}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
               style={canNext() ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
-              Continue →
+              {t("onboardingForm.continue")}
             </button>
           : <button type="button" disabled={!canNext() || submitting} onClick={handleSubmit}
               className="font-sans font-semibold text-sm px-8 py-2.5 rounded-sm transition-all disabled:cursor-not-allowed"
               style={canNext() && !submitting ? { background: "var(--color-ink)", color: "var(--color-paper)" } : { background: "color-mix(in srgb, var(--color-ink) 12%, transparent)", color: "color-mix(in srgb, var(--color-ink) 35%, transparent)" }}>
-              {submitting ? "Saving…" : "Complete profile"}
+              {submitting ? t("onboardingForm.saving") : t("onboardingForm.completeProfile")}
             </button>}
       </div>
     </div>

@@ -169,7 +169,7 @@ async function main() {
 
 	await prisma.user.update({
 		where: { email: PARTNER_EMAIL },
-		data: { name: "ياسمين الإدريسي" },
+		data: { name: "زينب بدر" },
 	});
 
 	const partner = await prisma.user.findUnique({ where: { email: PARTNER_EMAIL } });

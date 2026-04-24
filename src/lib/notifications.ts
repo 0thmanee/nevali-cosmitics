@@ -146,9 +146,122 @@ function checkoutPaymentLabel(method: string): string {
 	}
 }
 
+function normalizePhoneForWhatsApp(phoneRaw: string): string | null {
+	const rawDigits = phoneRaw.replace(/\D/g, "");
+	if (!rawDigits) return null;
+
+	// Accept common user formats and normalize to Morocco mobile in E.164 digits (no +), e.g. 212612345678.
+	let digits = rawDigits;
+	if (digits.startsWith("00")) digits = digits.slice(2);
+
+	let national = digits;
+	if (digits.startsWith("212")) {
+		national = digits.slice(3);
+		if (national.startsWith("0")) national = national.slice(1);
+	} else if (digits.startsWith("0")) {
+		national = digits.slice(1);
+	}
+
+	// Morocco mobile numbers are 9 digits and typically start with 6 or 7.
+	if (!/^[67]\d{8}$/.test(national)) return null;
+	return `212${national}`;
+}
+
+async function sendArabicWhatsAppOrderConfirmation(params: {
+	toPhone: string;
+	buyerName: string;
+	orderId: string;
+	totalMad: string;
+	lines: {
+		productName: string;
+		variantName: string;
+		quantity: number;
+		lineTotalMad: string;
+		imageUrl?: string | null;
+	}[];
+}): Promise<boolean> {
+	const infobipBaseUrl = env.INFOBIP_BASE_URL?.trim();
+	const infobipApiKey = env.INFOBIP_API_KEY?.trim();
+	const infobipFrom = env.INFOBIP_WHATSAPP_FROM?.trim();
+
+	const token = env.WHATSAPP_CLOUD_API_TOKEN?.trim();
+	const phoneNumberId = env.WHATSAPP_PHONE_NUMBER_ID?.trim();
+	const to = normalizePhoneForWhatsApp(params.toPhone);
+	if (!to) return false;
+
+	const linesText = params.lines
+		.map((l, i) => {
+			const imageLine = l.imageUrl?.trim() ? `\n🖼️ ${l.imageUrl.trim()}` : "";
+			return `${i + 1}) ${l.productName} (${l.variantName}) × ${l.quantity} — ${l.lineTotalMad} درهم${imageLine}`;
+		})
+		.join("\n");
+	const body = [
+		`السلام عليكم ${params.buyerName}،`,
+		"",
+		"✅ تم تأكيد طلبكم بنجاح.",
+		`🔖 رقم الطلب: ${params.orderId}`,
+		`💳 طريقة الدفع: الدفع عند الاستلام`,
+		`💰 المجموع: ${params.totalMad} درهم`,
+		"",
+		"📦 تفاصيل الطلب:",
+		linesText,
+		"",
+		"سنقوم بالتواصل معكم لتأكيد التوصيل. شكراً لثقتكم.",
+	].join("\n");
+
+	// Prefer Infobip when configured.
+	if (infobipBaseUrl && infobipApiKey && infobipFrom) {
+		const url = `${infobipBaseUrl.replace(/\/$/, "")}/whatsapp/1/message/text`;
+		try {
+			const res = await fetch(url, {
+				method: "POST",
+				headers: {
+					Authorization: `App ${infobipApiKey}`,
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify({
+					from: infobipFrom,
+					to,
+					content: {
+						text: body,
+					},
+				}),
+			});
+			if (res.ok) return true;
+		} catch {
+			// fallback to Meta sender below when available
+		}
+	}
+
+	// Meta fallback (existing path)
+	if (!token || !phoneNumberId) return false;
+	const metaUrl = `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`;
+	try {
+		const res = await fetch(metaUrl, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				messaging_product: "whatsapp",
+				recipient_type: "individual",
+				to,
+				type: "text",
+				text: { preview_url: false, body },
+			}),
+		});
+		return res.ok;
+	} catch {
+		return false;
+	}
+}
+
 /** Buyer receipt after a guest catalog checkout order is recorded. */
 export async function notifyShopOrderBuyerConfirmation(params: {
 	to: string;
+	toPhone?: string | null;
 	buyerName: string;
 	orderId: string;
 	totalMad: string;
@@ -158,27 +271,41 @@ export async function notifyShopOrderBuyerConfirmation(params: {
 		variantName: string;
 		quantity: number;
 		lineTotalMad: string;
+		imageUrl?: string | null;
 	}[];
 }): Promise<void> {
 	const to = params.to.trim();
-	if (!isValidEmail(to)) return;
+	const hasEmail = isValidEmail(to);
+
+	if (params.toPhone?.trim()) {
+		const sent = await sendArabicWhatsAppOrderConfirmation({
+			toPhone: params.toPhone,
+			buyerName: params.buyerName,
+			orderId: params.orderId,
+			totalMad: params.totalMad,
+			lines: params.lines,
+		});
+		if (sent) return;
+	}
+
+	if (!hasEmail) return;
 	const safeName = escapeHtml(params.buyerName);
 	const pay = escapeHtml(checkoutPaymentLabel(params.paymentMethod));
 	const linesText = params.lines
 		.map(
 			(l) =>
-				`• ${l.productName} (${l.variantName}) × ${l.quantity} — ${l.lineTotalMad} MAD`,
+				`• ${l.productName} (${l.variantName}) × ${l.quantity} — ${l.lineTotalMad} MAD${l.imageUrl ? ` [image: ${l.imageUrl}]` : ""}`,
 		)
 		.join("\n");
-	const subject = `nevali: order received (${params.orderId.slice(0, 8)}…)`;
-	const text = `Hello ${params.buyerName},\n\nThank you — we've received your order.\n\nOrder reference: ${params.orderId}\nPayment: ${checkoutPaymentLabel(params.paymentMethod)}\nTotal: ${params.totalMad} MAD\n\n${linesText}\n\nWe'll follow up using the contact details you provided.\n\n— nevali`;
+	const subject = `تم تأكيد طلبكم (${params.orderId.slice(0, 8)}…)`;
+	const text = `السلام عليكم ${params.buyerName},\n\n✅ تم تأكيد طلبكم بنجاح.\n\nرقم الطلب: ${params.orderId}\nطريقة الدفع: الدفع عند الاستلام\nالمجموع: ${params.totalMad} درهم\n\n${linesText}\n\nسنتواصل معكم لتأكيد تفاصيل التوصيل.\n\n— nevali`;
 	const rowsHtml = params.lines
 		.map(
 			(l) =>
-				`<tr><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};">${escapeHtml(l.productName)} <span style="color:${emailTheme.textMuted};">(${escapeHtml(l.variantName)})</span></td><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};text-align:right;">× ${l.quantity}</td><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};text-align:right;">${escapeHtml(l.lineTotalMad)} MAD</td></tr>`,
+				`<tr><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};">${escapeHtml(l.productName)} <span style="color:${emailTheme.textMuted};">(${escapeHtml(l.variantName)})</span>${l.imageUrl ? `<div style="margin-top:6px;"><a href="${escapeHtmlAttr(l.imageUrl)}" style="color:${emailTheme.textMuted};font-size:12px;">عرض صورة المنتج</a></div>` : ""}</td><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};text-align:right;">× ${l.quantity}</td><td style="padding:8px;border-bottom:1px solid ${emailTheme.creamDark};text-align:right;">${escapeHtml(l.lineTotalMad)} MAD</td></tr>`,
 		)
 		.join("");
-	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.55;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;"><p>Hello ${safeName},</p><p>Thank you — we've <strong>received your order</strong>.</p><p><strong>Order reference:</strong> ${escapeHtml(params.orderId)}<br/><strong>Payment:</strong> ${pay}<br/><strong>Total:</strong> ${escapeHtml(params.totalMad)} MAD</p><table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;">${rowsHtml}</table><p style="color:${emailTheme.textMuted};font-size:14px;">We'll follow up using the contact details you provided.</p><p style="color:${emailTheme.textMuted};font-size:14px;">— nevali</p></body></html>`;
+	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.7;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;direction:rtl;text-align:right;"><p>السلام عليكم ${safeName}،</p><p>✅ تم <strong>تأكيد طلبكم</strong> بنجاح.</p><p><strong>رقم الطلب:</strong> ${escapeHtml(params.orderId)}<br/><strong>طريقة الدفع:</strong> ${pay}<br/><strong>المجموع:</strong> ${escapeHtml(params.totalMad)} درهم</p><table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;">${rowsHtml}</table><p style="color:${emailTheme.textMuted};font-size:14px;">سنتواصل معكم لتأكيد تفاصيل التوصيل.</p><p style="color:${emailTheme.textMuted};font-size:14px;">— nevali</p></body></html>`;
 	await sendTransactionalEmail({ to, subject, text, html });
 }
 

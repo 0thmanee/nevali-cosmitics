@@ -34,6 +34,9 @@ export function CheckoutPageClient({
   const { lines, ready, clearCart, subtotalMad } = useCart();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [confirmedOrderId, setConfirmedOrderId] = useState<string | null>(null);
+  const [confirmationPhone, setConfirmationPhone] = useState<string>("");
+  const [confirmationEmail, setConfirmationEmail] = useState<string>("");
 
   const [buyerName, setBuyerName] = useState(initialName);
   const [buyerEmail, setBuyerEmail] = useState(initialEmail);
@@ -47,13 +50,61 @@ export function CheckoutPageClient({
   const paymentMethod: "COD" = "COD";
 
   useEffect(() => {
-    if (ready && lines.length === 0) {
+    if (ready && lines.length === 0 && !confirmedOrderId) {
       router.replace("/cart");
     }
-  }, [ready, lines.length, router]);
+  }, [ready, lines.length, router, confirmedOrderId]);
 
   if (!ready) {
     return <p className="py-16 text-center font-sans text-stone-500">{t("checkout.loading")}</p>;
+  }
+
+  if (confirmedOrderId) {
+    return (
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <div className="rounded-sm border border-cream-dark bg-white px-6 py-7 shadow-sm">
+          <div className="flex items-start gap-4">
+            <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary-dark">
+              <svg aria-hidden fill="none" height="18" viewBox="0 0 24 24" width="18">
+                <path d="M5 12l5 5L20 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <p className="font-serif text-2xl font-bold text-text-dark">{t("checkout.confirmedTitle")}</p>
+              <p className="mt-1 font-sans text-sm text-text-muted">{t("checkout.confirmedBody")}</p>
+              <div className="mt-4 rounded-sm border border-cream-dark bg-cream/50 px-4 py-3">
+                <p className="font-sans text-[11px] uppercase tracking-widest text-text-muted">
+                  {t("checkout.confirmedReferenceLabel")}
+                </p>
+                <p className="mt-1 break-all font-mono text-sm font-semibold text-text-dark">{confirmedOrderId}</p>
+              </div>
+              <p className="mt-3 font-sans text-xs text-text-muted">
+                {confirmationPhone
+                  ? t("checkout.confirmedNotificationPhone", { phone: confirmationPhone })
+                  : t("checkout.confirmedNotificationEmail", { email: confirmationEmail })}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    router.push(`/cart/checkout/success?orderId=${encodeURIComponent(confirmedOrderId)}`)
+                  }
+                  className="rounded-sm bg-ink px-4 py-2 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                >
+                  {t("checkout.confirmedOpenNow")}
+                </button>
+                <Link
+                  href="/products"
+                  className="rounded-sm border border-cream-dark bg-white px-4 py-2 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
+                >
+                  {t("checkout.confirmedBrowse")}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (lines.length === 0) return null;
@@ -102,7 +153,9 @@ export function CheckoutPageClient({
 
         persistLastCheckoutConfirmation(confirmationPayload);
         clearCart();
-        router.push(`/cart/checkout/success?orderId=${encodeURIComponent(result.orderId)}`);
+        setConfirmationPhone(buyerPhone.trim());
+        setConfirmationEmail(buyerEmail.trim());
+        setConfirmedOrderId(result.orderId);
       } catch (err) {
         const msg =
           err instanceof Error ? err.message : t("checkout.attemptErrorGeneric");
@@ -153,14 +206,12 @@ export function CheckoutPageClient({
             />
           </label>
           <label className="flex flex-col gap-1.5 font-sans text-sm">
-            <span className="font-medium text-text-dark">
-              {t("checkout.phone")}{" "}
-              <span className="font-normal text-stone-500">{t("checkout.optional")}</span>
-            </span>
+            <span className="font-medium text-text-dark">{t("checkout.phone")}</span>
             <input
               autoComplete="tel"
               className={inputClass}
               onChange={(e) => setBuyerPhone(e.target.value)}
+              required
               type="tel"
               value={buyerPhone}
             />

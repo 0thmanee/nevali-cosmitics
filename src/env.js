@@ -48,6 +48,16 @@ export const env = createEnv({
 		SUPABASE_STORAGE_BUCKET: z.string().min(1).optional(),
 		/** Public contact address shown on /contact (e.g. hello@yourdomain.com). */
 		CONTACT_PUBLIC_EMAIL: z.string().email().optional(),
+		/** Meta WhatsApp Cloud API token (optional). */
+		WHATSAPP_CLOUD_API_TOKEN: z.string().min(1).optional(),
+		/** Meta WhatsApp business phone number ID (optional). */
+		WHATSAPP_PHONE_NUMBER_ID: z.string().min(1).optional(),
+		/** Infobip API base URL, e.g. https://xyz.api.infobip.com */
+		INFOBIP_BASE_URL: z.string().optional(),
+		/** Infobip API key. */
+		INFOBIP_API_KEY: z.string().min(1).optional(),
+		/** Infobip WhatsApp sender number/name configured in your account. */
+		INFOBIP_WHATSAPP_FROM: z.string().min(1).optional(),
 	},
 
 	/**
@@ -90,6 +100,11 @@ export const env = createEnv({
 		NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE: process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE,
 		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
 		CONTACT_PUBLIC_EMAIL: process.env.CONTACT_PUBLIC_EMAIL,
+		WHATSAPP_CLOUD_API_TOKEN: process.env.WHATSAPP_CLOUD_API_TOKEN,
+		WHATSAPP_PHONE_NUMBER_ID: process.env.WHATSAPP_PHONE_NUMBER_ID,
+		INFOBIP_BASE_URL: process.env.INFOBIP_BASE_URL,
+		INFOBIP_API_KEY: process.env.INFOBIP_API_KEY,
+		INFOBIP_WHATSAPP_FROM: process.env.INFOBIP_WHATSAPP_FROM,
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

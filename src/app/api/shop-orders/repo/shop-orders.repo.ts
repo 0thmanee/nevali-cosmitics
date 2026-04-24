@@ -29,6 +29,7 @@ export async function createShopOrderFromCheckout(input: {
       quantity: number;
       unitPriceMad: string;
       lineTotalMad: string;
+      imageUrl: string | null;
       organizationId: string;
       organizationName: string;
     }[];
@@ -46,6 +47,7 @@ export async function createShopOrderFromCheckout(input: {
     organizationName: string;
     productName: string;
     unitPrice: Prisma.Decimal;
+    imageUrl: string | null;
     quantity: number;
   }[] = [];
 
@@ -64,6 +66,11 @@ export async function createShopOrderFromCheckout(input: {
             name: true,
             organizationId: true,
             paymentOption: true,
+            images: {
+              select: { url: true, sortOrder: true },
+              orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+              take: 1,
+            },
             organization: { select: { name: true } },
           },
         },
@@ -94,6 +101,7 @@ export async function createShopOrderFromCheckout(input: {
       organizationName: p.organization.name,
       productName: p.name,
       unitPrice: variant.price,
+      imageUrl: p.images[0]?.url ?? null,
       quantity: line.quantity,
     });
   }
@@ -149,6 +157,7 @@ export async function createShopOrderFromCheckout(input: {
         quantity: l.quantity,
         unitPriceMad: l.unitPrice.toFixed(2),
         lineTotalMad: (Number(l.unitPrice) * l.quantity).toFixed(2),
+        imageUrl: l.imageUrl,
         organizationId: l.organizationId,
         organizationName: l.organizationName,
       })),
@@ -172,6 +181,7 @@ export type ShopOrderNotificationPayload = {
     quantity: number;
     unitPriceMad: string;
     lineTotalMad: string;
+    imageUrl: string | null;
     organizationId: string;
     organizationName: string;
   }[];
@@ -207,6 +217,7 @@ export async function buildShopOrderNotificationPayload(
       quantity: l.quantity,
       unitPriceMad: l.unitPrice.toFixed(2),
       lineTotalMad: lineTot.toFixed(2),
+      imageUrl: null,
       organizationId: l.organizationId,
       organizationName: orgNameById.get(l.organizationId) ?? "",
     };

@@ -47,6 +47,7 @@ export async function submitShopOrder(raw: unknown) {
 	try {
 		await notifyShopOrderBuyerConfirmation({
 			to: notification.buyerEmail,
+			toPhone: notification.buyerPhone,
 			buyerName: notification.buyerName,
 			orderId: result.orderId,
 			totalMad: notification.totalMad,
@@ -56,6 +57,7 @@ export async function submitShopOrder(raw: unknown) {
 				variantName: l.variantName,
 				quantity: l.quantity,
 				lineTotalMad: l.lineTotalMad,
+				imageUrl: l.imageUrl,
 			})),
 		});
 		await notifyOrganizationsOfShopOrder({

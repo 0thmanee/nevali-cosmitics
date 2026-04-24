@@ -3,7 +3,7 @@ import { z } from "zod";
 export const submitShopOrderSchema = z.object({
   buyerName: z.string().trim().min(1, "Name is required").max(200),
   buyerEmail: z.string().trim().email("Valid email required"),
-  buyerPhone: z.string().trim().max(40).optional().nullable(),
+  buyerPhone: z.string().trim().min(1, "Phone is required").max(40),
   addressLine1: z.string().trim().min(1, "Address line 1 is required").max(200),
   addressLine2: z.string().trim().max(200).optional().nullable(),
   city: z.string().trim().min(1, "City is required").max(100),

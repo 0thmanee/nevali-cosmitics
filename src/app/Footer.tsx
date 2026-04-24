@@ -144,13 +144,13 @@ export default async function Footer() {
           <LocaleSwitcher />
           <Link
             className="font-sans text-xs text-text-muted transition-colors duration-200 hover:text-primary-darker"
-            href="/contact#privacy"
+            href="/privacy"
           >
             {t("footer.privacyPolicy")}
           </Link>
           <Link
             className="font-sans text-xs text-text-muted transition-colors duration-200 hover:text-primary-darker"
-            href="/contact#terms"
+            href="/terms"
           >
             {t("footer.termsOfService")}
           </Link>
