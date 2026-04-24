@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { SUPPORT_CATEGORIES, SUPPORT_PRIORITIES } from "./support-constants";
+import { SUPPORT_CATEGORY_LABEL_KEY, SUPPORT_PRIORITY_LABEL_KEY } from "./support-constants";
 import type { SupportFormState } from "./support-types";
 
 export type SupportNewTicketFormProps = {
@@ -21,6 +23,7 @@ export function SupportNewTicketForm({
   onViewTickets,
   isSubmitting = false,
 }: SupportNewTicketFormProps) {
+  const { t } = useI18n();
   const canSubmit =
     form.subject.trim() !== "" &&
     form.category !== "" &&
@@ -57,11 +60,10 @@ export function SupportNewTicketForm({
           </div>
           <div>
             <h3 className="font-serif font-bold text-[18px] text-text-dark">
-              Ticket Submitted
+              {t("support.ticketSubmitted")}
             </h3>
             <p className="font-sans text-sm text-text-muted mt-1 max-w-sm">
-              Our team typically responds within 4 hours during business days.
-              You&apos;ll be notified by email.
+              {t("support.ticketSubmittedHint")}
             </p>
           </div>
           <button
@@ -70,7 +72,7 @@ export function SupportNewTicketForm({
             className="font-sans text-sm font-semibold rounded-sm px-6 py-2.5 transition-colors"
             style={{ background: "var(--color-ink)", color: "white" }}
           >
-            View My Tickets
+            {t("support.viewMyTickets")}
           </button>
         </div>
       </div>
@@ -85,20 +87,20 @@ export function SupportNewTicketForm({
       >
         <div className="px-5 py-4 border-b" style={{ borderColor: "var(--color-cream-dark)" }}>
           <h3 className="font-serif font-bold text-[15px] text-text-dark">
-            Open a Support Ticket
+            {t("support.openSupportTicket")}
           </h3>
           <p className="font-sans text-[11px] text-text-muted mt-0.5">
-            Describe your issue and our team will get back to you.
+            {t("support.openSupportTicketHint")}
           </p>
         </div>
         <div className="p-5 flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase">
-              Subject
+              {t("support.subject")}
             </label>
             <input
               type="text"
-              placeholder="Brief description of your issue"
+              placeholder={t("support.subjectPlaceholder")}
               value={form.subject}
               onChange={(e) => onFormChange({ ...form, subject: e.target.value })}
               className="font-sans text-sm text-text-dark rounded-sm px-3.5 py-2.5 outline-none w-full"
@@ -108,7 +110,7 @@ export function SupportNewTicketForm({
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase">
-                Category
+                {t("support.category")}
               </label>
               <select
                 value={form.category}
@@ -116,17 +118,17 @@ export function SupportNewTicketForm({
                 className="font-sans text-sm text-text-dark rounded-sm px-3.5 py-2.5 outline-none w-full appearance-none"
                 style={{ background: "var(--color-paper)", border: "1px solid var(--color-cream-dark)" }}
               >
-                <option value="">Select category</option>
+                <option value="">{t("support.selectCategory")}</option>
                 {SUPPORT_CATEGORIES.map((c) => (
                   <option key={c} value={c}>
-                    {c}
+                    {t(SUPPORT_CATEGORY_LABEL_KEY[c])}
                   </option>
                 ))}
               </select>
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase">
-                Priority
+                {t("support.priority")}
               </label>
               <select
                 value={form.priority}
@@ -136,7 +138,7 @@ export function SupportNewTicketForm({
               >
                 {SUPPORT_PRIORITIES.map((p) => (
                   <option key={p} value={p}>
-                    {p}
+                    {t(SUPPORT_PRIORITY_LABEL_KEY[p])}
                   </option>
                 ))}
               </select>
@@ -144,10 +146,10 @@ export function SupportNewTicketForm({
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="font-sans text-[10px] font-bold tracking-[0.12em] text-text-muted uppercase">
-              Message
+              {t("support.message")}
             </label>
             <textarea
-              placeholder="Describe your issue in detail. Include any relevant product names, listing IDs, or error messages."
+              placeholder={t("support.messagePlaceholder")}
               value={form.message}
               onChange={(e) => onFormChange({ ...form, message: e.target.value })}
               rows={5}
@@ -164,7 +166,7 @@ export function SupportNewTicketForm({
               background: canSubmit && !isSubmitting ? "var(--color-ink)" : "var(--color-text-muted)",
             }}
           >
-            {isSubmitting ? "Submitting…" : "Submit Ticket"}
+            {isSubmitting ? t("support.submitting") : t("support.submitTicket")}
           </button>
         </div>
       </div>

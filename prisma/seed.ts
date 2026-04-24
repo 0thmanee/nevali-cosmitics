@@ -592,7 +592,7 @@ async function main() {
 
 	const partner = await upsertCredentialUser({
 		email: PARTNER_EMAIL,
-		name: "Yasmine El Idrissi",
+		name: "Zineb Badr",
 		role: "partner",
 		status: "enabled",
 		profileCompleted: true,
@@ -628,8 +628,8 @@ async function main() {
 	await prisma.profile.create({
 		data: {
 			userId: partner.id,
-			firstName: "Yasmine",
-			lastName: "El Idrissi",
+			firstName: "Zineb",
+			lastName: "Badr",
 			phone: "+212 5 22 00 00 00",
 			entityType: "Craft Company",
 			entityName: ORG_NAME,

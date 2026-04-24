@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { interpolate } from "~/lib/i18n/interpolate";
 import {
 	getTicketStatusStyle,
+	TICKET_STATUS_LABEL_KEY,
 	TICKET_PRIORITY_STYLE,
 } from "./support-constants";
 import type { TicketDisplay } from "./support-types";
@@ -16,8 +19,11 @@ export function SupportTicketCard({
 	ticket,
 	onViewOrReply,
 }: SupportTicketCardProps) {
+	const { t } = useI18n();
 	const statusEntry = getTicketStatusStyle(ticket.status);
-	const { label: statusLabel, ...statusPillStyle } = statusEntry;
+	const { ...statusPillStyle } = statusEntry;
+	const statusKey = TICKET_STATUS_LABEL_KEY[ticket.status as keyof typeof TICKET_STATUS_LABEL_KEY];
+	const statusLabel = statusKey ? t(statusKey) : ticket.status;
 	const priorityColor =
 		TICKET_PRIORITY_STYLE[ticket.priority]?.color ?? "var(--color-text-muted)";
 
@@ -48,9 +54,13 @@ export function SupportTicketCard({
 					{ticket.subject}
 				</p>
 				<p className="mt-1 font-sans text-text-muted text-[11px]">
-					{ticket.category} · Opened {ticket.created} · Last reply{" "}
-					{ticket.lastReply} · {ticket.messages} message
-					{ticket.messages !== 1 ? "s" : ""}
+					{interpolate(t("support.ticketMeta"), {
+						category: ticket.category,
+						opened: ticket.created,
+						lastReply: ticket.lastReply,
+						count: ticket.messages,
+						suffix: ticket.messages !== 1 ? "s" : "",
+					})}
 				</p>
 			</div>
 			{onViewOrReply && (
@@ -68,7 +78,7 @@ export function SupportTicketCard({
 					}
 					type="button"
 				>
-					{ticket.status === "RESOLVED" ? "View" : "Reply →"}
+					{ticket.status === "RESOLVED" ? t("support.view") : t("support.reply")}
 				</button>
 			)}
 		</div>

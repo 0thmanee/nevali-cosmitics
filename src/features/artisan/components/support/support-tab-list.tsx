@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { SUPPORT_TABS, type SupportTab } from "./support-constants";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { SUPPORT_TABS, SUPPORT_TAB_LABEL_KEY, type SupportTab } from "./support-constants";
 
 export type SupportTabListProps = {
   activeTab: SupportTab;
@@ -14,6 +15,7 @@ export function SupportTabList({
   onTabChange,
   ticketCount,
 }: SupportTabListProps) {
+  const { t } = useI18n();
   return (
     <div className="flex items-center gap-1">
       {SUPPORT_TABS.map((tab) => (
@@ -28,7 +30,7 @@ export function SupportTabList({
               : { background: "white", color: "var(--color-text-muted)", border: "1px solid var(--color-cream-dark)" }
           }
         >
-          {tab}
+          {t(SUPPORT_TAB_LABEL_KEY[tab])}
           {tab === "My Tickets" && (
             <span
               className="ml-1.5 text-[10px] font-bold rounded-full px-1.5 py-0.5"

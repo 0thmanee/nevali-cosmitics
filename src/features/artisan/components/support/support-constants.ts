@@ -4,6 +4,11 @@
 
 export const SUPPORT_TABS = ["My Tickets", "New Ticket", "FAQ"] as const;
 export type SupportTab = (typeof SUPPORT_TABS)[number];
+export const SUPPORT_TAB_LABEL_KEY: Record<SupportTab, string> = {
+	"My Tickets": "support.tabs.myTickets",
+	"New Ticket": "support.tabs.newTicket",
+	FAQ: "support.tabs.faq",
+};
 
 export const SUPPORT_CATEGORIES = [
 	"Certification",
@@ -14,8 +19,24 @@ export const SUPPORT_CATEGORIES = [
 	"Technical",
 	"Other",
 ] as const;
+export type SupportCategory = (typeof SUPPORT_CATEGORIES)[number];
+export const SUPPORT_CATEGORY_LABEL_KEY: Record<SupportCategory, string> = {
+	Certification: "support.categories.certification",
+	Products: "support.categories.products",
+	Account: "support.categories.account",
+	Export: "support.categories.export",
+	Payments: "support.categories.payments",
+	Technical: "support.categories.technical",
+	Other: "support.categories.other",
+};
 
 export const SUPPORT_PRIORITIES = ["Low", "Medium", "High"] as const;
+export type SupportPriority = (typeof SUPPORT_PRIORITIES)[number];
+export const SUPPORT_PRIORITY_LABEL_KEY: Record<SupportPriority, string> = {
+	Low: "support.priorityValues.low",
+	Medium: "support.priorityValues.medium",
+	High: "support.priorityValues.high",
+};
 
 export const SUPPORT_FAQ: ReadonlyArray<{ q: string; a: string }> = [
 	{
@@ -60,6 +81,11 @@ export const TICKET_STATUS_STYLE = {
 		label: "Resolved",
 	},
 } as const;
+export const TICKET_STATUS_LABEL_KEY: Record<keyof typeof TICKET_STATUS_STYLE, string> = {
+	OPEN: "support.status.open",
+	IN_REVIEW: "support.status.inReview",
+	RESOLVED: "support.status.resolved",
+};
 
 export type TicketStatusStyle =
 	(typeof TICKET_STATUS_STYLE)[keyof typeof TICKET_STATUS_STYLE];

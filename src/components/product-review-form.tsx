@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Star } from "lucide-react";
 import { createProductReview } from "~/app/api/products/actions/reviews.actions";
 import type { ReviewRating } from "~/app/api/products/schemas/reviews.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 
 type Props = {
   productId: string;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export function ProductReviewForm({ productId, onSuccess }: Props) {
+  const { t } = useI18n();
   const [rating, setRating] = useState<ReviewRating | null>(null);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -25,15 +27,15 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
     setError(null);
 
     if (!rating) {
-      setError("Please select a rating");
+      setError(t("productReviewForm.errorRatingRequired"));
       return;
     }
     if (!title.trim()) {
-      setError("Review title is required");
+      setError(t("productReviewForm.errorTitleRequired"));
       return;
     }
     if (!buyerName.trim()) {
-      setError("Your name is required");
+      setError(t("productReviewForm.errorNameRequired"));
       return;
     }
 
@@ -60,27 +62,27 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
 
       onSuccess?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit review");
+      setError(err instanceof Error ? err.message : t("productReviewForm.errorSubmitFailed"));
     } finally {
       setSubmitting(false);
     }
   };
 
   const ratingLabels: Record<ReviewRating, string> = {
-    ONE: "Poor",
-    TWO: "Fair",
-    THREE: "Good",
-    FOUR: "Very Good",
-    FIVE: "Excellent",
+    ONE: t("productReviewForm.ratingPoor"),
+    TWO: t("productReviewForm.ratingFair"),
+    THREE: t("productReviewForm.ratingGood"),
+    FOUR: t("productReviewForm.ratingVeryGood"),
+    FIVE: t("productReviewForm.ratingExcellent"),
   };
 
   return (
     <div className="bg-white border border-cream-dark rounded-sm p-6">
-      <h3 className="font-serif font-bold text-lg text-text-dark mb-4">Leave a Review</h3>
+      <h3 className="font-serif font-bold text-lg text-text-dark mb-4">{t("productReviewForm.title")}</h3>
 
       {success && (
         <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-sm">
-          <p className="font-sans text-sm text-green-700">Thank you! Your review has been submitted.</p>
+          <p className="font-sans text-sm text-green-700">{t("productReviewForm.success")}</p>
         </div>
       )}
 
@@ -94,7 +96,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         {/* Rating */}
         <div>
           <label className="block font-sans text-sm font-semibold text-text-dark mb-2">
-            Rating <span className="text-red-500">*</span>
+            {t("productReviewForm.ratingLabel")} <span className="text-red-500">*</span>
           </label>
           <div className="flex gap-2">
             {["ONE", "TWO", "THREE", "FOUR", "FIVE"].map((r) => {
@@ -125,14 +127,14 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         {/* Name */}
         <div>
           <label htmlFor="review-name" className="block font-sans text-sm font-semibold text-text-dark mb-1">
-            Your Name <span className="text-red-500">*</span>
+            {t("productReviewForm.nameLabel")} <span className="text-red-500">*</span>
           </label>
           <input
             id="review-name"
             type="text"
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
-            placeholder="Enter your name"
+            placeholder={t("productReviewForm.namePlaceholder")}
             className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             maxLength={100}
             disabled={submitting}
@@ -142,14 +144,14 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         {/* Email */}
         <div>
           <label htmlFor="review-email" className="block font-sans text-sm font-semibold text-text-dark mb-1">
-            Email <span className="text-text-muted">(optional)</span>
+            {t("productReviewForm.emailLabel")} <span className="text-text-muted">({t("productReviewForm.optional")})</span>
           </label>
           <input
             id="review-email"
             type="email"
             value={buyerEmail}
             onChange={(e) => setBuyerEmail(e.target.value)}
-            placeholder="your@email.com"
+            placeholder={t("productReviewForm.emailPlaceholder")}
             className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             disabled={submitting}
           />
@@ -158,14 +160,14 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         {/* Title */}
         <div>
           <label htmlFor="review-title" className="block font-sans text-sm font-semibold text-text-dark mb-1">
-            Review Title <span className="text-red-500">*</span>
+            {t("productReviewForm.reviewTitleLabel")} <span className="text-red-500">*</span>
           </label>
           <input
             id="review-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Summarize your experience..."
+            placeholder={t("productReviewForm.reviewTitlePlaceholder")}
             className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
             maxLength={200}
             disabled={submitting}
@@ -175,13 +177,13 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
         {/* Body */}
         <div>
           <label htmlFor="review-body" className="block font-sans text-sm font-semibold text-text-dark mb-1">
-            Your Review <span className="text-text-muted">(optional)</span>
+            {t("productReviewForm.reviewBodyLabel")} <span className="text-text-muted">({t("productReviewForm.optional")})</span>
           </label>
           <textarea
             id="review-body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Tell us more about your experience with this product..."
+            placeholder={t("productReviewForm.reviewBodyPlaceholder")}
             rows={4}
             className="w-full px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary resize-none"
             maxLength={5000}
@@ -197,7 +199,7 @@ export function ProductReviewForm({ productId, onSuccess }: Props) {
           disabled={submitting}
           className="w-full px-4 py-2 bg-primary text-white font-sans font-semibold rounded-sm hover:opacity-90 disabled:opacity-60 transition-opacity"
         >
-          {submitting ? "Submitting..." : "Submit Review"}
+          {submitting ? t("productReviewForm.submitting") : t("productReviewForm.submit")}
         </button>
       </form>
     </div>

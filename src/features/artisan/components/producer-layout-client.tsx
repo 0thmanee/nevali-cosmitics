@@ -4,11 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar } from "~/components/avatar";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { signOut } from "~/lib/auth-client";
 import { useUnreadNotificationCount } from "~/features/notifications/use-unread-notification-count";
 import { PRODUCER_NAV_ITEMS, getPageSubtitle, getPageTitle } from "../config";
 import { useArtisanDashboardStats } from "../hooks/use-dashboard-stats";
 import type { UserDisplay, LayoutProfile } from "~/app/api/profile/schemas/profile.schema";
+import { interpolate } from "~/lib/i18n/interpolate";
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 
@@ -187,25 +189,25 @@ type Props = {
 };
 
 export function ProducerLayoutClient({ user, profile, children }: Props) {
+  const { t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
   const { data: dashboardStats } = useArtisanDashboardStats();
   const { data: unreadAlerts = 0 } = useUnreadNotificationCount();
 
   const openSupportTickets = dashboardStats?.openSupportTickets ?? 0;
-  const subtitle = getPageSubtitle(pathname);
+  const subtitle = t(getPageSubtitle(pathname));
   const firstName = profile?.firstName ?? user.name.split(/\s+/)[0] ?? null;
-  const title = getPageTitle(pathname, firstName);
+  const titleData = getPageTitle(pathname, firstName);
+  const title = titleData.firstName
+    ? interpolate(t(titleData.key), { firstName: titleData.firstName })
+    : t(titleData.key);
 
   const displayName = profile
     ? `${profile.firstName} ${profile.lastName}`.trim() || user.name
     : user.name;
-  const shortName =
-    profile?.firstName && profile?.lastName
-      ? `${profile.firstName[0]}${profile.lastName[0]}.`
-      : user.name.split(/\s+/)[0] ?? user.name;
-  const entityLabel = profile?.entityName ?? user.email;
-
+  const shortName = profile?.firstName?.trim() || displayName || user.email;
+  const entityLabel = profile?.entityName?.trim() || user.email;
   return (
     <div className="h-screen flex overflow-hidden bg-cream">
       <aside className="hidden h-screen w-[248px] shrink-0 flex-col border-r border-cream-dark bg-linear-to-b from-cream via-cream-dark/45 to-primary-light/35 lg:flex">
@@ -218,7 +220,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/assets/logo.svg" alt="nevali" className="block h-8 w-auto" />
               <span className="mt-[3px] block font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-primary/70">
-                Brand portal
+                {t("artisanLayout.brandPortal")}
               </span>
             </div>
           </div>
@@ -256,7 +258,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
                     isActive ? "font-semibold text-primary-dark" : "font-normal"
                   }`}
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </span>
                 {showBadge && (
                   <span
@@ -301,7 +303,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
             onClick={() => signOut()}
             className="cursor-pointer font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
           >
-            Log out
+            {t("artisanLayout.logOut")}
           </button>
         </header>
 

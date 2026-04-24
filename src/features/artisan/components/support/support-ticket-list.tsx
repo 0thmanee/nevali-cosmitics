@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { SupportTicketCard } from "./support-ticket-card";
 import type { TicketDisplay } from "./support-types";
 
@@ -17,13 +18,14 @@ export function SupportTicketList({
   onOpenNewTicket,
   onViewTicket,
 }: SupportTicketListProps) {
+  const { t } = useI18n();
   if (isLoading) {
     return (
       <div
         className="rounded-sm px-5 py-12 text-center"
         style={{ background: "white", border: "1px solid var(--color-cream-dark)" }}
       >
-        <p className="font-sans text-sm text-text-muted">Loading tickets…</p>
+        <p className="font-sans text-sm text-text-muted">{t("support.loadingTickets")}</p>
       </div>
     );
   }
@@ -47,7 +49,7 @@ export function SupportTicketList({
           border: "1px solid var(--color-cream-dark)",
         }}
       >
-        + Open a New Ticket
+        {t("support.openNewTicket")}
       </button>
     </div>
   );

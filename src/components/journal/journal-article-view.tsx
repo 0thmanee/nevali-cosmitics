@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ProducerArticlePublicView } from "~/app/api/articles/articles.types";
 import { ArticleMarkdown } from "~/components/article-markdown";
+import { getTranslator } from "~/lib/i18n/server";
 
 function formatStoryDate(d: Date): string {
 	return new Intl.DateTimeFormat("en-US", {
@@ -13,7 +14,8 @@ function formatStoryDate(d: Date): string {
 
 type Props = { article: ProducerArticlePublicView };
 
-export function JournalArticleView({ article }: Props) {
+export async function JournalArticleView({ article }: Props) {
+	const t = await getTranslator();
 	const heroHeightClass = "min-h-[38vh] max-h-[560px] h-[min(48vh,560px)]";
 
 	return (
@@ -21,14 +23,14 @@ export function JournalArticleView({ article }: Props) {
 			<div className="border-cream-dark border-b bg-paper">
 				<div className="mx-auto max-w-4xl px-4 py-5 sm:px-8">
 					<nav
-						aria-label="Breadcrumb"
+						aria-label={t("journalArticle.breadcrumbAria")}
 						className="font-sans text-[11px] text-text-muted uppercase tracking-[0.12em]"
 					>
 						<Link
 							className="transition-colors hover:text-text-dark"
 							href="/journal"
 						>
-							Journal
+							{t("journal.title")}
 						</Link>
 						<span className="mx-2 text-cream-dark">/</span>
 						<Link
@@ -62,7 +64,7 @@ export function JournalArticleView({ article }: Props) {
 				)}
 				<div
 					aria-hidden
-					className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/35 to-transparent"
+					className="absolute inset-0 bg-linear-to-t from-black/82 via-black/35 to-transparent"
 				/>
 				<div className="absolute inset-0 flex flex-col justify-end">
 					<div className="mx-auto w-full max-w-4xl px-4 pt-24 pb-10 sm:px-8 sm:pb-14">
@@ -83,7 +85,7 @@ export function JournalArticleView({ article }: Props) {
 							{article.title}
 						</h1>
 						<p className="mt-3 font-sans text-sm text-white/85">
-							By{" "}
+							{t("journalArticle.by")}{" "}
 							<Link
 								className="font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white"
 								href={`/artisans/${article.organization.slug}`}
@@ -95,7 +97,7 @@ export function JournalArticleView({ article }: Props) {
 				</div>
 			</header>
 
-			<div className="mx-auto max-w-[42rem] px-4 py-12 sm:px-6 sm:py-16">
+			<div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
 				{article.excerpt && (
 					<p className="font-serif text-text-muted text-xl leading-relaxed sm:text-[1.35rem]">
 						{article.excerpt}
@@ -108,21 +110,21 @@ export function JournalArticleView({ article }: Props) {
 
 				<footer className="mt-16 border-cream-dark border-t pt-10">
 					<p className="font-sans text-sm text-text-muted">
-						Written by{" "}
+						{t("journalArticle.writtenBy")}{" "}
 						<Link
 							className="font-semibold text-forest-dark underline-offset-2 hover:underline"
 							href={`/artisans/${article.organization.slug}`}
 						>
 							{article.organization.name}
 						</Link>
-						. Explore more on the{" "}
+						{t("journalArticle.exploreMorePrefix")}{" "}
 						<Link
 							className="font-semibold text-forest-dark underline-offset-2 hover:underline"
 							href="/journal"
 						>
-							nevali journal
+							{t("journalArticle.nevaliJournal")}
 						</Link>
-						.
+						{t("journalArticle.exploreMoreSuffix")}
 					</p>
 				</footer>
 			</div>

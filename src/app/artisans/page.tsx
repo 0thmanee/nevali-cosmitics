@@ -3,8 +3,10 @@ import { listPublicPartners } from "~/app/api/partners/public-actions";
 import Footer from "~/app/Footer";
 import Navbar from "~/app/Navbar";
 import PartnersClient from "~/app/partners/PartnersClient";
+import { getTranslator } from "~/lib/i18n/server";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
+import { interpolate } from "~/lib/i18n/interpolate";
 
 export const metadata = {
 	title: SHOW_MULTI_PRODUCER_EXPERIENCE ? "Moroccan beauty brands — nevali" : `${NEVALI_HOUSE_BRAND.legalName} — our studio | nevali`,
@@ -14,6 +16,7 @@ export const metadata = {
 };
 
 export default async function ArtisansDirectoryPage() {
+	const t = await getTranslator();
 	const partners = await listPublicPartners();
 
 	return (
@@ -24,9 +27,11 @@ export default async function ArtisansDirectoryPage() {
 				<div className="max-w-7xl mx-auto px-6">
 					{/* Breadcrumb */}
 					<AnimateOnScroll className="py-4 flex items-center gap-2 font-sans text-xs tracking-[0.08em] uppercase text-white/40 border-b border-white/10" direction="down">
-						<span>Home</span>
+						<span>{t("nav.home")}</span>
 						<span>/</span>
-						<span className="text-white/70">{SHOW_MULTI_PRODUCER_EXPERIENCE ? "Brands" : "Studio"}</span>
+						<span className="text-white/70">
+							{SHOW_MULTI_PRODUCER_EXPERIENCE ? t("nav.brands") : t("artisansPage.studio")}
+						</span>
 					</AnimateOnScroll>
 
 					<div className="py-20 flex flex-col md:flex-row md:items-end justify-between gap-10">
@@ -34,28 +39,28 @@ export default async function ArtisansDirectoryPage() {
 						<div>
 							<p className="font-sans text-xs tracking-[0.2em] uppercase text-secondary mb-5">
 								{SHOW_MULTI_PRODUCER_EXPERIENCE
-									? "Verified Moroccan cosmetics makers"
-									: `${NEVALI_HOUSE_BRAND.legalName} Moroccan cosmetics studio`}
+									? t("artisansPage.heroEyebrowMulti")
+									: interpolate(t("artisansPage.heroEyebrowSingle"), { brand: NEVALI_HOUSE_BRAND.legalName })}
 							</p>
 							<h1
-								className="font-serif font-bold uppercase text-white leading-[1.0]"
+								className="font-serif font-bold uppercase text-white leading-none"
 								style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
 							>
 								{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
 									<>
-										The makers
+										{t("artisansPage.heroTitleMultiLine1")}
 										<br />
-										behind every
+										{t("artisansPage.heroTitleMultiLine2")}
 										<br />
-										bio-minded SKU
+										{t("artisansPage.heroTitleMultiLine3")}
 									</>
 								) : (
 									<>
-										Our studio,
+										{t("artisansPage.heroTitleSingleLine1")}
 										<br />
-										your traceable
+										{t("artisansPage.heroTitleSingleLine2")}
 										<br />
-										beauty line
+										{t("artisansPage.heroTitleSingleLine3")}
 									</>
 								)}
 							</h1>
@@ -65,22 +70,16 @@ export default async function ArtisansDirectoryPage() {
 						<AnimateOnScroll className="md:max-w-xs shrink-0 flex flex-col gap-6" delay={150} direction="up">
 							<p className="font-sans text-white/60 leading-relaxed text-sm">
 								{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-									<>
-										Independent labs, cooperatives, and founder-led houses—each reviewed for formulation integrity,
-										documentation, and the ability to ship beautiful Moroccan cosmetics with confidence.
-									</>
+									<>{t("artisansPage.heroBodyMulti")}</>
 								) : (
-									<>
-										Formulation, compliance, and fulfilment stay under one roof at {NEVALI_HOUSE_BRAND.legalName} so every
-										SKU ships with clarity, documentation you can read, and rituals you can trust.
-									</>
+									<>{interpolate(t("artisansPage.heroBodySingle"), { brand: NEVALI_HOUSE_BRAND.legalName })}</>
 								)}
 							</p>
 							<div className="flex gap-8">
 								{[
-									{ value: "12", label: "Regions" },
-									{ value: "96%", label: "Audit pass" },
-									{ value: "3", label: "Standards" },
+									{ value: "12", label: t("artisansPage.statRegions") },
+									{ value: "96%", label: t("artisansPage.statAuditPass") },
+									{ value: "3", label: t("artisansPage.statStandards") },
 								].map((s) => (
 									<div key={s.label} className="flex flex-col gap-0.5">
 										<span className="font-serif font-bold text-secondary" style={{ fontSize: "clamp(22px, 2.5vw, 32px)" }}>{s.value}</span>

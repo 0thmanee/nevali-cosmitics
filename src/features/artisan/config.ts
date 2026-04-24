@@ -3,74 +3,71 @@
  */
 
 export const PRODUCER_NAV_ITEMS = [
-  { label: "Dashboard", href: "/artisan", badge: null },
-  { label: "My Profile", href: "/artisan/profile", badge: null },
-  { label: "My Products", href: "/artisan/products", badge: null },
-  { label: "Journal", href: "/artisan/articles", badge: null },
-  { label: "Catalog orders", href: "/artisan/orders", badge: null },
-  { label: "Certification", href: "/artisan/certification", badge: null },
-  { label: "Training", href: "/artisan/training", badge: null },
-  { label: "Support", href: "/artisan/support", badge: null },
-  { label: "Alerts", href: "/artisan/notifications", badge: null },
+  { labelKey: "artisanPortal.nav.dashboard", href: "/artisan", badge: null },
+  { labelKey: "artisanPortal.nav.profile", href: "/artisan/profile", badge: null },
+  { labelKey: "artisanPortal.nav.products", href: "/artisan/products", badge: null },
+  { labelKey: "artisanPortal.nav.journal", href: "/artisan/articles", badge: null },
+  { labelKey: "artisanPortal.nav.orders", href: "/artisan/orders", badge: null },
+  { labelKey: "artisanPortal.nav.certification", href: "/artisan/certification", badge: null },
+  { labelKey: "artisanPortal.nav.training", href: "/artisan/training", badge: null },
+  { labelKey: "artisanPortal.nav.support", href: "/artisan/support", badge: null },
+  { labelKey: "artisanPortal.nav.alerts", href: "/artisan/notifications", badge: null },
 ] as const;
 
 export const PAGE_SUBTITLE: Record<string, string> = {
-  "/artisan": "Here's what's happening with your workshop today.",
-  "/artisan/profile": "Manage your personal and business information",
-  "/artisan/profile/edit": "Update your personal and business information",
-  "/artisan/products": "Manage your product listings and certifications",
-  "/artisan/articles":
-    "Write in Markdown, add cover and inline images — published posts appear on the nevali homepage and journal.",
-  "/artisan/articles/new":
-    "Create a journal post with Markdown, optional hero photo, and image uploads for the body.",
-  "/artisan/orders": "Aggregated sales from public catalog checkout (no buyer PII).",
-  "/artisan/products/new": "Fill in product details — images and certifications can be added after saving",
-  "/artisan/certification": "Track your certification status and documents",
-  "/artisan/training": "Continue your export readiness programs",
-  "/artisan/support": "Get help from the nevali team",
-  "/artisan/notifications":
-    "In-app notices for orders and platform updates.",
+  "/artisan": "artisanPortal.subtitle.dashboard",
+  "/artisan/profile": "artisanPortal.subtitle.profile",
+  "/artisan/profile/edit": "artisanPortal.subtitle.profileEdit",
+  "/artisan/products": "artisanPortal.subtitle.products",
+  "/artisan/articles": "artisanPortal.subtitle.articles",
+  "/artisan/articles/new": "artisanPortal.subtitle.articlesNew",
+  "/artisan/orders": "artisanPortal.subtitle.orders",
+  "/artisan/products/new": "artisanPortal.subtitle.productsNew",
+  "/artisan/certification": "artisanPortal.subtitle.certification",
+  "/artisan/training": "artisanPortal.subtitle.training",
+  "/artisan/support": "artisanPortal.subtitle.support",
+  "/artisan/notifications": "artisanPortal.subtitle.notifications",
 };
 
 export function getPageSubtitle(pathname: string): string {
   const fromMap = PAGE_SUBTITLE[pathname];
   if (fromMap !== undefined) return fromMap;
   if (pathname.startsWith("/artisan/articles/") && pathname.endsWith("/edit")) {
-    return "Update title, body, cover style, and visibility for this journal post.";
+    return "artisanPortal.subtitle.articlesEdit";
   }
-  return "Here's what's happening with your workshop today.";
+  return "artisanPortal.subtitle.dashboard";
 }
 
-export function getPageTitle(pathname: string, firstName?: string | null): string {
+export function getPageTitle(pathname: string, firstName?: string | null): { key: string; firstName?: string } {
   switch (pathname) {
     case "/artisan":
-      return firstName ? `Good morning, ${firstName}` : "Good morning";
+      return { key: firstName ? "artisanPortal.title.morningWithName" : "artisanPortal.title.morning", firstName: firstName ?? undefined };
     case "/artisan/profile":
-      return "My Profile";
+      return { key: "artisanPortal.title.profile" };
     case "/artisan/profile/edit":
-      return "Edit Profile";
+      return { key: "artisanPortal.title.editProfile" };
     case "/artisan/products":
-      return "My Products";
+      return { key: "artisanPortal.title.products" };
     case "/artisan/articles":
-      return "Journal";
+      return { key: "artisanPortal.title.journal" };
     case "/artisan/articles/new":
-      return "New article";
+      return { key: "artisanPortal.title.newArticle" };
     case "/artisan/orders":
-      return "Catalog orders";
+      return { key: "artisanPortal.title.orders" };
     case "/artisan/products/new":
-      return "Add New Product";
+      return { key: "artisanPortal.title.addProduct" };
     case "/artisan/certification":
-      return "Certification";
+      return { key: "artisanPortal.title.certification" };
     case "/artisan/training":
-      return "Training";
+      return { key: "artisanPortal.title.training" };
     case "/artisan/support":
-      return "Support";
+      return { key: "artisanPortal.title.support" };
     case "/artisan/notifications":
-      return "Alerts";
+      return { key: "artisanPortal.title.alerts" };
     default:
       if (pathname.startsWith("/artisan/articles/") && pathname.endsWith("/edit")) {
-        return "Edit article";
+        return { key: "artisanPortal.title.editArticle" };
       }
-      return "Dashboard";
+      return { key: "artisanPortal.title.dashboard" };
   }
 }

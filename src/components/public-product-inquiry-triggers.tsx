@@ -2,14 +2,12 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCart } from "~/features/cart/cart-context";
 import { getCategoryGradient } from "~/lib/public-product-gradient";
 import { pickDefaultPublicVariant, publicVariantOrderHint } from "~/lib/public-product-helpers";
 import { ProductInquiryModal } from "./product-inquiry-modal";
 import type { PublicProduct } from "./public-product-types";
-
-const PUBLIC_BILLING_HINT =
-	"Add to cart to check out on nevali. Orders are confirmed with cash on delivery; the brand fulfills your order.";
 
 type Props = {
 	product: PublicProduct;
@@ -18,6 +16,7 @@ type Props = {
 };
 
 export function PublicProductInquiryTriggers({ product, className }: Props) {
+	const { t } = useI18n();
 	const [modal, setModal] = useState<"cart" | "b2b" | null>(null);
 	const [justAdded, setJustAdded] = useState(false);
 	const { addLine } = useCart();
@@ -66,8 +65,8 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 				<button
 					className={`flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold shadow-sm transition-opacity disabled:cursor-default ${
 						justAdded
-							? "border border-[var(--color-ink)]/35 bg-cream text-text-dark"
-							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ink)]/55 focus-visible:ring-offset-2"
+							? "border border-(--color-ink)/35 bg-cream text-text-dark"
+							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-ink)/55 focus-visible:ring-offset-2"
 					}`}
 					onClick={handleAddToCart}
 					style={justAdded ? undefined : { background: "var(--color-ink)" }}
@@ -84,14 +83,14 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 						<circle cx="6" cy="12" fill="currentColor" r="0.8" />
 						<circle cx="11" cy="12" fill="currentColor" r="0.8" />
 					</svg>
-					{justAdded ? "Added" : "Add to Cart"}
+					{justAdded ? t("publicProductCard.added") : t("publicProductCard.addToCart")}
 				</button>
 				<button
-					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-sans text-sm font-medium text-text-muted transition-colors hover:text-text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ink)]/35 focus-visible:ring-offset-2"
+					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-sans text-sm font-medium text-text-muted transition-colors hover:text-text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-ink)/35 focus-visible:ring-offset-2"
 					onClick={() => setModal("b2b")}
 					type="button"
 				>
-					Wholesale inquiry →
+					{t("publicProductCard.wholesaleInquiryCta")}
 					<svg aria-hidden="true" fill="none" height="12" viewBox="0 0 12 12" width="12">
 						<path
 							d="M2 6h8M7 3l3 3-3 3"
@@ -109,14 +108,14 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 					aria-live="polite"
 					role="status"
 				>
-					<span className="font-semibold">Added to your cart.</span>{" "}
+					<span className="font-semibold">{t("publicInquiryTriggers.addedToCart")}</span>{" "}
 					<Link className="font-semibold text-text-dark underline underline-offset-2" href="/cart">
-						View cart
+						{t("publicInquiryTriggers.viewCart")}
 					</Link>
 				</div>
 			) : null}
 			<p className="mt-2 font-sans text-[11px] text-stone-500 leading-relaxed">
-				{PUBLIC_BILLING_HINT}
+				{t("publicInquiryTriggers.billingHint")}
 				{process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE?.trim()
 					? ` ${process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE.trim()}`
 					: ""}

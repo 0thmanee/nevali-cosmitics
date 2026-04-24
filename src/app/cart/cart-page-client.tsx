@@ -11,7 +11,7 @@ import { productPlaceholderImageUrl } from "~/lib/cosmetics-image-placeholders";
 export function CartPageClient() {
   const { t } = useI18n();
   const { formatMad } = useFormatPrice();
-  const { lines, ready, setQuantity, removeLine, subtotalMad } = useCart();
+  const { lines, ready, setQuantity, removeLine, clearCart, subtotalMad } = useCart();
 
   if (!ready) {
     return <p className="py-16 text-center font-sans text-stone-500">{t("cart.loading")}</p>;
@@ -33,8 +33,21 @@ export function CartPageClient() {
   }
 
   return (
-    <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
-      <div className="h-full flex flex-col gap-3 lg:col-span-7">
+    <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12 lg:gap-12">
+      <div className="flex h-full min-h-[460px] flex-col rounded-sm border border-cream-dark bg-white p-5 lg:col-span-7">
+        <div className="mb-4 flex items-center justify-between gap-3 border-b border-cream-dark pb-3">
+          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
+            {t("cart.title")}
+          </p>
+          <button
+            type="button"
+            onClick={clearCart}
+            className="font-sans text-xs text-stone-500 transition-colors hover:text-red-600"
+          >
+            {t("cart.clearCart")}
+          </button>
+        </div>
+        <div className="flex flex-1 flex-col gap-3">
         {lines.map((line) => {
           const unitPrice = Number(line.price.replace(",", "."));
           const lineTotal = unitPrice * line.quantity;
@@ -42,10 +55,7 @@ export function CartPageClient() {
             line.firstImageUrl ??
             productPlaceholderImageUrl(`${line.productId}:${line.category}`, 160);
           return (
-            <div
-              key={cartLineKey(line)}
-              className="flex gap-4 rounded-sm border border-cream-dark bg-white p-5"
-            >
+            <div key={cartLineKey(line)} className="flex gap-4 rounded-sm border border-cream-dark bg-paper p-5">
               <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-sm bg-cream">
                 <Image alt="" className="object-cover" fill sizes="80px" src={thumbSrc} />
               </div>
@@ -107,7 +117,7 @@ export function CartPageClient() {
                     +
                   </button>
                   <button
-                    className="ms-2 font-sans text-xs text-stone-500 transition-colors hover:text-red-600"
+                    className="ms-2 rounded-sm border border-cream-dark px-2 py-1 font-sans text-[11px] text-stone-500 transition-colors hover:border-red-200 hover:text-red-600"
                     onClick={() => removeLine(line.productId, line.productVariantId)}
                     type="button"
                   >
@@ -126,17 +136,18 @@ export function CartPageClient() {
             </div>
           );
         })}
+        </div>
 
         <Link
-          className="mt-1 w-fit font-sans text-sm text-stone-500 hover:text-text-dark"
+          className="mt-4 w-fit font-sans text-sm text-stone-500 hover:text-text-dark"
           href="/products"
         >
           {t("cart.continueShopping")}
         </Link>
       </div>
 
-      <aside className="lg:sticky lg:top-28 lg:col-span-5">
-        <div className="flex flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
+      <aside className="flex h-full min-h-[460px] lg:col-span-5">
+        <div className="flex h-full w-full flex-col gap-5 rounded-sm border border-cream-dark bg-white p-6">
           <p className="font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-stone-500">
             {t("cart.summary")}
           </p>
@@ -170,13 +181,15 @@ export function CartPageClient() {
             </span>
           </div>
 
-          <Link
-            className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            href="/cart/checkout"
-            style={{ background: "var(--color-ink)" }}
-          >
-            {t("cart.proceedCheckout")}
-          </Link>
+          <div className="mt-auto">
+            <Link
+              className="flex w-full items-center justify-center gap-2 rounded-sm py-3.5 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              href="/cart/checkout"
+              style={{ background: "var(--color-ink)" }}
+            >
+              {t("cart.proceedCheckout")}
+            </Link>
+          </div>
         </div>
       </aside>
     </div>

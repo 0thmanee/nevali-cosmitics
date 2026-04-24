@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { SUPPORT_FAQ } from "./support-constants";
-import type { SupportTab } from "./support-constants";
 
 export type SupportFaqSectionProps = {
   openFaqIndex: number | null;
@@ -15,6 +15,7 @@ export function SupportFaqSection({
   onToggleFaq,
   onOpenTicket,
 }: SupportFaqSectionProps) {
+  const { t } = useI18n();
   return (
     <div className="flex flex-col gap-3 max-w-2xl">
       {SUPPORT_FAQ.map((faq, i) => (
@@ -59,10 +60,10 @@ export function SupportFaqSection({
       >
         <div>
           <p className="font-sans font-semibold text-[15px] text-text-dark">
-            Still need help?
+            {t("support.stillNeedHelp")}
           </p>
           <p className="font-sans text-sm text-text-muted mt-0.5">
-            Our team typically responds within 4 business hours.
+            {t("support.stillNeedHelpHint")}
           </p>
         </div>
         <button
@@ -71,7 +72,7 @@ export function SupportFaqSection({
           className="font-sans font-semibold text-sm text-white rounded-sm px-5 py-2.5 shrink-0 transition-colors flex items-center gap-2"
           style={{ background: "var(--color-ink)" }}
         >
-          Open a Ticket
+          {t("support.openTicket")}
           <svg
             width="14"
             height="14"

@@ -32,7 +32,7 @@ export default async function ProducerDashboard() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex flex-col gap-4">
         <DashboardStats />
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <DashboardProductList />
           <div className="flex flex-col gap-4">
             <DashboardArticlesCard />

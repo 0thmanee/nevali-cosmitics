@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Star, ThumbsUp } from "lucide-react";
 import type { ProductReviewRow, ProductReviewStats } from "~/app/api/products/schemas/reviews.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import { interpolate } from "~/lib/i18n/interpolate";
 
 type Props = {
   productId: string;
@@ -16,21 +18,22 @@ const ratingLabels: Record<string, string> = {
   FIVE: "⭐⭐⭐⭐⭐",
 };
 
-function formatDate(date: Date | string): string {
+function formatDate(date: Date | string, t: (key: string) => string): string {
   const d = typeof date === "string" ? new Date(date) : date;
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-  return `${Math.floor(diffDays / 365)} years ago`;
+  if (diffDays === 0) return t("productReviewsList.today");
+  if (diffDays === 1) return t("productReviewsList.yesterday");
+  if (diffDays < 7) return interpolate(t("productReviewsList.daysAgo"), { count: diffDays });
+  if (diffDays < 30) return interpolate(t("productReviewsList.weeksAgo"), { count: Math.floor(diffDays / 7) });
+  if (diffDays < 365) return interpolate(t("productReviewsList.monthsAgo"), { count: Math.floor(diffDays / 30) });
+  return interpolate(t("productReviewsList.yearsAgo"), { count: Math.floor(diffDays / 365) });
 }
 
 export function ProductReviewsList({ productId }: Props) {
+  const { t } = useI18n();
   const [stats, setStats] = useState<ProductReviewStats | null>(null);
   const [reviews, setReviews] = useState<ProductReviewRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +51,7 @@ export function ProductReviewsList({ productId }: Props) {
         ]);
 
         if (!statsRes.ok || !reviewsRes.ok) {
-          throw new Error("Failed to fetch reviews");
+          throw new Error(t("productReviewsList.errorFetchFailed"));
         }
 
         const statsData = await statsRes.json();
@@ -57,7 +60,7 @@ export function ProductReviewsList({ productId }: Props) {
         setStats(statsData);
         setReviews(reviewsData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load reviews");
+        setError(err instanceof Error ? err.message : t("productReviewsList.errorLoadFailed"));
       } finally {
         setLoading(false);
       }
@@ -69,7 +72,7 @@ export function ProductReviewsList({ productId }: Props) {
   if (loading) {
     return (
       <div className="bg-white border border-cream-dark rounded-sm p-6">
-        <p className="font-sans text-sm text-text-muted">Loading reviews...</p>
+        <p className="font-sans text-sm text-text-muted">{t("productReviewsList.loading")}</p>
       </div>
     );
   }
@@ -99,7 +102,7 @@ export function ProductReviewsList({ productId }: Props) {
     <div className="bg-white border border-cream-dark rounded-sm p-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h3 className="font-serif font-bold text-lg text-text-dark">Customer Reviews</h3>
+          <h3 className="font-serif font-bold text-lg text-text-dark">{t("productReviewsList.title")}</h3>
           {stats && stats.totalReviews > 0 && (
             <div className="flex items-center gap-2 mt-2">
               <div className="flex">
@@ -116,7 +119,10 @@ export function ProductReviewsList({ productId }: Props) {
                 ))}
               </div>
               <span className="font-sans text-sm text-text-dark font-semibold">
-                {stats.averageRating.toFixed(1)} ({stats.totalReviews} reviews)
+                {interpolate(t("productReviewsList.ratingSummary"), {
+                  average: stats.averageRating.toFixed(1),
+                  count: stats.totalReviews,
+                })}
               </span>
             </div>
           )}
@@ -128,10 +134,10 @@ export function ProductReviewsList({ productId }: Props) {
             onChange={(e) => setSortBy(e.target.value as any)}
             className="px-3 py-2 border border-cream-dark rounded-sm font-sans text-sm focus:outline-none focus:border-primary"
           >
-            <option value="recent">Most Recent</option>
-            <option value="helpful">Most Helpful</option>
-            <option value="highest">Highest Rated</option>
-            <option value="lowest">Lowest Rated</option>
+            <option value="recent">{t("productReviewsList.sortRecent")}</option>
+            <option value="helpful">{t("productReviewsList.sortHelpful")}</option>
+            <option value="highest">{t("productReviewsList.sortHighest")}</option>
+            <option value="lowest">{t("productReviewsList.sortLowest")}</option>
           </select>
         )}
       </div>
@@ -166,7 +172,7 @@ export function ProductReviewsList({ productId }: Props) {
       {/* Reviews List */}
       {sortedReviews.length === 0 ? (
         <div className="text-center py-12">
-          <p className="font-sans text-text-muted">No reviews yet. Be the first to review this product!</p>
+          <p className="font-sans text-text-muted">{t("productReviewsList.empty")}</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -192,7 +198,7 @@ export function ProductReviewsList({ productId }: Props) {
                       ))}
                     </div>
                     <span className="font-sans text-xs text-text-muted">
-                      {formatDate(review.createdAt)}
+                      {formatDate(review.createdAt, t)}
                     </span>
                   </div>
                   <h4 className="font-sans font-semibold text-text-dark text-sm">
@@ -201,7 +207,7 @@ export function ProductReviewsList({ productId }: Props) {
                 </div>
                 {review.isVerifiedPurchase && (
                   <span className="bg-green-50 border border-green-200 text-green-700 font-sans text-xs font-semibold px-2 py-1 rounded">
-                    Verified
+                    {t("productReviewsList.verified")}
                   </span>
                 )}
               </div>
@@ -214,7 +220,7 @@ export function ProductReviewsList({ productId }: Props) {
 
               <div className="flex items-center gap-3">
                 <span className="font-sans text-xs text-text-muted">
-                  By <span className="font-semibold">{review.buyerName}</span>
+                  {t("productReviewsList.by")} <span className="font-semibold">{review.buyerName}</span>
                 </span>
                 {review.helpfulCount > 0 && (
                   <button
@@ -237,7 +243,7 @@ export function ProductReviewsList({ productId }: Props) {
           onClick={() => setLimit((prev) => prev + 10)}
           className="w-full mt-6 px-4 py-2 border border-cream-dark text-text-dark font-sans font-semibold rounded-sm hover:bg-cream transition-colors"
         >
-          Load More Reviews
+          {t("productReviewsList.loadMore")}
         </button>
       )}
     </div>

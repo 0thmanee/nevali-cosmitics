@@ -11,16 +11,14 @@ type Props = {
   role: string;
 };
 
-function dashboardHref(role: string): string {
-  if (role === "superadmin") return "/admin";
-  if (role === "buyer") return "/buyer";
-  return "/artisan";
+function profileHref(_role: string): string {
+  return "/profile";
 }
 
 export function NavbarUserMenu({ name, email, role }: Props) {
   const { t } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
-  const dash = dashboardHref(role);
+  const profile = profileHref(role);
 
   return (
     <div className="relative flex items-center">
@@ -61,11 +59,11 @@ export function NavbarUserMenu({ name, email, role }: Props) {
               <p className="truncate font-sans text-xs text-text-muted">{email}</p>
             </div>
             <Link
-              href={dash}
+              href={profile}
               className="block px-4 py-2 font-sans text-sm text-text-dark transition-colors hover:bg-cream"
               onClick={() => setMenuOpen(false)}
             >
-              {t("navbarUserMenu.dashboard")}
+              {t("navbarUserMenu.profile")}
             </Link>
             <button
               type="button"

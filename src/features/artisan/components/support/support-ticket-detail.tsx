@@ -2,10 +2,12 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import type { SupportTicketRow } from "~/app/api/support/schemas/support.schema";
 import { useAddProducerReply } from "../../hooks/use-support";
 import {
 	getTicketStatusStyle,
+	TICKET_STATUS_LABEL_KEY,
 	TICKET_PRIORITY_STYLE,
 } from "./support-constants";
 
@@ -69,12 +71,15 @@ export function SupportTicketDetail({
 	ticket: SupportTicketRow;
 	onClose: () => void;
 }) {
+	const { t } = useI18n();
 	const [reply, setReply] = useState("");
 	const replyMutation = useAddProducerReply();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const statusEntry = getTicketStatusStyle(ticket.status);
-	const { label: statusLabel, ...statusPillStyle } = statusEntry;
+	const { ...statusPillStyle } = statusEntry;
+	const statusKey = TICKET_STATUS_LABEL_KEY[ticket.status as keyof typeof TICKET_STATUS_LABEL_KEY];
+	const statusLabel = statusKey ? t(statusKey) : ticket.status;
 	const priorityColor = TICKET_PRIORITY_STYLE[
 		ticket.priority?.toUpperCase()
 	] ?? { color: "var(--color-text-muted)" };
@@ -160,7 +165,7 @@ export function SupportTicketDetail({
 								{ticket.category}
 							</span>
 							<span className="font-sans text-text-muted text-[11px]">
-								Opened {formatDate(ticket.createdAt)}
+								{t("support.opened")} {formatDate(ticket.createdAt)}
 							</span>
 						</div>
 					</div>
@@ -211,8 +216,7 @@ export function SupportTicketDetail({
 								/>
 							</svg>
 							<span className="font-sans text-text-muted text-[12px]">
-								This ticket is resolved. Open a new ticket if you need further
-								help.
+								{t("support.ticketResolvedHint")}
 							</span>
 						</div>
 					) : (
@@ -220,7 +224,7 @@ export function SupportTicketDetail({
 							<textarea
 								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-text-dark text-[13px] transition-colors placeholder:text-[var(--color-text-muted)] focus:outline-none"
 								onChange={(e) => setReply(e.target.value)}
-								placeholder="Add a follow-up message…"
+								placeholder={t("support.followUpPlaceholder")}
 								ref={textareaRef}
 								rows={3}
 								style={{
@@ -231,7 +235,7 @@ export function SupportTicketDetail({
 							/>
 							<div className="flex items-center justify-between gap-3">
 								<p className="font-sans text-text-muted text-[11px]">
-									The support team will review your follow-up.
+									{t("support.followUpHint")}
 								</p>
 								<button
 									className="flex items-center gap-2 rounded-sm px-5 py-2.5 font-sans font-semibold text-[13px] transition-opacity disabled:opacity-50"
@@ -263,11 +267,11 @@ export function SupportTicketDetail({
 													strokeWidth="1.4"
 												/>
 											</svg>
-											Sending…
+											{t("support.sending")}
 										</>
 									) : (
 										<>
-											Send
+											{t("support.send")}
 											<svg
 												fill="none"
 												height="13"
@@ -288,7 +292,7 @@ export function SupportTicketDetail({
 							</div>
 							{replyMutation.isError && (
 								<p className="font-sans text-[12px] text-red-500">
-									Failed to send. Please try again.
+									{t("support.sendFailed")}
 								</p>
 							)}
 						</form>

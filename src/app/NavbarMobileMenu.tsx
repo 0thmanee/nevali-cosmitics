@@ -11,10 +11,8 @@ import {
   SHOW_MULTI_PRODUCER_EXPERIENCE,
 } from "~/lib/platform-producer-mode";
 
-function dashboardHref(role: string): string {
-  if (role === "superadmin") return "/admin";
-  if (role === "buyer") return "/buyer";
-  return "/artisan";
+function profileHref(_role: string): string {
+  return "/profile";
 }
 
 type Props = {
@@ -28,7 +26,7 @@ export function NavbarMobileMenu({ isAuthenticated, role, name, email }: Props) 
   const { t } = useI18n();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const dash = dashboardHref(role);
+  const profile = profileHref(role);
 
   const navLinks = [
     ...(SHOW_MULTI_PRODUCER_EXPERIENCE
@@ -45,7 +43,7 @@ export function NavbarMobileMenu({ isAuthenticated, role, name, email }: Props) 
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="flex h-10 w-10 items-center justify-center rounded-sm border border-primary/25 bg-white text-primary transition-colors hover:bg-primary/10"
-        aria-label="Toggle menu"
+        aria-label={t("navbarMobile.toggleMenuAria")}
         aria-expanded={open}
       >
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
@@ -93,11 +91,11 @@ export function NavbarMobileMenu({ isAuthenticated, role, name, email }: Props) 
                 <div className="space-y-2">
                   <p className="truncate font-sans text-xs text-text-muted">{name || email}</p>
                   <Link
-                    href={dash}
+                    href={profile}
                     onClick={() => setOpen(false)}
                     className="block rounded-sm px-3 py-2 font-sans text-sm text-text-dark hover:bg-cream"
                   >
-                    {t("navbarUserMenu.dashboard")}
+                    {t("navbarUserMenu.profile")}
                   </Link>
                   <button
                     type="button"
