@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimateOnScroll } from "~/app/artisan-process/animate-on-scroll";
+import { LocaleSwitcher } from "~/components/i18n/locale-switcher";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
 import { PLATFORM_OWNED_ORG_SLUG, SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
 import { getTranslator } from "~/lib/i18n/server";
@@ -139,7 +140,8 @@ export default async function Footer() {
         direction="up"
       >
         <span className="font-sans text-xs text-text-muted">{t("footer.copyright")}</span>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+          <LocaleSwitcher />
           <Link
             className="font-sans text-xs text-text-muted transition-colors duration-200 hover:text-primary-darker"
             href="/contact#privacy"

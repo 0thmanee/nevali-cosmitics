@@ -14,22 +14,29 @@ export function CartNavLink() {
   return (
     <Link
       href="/cart"
-      className="relative flex h-9 w-9 items-center justify-center rounded-sm border border-primary/25 text-primary transition-colors hover:bg-primary/10"
+      className="group relative flex h-10 w-10 items-center justify-center rounded-sm border border-primary/15 bg-white text-primary transition-colors hover:border-primary/35 hover:bg-primary/6"
       aria-label={aria}
     >
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 18 18"
+        fill="none"
+        aria-hidden
+        className="transition-transform group-hover:scale-[1.03]"
+      >
         <path
-          d="M1.5 1.5h2l1.5 7.5h9l1.5-5H5"
+          d="M2.4 2h1.55l1.25 6.5h7.95l1.2-3.95H5.05"
           stroke="currentColor"
-          strokeWidth="1.35"
+          strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="7" cy="15" r="1" fill="currentColor" />
-        <circle cx="14" cy="15" r="1" fill="currentColor" />
+        <circle cx="6.8" cy="13.9" r="0.85" fill="currentColor" />
+        <circle cx="12.8" cy="13.9" r="0.85" fill="currentColor" />
       </svg>
       {ready && totalQuantity > 0 ? (
-        <span className="absolute end-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center bg-primary px-1 font-sans text-[10px] font-bold text-white">
+        <span className="absolute -inset-e-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-primary px-1 font-sans text-[8px] font-semibold leading-none text-white shadow-sm">
           {totalQuantity > 99 ? t("cart.overflowBadge") : totalQuantity}
         </span>
       ) : null}

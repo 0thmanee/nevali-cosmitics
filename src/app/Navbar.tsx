@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getSession } from "~/app/api/auth/actions";
-import { LocaleSwitcher } from "~/components/i18n/locale-switcher";
 import { CartNavLink } from "~/components/cart-nav-link";
 import { getTranslator } from "~/lib/i18n/server";
 import { SHOW_MULTI_PRODUCER_EXPERIENCE } from "~/lib/platform-producer-mode";
@@ -26,7 +25,6 @@ export default async function Navbar() {
         </div>
 
         <div className="ms-auto flex items-center gap-2 sm:gap-3">
-          <LocaleSwitcher />
           <CartNavLink />
           {user ? (
             <NavbarUserMenu name={user.name ?? ""} email={user.email ?? ""} role={role ?? "partner"} />
