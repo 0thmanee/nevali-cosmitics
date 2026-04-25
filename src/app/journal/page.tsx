@@ -22,6 +22,8 @@ function formatStoryDate(d: Date): string {
 
 export default async function JournalIndexPage() {
 	const articles = await listPublishedArticlesForHome(48);
+	const [featured, ...rest] = articles;
+	const latest = rest.slice(0, 6);
 
 	return (
 		<main className="flex min-h-screen w-full flex-col bg-cream pt-14">
@@ -43,43 +45,119 @@ export default async function JournalIndexPage() {
 						No published articles yet. Check back soon.
 					</p>
 				) : (
-					<ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-						{articles.map((a) => (
-							<li key={a.id}>
-								<Link
-									className="group flex flex-col gap-3"
-									href={`/journal/${a.id}`}
-								>
-									<div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-cream-dark bg-cream-dark transition-transform duration-500 group-hover:scale-[1.02]">
-										{a.coverImageUrl ? (
-											<Image
-												alt={a.title}
-												className="object-cover"
-												fill
-												sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-												src={a.coverImageUrl}
-											/>
-										) : (
-											<div
-												className="absolute inset-0"
-												style={{ background: a.coverGradient }}
-											/>
-										)}
-									</div>
-									<div className="flex flex-wrap gap-2 font-bold text-[11px] text-text-muted uppercase tracking-wide">
-										<span>{formatStoryDate(a.publishedAt)}</span>
-										{a.tag && <span className="text-forest-dark">{a.tag}</span>}
-									</div>
-									<h2 className="font-bold font-serif text-lg text-text-dark group-hover:text-forest-light">
-										{a.title}
-									</h2>
-									<p className="font-sans text-text-muted text-xs">
-										{a.organizationName}
+					<div className="mt-12 flex flex-col gap-12">
+						{featured ? (
+							<Link
+								className="group grid gap-0 overflow-hidden rounded-sm border border-cream-dark bg-white shadow-sm lg:grid-cols-2"
+								href={`/journal/${featured.id}`}
+							>
+								<div className="relative min-h-[260px] bg-cream-dark">
+									{featured.coverImageUrl ? (
+										<Image
+											alt={featured.title}
+											className="object-cover transition-transform duration-700 group-hover:scale-105"
+											fill
+											priority
+											sizes="(max-width: 1024px) 100vw, 50vw"
+											src={featured.coverImageUrl}
+										/>
+									) : (
+										<div className="absolute inset-0" style={{ background: featured.coverGradient }} />
+									)}
+								</div>
+								<div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
+									<p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em] text-forest-dark">
+										Featured story
 									</p>
-								</Link>
-							</li>
-						))}
-					</ul>
+									<h2 className="font-serif text-3xl font-bold leading-tight text-text-dark">
+										{featured.title}
+									</h2>
+									<p className="font-sans text-sm leading-relaxed text-text-muted">
+										Open the full story for ingredient notes, producer insights, and practical formulation context.
+									</p>
+									<div className="flex flex-wrap items-center gap-3 font-sans text-xs uppercase tracking-wide text-text-muted">
+										<span>{formatStoryDate(featured.publishedAt)}</span>
+										{featured.tag ? <span className="text-forest-dark">{featured.tag}</span> : null}
+										<span>{featured.organizationName}</span>
+									</div>
+								</div>
+							</Link>
+						) : null}
+
+						<section className="space-y-4">
+							<div className="flex items-end justify-between gap-4">
+								<div>
+									<p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em] text-text-muted">
+										Latest
+									</p>
+									<h3 className="mt-1 font-serif text-2xl font-bold text-text-dark">
+										Recent journal entries
+									</h3>
+								</div>
+							</div>
+							<ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+								{latest.map((a) => (
+									<li key={a.id}>
+										<Link className="group flex flex-col gap-3" href={`/journal/${a.id}`}>
+											<div className="relative aspect-4/3 w-full overflow-hidden rounded-sm border border-cream-dark bg-cream-dark">
+												{a.coverImageUrl ? (
+													<Image
+														alt={a.title}
+														className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+														fill
+														sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+														src={a.coverImageUrl}
+													/>
+												) : (
+													<div className="absolute inset-0" style={{ background: a.coverGradient }} />
+												)}
+											</div>
+											<div className="flex flex-wrap gap-2 font-bold text-[11px] text-text-muted uppercase tracking-wide">
+												<span>{formatStoryDate(a.publishedAt)}</span>
+												{a.tag && <span className="text-forest-dark">{a.tag}</span>}
+											</div>
+											<h4 className="font-bold font-serif text-lg text-text-dark group-hover:text-forest-light">
+												{a.title}
+											</h4>
+											<p className="line-clamp-2 font-sans text-sm text-text-muted">
+												Read the full article for the complete story.
+											</p>
+											<p className="font-sans text-xs text-text-muted">{a.organizationName}</p>
+										</Link>
+									</li>
+								))}
+							</ul>
+						</section>
+
+						{rest.length > latest.length ? (
+							<section className="space-y-4 border-t border-cream-dark pt-10">
+								<h3 className="font-serif text-xl font-bold text-text-dark">More from the journal</h3>
+								<ul className="grid gap-4 sm:grid-cols-2">
+									{rest.slice(latest.length).map((a) => (
+										<li key={a.id}>
+											<Link
+												className="group flex items-start justify-between gap-4 rounded-sm border border-cream-dark bg-white px-4 py-4 transition-colors hover:bg-paper"
+												href={`/journal/${a.id}`}
+											>
+												<div className="min-w-0">
+													<p className="font-sans text-[11px] uppercase tracking-wide text-text-muted">
+														{formatStoryDate(a.publishedAt)}
+													</p>
+													<p className="mt-1 font-serif text-lg font-bold text-text-dark group-hover:text-forest-light">
+														{a.title}
+													</p>
+													<p className="mt-1 font-sans text-xs text-text-muted">{a.organizationName}</p>
+												</div>
+												<span className="font-sans text-xs font-semibold uppercase tracking-wide text-forest-dark">
+													Read
+												</span>
+											</Link>
+										</li>
+									))}
+								</ul>
+							</section>
+						) : null}
+					</div>
 				)}
 			</AnimateOnScroll>
 			<Footer />

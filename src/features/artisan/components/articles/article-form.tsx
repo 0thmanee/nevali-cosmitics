@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
-import { useRef, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import type { ProducerArticleRow } from "~/app/api/articles/articles.types";
+import { ArticleMarkdown } from "~/components/article-markdown";
 import {
 	ARTICLE_COVER_PRESETS,
 	DEFAULT_ARTICLE_COVER,
@@ -18,6 +19,17 @@ import {
 } from "../../hooks/use-articles";
 
 type Props = { mode: "create" } | { mode: "edit"; article: ProducerArticleRow };
+
+const MARKDOWN_SNIPPETS = [
+	{ label: "H2", snippet: "\n\n## Section title\n\n" },
+	{ label: "Quote", snippet: "\n\n> Quote text\n\n" },
+	{ label: "Bullet list", snippet: "\n\n- First point\n- Second point\n- Third point\n\n" },
+	{ label: "Numbered list", snippet: "\n\n1. First step\n2. Second step\n3. Third step\n\n" },
+	{ label: "Link", snippet: "\n\n[Link label](https://example.com)\n\n" },
+	{ label: "Table", snippet: "\n\n| Ingredient | Benefit |\n| --- | --- |\n| Argan oil | Nourishes |\n| Rose water | Soothes |\n\n" },
+	{ label: "Code block", snippet: "\n\n```txt\nAdd your technical notes here\n```\n\n" },
+	{ label: "Divider", snippet: "\n\n---\n\n" },
+] as const;
 
 export function ArticleForm(props: Props) {
 	const router = useRouter();
@@ -48,12 +60,26 @@ export function ArticleForm(props: Props) {
 	const [error, setError] = useState<string | null>(null);
 	const [uploadingCover, setUploadingCover] = useState(false);
 	const [uploadingInline, setUploadingInline] = useState(false);
+	const [editorView, setEditorView] = useState<"write" | "split" | "preview">("split");
 
 	const busy =
 		pending ||
 		createMutation.isPending ||
 		updateMutation.isPending ||
 		deleteMutation.isPending;
+
+	const readingMeta = useMemo(() => {
+		const plain = body
+			.replace(/```[\s\S]*?```/g, " ")
+			.replace(/`[^`]+`/g, " ")
+			.replace(/!\[[^\]]*]\([^)]+\)/g, " ")
+			.replace(/\[[^\]]+]\([^)]+\)/g, "$1")
+			.replace(/[#>*_\-\|]/g, " ")
+			.trim();
+		const words = plain ? plain.split(/\s+/).length : 0;
+		const minutes = Math.max(1, Math.ceil(words / 210));
+		return { words, minutes };
+	}, [body]);
 
 	async function onCoverFile(file: File | null) {
 		if (!file) return;
@@ -315,6 +341,35 @@ export function ArticleForm(props: Props) {
 						Body (Markdown)
 					</label>
 					<div className="flex flex-wrap gap-2">
+						<div className="inline-flex overflow-hidden rounded-sm border border-cream-dark bg-white">
+							<button
+								className={`px-3 py-1.5 font-sans font-semibold text-xs ${
+									editorView === "write" ? "bg-ink text-white" : "hover:bg-cream"
+								}`}
+								onClick={() => setEditorView("write")}
+								type="button"
+							>
+								Write
+							</button>
+							<button
+								className={`border-x border-cream-dark px-3 py-1.5 font-sans font-semibold text-xs ${
+									editorView === "split" ? "bg-ink text-white" : "hover:bg-cream"
+								}`}
+								onClick={() => setEditorView("split")}
+								type="button"
+							>
+								Split
+							</button>
+							<button
+								className={`px-3 py-1.5 font-sans font-semibold text-xs ${
+									editorView === "preview" ? "bg-ink text-white" : "hover:bg-cream"
+								}`}
+								onClick={() => setEditorView("preview")}
+								type="button"
+							>
+								Preview
+							</button>
+						</div>
 						<input
 							accept="image/jpeg,image/png,image/webp"
 							className="hidden"
@@ -340,25 +395,57 @@ export function ArticleForm(props: Props) {
 						>
 							Insert heading
 						</button>
-						<button
-							className="rounded-sm border border-cream-dark bg-paper px-3 py-1.5 font-sans font-semibold text-xs hover:bg-cream disabled:opacity-50"
-							disabled={busy}
-							onClick={() => insertSnippet("\n\n> Quote text\n\n")}
-							type="button"
-						>
-							Insert quote
-						</button>
 					</div>
 				</div>
-				<textarea
-					className="min-h-[280px] resize-y rounded-sm border border-cream-dark bg-white px-3 py-2 font-mono text-[13px] leading-relaxed"
-					id="article-body"
-					onChange={(e) => setBody(e.target.value)}
-					ref={bodyRef}
-					required
-					rows={18}
-					value={body}
-				/>
+				<div className="flex items-center justify-between rounded-sm border border-cream-dark/70 bg-paper/80 px-3 py-2">
+					<p className="font-sans text-[12px] text-text-muted">
+						{readingMeta.words} words · {readingMeta.minutes} min read
+					</p>
+					<div className="flex flex-wrap gap-1">
+						{MARKDOWN_SNIPPETS.map((item) => (
+							<button
+								className="rounded-sm border border-cream-dark bg-white px-2.5 py-1 font-sans font-semibold text-[11px] hover:bg-cream disabled:opacity-50"
+								disabled={busy}
+								key={item.label}
+								onClick={() => insertSnippet(item.snippet)}
+								type="button"
+							>
+								{item.label}
+							</button>
+						))}
+					</div>
+				</div>
+				<div
+					className={`grid gap-4 ${
+						editorView === "split" ? "lg:grid-cols-2" : "grid-cols-1"
+					}`}
+				>
+					{editorView !== "preview" && (
+						<textarea
+							className="min-h-[360px] resize-y rounded-sm border border-cream-dark bg-white px-3 py-2 font-mono text-[13px] leading-relaxed"
+							id="article-body"
+							onChange={(e) => setBody(e.target.value)}
+							ref={bodyRef}
+							required
+							rows={20}
+							value={body}
+						/>
+					)}
+					{editorView !== "write" && (
+						<div className="min-h-[360px] rounded-sm border border-cream-dark bg-white p-4">
+							<p className="mb-3 font-sans text-[11px] font-bold uppercase tracking-wide text-text-muted">
+								Live preview
+							</p>
+							{body.trim().length > 0 ? (
+								<ArticleMarkdown markdown={body} />
+							) : (
+								<p className="font-sans text-sm text-text-muted">
+									Start writing markdown to preview your article here.
+								</p>
+							)}
+						</div>
+					)}
+				</div>
 				<details className="font-sans text-[12px] text-text-muted">
 					<summary className="cursor-pointer font-semibold text-text-dark">
 						Markdown tips

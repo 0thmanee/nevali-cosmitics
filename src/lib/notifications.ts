@@ -2,6 +2,7 @@ import { env } from "~/env";
 import { prisma } from "~/lib/db";
 import { isValidEmail, sendTransactionalEmail } from "~/lib/email";
 import { emailTheme } from "~/lib/email-theme";
+import { normalizePhoneForWhatsAppDigits } from "~/lib/whatsapp-phone-normalize";
 
 function appOrigin(): string {
 	return env.BETTER_AUTH_URL.replace(/\/$/, "");
@@ -36,6 +37,29 @@ export async function getOrganizationMemberEmails(
 	for (const r of rows) {
 		const e = r.user.email?.trim();
 		if (e) set.add(e);
+	}
+	if (set.size > 0) return [...set];
+
+	// Fallback 1: accepted invitations (org may not have linked members yet).
+	const acceptedInvites = await prisma.invitation.findMany({
+		where: { organizationId, status: "accepted" },
+		select: { email: true },
+	});
+	for (const inv of acceptedInvites) {
+		const e = inv.email?.trim();
+		if (e && isValidEmail(e)) set.add(e);
+	}
+	if (set.size > 0) return [...set];
+
+	// Fallback 2: platform contact mailbox (ensures no order alert is dropped).
+	const opsEmail = env.CONTACT_PUBLIC_EMAIL?.trim();
+	if (opsEmail && isValidEmail(opsEmail)) {
+		if (env.NODE_ENV !== "production") {
+			console.warn(
+				`[notify] No partner recipients for org ${organizationId}; falling back to CONTACT_PUBLIC_EMAIL.`,
+			);
+		}
+		set.add(opsEmail);
 	}
 	return [...set];
 }
@@ -146,27 +170,6 @@ function checkoutPaymentLabel(method: string): string {
 	}
 }
 
-function normalizePhoneForWhatsApp(phoneRaw: string): string | null {
-	const rawDigits = phoneRaw.replace(/\D/g, "");
-	if (!rawDigits) return null;
-
-	// Accept common user formats and normalize to Morocco mobile in E.164 digits (no +), e.g. 212612345678.
-	let digits = rawDigits;
-	if (digits.startsWith("00")) digits = digits.slice(2);
-
-	let national = digits;
-	if (digits.startsWith("212")) {
-		national = digits.slice(3);
-		if (national.startsWith("0")) national = national.slice(1);
-	} else if (digits.startsWith("0")) {
-		national = digits.slice(1);
-	}
-
-	// Morocco mobile numbers are 9 digits and typically start with 6 or 7.
-	if (!/^[67]\d{8}$/.test(national)) return null;
-	return `212${national}`;
-}
-
 async function sendArabicWhatsAppOrderConfirmation(params: {
 	toPhone: string;
 	buyerName: string;
@@ -186,7 +189,7 @@ async function sendArabicWhatsAppOrderConfirmation(params: {
 
 	const token = env.WHATSAPP_CLOUD_API_TOKEN?.trim();
 	const phoneNumberId = env.WHATSAPP_PHONE_NUMBER_ID?.trim();
-	const to = normalizePhoneForWhatsApp(params.toPhone);
+	const to = normalizePhoneForWhatsAppDigits(params.toPhone);
 	if (!to) return false;
 
 	const linesText = params.lines

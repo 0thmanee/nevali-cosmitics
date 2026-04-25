@@ -25,8 +25,8 @@ const prisma = new PrismaClient({
 
 const SEED_PASSWORD = "Password123!";
 
-const ADMIN_EMAIL = "admin@nevali-cosmetics.local";
-const PARTNER_EMAIL = "studio@nevali-cosmetics.local";
+const ADMIN_EMAIL = "admin@nevali.store";
+const PARTNER_EMAIL = "contact@nevali.store";
 const BUYER_EMAIL = "buyer@nevali-cosmetics.local";
 
 const ORG_SLUG = "nevali-cosmetics";

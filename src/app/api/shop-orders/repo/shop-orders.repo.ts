@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "~/lib/db";
 import { paymentOptionAllowsCheckout } from "~/lib/checkout-payment";
+import { SHOP_ORDER_STATUSES, type ShopOrderStatusValue } from "~/lib/shop-order-statuses";
 
 export async function createShopOrderFromCheckout(input: {
   buyerUserId?: string | null;
@@ -278,6 +279,89 @@ export type AdminShopOrderListRow = {
   totalMad: string;
 };
 
+const shopOrderAdminInclude = {
+  lines: {
+    include: {
+      organization: { select: { name: true } },
+    },
+    orderBy: { id: "asc" as const },
+  },
+} satisfies Prisma.ShopOrderInclude;
+
+type ShopOrderForAdminRow = Prisma.ShopOrderGetPayload<{ include: typeof shopOrderAdminInclude }>;
+
+export function mapShopOrderToAdminListRow(o: ShopOrderForAdminRow): AdminShopOrderListRow {
+  let total = 0;
+  const lines: AdminShopOrderLineRow[] = o.lines.map((l) => {
+    const up = Number(l.unitPrice);
+    const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
+    total += lineTot;
+    return {
+      id: l.id,
+      productId: l.productId,
+      productVariantId: l.productVariantId,
+      variantName: l.variantName,
+      organizationId: l.organizationId,
+      organizationName: l.organization.name,
+      productName: l.productName,
+      unitPrice: l.unitPrice.toFixed(2),
+      quantity: l.quantity,
+    };
+  });
+  return {
+    id: o.id,
+    buyerName: o.buyerName,
+    buyerEmail: o.buyerEmail,
+    buyerPhone: o.buyerPhone,
+    addressLine1: o.addressLine1,
+    addressLine2: o.addressLine2,
+    city: o.city,
+    postalCode: o.postalCode,
+    country: o.country,
+    paymentMethod: o.paymentMethod,
+    status: o.status,
+    notes: o.notes,
+    createdAt: o.createdAt,
+    lines,
+    totalMad: total.toFixed(2),
+  };
+}
+
+export async function getShopOrderByIdForAdminRepo(orderId: string): Promise<AdminShopOrderListRow | null> {
+  const o = await prisma.shopOrder.findUnique({
+    where: { id: orderId },
+    include: shopOrderAdminInclude,
+  });
+  return o ? mapShopOrderToAdminListRow(o) : null;
+}
+
+export async function getShopOrderByIdForProducerRepo(
+  orderId: string,
+  organizationId: string,
+): Promise<AdminShopOrderListRow | null> {
+  const o = await prisma.shopOrder.findFirst({
+    where: {
+      id: orderId,
+      lines: { some: { organizationId } },
+    },
+    include: shopOrderAdminInclude,
+  });
+  return o ? mapShopOrderToAdminListRow(o) : null;
+}
+
+export const ADMIN_SHOP_ORDER_STATUSES = SHOP_ORDER_STATUSES;
+export type AdminShopOrderStatus = ShopOrderStatusValue;
+
+export async function updateShopOrderStatusForAdminRepo(params: {
+  orderId: string;
+  status: AdminShopOrderStatus;
+}): Promise<void> {
+  await prisma.shopOrder.update({
+    where: { id: params.orderId },
+    data: { status: params.status },
+  });
+}
+
 export async function listShopOrdersForAdminRepo(params: {
   organizationId?: string | null;
   take?: number;
@@ -292,52 +376,10 @@ export async function listShopOrdersForAdminRepo(params: {
     where,
     orderBy: { createdAt: "desc" },
     take,
-    include: {
-      lines: {
-        include: {
-          organization: { select: { name: true } },
-        },
-        orderBy: { id: "asc" },
-      },
-    },
+    include: shopOrderAdminInclude,
   });
 
-  return rows.map((o) => {
-    let total = 0;
-    const lines: AdminShopOrderLineRow[] = o.lines.map((l) => {
-      const up = Number(l.unitPrice);
-      const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
-      total += lineTot;
-      return {
-        id: l.id,
-        productId: l.productId,
-        productVariantId: l.productVariantId,
-        variantName: l.variantName,
-        organizationId: l.organizationId,
-        organizationName: l.organization.name,
-        productName: l.productName,
-        unitPrice: l.unitPrice.toFixed(2),
-        quantity: l.quantity,
-      };
-    });
-    return {
-      id: o.id,
-      buyerName: o.buyerName,
-      buyerEmail: o.buyerEmail,
-      buyerPhone: o.buyerPhone,
-      addressLine1: o.addressLine1,
-      addressLine2: o.addressLine2,
-      city: o.city,
-      postalCode: o.postalCode,
-      country: o.country,
-      paymentMethod: o.paymentMethod,
-      status: o.status,
-      notes: o.notes,
-      createdAt: o.createdAt,
-      lines,
-      totalMad: total.toFixed(2),
-    };
-  });
+  return rows.map(mapShopOrderToAdminListRow);
 }
 
 export async function countShopOrdersForAdminRepo(organizationId?: string | null): Promise<number> {

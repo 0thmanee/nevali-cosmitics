@@ -97,36 +97,96 @@ export async function JournalArticleView({ article }: Props) {
 				</div>
 			</header>
 
-			<div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
-				{article.excerpt && (
-					<p className="font-serif text-text-muted text-xl leading-relaxed sm:text-[1.35rem]">
-						{article.excerpt}
-					</p>
-				)}
+			<div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+				<div className="grid gap-10 lg:grid-cols-12">
+					<div className="lg:col-span-8">
+						{article.excerpt && (
+							<p className="font-serif text-text-muted text-xl leading-relaxed sm:text-[1.35rem]">
+								{article.excerpt}
+							</p>
+						)}
+						<div
+							className={`rounded-sm border border-cream-dark bg-white p-5 shadow-sm sm:p-7 ${article.excerpt ? "mt-8" : ""}`}
+						>
+							<ArticleMarkdown markdown={article.body} />
+						</div>
 
-				<div className={article.excerpt ? "mt-12" : ""}>
-					<ArticleMarkdown markdown={article.body} />
+						<footer className="mt-10 border-cream-dark border-t pt-8">
+							<p className="font-sans text-sm text-text-muted">
+								{t("journalArticle.writtenBy")}{" "}
+								<Link
+									className="font-semibold text-forest-dark underline-offset-2 hover:underline"
+									href={`/artisans/${article.organization.slug}`}
+								>
+									{article.organization.name}
+								</Link>
+								{t("journalArticle.exploreMorePrefix")}{" "}
+								<Link
+									className="font-semibold text-forest-dark underline-offset-2 hover:underline"
+									href="/journal"
+								>
+									{t("journalArticle.nevaliJournal")}
+								</Link>
+								{t("journalArticle.exploreMoreSuffix")}
+							</p>
+						</footer>
+					</div>
+
+					<aside className="space-y-4 lg:col-span-4 lg:pl-4">
+						<div className="rounded-sm border border-cream-dark bg-white p-5 shadow-sm">
+							<p className="font-sans text-[11px] uppercase tracking-[0.14em] text-text-muted">
+								Article details
+							</p>
+							<dl className="mt-4 space-y-3 font-sans text-sm">
+								<div>
+									<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+										Published
+									</dt>
+									<dd className="mt-1 text-text-dark">{formatStoryDate(article.publishedAt)}</dd>
+								</div>
+								{article.tag ? (
+									<div>
+										<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+											Topic
+										</dt>
+										<dd className="mt-1">
+											<span className="rounded-sm border border-cream-dark bg-paper px-2 py-1 font-semibold text-xs text-forest-dark">
+												{article.tag}
+											</span>
+										</dd>
+									</div>
+								) : null}
+								<div>
+									<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+										By producer
+									</dt>
+									<dd className="mt-1 text-text-dark">{article.organization.name}</dd>
+								</div>
+							</dl>
+						</div>
+
+						<div className="rounded-sm border border-cream-dark bg-paper p-5">
+							<p className="font-serif text-lg font-bold text-text-dark">Explore more stories</p>
+							<p className="mt-2 font-sans text-sm leading-relaxed text-text-muted">
+								Find more practical reads on ingredients, compliance, and producer know-how in the journal.
+							</p>
+							<div className="mt-4 flex flex-wrap gap-2">
+								<Link
+									className="rounded-sm bg-ink px-4 py-2 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+									href="/journal"
+								>
+									Back to Journal
+								</Link>
+								<Link
+									className="rounded-sm border border-cream-dark bg-white px-4 py-2 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
+									href={`/artisans/${article.organization.slug}`}
+								>
+									View Producer
+								</Link>
+							</div>
+						</div>
+					</aside>
 				</div>
-
-				<footer className="mt-16 border-cream-dark border-t pt-10">
-					<p className="font-sans text-sm text-text-muted">
-						{t("journalArticle.writtenBy")}{" "}
-						<Link
-							className="font-semibold text-forest-dark underline-offset-2 hover:underline"
-							href={`/artisans/${article.organization.slug}`}
-						>
-							{article.organization.name}
-						</Link>
-						{t("journalArticle.exploreMorePrefix")}{" "}
-						<Link
-							className="font-semibold text-forest-dark underline-offset-2 hover:underline"
-							href="/journal"
-						>
-							{t("journalArticle.nevaliJournal")}
-						</Link>
-						{t("journalArticle.exploreMoreSuffix")}
-					</p>
-				</footer>
 			</div>
 		</article>
 	);

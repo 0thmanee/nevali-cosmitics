@@ -43,13 +43,6 @@ export default async function CartCheckoutSuccessPage({
             </svg>
           </div>
           <h1 className="font-serif text-3xl font-bold text-text-dark">{t("checkoutSuccess.title")}</h1>
-          <p
-            aria-live="polite"
-            className="rounded-sm border border-text-muted/40 bg-cream px-4 py-2 font-sans text-sm font-semibold text-text-dark"
-            role="status"
-          >
-            {t("checkoutSuccess.successBanner")}
-          </p>
           <p className="font-sans leading-relaxed text-stone-600">{t("checkoutSuccess.body")}</p>
           {orderId ? (
             <p className="font-sans text-sm text-text-dark">

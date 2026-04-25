@@ -310,8 +310,8 @@ model ShopOrder {
   postalCode    String
   country       String
   paymentMethod CheckoutPaymentMethod
-  /// PENDING_PAYMENT = card, awaiting Stripe; CONFIRMED = paid (card) or placed (COD); CANCELLED = abandoned.
-  status        String                 @default("PENDING") // PENDING_PAYMENT | CONFIRMED | CANCELLED
+  /// Checkout: PENDING_PAYMENT | CONFIRMED | CANCELLED (legacy). Ops: NEW | CONFIRMED | SHIPPED | CANCELED | RETURNED.
+  status        String                 @default("PENDING") // PENDING_PAYMENT | CONFIRMED | CANCELLED | NEW | SHIPPED | RETURNED
   notes         String?                @db.Text
   stripeCheckoutSessionId String?     @unique
   stripePaymentIntentId   String?

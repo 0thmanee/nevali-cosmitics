@@ -25,6 +25,10 @@ function statusLabel(status: string, t: (key: string) => string): string {
 	if (status === "PENDING_PAYMENT") return t("profilePage.statusPendingPayment");
 	if (status === "CANCELLED") return t("profilePage.statusCancelled");
 	if (status === "PENDING") return t("profilePage.statusPending");
+	if (status === "NEW") return t("profilePage.statusNew");
+	if (status === "SHIPPED") return t("profilePage.statusShipped");
+	if (status === "CANCELED") return t("profilePage.statusCanceled");
+	if (status === "RETURNED") return t("profilePage.statusReturned");
 	return status.replace(/_/g, " ");
 }
 

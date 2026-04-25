@@ -1,9 +1,12 @@
 "use server";
 
 import { getSession, redirectNonSuperadminHome } from "~/app/api/auth/actions";
+import { isShopOrderStatus } from "~/lib/shop-order-statuses";
 import {
-	getShopOrderAnalyticsForAdminRepo,
-	listShopOrdersForAdminRepo,
+  getShopOrderByIdForAdminRepo,
+  getShopOrderAnalyticsForAdminRepo,
+  listShopOrdersForAdminRepo,
+  updateShopOrderStatusForAdminRepo,
 } from "./repo/shop-orders.repo";
 
 async function requireSuperadmin() {
@@ -20,9 +23,29 @@ export async function listShopOrdersForAdmin(organizationId?: string | null) {
   return listShopOrdersForAdminRepo({ organizationId: organizationId ?? undefined });
 }
 
+export async function getShopOrderForAdmin(orderId: string) {
+  await requireSuperadmin();
+  return getShopOrderByIdForAdminRepo(orderId);
+}
+
 export async function getAdminShopOrderAnalytics(organizationId?: string | null) {
   await requireSuperadmin();
   return getShopOrderAnalyticsForAdminRepo({
     organizationId: organizationId ?? undefined,
+  });
+}
+
+export async function updateShopOrderStatusForAdmin(input: {
+  orderId: string;
+  status: string;
+}) {
+  await requireSuperadmin();
+  const status = input.status?.toUpperCase().trim();
+  if (!status || !isShopOrderStatus(status)) {
+    throw new Error("Invalid order status.");
+  }
+  await updateShopOrderStatusForAdminRepo({
+    orderId: input.orderId,
+    status,
   });
 }
