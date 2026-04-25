@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
-import { useMemo, useRef, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ProducerArticleRow } from "~/app/api/articles/articles.types";
 import { ArticleMarkdown } from "~/components/article-markdown";
 import {
@@ -30,6 +30,17 @@ const MARKDOWN_SNIPPETS = [
 	{ label: "Code block", snippet: "\n\n```txt\nAdd your technical notes here\n```\n\n" },
 	{ label: "Divider", snippet: "\n\n---\n\n" },
 ] as const;
+
+type ArticleDraftPayload = {
+	title: string;
+	tag: string;
+	excerpt: string;
+	body: string;
+	coverGradient: string;
+	coverImageUrl: string | null;
+	status: "DRAFT" | "PUBLISHED";
+	updatedAt: string;
+};
 
 export function ArticleForm(props: Props) {
 	const router = useRouter();
@@ -61,6 +72,9 @@ export function ArticleForm(props: Props) {
 	const [uploadingCover, setUploadingCover] = useState(false);
 	const [uploadingInline, setUploadingInline] = useState(false);
 	const [editorView, setEditorView] = useState<"write" | "split" | "preview">("split");
+	const [hasRecoveredDraft, setHasRecoveredDraft] = useState(false);
+	const [lastAutosaveAt, setLastAutosaveAt] = useState<string | null>(null);
+	const [initialHydrated, setInitialHydrated] = useState(false);
 
 	const busy =
 		pending ||
@@ -80,6 +94,143 @@ export function ArticleForm(props: Props) {
 		const minutes = Math.max(1, Math.ceil(words / 210));
 		return { words, minutes };
 	}, [body]);
+
+	const draftStorageKey = useMemo(
+		() =>
+			props.mode === "edit"
+				? `nevali:article-draft:edit:${props.article.id}`
+				: "nevali:article-draft:create",
+		[props],
+	);
+
+	const baseSnapshot = useMemo(
+		() =>
+			JSON.stringify({
+				title: initial?.title ?? "",
+				tag: initial?.tag ?? "",
+				excerpt: initial?.excerpt ?? "",
+				body: initial?.body ?? "",
+				coverGradient: initial?.coverGradient ?? DEFAULT_ARTICLE_COVER,
+				coverImageUrl: initial?.coverImageUrl ?? null,
+				status:
+					((initial?.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT") as
+						| "DRAFT"
+						| "PUBLISHED"),
+			}),
+		[initial],
+	);
+
+	const currentSnapshot = useMemo(
+		() =>
+			JSON.stringify({
+				title,
+				tag,
+				excerpt,
+				body,
+				coverGradient,
+				coverImageUrl,
+				status,
+			}),
+		[title, tag, excerpt, body, coverGradient, coverImageUrl, status],
+	);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		setInitialHydrated(true);
+		try {
+			const raw = window.localStorage.getItem(draftStorageKey);
+			if (!raw) return;
+			const parsed = JSON.parse(raw) as ArticleDraftPayload;
+			if (!parsed || typeof parsed !== "object") return;
+
+			const savedSnapshot = JSON.stringify({
+				title: parsed.title ?? "",
+				tag: parsed.tag ?? "",
+				excerpt: parsed.excerpt ?? "",
+				body: parsed.body ?? "",
+				coverGradient: parsed.coverGradient ?? DEFAULT_ARTICLE_COVER,
+				coverImageUrl: parsed.coverImageUrl ?? null,
+				status: parsed.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT",
+			});
+			if (savedSnapshot === baseSnapshot) {
+				window.localStorage.removeItem(draftStorageKey);
+				return;
+			}
+
+			setTitle(parsed.title ?? "");
+			setTag(parsed.tag ?? "");
+			setExcerpt(parsed.excerpt ?? "");
+			setBody(parsed.body ?? "");
+			setCoverGradient(parsed.coverGradient ?? DEFAULT_ARTICLE_COVER);
+			setCoverImageUrl(parsed.coverImageUrl ?? null);
+			setStatus(parsed.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT");
+			setHasRecoveredDraft(true);
+			setLastAutosaveAt(parsed.updatedAt ?? null);
+		} catch {
+			// Ignore malformed local drafts.
+		}
+	}, [draftStorageKey, baseSnapshot]);
+
+	useEffect(() => {
+		if (typeof window === "undefined" || !initialHydrated) return;
+		const timer = window.setTimeout(() => {
+			try {
+				if (currentSnapshot === baseSnapshot) {
+					window.localStorage.removeItem(draftStorageKey);
+					setLastAutosaveAt(null);
+					return;
+				}
+				const payload: ArticleDraftPayload = {
+					title,
+					tag,
+					excerpt,
+					body,
+					coverGradient,
+					coverImageUrl,
+					status,
+					updatedAt: new Date().toISOString(),
+				};
+				window.localStorage.setItem(draftStorageKey, JSON.stringify(payload));
+				setLastAutosaveAt(payload.updatedAt);
+			} catch {
+				// Ignore storage quota / privacy mode failures.
+			}
+		}, 600);
+		return () => window.clearTimeout(timer);
+	}, [
+		initialHydrated,
+		draftStorageKey,
+		currentSnapshot,
+		baseSnapshot,
+		title,
+		tag,
+		excerpt,
+		body,
+		coverGradient,
+		coverImageUrl,
+		status,
+	]);
+
+	function clearLocalDraft(resetToInitial: boolean) {
+		if (typeof window !== "undefined") {
+			window.localStorage.removeItem(draftStorageKey);
+		}
+		setHasRecoveredDraft(false);
+		setLastAutosaveAt(null);
+		if (resetToInitial) {
+			setTitle(initial?.title ?? "");
+			setTag(initial?.tag ?? "");
+			setExcerpt(initial?.excerpt ?? "");
+			setBody(initial?.body ?? "");
+			setCoverGradient(initial?.coverGradient ?? DEFAULT_ARTICLE_COVER);
+			setCoverImageUrl(initial?.coverImageUrl ?? null);
+			setStatus(
+				(initial?.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT") as
+					| "DRAFT"
+					| "PUBLISHED",
+			);
+		}
+	}
 
 	async function onCoverFile(file: File | null) {
 		if (!file) return;
@@ -149,6 +300,7 @@ export function ArticleForm(props: Props) {
 						coverImageUrl,
 						status,
 					});
+					clearLocalDraft(false);
 					router.push(`/artisan/articles/${row.id}/edit`);
 					router.refresh();
 				} else {
@@ -162,6 +314,7 @@ export function ArticleForm(props: Props) {
 						coverImageUrl,
 						status,
 					});
+					clearLocalDraft(false);
 					router.refresh();
 				}
 			} catch (err) {
@@ -199,6 +352,26 @@ export function ArticleForm(props: Props) {
 			{error && (
 				<div className="rounded-sm border border-red-200 bg-red-50 px-4 py-3 font-sans text-red-800 text-sm">
 					{error}
+				</div>
+			)}
+
+			{hasRecoveredDraft && (
+				<div className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-sm text-amber-900">
+					<p className="font-semibold">Recovered unsaved draft from this browser.</p>
+					<div className="mt-2 flex flex-wrap items-center gap-3">
+						{lastAutosaveAt ? (
+							<span className="text-[12px] text-amber-800">
+								Last autosave: {new Date(lastAutosaveAt).toLocaleString()}
+							</span>
+						) : null}
+						<button
+							className="rounded-sm border border-amber-300 bg-white px-2.5 py-1 text-[12px] font-semibold hover:bg-amber-100"
+							onClick={() => clearLocalDraft(true)}
+							type="button"
+						>
+							Discard recovered draft
+						</button>
+					</div>
 				</div>
 			)}
 
@@ -398,9 +571,16 @@ export function ArticleForm(props: Props) {
 					</div>
 				</div>
 				<div className="flex items-center justify-between rounded-sm border border-cream-dark/70 bg-paper/80 px-3 py-2">
-					<p className="font-sans text-[12px] text-text-muted">
-						{readingMeta.words} words · {readingMeta.minutes} min read
-					</p>
+					<div className="font-sans text-[12px] text-text-muted">
+						<p>
+							{readingMeta.words} words · {readingMeta.minutes} min read
+						</p>
+						{lastAutosaveAt ? (
+							<p className="text-[11px]">
+								Autosaved {new Date(lastAutosaveAt).toLocaleTimeString()}
+							</p>
+						) : null}
+					</div>
 					<div className="flex flex-wrap gap-1">
 						{MARKDOWN_SNIPPETS.map((item) => (
 							<button
