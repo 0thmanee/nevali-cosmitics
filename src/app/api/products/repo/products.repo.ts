@@ -22,9 +22,14 @@ type VariantDbCore = {
   productId: string;
   name: string;
   unit: string;
+  sourceName: string | null;
   minOrderQuantity: number;
   minOrderNote: string | null;
   price: Prisma.Decimal;
+  unitCost: Prisma.Decimal;
+  packagingCost: Prisma.Decimal;
+  handlingCost: Prisma.Decimal;
+  otherCost: Prisma.Decimal;
   quantityOnHand: number;
   inStock: boolean;
   sortOrder: number;
@@ -36,7 +41,44 @@ function toVariantRow(v: VariantDbCore): ProductVariantRow {
   return {
     ...v,
     price: v.price.toFixed(2),
+    unitCost: v.unitCost.toFixed(2),
+    packagingCost: v.packagingCost.toFixed(2),
+    handlingCost: v.handlingCost.toFixed(2),
+    otherCost: v.otherCost.toFixed(2),
+    soldUnits: 0,
+    realizedRevenueMad: "0.00",
+    realizedNetMad: "0.00",
   };
+}
+
+type VariantSalesStats = { soldUnits: number; realizedRevenue: number };
+
+async function getVariantSalesStatsForProduct(
+  productId: string,
+): Promise<Map<string, VariantSalesStats>> {
+  const lines = await prisma.shopOrderLine.findMany({
+    where: {
+      productId,
+      productVariantId: { not: null },
+      order: { status: { in: ["NEW", "CONFIRMED", "SHIPPED"] } },
+    },
+    select: {
+      productVariantId: true,
+      quantity: true,
+      unitPrice: true,
+    },
+  });
+  const byVariant = new Map<string, VariantSalesStats>();
+  for (const l of lines) {
+    const variantId = l.productVariantId;
+    if (!variantId) continue;
+    const prev = byVariant.get(variantId) ?? { soldUnits: 0, realizedRevenue: 0 };
+    const unitPrice = Number(l.unitPrice);
+    prev.soldUnits += l.quantity;
+    prev.realizedRevenue += (Number.isFinite(unitPrice) ? unitPrice : 0) * l.quantity;
+    byVariant.set(variantId, prev);
+  }
+  return byVariant;
 }
 
 function fromPriceFromVariants(variants: { price: Prisma.Decimal }[]): string | null {
@@ -134,9 +176,14 @@ type VariantUpsertInput = {
   id?: string;
   name: string;
   unit: string;
+  sourceName?: string | null;
   minOrderQuantity: number;
   minOrderNote?: string | null;
   price: string;
+  unitCost?: string;
+  packagingCost?: string;
+  handlingCost?: string;
+  otherCost?: string;
   quantityOnHand: number;
   inStock: boolean;
   sortOrder?: number;
@@ -161,6 +208,10 @@ async function syncProductVariantsTx(
       throw new Error(`Unknown variant id for this product: ${v.id}`);
     }
     const priceNorm = v.price.trim().replace(",", ".");
+    const unitCostNorm = (v.unitCost ?? "0").trim().replace(",", ".");
+    const packagingCostNorm = (v.packagingCost ?? "0").trim().replace(",", ".");
+    const handlingCostNorm = (v.handlingCost ?? "0").trim().replace(",", ".");
+    const otherCostNorm = (v.otherCost ?? "0").trim().replace(",", ".");
     const sortOrder = v.sortOrder ?? i;
     if (v.id && existingIds.has(v.id)) {
       await tx.productVariant.update({
@@ -168,9 +219,14 @@ async function syncProductVariantsTx(
         data: {
           name: v.name,
           unit: v.unit || "item",
+          sourceName: v.sourceName?.trim() || null,
           minOrderQuantity: v.minOrderQuantity,
           minOrderNote: v.minOrderNote ?? null,
           price: new Prisma.Decimal(priceNorm),
+          unitCost: new Prisma.Decimal(unitCostNorm),
+          packagingCost: new Prisma.Decimal(packagingCostNorm),
+          handlingCost: new Prisma.Decimal(handlingCostNorm),
+          otherCost: new Prisma.Decimal(otherCostNorm),
           quantityOnHand: v.quantityOnHand,
           inStock: v.inStock,
           sortOrder,
@@ -182,9 +238,14 @@ async function syncProductVariantsTx(
           productId,
           name: v.name,
           unit: v.unit || "item",
+          sourceName: v.sourceName?.trim() || null,
           minOrderQuantity: v.minOrderQuantity,
           minOrderNote: v.minOrderNote ?? null,
           price: new Prisma.Decimal(priceNorm),
+          unitCost: new Prisma.Decimal(unitCostNorm),
+          packagingCost: new Prisma.Decimal(packagingCostNorm),
+          handlingCost: new Prisma.Decimal(handlingCostNorm),
+          otherCost: new Prisma.Decimal(otherCostNorm),
           quantityOnHand: v.quantityOnHand,
           inStock: v.inStock,
           sortOrder,
@@ -227,9 +288,14 @@ const variantSelect = {
   productId: true,
   name: true,
   unit: true,
+  sourceName: true,
   minOrderQuantity: true,
   minOrderNote: true,
   price: true,
+  unitCost: true,
+  packagingCost: true,
+  handlingCost: true,
+  otherCost: true,
   quantityOnHand: true,
   inStock: true,
   sortOrder: true,
@@ -312,11 +378,27 @@ export async function getProductWithImagesByOrgRepo(
     },
   });
   if (!row) return null;
+  const salesStats = await getVariantSalesStatsForProduct(productId);
   const { images, certifications, variants, ...rest } = row;
   return {
     ...rest,
     images,
-    variants: variants.map((v) => toVariantRow(v as VariantDbCore)),
+    variants: variants.map((v) => {
+      const base = toVariantRow(v as VariantDbCore);
+      const stat = salesStats.get(v.id) ?? { soldUnits: 0, realizedRevenue: 0 };
+      const cogsPerItem =
+        Number(base.unitCost) +
+        Number(base.packagingCost) +
+        Number(base.handlingCost) +
+        Number(base.otherCost);
+      const realizedNet = stat.realizedRevenue - cogsPerItem * stat.soldUnits;
+      return {
+        ...base,
+        soldUnits: stat.soldUnits,
+        realizedRevenueMad: stat.realizedRevenue.toFixed(2),
+        realizedNetMad: realizedNet.toFixed(2),
+      };
+    }),
     certifications,
   };
 }
@@ -346,12 +428,28 @@ export async function getProductWithImagesForAdminRepo(
     },
   });
   if (!row) return null;
+  const salesStats = await getVariantSalesStatsForProduct(productId);
   const { organization, images, certifications, variants, ...rest } = row;
   return {
     ...rest,
     organizationName: organization.name,
     images,
-    variants: variants.map((v) => toVariantRow(v as VariantDbCore)),
+    variants: variants.map((v) => {
+      const base = toVariantRow(v as VariantDbCore);
+      const stat = salesStats.get(v.id) ?? { soldUnits: 0, realizedRevenue: 0 };
+      const cogsPerItem =
+        Number(base.unitCost) +
+        Number(base.packagingCost) +
+        Number(base.handlingCost) +
+        Number(base.otherCost);
+      const realizedNet = stat.realizedRevenue - cogsPerItem * stat.soldUnits;
+      return {
+        ...base,
+        soldUnits: stat.soldUnits,
+        realizedRevenueMad: stat.realizedRevenue.toFixed(2),
+        realizedNetMad: realizedNet.toFixed(2),
+      };
+    }),
     certifications,
   };
 }

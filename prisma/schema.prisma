@@ -230,9 +230,14 @@ model ProductVariant {
   productId        String
   name             String
   unit             String           @default("item")
+  sourceName       String?
   minOrderQuantity Int              @default(1)
   minOrderNote     String?
   price            Decimal          @db.Decimal(12, 2)
+  unitCost         Decimal          @default(0) @db.Decimal(12, 2)
+  packagingCost    Decimal          @default(0) @db.Decimal(12, 2)
+  handlingCost     Decimal          @default(0) @db.Decimal(12, 2)
+  otherCost        Decimal          @default(0) @db.Decimal(12, 2)
   quantityOnHand   Int              @default(0)
   inStock          Boolean          @default(true)
   sortOrder        Int              @default(0)

@@ -114,9 +114,14 @@ export function ProductCreateForm() {
         variants: variants.map((v, i) => ({
           name: v.name.trim(),
           unit: v.unit.trim() || "item",
+          sourceName: v.sourceName.trim() || null,
           minOrderQuantity: Number(v.minOrderQuantity) || 1,
           minOrderNote: v.minOrderNote.trim() || null,
           price: v.price.trim(),
+          unitCost: v.unitCost.trim() || "0",
+          packagingCost: v.packagingCost.trim() || "0",
+          handlingCost: v.handlingCost.trim() || "0",
+          otherCost: v.otherCost.trim() || "0",
           quantityOnHand: Math.max(0, Number(v.quantityOnHand) || 0),
           inStock: v.inStock,
           sortOrder: i,
@@ -183,7 +188,7 @@ export function ProductCreateForm() {
           className="rounded-sm px-6 py-4"
           style={{ background: "color-mix(in srgb, var(--color-danger) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--color-danger) 30%, transparent)" }}
         >
-          <p className="font-sans text-sm text-[var(--color-danger)]">{error}</p>
+          <p className="font-sans text-sm text-danger">{error}</p>
         </div>
       )}
 
@@ -196,7 +201,7 @@ export function ProductCreateForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-name" className={productFormLabelClass}>
-                Product name <span className="text-[var(--color-danger)]">*</span>
+                Product name <span className="text-danger">*</span>
               </label>
               <input
                 id="product-name"
@@ -212,7 +217,7 @@ export function ProductCreateForm() {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-category" className={productFormLabelClass}>
-                Category <span className="text-[var(--color-danger)]">*</span>
+                Category <span className="text-danger">*</span>
               </label>
               <select
                 id="product-category"
@@ -361,7 +366,7 @@ export function ProductCreateForm() {
             </button>
           </div>
           <p className="font-sans text-[11px] text-text-muted mt-1.5">PDF or image only (JPEG, PNG, WebP). Max 10 MB.</p>
-          {certError && <p className="font-sans text-[12px] text-[var(--color-danger)] mt-1" role="alert">{certError}</p>}
+          {certError && <p className="font-sans text-[12px] text-danger mt-1" role="alert">{certError}</p>}
         </div>
         <div className="p-6">
           {stagedCerts.length === 0 ? (

@@ -5,9 +5,14 @@ const productVariantUpsertBaseSchema = z.object({
 	id: z.string().cuid().optional(),
 	name: z.string().min(1).max(200),
 	unit: z.string().max(50).optional().default("item"),
+	sourceName: z.string().max(200).optional().nullable(),
 	minOrderQuantity: z.number().int().min(1),
 	minOrderNote: z.string().max(500).nullable().optional(),
 	price: z.string().min(1).max(20),
+	unitCost: z.string().max(20).optional().default("0"),
+	packagingCost: z.string().max(20).optional().default("0"),
+	handlingCost: z.string().max(20).optional().default("0"),
+	otherCost: z.string().max(20).optional().default("0"),
 	quantityOnHand: z.number().int().min(0),
 	inStock: z.boolean(),
 	sortOrder: z.number().int().min(0).optional(),
@@ -109,9 +114,17 @@ export type ProductVariantRow = {
 	productId: string;
 	name: string;
 	unit: string;
+	sourceName: string | null;
 	minOrderQuantity: number;
 	minOrderNote: string | null;
 	price: string;
+	unitCost: string;
+	packagingCost: string;
+	handlingCost: string;
+	otherCost: string;
+	soldUnits: number;
+	realizedRevenueMad: string;
+	realizedNetMad: string;
 	quantityOnHand: number;
 	inStock: boolean;
 	sortOrder: number;

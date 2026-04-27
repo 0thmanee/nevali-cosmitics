@@ -93,9 +93,14 @@ export function ProductEditForm({ productId }: Props) {
             id: v.serverId,
             name: v.name.trim(),
             unit: v.unit.trim() || "item",
+            sourceName: v.sourceName.trim() || null,
             minOrderQuantity: Number(v.minOrderQuantity) || 1,
             minOrderNote: v.minOrderNote.trim() || null,
             price: v.price.trim(),
+            unitCost: v.unitCost.trim() || "0",
+            packagingCost: v.packagingCost.trim() || "0",
+            handlingCost: v.handlingCost.trim() || "0",
+            otherCost: v.otherCost.trim() || "0",
             quantityOnHand: Math.max(0, Number(v.quantityOnHand) || 0),
             inStock: v.inStock,
             sortOrder: i,
@@ -120,7 +125,7 @@ export function ProductEditForm({ productId }: Props) {
       >
         {isError ? (
           <div className="text-center px-6">
-            <p className="font-sans text-sm text-[var(--color-danger)]">
+            <p className="font-sans text-sm text-danger">
               {error instanceof Error ? error.message : "Failed to load product."}
             </p>
             <Link
@@ -160,7 +165,7 @@ export function ProductEditForm({ productId }: Props) {
               </span>
             </p>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <Link
               href={`/artisan/products/${productId}`}
               className="font-sans text-sm font-semibold rounded-sm px-4 py-2 transition-colors"
@@ -177,7 +182,7 @@ export function ProductEditForm({ productId }: Props) {
           className="rounded-sm overflow-hidden px-6 py-4"
           style={{ ...cardStyle, background: "color-mix(in srgb, var(--color-danger) 6%, transparent)", borderColor: "color-mix(in srgb, var(--color-danger) 30%, transparent)" }}
         >
-          <p className="font-sans text-sm text-[var(--color-danger)]">{validationError}</p>
+          <p className="font-sans text-sm text-danger">{validationError}</p>
         </div>
       )}
 
@@ -201,7 +206,7 @@ export function ProductEditForm({ productId }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5 sm:col-span-2">
               <label htmlFor="product-name" className={productFormLabelClass}>
-                Product name <span className="text-[var(--color-danger)]">*</span>
+                Product name <span className="text-danger">*</span>
               </label>
               <input
                 id="product-name"
@@ -217,7 +222,7 @@ export function ProductEditForm({ productId }: Props) {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="product-category" className={productFormLabelClass}>
-                Category <span className="text-[var(--color-danger)]">*</span>
+                Category <span className="text-danger">*</span>
               </label>
               <select
                 id="product-category"
