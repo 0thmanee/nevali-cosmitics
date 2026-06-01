@@ -3,6 +3,7 @@
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { STAT_ICON_COLOR, StatCard } from "~/components/stat-card";
 import { useProducts } from "~/features/artisan/hooks/use-products";
 import {
@@ -13,6 +14,7 @@ import {
 } from ".";
 
 export function ProductsPageClient() {
+	const { t } = useI18n();
 	const [activeTab, setActiveTab] = useState<ProductsTab>("All");
 	const [search, setSearch] = useState("");
 
@@ -44,13 +46,13 @@ export function ProductsPageClient() {
 			<div className="grid grid-cols-3 gap-3">
 				<StatCard
 					icon={<CheckCircle color={STAT_ICON_COLOR.green} size={20} />}
-					label="Approved"
+					label={t("producerProducts.statApproved")}
 					value={counts.Approved}
 					variant="green"
 				/>
 				<StatCard
 					icon={<Clock color={STAT_ICON_COLOR.amber} size={20} />}
-					label="Pending Review"
+					label={t("producerProducts.statPendingReview")}
 					value={counts.Pending}
 					variant="amber"
 				/>
@@ -65,7 +67,7 @@ export function ProductsPageClient() {
 							size={20}
 						/>
 					}
-					label="Rejected"
+					label={t("producerProducts.statRejected")}
 					value={counts.Rejected}
 					variant={counts.Rejected > 0 ? "red" : "neutral"}
 				/>
@@ -76,7 +78,7 @@ export function ProductsPageClient() {
 						className="rounded-sm bg-forest-dark px-4 py-2 font-sans font-semibold text-sm text-white transition-colors"
 						href="/artisan/products/new"
 					>
-						Add product
+						{t("producerProducts.addProduct")}
 					</Link>
 				}
 				activeTab={activeTab}
@@ -87,11 +89,11 @@ export function ProductsPageClient() {
 			/>
 			{isLoading ? (
 				<div className="rounded-sm border border-cream-dark bg-white py-12 text-center font-sans text-sm text-text-muted">
-					Loading products…
+					{t("producerProducts.loadingProducts")}
 				</div>
 			) : isError ? (
 				<div className="rounded-sm border border-cream-dark bg-white py-12 text-center font-sans text-red-500 text-sm">
-					Failed to load products.
+					{t("producerProducts.failedToLoadProducts")}
 				</div>
 			) : (
 				<ProductsTable products={filtered} />

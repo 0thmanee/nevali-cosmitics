@@ -7,6 +7,7 @@ import {
 	CERTIFICATION_ACCEPT,
 	CERTIFICATION_ALLOWED_MIMES,
 } from "~/app/api/media/schemas/media.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { uploadMedia } from "~/lib/media";
 import {
 	useAddCertification,
@@ -22,19 +23,19 @@ const STATUS_CONFIG = {
 		bg: "color-mix(in srgb, var(--color-gold) 10%, transparent)",
 		color: "var(--color-text-muted)",
 		dot: "var(--color-text-muted)",
-		label: "Pending review",
+		labelKey: "producerProfileCert.statusPendingReview",
 	},
 	APPROVED: {
 		bg: "color-mix(in srgb, var(--color-ink) 10%, transparent)",
 		color: "var(--color-success)",
 		dot: "var(--color-success-light)",
-		label: "Approved",
+		labelKey: "producerProfileCert.statusApproved",
 	},
 	REJECTED: {
 		bg: "color-mix(in srgb, var(--color-danger-dark) 10%, transparent)",
 		color: "var(--color-danger-dark)",
 		dot: "var(--color-danger)",
-		label: "Rejected",
+		labelKey: "producerProfileCert.statusRejected",
 	},
 } as const;
 
@@ -49,6 +50,7 @@ function CertRow({
 	onRemove: () => void;
 	removing: boolean;
 }) {
+	const { t } = useI18n();
 	const s =
 		STATUS_CONFIG[cert.status as keyof typeof STATUS_CONFIG] ??
 		STATUS_CONFIG.PENDING;
@@ -102,7 +104,7 @@ function CertRow({
 						className="inline-block h-1.5 w-1.5 rounded-full"
 						style={{ background: s.dot }}
 					/>
-					{s.label}
+					{t(s.labelKey)}
 				</span>
 				<a
 					className="srgb, var(--color-paper) 70%, var(--color-cream-dark))] srgb, var(--color-paper) 55%, var(--color-cream-dark))] rounded-sm border border-cream-dark bg-[color-mix(in px-2.5 py-1 font-medium font-sans text-[11px] text-text-dark transition-colors hover:bg-[color-mix(in"
@@ -110,7 +112,7 @@ function CertRow({
 					rel="noopener noreferrer"
 					target="_blank"
 				>
-					View
+					{t("producerProfileCert.view")}
 				</a>
 				<button
 					className="font-medium font-sans text-[11px] text-[var(--color-text-muted)] transition-colors hover:text-red-500 disabled:opacity-50"
@@ -118,7 +120,7 @@ function CertRow({
 					onClick={onRemove}
 					type="button"
 				>
-					Remove
+					{t("producerProfileCert.remove")}
 				</button>
 			</div>
 		</div>
@@ -134,6 +136,7 @@ function InlineUploadForm({
 	productId: string | null;
 	onSuccess?: () => void;
 }) {
+	const { t } = useI18n();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [name, setName] = useState("");
 	const [fileError, setFileError] = useState<string | null>(null);
@@ -145,11 +148,11 @@ function InlineUploadForm({
 		setFileError(null);
 		if (!file) return;
 		if (!name.trim()) {
-			setFileError("Enter a certificate name first.");
+			setFileError(t("producerProfileCert.errorEnterCertName"));
 			return;
 		}
 		if (!ALLOWED_SET.has(file.type)) {
-			setFileError("Only PDF and images (JPEG, PNG, WebP) are accepted.");
+			setFileError(t("producerProfileCert.errorFileType"));
 			return;
 		}
 		try {
@@ -165,7 +168,7 @@ function InlineUploadForm({
 			);
 		} catch {
 			addMutation.reset();
-			setFileError("Upload failed. Please try again.");
+			setFileError(t("producerProfileCert.errorUploadFailed"));
 		}
 	};
 
@@ -179,7 +182,7 @@ function InlineUploadForm({
 			}}
 		>
 			<p className="font-sans font-semibold text-[11px] text-text-dark uppercase tracking-wide">
-				New certificate
+				{t("producerProfileCert.newCertificate")}
 			</p>
 			<div className="flex flex-wrap items-center gap-2">
 				<input
@@ -195,7 +198,7 @@ function InlineUploadForm({
 						setName(e.target.value);
 						setFileError(null);
 					}}
-					placeholder="Certificate name (e.g. ISO 22000, Bio Certificate…)"
+					placeholder={t("producerProfileCert.certNamePlaceholder")}
 					type="text"
 					value={name}
 				/>
@@ -233,7 +236,7 @@ function InlineUploadForm({
 									strokeWidth="1.4"
 								/>
 							</svg>
-							Uploading…
+							{t("producerProfileCert.uploading")}
 						</>
 					) : (
 						<>
@@ -252,13 +255,13 @@ function InlineUploadForm({
 									strokeWidth="1.4"
 								/>
 							</svg>
-							Upload file
+							{t("producerProfileCert.uploadFile")}
 						</>
 					)}
 				</button>
 			</div>
 			<p className="font-sans text-[11px] text-text-muted">
-				PDF, JPEG, PNG or WebP — max 10 MB
+				{t("producerProfileCert.fileFormatHint")}
 			</p>
 			{fileError && (
 				<p className="font-sans text-[12px] text-red-500" role="alert">
@@ -320,6 +323,7 @@ function SectionHeader({
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function CertificationDocumentsSection() {
+	const { t } = useI18n();
 	const { data: certifications = [], isLoading, isError } = useCertifications();
 	const { data: products = [] } = useProducts();
 	const removeMutation = useRemoveCertification();
@@ -339,7 +343,7 @@ export function CertificationDocumentsSection() {
 				}}
 			>
 				<p className="font-sans text-[13px] text-text-muted">
-					Loading certifications…
+					{t("producerProfileCert.loadingCertifications")}
 				</p>
 			</div>
 		);
@@ -354,7 +358,7 @@ export function CertificationDocumentsSection() {
 				}}
 			>
 				<p className="font-sans text-[13px] text-red-500">
-					Failed to load certifications.
+					{t("producerProfileCert.failedLoadCertifications")}
 				</p>
 			</div>
 		);
@@ -382,7 +386,7 @@ export function CertificationDocumentsSection() {
 			>
 				<SectionHeader
 					count={globalCerts.length}
-					description="ISO, BIO, organic, export licenses and other organization-wide certifications."
+					description={t("producerProfileCert.orgCertsDescription")}
 					icon={
 						<svg fill="none" height="12" viewBox="0 0 12 12" width="12">
 							<path
@@ -393,7 +397,7 @@ export function CertificationDocumentsSection() {
 							/>
 						</svg>
 					}
-					title="Organization Certifications"
+					title={t("producerProfileCert.orgCertsHeading")}
 				/>
 
 				<div className="flex flex-col gap-3 p-5">
@@ -438,13 +442,13 @@ export function CertificationDocumentsSection() {
 									strokeWidth="1.5"
 								/>
 							</svg>
-							Add certificate
+							{t("producerProfileCert.addCertificate")}
 						</button>
 					)}
 
 					{globalCerts.length === 0 && !orgFormOpen && (
 						<p className="font-sans text-[12px] text-text-muted">
-							No organization certificates yet.
+							{t("producerProfileCert.noOrgCertsYet")}
 						</p>
 					)}
 				</div>
@@ -460,7 +464,7 @@ export function CertificationDocumentsSection() {
 			>
 				<SectionHeader
 					count={productCerts.length}
-					description="Certifications linked to a specific product — each product can have multiple."
+					description={t("producerProfileCert.productCertsDescription")}
 					icon={
 						<svg fill="none" height="12" viewBox="0 0 12 12" width="12">
 							<rect
@@ -481,13 +485,13 @@ export function CertificationDocumentsSection() {
 							<circle cx="6" cy="7.5" fill="var(--color-ink)" r="1" />
 						</svg>
 					}
-					title="Product Certifications"
+					title={t("producerProfileCert.productCertsHeading")}
 				/>
 
 				{products.length === 0 ? (
 					<div className="px-5 py-8 text-center">
 						<p className="font-sans text-[13px] text-text-muted">
-							No products yet. Add products from My Products first.
+							{t("producerProfileCert.noProductsYet")}
 						</p>
 					</div>
 				) : (
@@ -531,7 +535,13 @@ export function CertificationDocumentsSection() {
 															color: "var(--color-ink)",
 														}}
 													>
-														{certs.length} cert{certs.length !== 1 ? "s" : ""}
+														{certs.length !== 1
+															? t("producerProfileCert.certCountPlural", {
+																	count: certs.length,
+																})
+															: t("producerProfileCert.certCountSingular", {
+																	count: certs.length,
+																})}
 													</span>
 												)}
 											</div>
@@ -573,7 +583,7 @@ export function CertificationDocumentsSection() {
 																strokeWidth="1.5"
 															/>
 														</svg>
-														Cancel
+														{t("producerProfileCert.cancel")}
 													</>
 												) : (
 													<>
@@ -590,7 +600,7 @@ export function CertificationDocumentsSection() {
 																strokeWidth="1.5"
 															/>
 														</svg>
-														Add cert
+														{t("producerProfileCert.addCert")}
 													</>
 												)}
 											</button>

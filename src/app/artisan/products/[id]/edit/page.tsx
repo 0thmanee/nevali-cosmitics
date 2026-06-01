@@ -1,11 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import { ProductEditForm } from "~/features/artisan/components/products/product-edit-form";
+import { getTranslator } from "~/lib/i18n/server";
 
 type Props = { params: Promise<{ id: string }> };
 
 export default async function ProductEditPage({ params }: Props) {
 	const { id } = await params;
+	const t = await getTranslator();
 	return (
 		<div className="flex w-full flex-col gap-6 p-4 lg:p-6">
 			<nav className="flex items-center gap-2 text-sm">
@@ -13,17 +15,19 @@ export default async function ProductEditPage({ params }: Props) {
 					className="font-sans text-text-muted transition-colors hover:text-text-dark"
 					href="/artisan/products"
 				>
-					Products
+					{t("producerProductPages.breadcrumbProducts")}
 				</Link>
 				<span className="font-sans text-text-muted/60">/</span>
 				<Link
 					className="font-sans text-text-muted transition-colors hover:text-text-dark"
 					href={`/artisan/products/${id}`}
 				>
-					View
+					{t("producerProductPages.breadcrumbView")}
 				</Link>
 				<span className="font-sans text-text-muted/60">/</span>
-				<span className="font-medium font-sans text-text-dark">Edit</span>
+				<span className="font-medium font-sans text-text-dark">
+					{t("producerProductPages.breadcrumbEdit")}
+				</span>
 			</nav>
 			<ProductEditForm productId={id} />
 		</div>

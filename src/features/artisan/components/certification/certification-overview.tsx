@@ -2,6 +2,7 @@
 
 import { Award, CheckCircle, Clock, XCircle } from "lucide-react";
 import type React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCertifications } from "~/features/artisan/hooks/use-certifications";
 import { useCertifiedProducts } from "~/features/artisan/hooks/use-products";
 import { NEVALI_HOUSE_BRAND } from "~/lib/nevali-brand-copy";
@@ -79,6 +80,7 @@ function CertTypeRow({
 	barColor: string;
 	emptyHint: string;
 }) {
+	const { t } = useI18n();
 	return (
 		<div
 			className="flex flex-col gap-3 rounded-sm p-4"
@@ -104,7 +106,7 @@ function CertTypeRow({
 					className="rounded-full px-2 py-0.5 font-bold font-sans text-[11px]"
 					style={{ background: accentColor + "14", color: accentColor }}
 				>
-					{total} total
+					{t("producerProfileCert.totalCount", { count: total })}
 				</span>
 			</div>
 
@@ -120,19 +122,19 @@ function CertTypeRow({
 							color="var(--color-success)"
 							count={approved}
 							dot="var(--color-success-light)"
-							label="Approved"
+							label={t("producerProfileCert.statusApproved")}
 						/>
 						<StatusChip
 							color="var(--color-text-muted)"
 							count={pending}
 							dot="var(--color-text-muted)"
-							label="Pending"
+							label={t("producerProfileCert.statusPending")}
 						/>
 						<StatusChip
 							color="var(--color-danger-dark)"
 							count={rejected}
 							dot="var(--color-danger)"
-							label="Rejected"
+							label={t("producerProfileCert.statusRejected")}
 						/>
 					</div>
 				</>
@@ -170,6 +172,7 @@ function StatNumber({
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 export function CertificationOverview() {
+	const { t } = useI18n();
 	const { data: certifications = [], isLoading: certLoading } =
 		useCertifications();
 	const { data: certifiedProducts = [], isLoading: productsLoading } =
@@ -202,7 +205,9 @@ export function CertificationOverview() {
 					border: "1px solid var(--color-cream-dark)",
 				}}
 			>
-				<p className="font-sans text-[13px] text-text-muted">Loading…</p>
+				<p className="font-sans text-[13px] text-text-muted">
+					{t("producerProfileCert.loading")}
+				</p>
 			</div>
 		);
 	}
@@ -215,28 +220,28 @@ export function CertificationOverview() {
 					[
 						{
 							value: certifiedCount,
-							label: "Certified products",
+							label: t("producerProfileCert.certifiedProducts"),
 							icon: <Award size={18} strokeWidth={1.5} />,
 							bg: "color-mix(in srgb, var(--color-ink) 8%, transparent)",
 							color: "var(--color-ink)",
 						},
 						{
 							value: totalApproved,
-							label: "Approved certs",
+							label: t("producerProfileCert.approvedCerts"),
 							icon: <CheckCircle size={18} strokeWidth={1.5} />,
 							bg: "color-mix(in srgb, var(--color-success) 8%, transparent)",
 							color: "var(--color-success)",
 						},
 						{
 							value: totalPending,
-							label: "Pending review",
+							label: t("producerProfileCert.pendingReview"),
 							icon: <Clock size={18} strokeWidth={1.5} />,
 							bg: "color-mix(in srgb, var(--color-gold) 8%, transparent)",
 							color: "var(--color-text-muted)",
 						},
 						{
 							value: totalRejected,
-							label: "Rejected",
+							label: t("producerProfileCert.statusRejected"),
 							icon: <XCircle size={18} strokeWidth={1.5} />,
 							bg: "color-mix(in srgb, var(--color-danger-dark) 8%, transparent)",
 							color: "var(--color-danger-dark)",
@@ -287,7 +292,7 @@ export function CertificationOverview() {
 						style={{ borderColor: "var(--color-cream-dark)" }}
 					>
 						<h3 className="font-bold font-serif text-[15px] text-text-dark">
-							Certification breakdown
+							{t("producerProfileCert.certificationBreakdown")}
 						</h3>
 					</div>
 					<div className="flex flex-col gap-3 p-5">
@@ -295,7 +300,7 @@ export function CertificationOverview() {
 							accentColor="var(--color-ink)"
 							approved={gApproved}
 							barColor="var(--color-success-light)"
-							emptyHint="No organization certifications yet — go to Documents to upload your ISO, BIO or export licenses."
+							emptyHint={t("producerProfileCert.orgCertsEmptyHint")}
 							icon={
 								<svg fill="none" height="14" viewBox="0 0 14 14" width="14">
 									<path
@@ -306,7 +311,7 @@ export function CertificationOverview() {
 									/>
 								</svg>
 							}
-							label="Organization certifications"
+							label={t("producerProfileCert.orgCertifications")}
 							pending={gPending}
 							rejected={gRejected}
 							total={globalCerts.length}
@@ -315,7 +320,7 @@ export function CertificationOverview() {
 							accentColor="var(--color-info-dark)"
 							approved={pApproved}
 							barColor="var(--color-info)"
-							emptyHint="No product certifications yet — go to Documents and select a product to attach a certificate."
+							emptyHint={t("producerProfileCert.productCertsEmptyHint")}
 							icon={
 								<svg fill="none" height="14" viewBox="0 0 14 14" width="14">
 									<rect
@@ -341,7 +346,7 @@ export function CertificationOverview() {
 									/>
 								</svg>
 							}
-							label="Product certifications"
+							label={t("producerProfileCert.productCertifications")}
 							pending={pPending}
 							rejected={pRejected}
 							total={productCerts.length}
@@ -385,13 +390,17 @@ export function CertificationOverview() {
 									/>
 								</svg>
 								<span className="font-bold font-sans text-[11px] text-[var(--color-danger-dark)] uppercase tracking-wide">
-									Action needed
+									{t("producerProfileCert.actionNeeded")}
 								</span>
 							</div>
 							<p className="font-sans text-[12px] text-[var(--color-danger-dark)]/80 leading-relaxed">
-								<strong>{totalRejected}</strong> certification
-								{totalRejected !== 1 ? "s were" : " was"} rejected. Go to the
-								Documents tab to review and re-upload.
+								{totalRejected !== 1
+									? t("producerProfileCert.rejectionAlertPlural", {
+											count: totalRejected,
+										})
+									: t("producerProfileCert.rejectionAlertSingular", {
+											count: totalRejected,
+										})}
 							</p>
 						</div>
 					)}
@@ -425,7 +434,7 @@ export function CertificationOverview() {
 								</svg>
 							</div>
 							<span className="font-sans font-semibold text-[13px] text-text-dark">
-								Certified products
+								{t("producerProfileCert.certifiedProducts")}
 							</span>
 						</div>
 						<div className="flex items-end gap-2">
@@ -433,21 +442,17 @@ export function CertificationOverview() {
 								{certifiedCount}
 							</span>
 							<span className="mb-1 font-sans text-[12px] text-text-muted">
-								product{certifiedCount !== 1 ? "s" : ""} approved
+								{certifiedCount !== 1
+									? t("producerProfileCert.productsApprovedPlural")
+									: t("producerProfileCert.productsApprovedSingular")}
 							</span>
 						</div>
 						<p className="font-sans text-[11px] text-text-muted leading-relaxed">
-							{SHOW_MULTI_PRODUCER_EXPERIENCE ? (
-								<>
-									Products approved by the admin appear in the public
-									marketplace under your partner profile.
-								</>
-							) : (
-								<>
-									Products approved by the admin appear in the public catalog
-									under your {NEVALI_HOUSE_BRAND.legalName} studio profile.
-								</>
-							)}
+							{SHOW_MULTI_PRODUCER_EXPERIENCE
+								? t("producerProfileCert.approvedProductsMarketplace")
+								: t("producerProfileCert.approvedProductsCatalog", {
+										brand: NEVALI_HOUSE_BRAND.legalName,
+									})}
 						</p>
 					</div>
 
@@ -478,12 +483,11 @@ export function CertificationOverview() {
 								/>
 							</svg>
 							<span className="font-bold font-sans text-[11px] text-text-muted uppercase tracking-wide">
-								Renewal reminder
+								{t("producerProfileCert.renewalReminder")}
 							</span>
 						</div>
 						<p className="font-sans text-[12px] text-text-muted/80 leading-relaxed">
-							Keep your documents up to date. Re-submit updated certificates
-							before they expire.
+							{t("producerProfileCert.renewalReminderText")}
 						</p>
 					</div>
 				</div>

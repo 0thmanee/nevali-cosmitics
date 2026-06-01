@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import type { ProductImageItem } from "~/app/api/products/schemas/products.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 
 const cardStyle = {
 	background: "white",
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function ProductGallery({ images, alt = "Product" }: Props) {
+	const { t } = useI18n();
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const main = images[selectedIndex] ?? images[0];
 
@@ -61,7 +63,9 @@ export function ProductGallery({ images, alt = "Product" }: Props) {
 						/>
 					</svg>
 				</div>
-				<p className="font-sans text-sm text-text-muted">No images yet</p>
+				<p className="font-sans text-sm text-text-muted">
+					{t("producerProducts.noImagesYet")}
+				</p>
 			</div>
 		);
 	}
@@ -70,7 +74,7 @@ export function ProductGallery({ images, alt = "Product" }: Props) {
 		<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 			<div className="border-cream-dark border-b px-6 py-4">
 				<h2 className="font-bold font-serif text-[15px] text-text-dark">
-					Gallery
+					{t("producerProducts.gallery")}
 				</h2>
 			</div>
 			<div className="flex flex-col gap-4 p-6">

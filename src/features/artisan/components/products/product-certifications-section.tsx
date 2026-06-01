@@ -8,6 +8,7 @@ import {
 	CERTIFICATION_ACCEPT,
 	CERTIFICATION_ALLOWED_MIMES,
 } from "~/app/api/media/schemas/media.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { uploadMedia } from "~/lib/media";
 import {
 	useAddCertification,
@@ -54,6 +55,7 @@ export function ProductCertificationsSection({
 	productName,
 	certifications,
 }: Props) {
+	const { t } = useI18n();
 	const queryClient = useQueryClient();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [name, setName] = useState("");
@@ -67,11 +69,11 @@ export function ProductCertificationsSection({
 		setFileError(null);
 		if (!file) return;
 		if (!name.trim()) {
-			setFileError("Enter a document name first.");
+			setFileError(t("producerProducts.enterDocumentNameFirst"));
 			return;
 		}
 		if (!ALLOWED_SET.has(file.type)) {
-			setFileError("Only PDF and images (JPEG, PNG, WebP) are allowed.");
+			setFileError(t("producerProducts.onlyPdfAndImagesAllowed"));
 			return;
 		}
 		try {
@@ -96,11 +98,10 @@ export function ProductCertificationsSection({
 		<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 			<div className="flex flex-col gap-1 border-cream-dark border-b px-6 py-4">
 				<h2 className="font-bold font-serif text-[15px] text-text-dark">
-					Certifications
+					{t("producerProducts.certifications")}
 				</h2>
 				<p className="font-sans text-[11px] text-text-muted">
-					Add documents (PDF or image) for this product. Each certification is
-					reviewed by admin separately and will show as PENDING until approved.
+					{t("producerProducts.certificationsSectionHint")}
 				</p>
 			</div>
 			<div className="flex flex-col gap-3 border-cream-dark border-b px-6 py-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
@@ -119,7 +120,7 @@ export function ProductCertificationsSection({
 								setName(e.target.value);
 								setFileError(null);
 							}}
-							placeholder="Document name"
+							placeholder={t("producerProducts.documentName")}
 							type="text"
 							value={name}
 						/>
@@ -133,11 +134,13 @@ export function ProductCertificationsSection({
 							style={{ background: "var(--color-ink)", color: "white" }}
 							type="button"
 						>
-							{addMutation.isPending ? "Uploading…" : "Upload certification"}
+							{addMutation.isPending
+								? t("producerProducts.uploading")
+								: t("producerProducts.uploadCertification")}
 						</button>
 					</div>
 					<p className="font-sans text-[11px] text-text-muted">
-						PDF or image only (JPEG, PNG, WebP). Max 10 MB.
+						{t("producerProducts.pdfOrImageMax10mb")}
 					</p>
 					{fileError && (
 						<p
@@ -152,8 +155,7 @@ export function ProductCertificationsSection({
 			<div className="p-6">
 				{certifications.length === 0 ? (
 					<p className="font-sans text-sm text-text-muted">
-						No certifications linked to this product yet. Add a document (PDF or
-						image) above.
+						{t("producerProducts.noCertificationsLinkedYet")}
 					</p>
 				) : (
 					<ul className="flex flex-col gap-2">
@@ -196,7 +198,7 @@ export function ProductCertificationsSection({
 											rel="noopener noreferrer"
 											target="_blank"
 										>
-											View
+											{t("producerProducts.view")}
 										</a>
 										<button
 											className="font-medium font-sans text-[12px] text-[var(--color-danger)] hover:underline disabled:opacity-60"
@@ -204,7 +206,7 @@ export function ProductCertificationsSection({
 											onClick={() => removeMutation.mutate(c.id)}
 											type="button"
 										>
-											Remove
+											{t("producerProducts.remove")}
 										</button>
 									</div>
 								</li>

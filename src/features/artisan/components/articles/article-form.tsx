@@ -7,6 +7,7 @@ import type React from "react";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ProducerArticleRow } from "~/app/api/articles/articles.types";
 import { ArticleMarkdown } from "~/components/article-markdown";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import {
 	ARTICLE_COVER_PRESETS,
 	DEFAULT_ARTICLE_COVER,
@@ -21,27 +22,35 @@ import {
 type Props = { mode: "create" } | { mode: "edit"; article: ProducerArticleRow };
 
 const MARKDOWN_SNIPPETS = [
-	{ label: "H2", snippet: "\n\n## Section title\n\n" },
-	{ label: "Quote", snippet: "\n\n> Quote text\n\n" },
+	{ id: "h2", labelKey: "snippetH2", snippet: "\n\n## Section title\n\n" },
+	{ id: "quote", labelKey: "snippetQuote", snippet: "\n\n> Quote text\n\n" },
 	{
-		label: "Bullet list",
+		id: "bulletList",
+		labelKey: "snippetBulletList",
 		snippet: "\n\n- First point\n- Second point\n- Third point\n\n",
 	},
 	{
-		label: "Numbered list",
+		id: "numberedList",
+		labelKey: "snippetNumberedList",
 		snippet: "\n\n1. First step\n2. Second step\n3. Third step\n\n",
 	},
-	{ label: "Link", snippet: "\n\n[Link label](https://example.com)\n\n" },
 	{
-		label: "Table",
+		id: "link",
+		labelKey: "snippetLink",
+		snippet: "\n\n[Link label](https://example.com)\n\n",
+	},
+	{
+		id: "table",
+		labelKey: "snippetTable",
 		snippet:
 			"\n\n| Ingredient | Benefit |\n| --- | --- |\n| Argan oil | Nourishes |\n| Rose water | Soothes |\n\n",
 	},
 	{
-		label: "Code block",
+		id: "codeBlock",
+		labelKey: "snippetCodeBlock",
 		snippet: "\n\n```txt\nAdd your technical notes here\n```\n\n",
 	},
-	{ label: "Divider", snippet: "\n\n---\n\n" },
+	{ id: "divider", labelKey: "snippetDivider", snippet: "\n\n---\n\n" },
 ] as const;
 
 type ArticleDraftPayload = {
@@ -56,6 +65,7 @@ type ArticleDraftPayload = {
 };
 
 export function ArticleForm(props: Props) {
+	const { t } = useI18n();
 	const router = useRouter();
 	const bodyRef = useRef<HTMLTextAreaElement>(null);
 	const coverInputRef = useRef<HTMLInputElement>(null);
@@ -254,7 +264,11 @@ export function ArticleForm(props: Props) {
 			const { url } = await uploadMedia(file, "articleMedia");
 			setCoverImageUrl(url);
 		} catch (e) {
-			setError(e instanceof Error ? e.message : "Cover upload failed.");
+			setError(
+				e instanceof Error
+					? e.message
+					: t("producerArticlesUi.coverUploadFailed"),
+			);
 		} finally {
 			setUploadingCover(false);
 			if (coverInputRef.current) coverInputRef.current.value = "";
@@ -288,11 +302,17 @@ export function ArticleForm(props: Props) {
 		setUploadingInline(true);
 		try {
 			const { url } = await uploadMedia(file, "articleMedia");
-			const alt = file.name.replace(/\.[^/.]+$/, "").slice(0, 80) || "Image";
+			const alt =
+				file.name.replace(/\.[^/.]+$/, "").slice(0, 80) ||
+				t("producerArticlesUi.imageAltFallback");
 			const snippet = `\n\n![${alt}](${url})\n\n`;
 			insertSnippet(snippet);
 		} catch (e) {
-			setError(e instanceof Error ? e.message : "Image upload failed.");
+			setError(
+				e instanceof Error
+					? e.message
+					: t("producerArticlesUi.imageUploadFailed"),
+			);
 		} finally {
 			setUploadingInline(false);
 			if (inlineImageInputRef.current) inlineImageInputRef.current.value = "";
@@ -332,14 +352,18 @@ export function ArticleForm(props: Props) {
 					router.refresh();
 				}
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "Something went wrong.");
+				setError(
+					err instanceof Error
+						? err.message
+						: t("producerArticlesUi.genericError"),
+				);
 			}
 		});
 	}
 
 	function onDelete() {
 		if (props.mode !== "edit") return;
-		if (!window.confirm("Delete this article? This cannot be undone.")) return;
+		if (!window.confirm(t("producerArticlesUi.deleteConfirm"))) return;
 		setError(null);
 		startTransition(async () => {
 			try {
@@ -347,7 +371,11 @@ export function ArticleForm(props: Props) {
 				router.push("/artisan/articles");
 				router.refresh();
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "Delete failed.");
+				setError(
+					err instanceof Error
+						? err.message
+						: t("producerArticlesUi.deleteFailed"),
+				);
 			}
 		});
 	}
@@ -359,7 +387,7 @@ export function ArticleForm(props: Props) {
 					className="font-sans text-sm text-text-muted hover:text-text-dark"
 					href="/artisan/articles"
 				>
-					← Journal
+					← {t("producerArticlesUi.backToJournal")}
 				</Link>
 			</div>
 
@@ -372,12 +400,14 @@ export function ArticleForm(props: Props) {
 			{hasRecoveredDraft && (
 				<div className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-amber-900 text-sm">
 					<p className="font-semibold">
-						Recovered unsaved draft from this browser.
+						{t("producerArticlesUi.recoveredDraft")}
 					</p>
 					<div className="mt-2 flex flex-wrap items-center gap-3">
 						{lastAutosaveAt ? (
 							<span className="text-[12px] text-amber-800">
-								Last autosave: {new Date(lastAutosaveAt).toLocaleString()}
+								{t("producerArticlesUi.lastAutosave", {
+									time: new Date(lastAutosaveAt).toLocaleString(),
+								})}
 							</span>
 						) : null}
 						<button
@@ -385,7 +415,7 @@ export function ArticleForm(props: Props) {
 							onClick={() => clearLocalDraft(true)}
 							type="button"
 						>
-							Discard recovered draft
+							{t("producerArticlesUi.discardRecoveredDraft")}
 						</button>
 					</div>
 				</div>
@@ -396,7 +426,7 @@ export function ArticleForm(props: Props) {
 					className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide"
 					htmlFor="article-title"
 				>
-					Title
+					{t("producerArticlesUi.titleLabel")}
 				</label>
 				<input
 					className="rounded-sm border border-cream-dark bg-white px-3 py-2 font-sans text-sm"
@@ -413,14 +443,14 @@ export function ArticleForm(props: Props) {
 					className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide"
 					htmlFor="article-tag"
 				>
-					Tag (optional)
+					{t("producerArticlesUi.tagLabel")}
 				</label>
 				<input
 					className="rounded-sm border border-cream-dark bg-white px-3 py-2 font-sans text-sm"
 					id="article-tag"
 					maxLength={60}
 					onChange={(e) => setTag(e.target.value)}
-					placeholder="e.g. Compliance, Community"
+					placeholder={t("producerArticlesUi.tagPlaceholder")}
 					value={tag}
 				/>
 			</div>
@@ -430,7 +460,7 @@ export function ArticleForm(props: Props) {
 					className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide"
 					htmlFor="article-excerpt"
 				>
-					Excerpt (optional)
+					{t("producerArticlesUi.excerptLabel")}
 				</label>
 				<textarea
 					className="min-h-[72px] resize-y rounded-sm border border-cream-dark bg-white px-3 py-2 font-sans text-sm"
@@ -445,7 +475,7 @@ export function ArticleForm(props: Props) {
 			<div className="flex flex-col gap-3 rounded-sm border border-cream-dark bg-white p-4">
 				<div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 					<span className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide">
-						Cover media
+						{t("producerArticlesUi.coverMedia")}
 					</span>
 					<div className="flex flex-wrap gap-2">
 						<input
@@ -461,7 +491,9 @@ export function ArticleForm(props: Props) {
 							onClick={() => coverInputRef.current?.click()}
 							type="button"
 						>
-							{uploadingCover ? "Uploading…" : "Upload cover photo"}
+							{uploadingCover
+								? t("producerArticlesUi.uploading")
+								: t("producerArticlesUi.uploadCoverPhoto")}
 						</button>
 						{coverImageUrl && (
 							<button
@@ -470,20 +502,18 @@ export function ArticleForm(props: Props) {
 								onClick={() => setCoverImageUrl(null)}
 								type="button"
 							>
-								Remove photo
+								{t("producerArticlesUi.removePhoto")}
 							</button>
 						)}
 					</div>
 				</div>
 				<p className="font-sans text-[12px] text-text-muted leading-relaxed">
-					When set, this photo is the hero on the public article and on listing
-					cards. You can still pick a gradient accent for places without the
-					photo.
+					{t("producerArticlesUi.coverHelp")}
 				</p>
 				<div className="relative h-40 w-full max-w-md overflow-hidden rounded-sm border border-cream-dark">
 					{coverImageUrl ? (
 						<Image
-							alt="Cover preview"
+							alt={t("producerArticlesUi.coverPreviewAlt")}
 							className="object-cover"
 							fill
 							sizes="(max-width: 768px) 100vw, 448px"
@@ -500,7 +530,7 @@ export function ArticleForm(props: Props) {
 
 			<div className="flex flex-col gap-2">
 				<span className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide">
-					Cover gradient
+					{t("producerArticlesUi.coverGradient")}
 				</span>
 				<div className="flex flex-wrap gap-2">
 					{ARTICLE_COVER_PRESETS.map((p) => (
@@ -527,7 +557,7 @@ export function ArticleForm(props: Props) {
 						className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide"
 						htmlFor="article-body"
 					>
-						Body (Markdown)
+						{t("producerArticlesUi.bodyLabel")}
 					</label>
 					<div className="flex flex-wrap gap-2">
 						<div className="inline-flex overflow-hidden rounded-sm border border-cream-dark bg-white">
@@ -540,7 +570,7 @@ export function ArticleForm(props: Props) {
 								onClick={() => setEditorView("write")}
 								type="button"
 							>
-								Write
+								{t("producerArticlesUi.viewWrite")}
 							</button>
 							<button
 								className={`border-cream-dark border-x px-3 py-1.5 font-sans font-semibold text-xs ${
@@ -551,7 +581,7 @@ export function ArticleForm(props: Props) {
 								onClick={() => setEditorView("split")}
 								type="button"
 							>
-								Split
+								{t("producerArticlesUi.viewSplit")}
 							</button>
 							<button
 								className={`px-3 py-1.5 font-sans font-semibold text-xs ${
@@ -562,7 +592,7 @@ export function ArticleForm(props: Props) {
 								onClick={() => setEditorView("preview")}
 								type="button"
 							>
-								Preview
+								{t("producerArticlesUi.viewPreview")}
 							</button>
 						</div>
 						<input
@@ -580,7 +610,9 @@ export function ArticleForm(props: Props) {
 							onClick={() => inlineImageInputRef.current?.click()}
 							type="button"
 						>
-							{uploadingInline ? "Uploading…" : "Insert image"}
+							{uploadingInline
+								? t("producerArticlesUi.uploading")
+								: t("producerArticlesUi.insertImage")}
 						</button>
 						<button
 							className="rounded-sm border border-cream-dark bg-paper px-3 py-1.5 font-sans font-semibold text-xs hover:bg-cream disabled:opacity-50"
@@ -588,18 +620,23 @@ export function ArticleForm(props: Props) {
 							onClick={() => insertSnippet("\n\n## Section title\n\n")}
 							type="button"
 						>
-							Insert heading
+							{t("producerArticlesUi.insertHeading")}
 						</button>
 					</div>
 				</div>
 				<div className="flex items-center justify-between rounded-sm border border-cream-dark/70 bg-paper/80 px-3 py-2">
 					<div className="font-sans text-[12px] text-text-muted">
 						<p>
-							{readingMeta.words} words · {readingMeta.minutes} min read
+							{t("producerArticlesUi.readingMeta", {
+								words: readingMeta.words,
+								minutes: readingMeta.minutes,
+							})}
 						</p>
 						{lastAutosaveAt ? (
 							<p className="text-[11px]">
-								Autosaved {new Date(lastAutosaveAt).toLocaleTimeString()}
+								{t("producerArticlesUi.autosaved", {
+									time: new Date(lastAutosaveAt).toLocaleTimeString(),
+								})}
 							</p>
 						) : null}
 					</div>
@@ -608,11 +645,11 @@ export function ArticleForm(props: Props) {
 							<button
 								className="rounded-sm border border-cream-dark bg-white px-2.5 py-1 font-sans font-semibold text-[11px] hover:bg-cream disabled:opacity-50"
 								disabled={busy}
-								key={item.label}
+								key={item.id}
 								onClick={() => insertSnippet(item.snippet)}
 								type="button"
 							>
-								{item.label}
+								{t(`producerArticlesUi.${item.labelKey}`)}
 							</button>
 						))}
 					</div>
@@ -636,13 +673,13 @@ export function ArticleForm(props: Props) {
 					{editorView !== "write" && (
 						<div className="min-h-[360px] rounded-sm border border-cream-dark bg-white p-4">
 							<p className="mb-3 font-bold font-sans text-[11px] text-text-muted uppercase tracking-wide">
-								Live preview
+								{t("producerArticlesUi.livePreview")}
 							</p>
 							{body.trim().length > 0 ? (
 								<ArticleMarkdown markdown={body} />
 							) : (
 								<p className="font-sans text-sm text-text-muted">
-									Start writing markdown to preview your article here.
+									{t("producerArticlesUi.previewPlaceholder")}
 								</p>
 							)}
 						</div>
@@ -650,23 +687,18 @@ export function ArticleForm(props: Props) {
 				</div>
 				<details className="font-sans text-[12px] text-text-muted">
 					<summary className="cursor-pointer font-semibold text-text-dark">
-						Markdown tips
+						{t("producerArticlesUi.markdownTips")}
 					</summary>
 					<ul className="mt-2 list-disc space-y-1 pl-5">
 						<li>
 							<code className="rounded bg-cream px-1">**bold**</code>,{" "}
 							<code className="rounded bg-cream px-1">*italic*</code>
 						</li>
-						<li>Headings: lines starting with ## or ###</li>
-						<li>Bullets: lines starting with - or *</li>
-						<li>Links: [label](https://…)</li>
-						<li>
-							Images: ![description](https://…) — use Insert image to upload
-						</li>
-						<li>
-							Tables: use | columns | with a separator row (see GitHub-flavored
-							Markdown)
-						</li>
+						<li>{t("producerArticlesUi.tipHeadings")}</li>
+						<li>{t("producerArticlesUi.tipBullets")}</li>
+						<li>{t("producerArticlesUi.tipLinks")}</li>
+						<li>{t("producerArticlesUi.tipImages")}</li>
+						<li>{t("producerArticlesUi.tipTables")}</li>
 					</ul>
 				</details>
 			</div>
@@ -676,7 +708,7 @@ export function ArticleForm(props: Props) {
 					className="font-sans font-semibold text-text-muted text-xs uppercase tracking-wide"
 					htmlFor="article-visibility"
 				>
-					Visibility
+					{t("producerArticlesUi.visibilityLabel")}
 				</label>
 				<select
 					className="rounded-sm border border-cream-dark bg-white px-3 py-2 font-sans text-sm"
@@ -684,9 +716,11 @@ export function ArticleForm(props: Props) {
 					onChange={(e) => setStatus(e.target.value as "DRAFT" | "PUBLISHED")}
 					value={status}
 				>
-					<option value="DRAFT">Draft — not on the public site</option>
+					<option value="DRAFT">
+						{t("producerArticlesUi.visibilityDraftOption")}
+					</option>
 					<option value="PUBLISHED">
-						Published — visible on nevali home and journal
+						{t("producerArticlesUi.visibilityPublishedOption")}
 					</option>
 				</select>
 			</div>
@@ -697,7 +731,9 @@ export function ArticleForm(props: Props) {
 					disabled={busy}
 					type="submit"
 				>
-					{props.mode === "create" ? "Create article" : "Save changes"}
+					{props.mode === "create"
+						? t("producerArticlesUi.createArticle")
+						: t("producerArticlesUi.saveChanges")}
 				</button>
 				{props.mode === "edit" && (
 					<button
@@ -706,7 +742,7 @@ export function ArticleForm(props: Props) {
 						onClick={onDelete}
 						type="button"
 					>
-						Delete
+						{t("producerArticlesUi.delete")}
 					</button>
 				)}
 			</div>

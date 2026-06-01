@@ -1,9 +1,17 @@
 "use client";
 
 import type React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 
 const TABS = ["All", "Approved", "Pending", "Rejected"] as const;
 export type ProductsTab = (typeof TABS)[number];
+
+const TAB_LABEL_KEYS: Record<ProductsTab, string> = {
+	All: "producerProducts.tabAll",
+	Approved: "producerProducts.tabApproved",
+	Pending: "producerProducts.tabPending",
+	Rejected: "producerProducts.tabRejected",
+};
 
 export type ProductsFilterBarProps = {
 	activeTab: ProductsTab;
@@ -22,6 +30,7 @@ export function ProductsFilterBar({
 	counts,
 	action,
 }: ProductsFilterBarProps) {
+	const { t } = useI18n();
 	return (
 		<div
 			className="flex flex-col gap-3 rounded-sm px-4 py-3 sm:flex-row sm:items-center"
@@ -56,7 +65,7 @@ export function ProductsFilterBar({
 					<input
 						className="w-full rounded-sm py-2 pr-4 pl-8 font-sans text-sm text-text-dark outline-none"
 						onChange={(e) => onSearchChange(e.target.value)}
-						placeholder="Search products..."
+						placeholder={t("producerProducts.searchProducts")}
 						style={{
 							background: "var(--color-paper)",
 							border: "1px solid var(--color-cream-dark)",
@@ -82,7 +91,7 @@ export function ProductsFilterBar({
 							}
 							type="button"
 						>
-							{tab}
+							{t(TAB_LABEL_KEYS[tab])}
 							<span
 								className="ml-1.5 rounded-full px-1.5 py-0.5 font-bold text-[10px]"
 								style={

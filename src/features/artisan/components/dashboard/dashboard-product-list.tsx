@@ -3,22 +3,27 @@
 import Link from "next/link";
 import React from "react";
 import type { ProductRow } from "~/app/api/products/schemas/products.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
+import type { Translator } from "~/lib/i18n/create-translator";
 import { PRODUCT_STATUS_STYLES, STATUS_DOT_COLORS } from "../../constants";
 import { useProducts } from "../../hooks/use-products";
 
-function formatUpdatedAt(date: Date): string {
+function formatUpdatedAt(t: Translator, date: Date): string {
 	const d = new Date(date);
 	const now = new Date();
 	const diffMs = now.getTime() - d.getTime();
 	const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-	if (days === 0) return "Updated today";
-	if (days === 1) return "Updated yesterday";
-	if (days < 7) return `Updated ${days} days ago`;
-	if (days < 14) return "Updated 1 week ago";
-	return `Updated ${Math.floor(days / 7)} weeks ago`;
+	if (days === 0) return t("producerDashboard.updatedToday");
+	if (days === 1) return t("producerDashboard.updatedYesterday");
+	if (days < 7) return t("producerDashboard.updatedDaysAgo", { days });
+	if (days < 14) return t("producerDashboard.updatedOneWeek");
+	return t("producerDashboard.updatedWeeksAgo", {
+		weeks: Math.floor(days / 7),
+	});
 }
 
 function ProductRowItem({ p }: { p: ProductRow }) {
+	const { t } = useI18n();
 	const statusStyle =
 		PRODUCT_STATUS_STYLES[p.status] ?? PRODUCT_STATUS_STYLES.PENDING;
 	const dotColor = STATUS_DOT_COLORS[p.status] ?? "var(--color-gold)";
@@ -33,20 +38,21 @@ function ProductRowItem({ p }: { p: ProductRow }) {
 					{p.name}
 				</p>
 				<p className="mt-0.5 font-sans text-[12px] text-text-muted">
-					{p.category} · {formatUpdatedAt(p.updatedAt)}
+					{p.category} · {formatUpdatedAt(t, p.updatedAt)}
 				</p>
 			</div>
 			<span
 				className="shrink-0 rounded-full px-3 py-1 font-bold font-sans text-[10px] uppercase tracking-wide"
 				style={statusStyle}
 			>
-				{p.status}
+				{t(`artisanProductsTable.status.${p.status}`)}
 			</span>
 		</div>
 	);
 }
 
 export function DashboardProductList() {
+	const { t } = useI18n();
 	const { data: products = [], isLoading, isError } = useProducts();
 	const approvedCount = products.filter((p) => p.status === "APPROVED").length;
 	const rejected = products.find((p) => p.status === "REJECTED");
@@ -59,10 +65,13 @@ export function DashboardProductList() {
 			>
 				<div>
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						My Products
+						{t("producerDashboard.myProducts")}
 					</h2>
 					<p className="mt-0.5 font-sans text-[12px] text-text-muted">
-						{products.length} listings · {approvedCount} approved
+						{t("producerDashboard.productsSummary", {
+							count: products.length,
+							approved: approvedCount,
+						})}
 					</p>
 				</div>
 				<Link
@@ -74,7 +83,7 @@ export function DashboardProductList() {
 						border: "1px solid var(--color-cream-dark)",
 					}}
 				>
-					View all
+					{t("producerDashboard.viewAll")}
 				</Link>
 			</div>
 			<div
@@ -83,15 +92,15 @@ export function DashboardProductList() {
 			>
 				{isLoading ? (
 					<div className="px-5 py-8 font-sans text-sm text-text-muted">
-						Loading products…
+						{t("producerDashboard.loadingProducts")}
 					</div>
 				) : isError ? (
 					<div className="px-5 py-8 font-sans text-[var(--color-danger)] text-sm">
-						Failed to load products.
+						{t("producerDashboard.failedProducts")}
 					</div>
 				) : products.length === 0 ? (
 					<div className="px-5 py-8 font-sans text-sm text-text-muted">
-						No products yet. Add products from the Products page.
+						{t("producerDashboard.noProducts")}
 					</div>
 				) : (
 					products.slice(0, 5).map((p) => <ProductRowItem key={p.id} p={p} />)
@@ -132,11 +141,10 @@ export function DashboardProductList() {
 						</svg>
 						<div>
 							<p className="font-sans font-semibold text-[var(--color-danger)] text-sm leading-tight">
-								Action required — {rejected.name}
+								{t("producerDashboard.actionRequired", { name: rejected.name })}
 							</p>
 							<p className="mt-0.5 font-sans text-[12px] text-[var(--color-danger)]/70">
-								Your listing was rejected. Review feedback and resubmit if
-								needed.
+								{t("producerDashboard.rejectedHint")}
 							</p>
 						</div>
 					</div>

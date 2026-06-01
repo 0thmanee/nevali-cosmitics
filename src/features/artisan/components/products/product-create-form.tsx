@@ -11,6 +11,7 @@ import {
 	CERTIFICATION_ALLOWED_MIMES,
 } from "~/app/api/media/schemas/media.schema";
 import { addProductImage, createProduct } from "~/app/api/products/actions";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { PRODUCT_CATEGORIES } from "~/features/profile/config";
 import { uploadMedia } from "~/lib/media";
 import {
@@ -35,6 +36,7 @@ type StagedCert = { id: string; name: string; file: File };
 
 export function ProductCreateForm() {
 	const router = useRouter();
+	const { t } = useI18n();
 
 	const [form, setForm] = useState({
 		name: "",
@@ -91,11 +93,11 @@ export function ProductCreateForm() {
 		setCertError(null);
 		if (!file) return;
 		if (!certName.trim()) {
-			setCertError("Enter a document name first.");
+			setCertError(t("producerProducts.enterDocumentNameFirst"));
 			return;
 		}
 		if (!CERT_ALLOWED.has(file.type)) {
-			setCertError("Only PDF, JPEG, PNG or WebP allowed.");
+			setCertError(t("producerProducts.onlyPdfJpegPngWebp"));
 			return;
 		}
 		setStagedCerts((prev) => [
@@ -112,21 +114,23 @@ export function ProductCreateForm() {
 		e.preventDefault();
 		setError(null);
 		if (!form.name.trim()) {
-			setError("Product name is required.");
+			setError(t("producerProducts.productNameRequired"));
 			return;
 		}
 		if (!form.category.trim()) {
-			setError("Category is required.");
+			setError(t("producerProducts.categoryRequired"));
 			return;
 		}
 		for (let i = 0; i < variants.length; i++) {
 			const v = variants[i]!;
 			if (!v.name.trim()) {
-				setError(`Variant ${i + 1}: packaging name is required.`);
+				setError(
+					t("producerProducts.variantPackagingNameRequired", { n: i + 1 }),
+				);
 				return;
 			}
 			if (!v.price.trim()) {
-				setError(`Variant ${i + 1}: price is required.`);
+				setError(t("producerProducts.variantPriceRequired", { n: i + 1 }));
 				return;
 			}
 		}
@@ -134,7 +138,7 @@ export function ProductCreateForm() {
 		setSubmitting(true);
 		try {
 			// 1 — create product
-			setUploadStatus("Creating product…");
+			setUploadStatus(t("producerProducts.creatingProduct"));
 			const product = await createProduct({
 				name: form.name.trim(),
 				category: form.category.trim(),
@@ -161,7 +165,13 @@ export function ProductCreateForm() {
 			// 2 — upload images in parallel
 			if (stagedImages.length > 0) {
 				setUploadStatus(
-					`Uploading ${stagedImages.length} image${stagedImages.length > 1 ? "s" : ""}…`,
+					stagedImages.length > 1
+						? t("producerProducts.uploadingImagesPlural", {
+								n: stagedImages.length,
+							})
+						: t("producerProducts.uploadingImage", {
+								n: stagedImages.length,
+							}),
 				);
 				await Promise.all(
 					stagedImages.map(async (img) => {
@@ -174,7 +184,13 @@ export function ProductCreateForm() {
 			// 3 — upload certifications in parallel
 			if (stagedCerts.length > 0) {
 				setUploadStatus(
-					`Uploading ${stagedCerts.length} certification${stagedCerts.length > 1 ? "s" : ""}…`,
+					stagedCerts.length > 1
+						? t("producerProducts.uploadingCertificationsPlural", {
+								n: stagedCerts.length,
+							})
+						: t("producerProducts.uploadingCertification", {
+								n: stagedCerts.length,
+							}),
 				);
 				await Promise.all(
 					stagedCerts.map(async (cert) => {
@@ -196,7 +212,7 @@ export function ProductCreateForm() {
 			setError(
 				err instanceof Error
 					? err.message
-					: "Failed to create product. Please try again.",
+					: t("producerProducts.failedToCreateProduct"),
 			);
 		} finally {
 			setSubmitting(false);
@@ -211,15 +227,13 @@ export function ProductCreateForm() {
 				<div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
 					<div>
 						<h1 className="font-bold font-serif text-[22px] text-text-dark leading-tight">
-							Add new product
+							{t("producerProducts.addNewProduct")}
 						</h1>
 						<p className="mt-1 font-sans text-[13px] text-text-muted">
-							Fill in the details, add images and certifications, then submit
-							for review.
+							{t("producerProducts.addNewProductSubtitle")}
 						</p>
 						<p className="mt-1 font-sans text-[12px] text-text-muted/80">
-							Products are reviewed by the admin team. You'll be notified once
-							approved.
+							{t("producerProducts.addNewProductReviewNote")}
 						</p>
 					</div>
 					<span
@@ -255,14 +269,15 @@ export function ProductCreateForm() {
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="border-cream-dark border-b px-6 py-4">
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Details
+						{t("producerProducts.details")}
 					</h2>
 				</div>
 				<div className="p-6">
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 						<div className="flex flex-col gap-1.5 sm:col-span-2">
 							<label className={productFormLabelClass} htmlFor="product-name">
-								Product name <span className="text-danger">*</span>
+								{t("producerProducts.productName")}{" "}
+								<span className="text-danger">*</span>
 							</label>
 							<input
 								className={productFormInputBase}
@@ -272,7 +287,7 @@ export function ProductCreateForm() {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, name: e.target.value }))
 								}
-								placeholder="e.g. Argan Oil Extra Virgin"
+								placeholder={t("producerProducts.productNamePlaceholder")}
 								style={productFormInputStyle}
 								type="text"
 								value={form.name}
@@ -283,7 +298,8 @@ export function ProductCreateForm() {
 								className={productFormLabelClass}
 								htmlFor="product-category"
 							>
-								Category <span className="text-danger">*</span>
+								{t("producerProducts.category")}{" "}
+								<span className="text-danger">*</span>
 							</label>
 							<select
 								className={productFormInputBase}
@@ -295,7 +311,7 @@ export function ProductCreateForm() {
 								style={productFormInputStyle}
 								value={form.category}
 							>
-								<option value="">Select category</option>
+								<option value="">{t("producerProducts.selectCategory")}</option>
 								{PRODUCT_CATEGORIES.map((c) => (
 									<option key={c.label} value={c.label}>
 										{c.label}
@@ -308,7 +324,10 @@ export function ProductCreateForm() {
 								className={productFormLabelClass}
 								htmlFor="product-capacity"
 							>
-								Capacity <span className="text-text-muted/70">(optional)</span>
+								{t("producerProducts.capacity")}{" "}
+								<span className="text-text-muted/70">
+									{t("producerProducts.optional")}
+								</span>
 							</label>
 							<input
 								className={productFormInputBase}
@@ -318,7 +337,7 @@ export function ProductCreateForm() {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, capacity: e.target.value }))
 								}
-								placeholder="e.g. 500 L/month"
+								placeholder={t("producerProducts.capacityPlaceholder")}
 								style={productFormInputStyle}
 								type="text"
 								value={form.capacity}
@@ -329,8 +348,10 @@ export function ProductCreateForm() {
 								className={productFormLabelClass}
 								htmlFor="product-description"
 							>
-								Description{" "}
-								<span className="text-text-muted/70">(optional)</span>
+								{t("producerProducts.description")}{" "}
+								<span className="text-text-muted/70">
+									{t("producerProducts.optional")}
+								</span>
 							</label>
 							<textarea
 								className={productFormInputBase}
@@ -340,7 +361,7 @@ export function ProductCreateForm() {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, description: e.target.value }))
 								}
-								placeholder="What buyers should know about this product…"
+								placeholder={t("producerProducts.descriptionPlaceholder")}
 								rows={4}
 								style={productFormInputStyle}
 								value={form.description}
@@ -350,7 +371,7 @@ export function ProductCreateForm() {
 
 					<div className="mt-6 border-cream-dark border-t pt-6">
 						<h3 className="mb-3 font-bold font-serif text-[14px] text-text-dark">
-							Variants & pricing
+							{t("producerProducts.variantsAndPricing")}
 						</h3>
 						<ProductVariantsFormBlock
 							disabled={submitting}
@@ -365,7 +386,7 @@ export function ProductCreateForm() {
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="flex items-center justify-between gap-3 border-cream-dark border-b px-6 py-4">
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Product images
+						{t("producerProducts.productImages")}
 					</h2>
 					<input
 						accept="image/jpeg,image/png,image/webp"
@@ -383,13 +404,13 @@ export function ProductCreateForm() {
 						style={{ background: "var(--color-ink)", color: "white" }}
 						type="button"
 					>
-						Add image
+						{t("producerProducts.addImage")}
 					</button>
 				</div>
 				<div className="p-6">
 					{stagedImages.length === 0 ? (
 						<p className="font-sans text-sm text-text-muted">
-							No images yet. Click "Add image" to upload (JPEG, PNG or WebP).
+							{t("producerProducts.noImagesYetHint")}
 						</p>
 					) : (
 						<div className="flex flex-wrap gap-4">
@@ -432,11 +453,10 @@ export function ProductCreateForm() {
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="border-cream-dark border-b px-6 py-4">
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Certifications
+						{t("producerProducts.certifications")}
 					</h2>
 					<p className="mt-0.5 font-sans text-[11px] text-text-muted">
-						Add product-level certification documents (PDF or image). Each will
-						be submitted for admin review.
+						{t("producerProducts.certificationsCreateHint")}
 					</p>
 				</div>
 				<div className="border-cream-dark border-b px-6 py-4">
@@ -448,7 +468,7 @@ export function ProductCreateForm() {
 								setCertName(e.target.value);
 								setCertError(null);
 							}}
-							placeholder="Document name"
+							placeholder={t("producerProducts.documentName")}
 							style={{ background: "var(--color-paper)" }}
 							type="text"
 							value={certName}
@@ -471,11 +491,11 @@ export function ProductCreateForm() {
 							style={{ background: "var(--color-ink)", color: "white" }}
 							type="button"
 						>
-							Upload certification
+							{t("producerProducts.uploadCertification")}
 						</button>
 					</div>
 					<p className="mt-1.5 font-sans text-[11px] text-text-muted">
-						PDF or image only (JPEG, PNG, WebP). Max 10 MB.
+						{t("producerProducts.pdfOrImageMax10mb")}
 					</p>
 					{certError && (
 						<p className="mt-1 font-sans text-[12px] text-danger" role="alert">
@@ -486,7 +506,7 @@ export function ProductCreateForm() {
 				<div className="p-6">
 					{stagedCerts.length === 0 ? (
 						<p className="font-sans text-sm text-text-muted">
-							No certifications added yet.
+							{t("producerProducts.noCertificationsAddedYet")}
 						</p>
 					) : (
 						<ul className="flex flex-col gap-2">
@@ -537,13 +557,13 @@ export function ProductCreateForm() {
 					style={{ background: "var(--color-ink)" }}
 					type="submit"
 				>
-					{uploadStatus ?? "Create product"}
+					{uploadStatus ?? t("producerProducts.createProduct")}
 				</button>
 				<Link
 					className="font-medium font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
 					href="/artisan/products"
 				>
-					Cancel
+					{t("producerProducts.cancel")}
 				</Link>
 			</div>
 		</form>

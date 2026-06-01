@@ -252,11 +252,10 @@ export function ProductDetailView({ productId }: Props) {
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="border-cream-dark border-b px-6 py-4">
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Internal product economics
+						{t("artisanProductDetail.economicsTitle")}
 					</h2>
 					<p className="mt-0.5 font-sans text-[12px] text-text-muted">
-						Variant-level internal costs, margin per item, and remaining
-						potential net from current stock.
+						{t("artisanProductDetail.economicsSubtitle")}
 					</p>
 				</div>
 				<div className="p-6">
@@ -293,7 +292,7 @@ export function ProductDetailView({ productId }: Props) {
 									<div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
 										<div className="rounded-sm border border-cream-dark bg-paper px-4 py-3">
 											<p className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.12em]">
-												Total sold units
+												{t("artisanProductDetail.totalSoldUnits")}
 											</p>
 											<p className="mt-1 font-bold font-serif text-text-dark text-xl">
 												{totals.soldUnits}
@@ -301,7 +300,7 @@ export function ProductDetailView({ productId }: Props) {
 										</div>
 										<div className="rounded-sm border border-cream-dark bg-paper px-4 py-3">
 											<p className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.12em]">
-												Realized revenue
+												{t("artisanProductDetail.realizedRevenue")}
 											</p>
 											<p className="mt-1 font-bold font-serif text-text-dark text-xl">
 												{formatMad(totals.realizedRevenue.toFixed(2))}
@@ -309,7 +308,7 @@ export function ProductDetailView({ productId }: Props) {
 										</div>
 										<div className="rounded-sm border border-cream-dark bg-paper px-4 py-3">
 											<p className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.12em]">
-												Realized net profit
+												{t("artisanProductDetail.realizedNetProfit")}
 											</p>
 											<p className="mt-1 font-bold font-serif text-text-dark text-xl">
 												{formatMad(totals.realizedNet.toFixed(2))}
@@ -317,7 +316,7 @@ export function ProductDetailView({ productId }: Props) {
 										</div>
 										<div className="rounded-sm border border-cream-dark bg-paper px-4 py-3">
 											<p className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-[0.12em]">
-												Remaining potential net
+												{t("artisanProductDetail.remainingPotentialNet")}
 											</p>
 											<p className="mt-1 font-bold font-serif text-text-dark text-xl">
 												{formatMad(totals.remainingPotentialNet.toFixed(2))}
@@ -331,15 +330,33 @@ export function ProductDetailView({ productId }: Props) {
 								<table className="min-w-full border-collapse">
 									<thead>
 										<tr className="border-cream-dark border-b bg-paper/70 font-sans text-[10px] text-text-muted uppercase tracking-[0.12em]">
-											<th className="px-3 py-2 text-left">Variant</th>
-											<th className="px-3 py-2 text-left">Source</th>
-											<th className="px-3 py-2 text-right">Price</th>
-											<th className="px-3 py-2 text-right">COGS/item</th>
-											<th className="px-3 py-2 text-right">Net/item</th>
-											<th className="px-3 py-2 text-right">Sold</th>
-											<th className="px-3 py-2 text-right">Realized net</th>
-											<th className="px-3 py-2 text-right">Qty</th>
-											<th className="px-3 py-2 text-right">Potential net</th>
+											<th className="px-3 py-2 text-left">
+												{t("artisanProductDetail.colVariant")}
+											</th>
+											<th className="px-3 py-2 text-left">
+												{t("artisanProductDetail.colSource")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colPrice")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colCogsPerItem")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colNetPerItem")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colSold")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colRealizedNet")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colQty")}
+											</th>
+											<th className="px-3 py-2 text-right">
+												{t("artisanProductDetail.colPotentialNet")}
+											</th>
 										</tr>
 									</thead>
 									<tbody>

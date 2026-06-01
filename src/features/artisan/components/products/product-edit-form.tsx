@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { PRODUCT_CATEGORIES } from "~/features/profile/config";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
 import { useProduct, useUpdateProduct } from "../../hooks/use-products";
@@ -30,6 +31,7 @@ type Props = { productId: string };
 
 export function ProductEditForm({ productId }: Props) {
 	const router = useRouter();
+	const { t } = useI18n();
 	const {
 		data: product,
 		isLoading: loadingProduct,
@@ -70,21 +72,25 @@ export function ProductEditForm({ productId }: Props) {
 		e.preventDefault();
 		setValidationError(null);
 		if (!form.name.trim()) {
-			setValidationError("Product name is required.");
+			setValidationError(t("producerProducts.productNameRequired"));
 			return;
 		}
 		if (!form.category.trim()) {
-			setValidationError("Category is required.");
+			setValidationError(t("producerProducts.categoryRequired"));
 			return;
 		}
 		for (let i = 0; i < variants.length; i++) {
 			const v = variants[i]!;
 			if (!v.name.trim()) {
-				setValidationError(`Variant ${i + 1}: packaging name is required.`);
+				setValidationError(
+					t("producerProducts.variantPackagingNameRequired", { n: i + 1 }),
+				);
 				return;
 			}
 			if (!v.price.trim()) {
-				setValidationError(`Variant ${i + 1}: price is required.`);
+				setValidationError(
+					t("producerProducts.variantPriceRequired", { n: i + 1 }),
+				);
 				return;
 			}
 		}
@@ -119,7 +125,9 @@ export function ProductEditForm({ productId }: Props) {
 				onSuccess: () => router.push(`/artisan/products/${productId}`),
 				onError: (err) =>
 					setValidationError(
-						err instanceof Error ? err.message : "Failed to update product.",
+						err instanceof Error
+							? err.message
+							: t("producerProducts.failedToUpdateProduct"),
 					),
 			},
 		);
@@ -138,17 +146,19 @@ export function ProductEditForm({ productId }: Props) {
 						<p className="font-sans text-danger text-sm">
 							{error instanceof Error
 								? error.message
-								: "Failed to load product."}
+								: t("producerProducts.failedToLoadProduct")}
 						</p>
 						<Link
 							className="mt-3 inline-block font-medium font-sans text-sm text-text-dark underline"
 							href="/artisan/products"
 						>
-							← Back to products
+							← {t("producerProducts.backToProducts")}
 						</Link>
 					</div>
 				) : (
-					<p className="font-sans text-sm text-text-muted">Loading product…</p>
+					<p className="font-sans text-sm text-text-muted">
+						{t("producerProducts.loadingProduct")}
+					</p>
 				)}
 			</div>
 		);
@@ -163,13 +173,13 @@ export function ProductEditForm({ productId }: Props) {
 				<div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
 					<div>
 						<h1 className="font-bold font-serif text-[22px] text-text-dark leading-tight">
-							Edit product
+							{t("producerProducts.editProduct")}
 						</h1>
 						<p className="mt-1 font-sans text-[13px] text-text-muted">
-							Update the details below. Status is managed by the admin team.
+							{t("producerProducts.editProductSubtitle")}
 						</p>
 						<p className="mt-1 font-sans text-[12px] text-text-muted/80">
-							Current status:{" "}
+							{t("producerProducts.currentStatus")}{" "}
 							<span
 								className="rounded-full px-2.5 py-0.5 font-bold font-sans text-[11px] uppercase tracking-wide"
 								style={statusStyle}
@@ -184,7 +194,7 @@ export function ProductEditForm({ productId }: Props) {
 							href={`/artisan/products/${productId}`}
 							style={{ background: "var(--color-ink)", color: "white" }}
 						>
-							View
+							{t("producerProducts.view")}
 						</Link>
 					</div>
 				</div>
@@ -220,14 +230,15 @@ export function ProductEditForm({ productId }: Props) {
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="border-cream-dark border-b px-6 py-4">
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Details
+						{t("producerProducts.details")}
 					</h2>
 				</div>
 				<div className="flex flex-col gap-4 p-6">
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 						<div className="flex flex-col gap-1.5 sm:col-span-2">
 							<label className={productFormLabelClass} htmlFor="product-name">
-								Product name <span className="text-danger">*</span>
+								{t("producerProducts.productName")}{" "}
+								<span className="text-danger">*</span>
 							</label>
 							<input
 								className={productFormInputBase}
@@ -237,7 +248,7 @@ export function ProductEditForm({ productId }: Props) {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, name: e.target.value }))
 								}
-								placeholder="e.g. Argan Oil Extra Virgin"
+								placeholder={t("producerProducts.productNamePlaceholder")}
 								style={productFormInputStyle}
 								type="text"
 								value={form.name}
@@ -248,7 +259,8 @@ export function ProductEditForm({ productId }: Props) {
 								className={productFormLabelClass}
 								htmlFor="product-category"
 							>
-								Category <span className="text-danger">*</span>
+								{t("producerProducts.category")}{" "}
+								<span className="text-danger">*</span>
 							</label>
 							<select
 								className={productFormInputBase}
@@ -260,7 +272,7 @@ export function ProductEditForm({ productId }: Props) {
 								style={productFormInputStyle}
 								value={form.category}
 							>
-								<option value="">Select category</option>
+								<option value="">{t("producerProducts.selectCategory")}</option>
 								{PRODUCT_CATEGORIES.map((c) => (
 									<option key={c.label} value={c.label}>
 										{c.label}
@@ -273,7 +285,10 @@ export function ProductEditForm({ productId }: Props) {
 								className={productFormLabelClass}
 								htmlFor="product-capacity"
 							>
-								Capacity <span className="text-text-muted/70">(optional)</span>
+								{t("producerProducts.capacity")}{" "}
+								<span className="text-text-muted/70">
+									{t("producerProducts.optional")}
+								</span>
 							</label>
 							<input
 								className={productFormInputBase}
@@ -283,7 +298,7 @@ export function ProductEditForm({ productId }: Props) {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, capacity: e.target.value }))
 								}
-								placeholder="e.g. 500 L/month"
+								placeholder={t("producerProducts.capacityPlaceholder")}
 								style={productFormInputStyle}
 								type="text"
 								value={form.capacity}
@@ -294,8 +309,10 @@ export function ProductEditForm({ productId }: Props) {
 								className={productFormLabelClass}
 								htmlFor="product-description"
 							>
-								Description{" "}
-								<span className="text-text-muted/70">(optional)</span>
+								{t("producerProducts.description")}{" "}
+								<span className="text-text-muted/70">
+									{t("producerProducts.optional")}
+								</span>
 							</label>
 							<textarea
 								className={productFormInputBase}
@@ -305,7 +322,7 @@ export function ProductEditForm({ productId }: Props) {
 								onChange={(e) =>
 									setForm((p) => ({ ...p, description: e.target.value }))
 								}
-								placeholder="What buyers should know about this product…"
+								placeholder={t("producerProducts.descriptionPlaceholder")}
 								rows={4}
 								style={productFormInputStyle}
 								value={form.description}
@@ -328,30 +345,31 @@ export function ProductEditForm({ productId }: Props) {
 								/>
 								<span>
 									<span className="font-sans font-semibold text-sm text-text-dark">
-										Public homepage hero
+										{t("producerProducts.publicHomepageHero")}
 									</span>
 									<span className="mt-1 block font-sans text-text-muted text-xs leading-relaxed">
-										When enabled, visitors see this approved listing as the
-										featured product on the site homepage. Only one SKU at a
-										time—you can also use{" "}
+										{t("producerProducts.publicHomepageHeroDescPrefix")}{" "}
 										<strong className="font-semibold text-text-dark/90">
-											Show on homepage
+											{t("producerProducts.showOnHomepage")}
 										</strong>{" "}
-										from the products list.
+										{t("producerProducts.publicHomepageHeroDescSuffix")}
 									</span>
 								</span>
 							</label>
 						</div>
 					) : (
 						<p className="mt-4 font-sans text-text-muted text-xs">
-							Homepage hero is available only for <strong>approved</strong>{" "}
-							products. Current status: {product.status}.
+							{t("producerProducts.homepageHeroApprovedOnlyPrefix")}{" "}
+							<strong>{t("producerProducts.approved")}</strong>{" "}
+							{t("producerProducts.homepageHeroApprovedOnlySuffix", {
+								status: product.status,
+							})}
 						</p>
 					)}
 
 					<div className="mt-2 border-cream-dark border-t pt-6">
 						<h3 className="mb-3 font-bold font-serif text-[14px] text-text-dark">
-							Variants & pricing
+							{t("producerProducts.variantsAndPricing")}
 						</h3>
 						<ProductVariantsFormBlock
 							disabled={isLoading}
@@ -372,13 +390,15 @@ export function ProductEditForm({ productId }: Props) {
 					style={{ background: "var(--color-ink)" }}
 					type="submit"
 				>
-					{isLoading ? "Saving…" : "Save changes"}
+					{isLoading
+						? t("producerProducts.saving")
+						: t("producerProducts.saveChanges")}
 				</button>
 				<Link
 					className="font-medium font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
 					href={`/artisan/products/${productId}`}
 				>
-					Cancel
+					{t("producerProducts.cancel")}
 				</Link>
 			</div>
 		</form>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { getTrainingLevelLabel } from "~/app/api/training/schemas/training.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { STAT_ICON_COLOR, StatCard } from "~/components/stat-card";
 import {
 	useEnrollInProgram,
@@ -44,8 +45,16 @@ const levelStyle: Record<
 };
 
 export function TrainingView() {
+	const { t } = useI18n();
 	const [activeTab, setActiveTab] = useState<Tab>("All");
 	const [expanded, setExpanded] = useState<string | null>(null);
+
+	const tabLabels: Record<Tab, string> = {
+		All: t("producerProfileCert.tabAll"),
+		"In Progress": t("producerProfileCert.tabInProgress"),
+		Available: t("producerProfileCert.tabAvailable"),
+		Completed: t("producerProfileCert.tabCompleted"),
+	};
 
 	const router = useRouter();
 	const { data: programs = [], isLoading, isError } = useTrainingPrograms();
@@ -75,7 +84,9 @@ export function TrainingView() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center py-20">
-				<p className="font-sans text-sm text-text-muted">Loading programs…</p>
+				<p className="font-sans text-sm text-text-muted">
+					{t("producerProfileCert.loadingPrograms")}
+				</p>
 			</div>
 		);
 	}
@@ -84,7 +95,7 @@ export function TrainingView() {
 		return (
 			<div>
 				<p className="font-sans text-[var(--color-danger)] text-sm">
-					Failed to load training programs.
+					{t("producerProfileCert.failedLoadPrograms")}
 				</p>
 			</div>
 		);
@@ -95,19 +106,19 @@ export function TrainingView() {
 			<div className="grid grid-cols-3 gap-3">
 				<StatCard
 					icon={<BookOpen color={STAT_ICON_COLOR.amber} size={20} />}
-					label="In Progress"
+					label={t("producerProfileCert.tabInProgress")}
 					value={counts["In Progress"]}
 					variant="amber"
 				/>
 				<StatCard
 					icon={<Library color={STAT_ICON_COLOR.neutral} size={20} />}
-					label="Available"
+					label={t("producerProfileCert.tabAvailable")}
 					value={counts["Available"]}
 					variant="neutral"
 				/>
 				<StatCard
 					icon={<GraduationCap color={STAT_ICON_COLOR.green} size={20} />}
-					label="Completed"
+					label={t("producerProfileCert.tabCompleted")}
 					value={counts["Completed"]}
 					variant="green"
 				/>
@@ -132,7 +143,7 @@ export function TrainingView() {
 						}
 						type="button"
 					>
-						{tab}
+						{tabLabels[tab]}
 						<span
 							className="ml-1.5 rounded-full px-1.5 py-0.5 font-bold text-[10px]"
 							style={
@@ -166,8 +177,8 @@ export function TrainingView() {
 					>
 						<p className="font-sans text-sm text-text-muted">
 							{programs.length === 0
-								? "No training programs available yet. The admin will publish programs and assign them to your organization."
-								: `No programs in this tab.`}
+								? t("producerProfileCert.noProgramsYet")
+								: t("producerProfileCert.noProgramsInTab")}
 						</p>
 					</div>
 				) : (
@@ -228,7 +239,7 @@ export function TrainingView() {
 															color: "white",
 														}}
 													>
-														Continue →
+														{t("producerProfileCert.continue")} →
 													</Link>
 												)}
 												{status === "AVAILABLE" && (
@@ -250,7 +261,9 @@ export function TrainingView() {
 														}}
 														type="button"
 													>
-														{enrollMutation.isPending ? "Starting…" : "Start"}
+														{enrollMutation.isPending
+															? t("producerProfileCert.starting")
+															: t("producerProfileCert.start")}
 													</button>
 												)}
 												{status === "COMPLETED" && (
@@ -264,7 +277,7 @@ export function TrainingView() {
 																"1px solid color-mix(in srgb, var(--color-gold) 20%, transparent)",
 														}}
 													>
-														Completed
+														{t("producerProfileCert.completed")}
 													</span>
 												)}
 												<button
@@ -303,8 +316,10 @@ export function TrainingView() {
 											<div className="mt-3">
 												<div className="mb-1.5 flex items-center justify-between">
 													<span className="font-sans text-[11px] text-text-muted">
-														{modulesCompleted} of {totalModules} modules
-														completed
+														{t("producerProfileCert.modulesCompleted", {
+															completed: modulesCompleted,
+															total: totalModules,
+														})}
 													</span>
 													<span
 														className="font-sans font-semibold text-[11px]"
@@ -323,12 +338,12 @@ export function TrainingView() {
 													/>
 												</div>
 												<p className="mt-1.5 font-sans text-[11px] text-text-muted">
-													Up next:{" "}
+													{t("producerProfileCert.upNext")}{" "}
 													<Link
 														className="font-semibold text-text-dark hover:underline"
 														href={`/artisan/training/${program.id}`}
 													>
-														Open program
+														{t("producerProfileCert.openProgram")}
 													</Link>
 												</p>
 											</div>
@@ -357,7 +372,9 @@ export function TrainingView() {
 													/>
 												</svg>
 												<span className="font-sans font-semibold text-[11px] text-text-muted">
-													Completed · All {totalModules} modules
+													{t("producerProfileCert.completedAllModules", {
+														total: totalModules,
+													})}
 												</span>
 											</div>
 										)}
@@ -376,16 +393,22 @@ export function TrainingView() {
 											)}
 											<div className="flex flex-wrap gap-2">
 												{[
-													{ label: "Category", value: program.category },
 													{
-														label: "Duration",
+														label: t("producerProfileCert.detailCategory"),
+														value: program.category,
+													},
+													{
+														label: t("producerProfileCert.detailDuration"),
 														value: program.durationLabel ?? "—",
 													},
 													{
-														label: "Level",
+														label: t("producerProfileCert.detailLevel"),
 														value: getTrainingLevelLabel(program.level),
 													},
-													{ label: "Provider", value: program.provider },
+													{
+														label: t("producerProfileCert.detailProvider"),
+														value: program.provider,
+													},
 												].map((d) => (
 													<div
 														className="rounded-sm px-3 py-2"
@@ -421,8 +444,8 @@ export function TrainingView() {
 													type="button"
 												>
 													{enrollMutation.isPending
-														? "Starting…"
-														: "Enroll and start"}
+														? t("producerProfileCert.starting")
+														: t("producerProfileCert.enrollAndStart")}
 												</button>
 											)}
 										</div>

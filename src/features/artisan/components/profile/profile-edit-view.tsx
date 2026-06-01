@@ -9,6 +9,7 @@ import type {
 	ProfileViewUser,
 } from "~/app/api/profile/schemas/profile.schema";
 import { Avatar } from "~/components/avatar";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useUploadProfileImage } from "~/features/media";
 import {
 	ENTITY_TYPES,
@@ -42,6 +43,7 @@ export function ProfileEditView({
 	partnerId,
 }: Props) {
 	const router = useRouter();
+	const { t } = useI18n();
 	const [form, setForm] = useState<OnboardingFormData>({
 		firstName: profile.firstName,
 		lastName: profile.lastName,
@@ -95,7 +97,7 @@ export function ProfileEditView({
 				setPhotoError(
 					err instanceof Error
 						? err.message
-						: "Something went wrong. Please try again.",
+						: t("producerProfileCert.errorGeneric"),
 				);
 			},
 		});
@@ -126,15 +128,15 @@ export function ProfileEditView({
 			!form.region ||
 			!form.city
 		) {
-			setError("Please fill required fields.");
+			setError(t("producerProfileCert.errorRequiredFields"));
 			return;
 		}
 		if (form.categories.length === 0) {
-			setError("Select at least one product category.");
+			setError(t("producerProfileCert.errorSelectCategory"));
 			return;
 		}
 		if (!form.agreeTerms) {
-			setError("You must agree to the terms.");
+			setError(t("producerProfileCert.errorAgreeTerms"));
 			return;
 		}
 		setError(null);
@@ -145,7 +147,9 @@ export function ProfileEditView({
 			router.refresh();
 		} catch (err) {
 			setError(
-				err instanceof Error ? err.message : "Something went wrong. Try again.",
+				err instanceof Error
+					? err.message
+					: t("producerProfileCert.errorGenericRetry"),
 			);
 		} finally {
 			setSubmitting(false);
@@ -159,7 +163,7 @@ export function ProfileEditView({
 					className="font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
 					href="/artisan/profile"
 				>
-					← Back to profile
+					← {t("producerProfileCert.backToProfile")}
 				</Link>
 			</div>
 
@@ -180,16 +184,18 @@ export function ProfileEditView({
 						<div className="overflow-hidden rounded-sm" style={cardStyle}>
 							<div className="border-b px-5 py-4" style={cardHeaderBorder}>
 								<h3 className="font-bold font-serif text-[15px] text-text-dark">
-									Personal Information
+									{t("producerProfileCert.personalInfoTitle")}
 								</h3>
 								<p className="mt-0.5 font-sans text-[11px] text-text-muted">
-									Your account and contact details
+									{t("producerProfileCert.personalInfoSubtitle")}
 								</p>
 							</div>
 							<div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-2">
 								<div className="flex flex-wrap items-end gap-4 sm:col-span-2">
 									<div className="flex flex-col gap-1.5">
-										<span className={labelClassName}>Profile picture</span>
+										<span className={labelClassName}>
+											{t("producerProfileCert.profilePicture")}
+										</span>
 										<div className="flex items-center gap-4">
 											<Avatar
 												displayName={displayName}
@@ -217,7 +223,9 @@ export function ProfileEditView({
 													}}
 													type="button"
 												>
-													{photoUploading ? "Uploading…" : "Change photo"}
+													{photoUploading
+														? t("producerProfileCert.uploading")
+														: t("producerProfileCert.changePhoto")}
 												</button>
 												{photoDisplayError && (
 													<p
@@ -233,7 +241,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="firstName">
-										First Name
+										{t("producerProfileCert.firstName")}
 									</label>
 									<input
 										className={inputClassName}
@@ -247,7 +255,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="lastName">
-										Last Name
+										{t("producerProfileCert.lastName")}
 									</label>
 									<input
 										className={inputClassName}
@@ -260,7 +268,9 @@ export function ProfileEditView({
 									/>
 								</div>
 								<div>
-									<label className={labelClassName}>Email Address</label>
+									<label className={labelClassName}>
+										{t("producerProfileCert.emailAddress")}
+									</label>
 									<div
 										className="rounded-sm px-3.5 py-2.5 font-sans text-sm text-text-dark"
 										style={fieldStyle}
@@ -270,7 +280,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="phone">
-										Phone Number
+										{t("producerProfileCert.phoneNumber")}
 									</label>
 									<input
 										className={inputClassName}
@@ -289,16 +299,16 @@ export function ProfileEditView({
 						<div className="overflow-hidden rounded-sm" style={cardStyle}>
 							<div className="border-b px-5 py-4" style={cardHeaderBorder}>
 								<h3 className="font-bold font-serif text-[15px] text-text-dark">
-									Business Information
+									{t("producerProfileCert.businessInfoTitle")}
 								</h3>
 								<p className="mt-0.5 font-sans text-[11px] text-text-muted">
-									Your cooperative and legal details
+									{t("producerProfileCert.businessInfoSubtitle")}
 								</p>
 							</div>
 							<div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-2">
 								<div>
 									<label className={labelClassName} htmlFor="entityType">
-										Entity Type
+										{t("producerProfileCert.entityType")}
 									</label>
 									<select
 										className={inputClassName}
@@ -307,7 +317,9 @@ export function ProfileEditView({
 										style={fieldStyle}
 										value={form.entityType}
 									>
-										<option value="">Select entity type</option>
+										<option value="">
+											{t("producerProfileCert.selectEntityType")}
+										</option>
 										{ENTITY_TYPES.map((t) => (
 											<option key={t} value={t}>
 												{t}
@@ -317,7 +329,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="entityName">
-										Entity Name
+										{t("producerProfileCert.entityName")}
 									</label>
 									<input
 										className={inputClassName}
@@ -334,7 +346,7 @@ export function ProfileEditView({
 										className={labelClassName}
 										htmlFor="registrationNumber"
 									>
-										Registration No. (RC / ICE)
+										{t("producerProfileCert.registrationNumber")}
 									</label>
 									<input
 										className={inputClassName}
@@ -348,7 +360,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="region">
-										Region
+										{t("producerProfileCert.region")}
 									</label>
 									<select
 										className={inputClassName}
@@ -357,7 +369,9 @@ export function ProfileEditView({
 										style={fieldStyle}
 										value={form.region}
 									>
-										<option value="">Select region</option>
+										<option value="">
+											{t("producerProfileCert.selectRegion")}
+										</option>
 										{MOROCCAN_REGIONS.map((r) => (
 											<option key={r} value={r}>
 												{r}
@@ -367,7 +381,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="city">
-										City
+										{t("producerProfileCert.city")}
 									</label>
 									<input
 										className={inputClassName}
@@ -381,7 +395,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="yearEstablished">
-										Year Established
+										{t("producerProfileCert.yearEstablished")}
 									</label>
 									<input
 										className={inputClassName}
@@ -395,7 +409,7 @@ export function ProfileEditView({
 								</div>
 								<div className="sm:col-span-2">
 									<label className={labelClassName} htmlFor="website">
-										Website (optional)
+										{t("producerProfileCert.website")}
 									</label>
 									<input
 										className={inputClassName}
@@ -408,9 +422,11 @@ export function ProfileEditView({
 									/>
 								</div>
 								<div className="sm:col-span-2">
-									<p className={labelClassName}>Primary Products</p>
+									<p className={labelClassName}>
+										{t("producerProfileCert.primaryProducts")}
+									</p>
 									<p className="mb-2 font-sans text-[11px] text-text-muted">
-										Select all categories you produce
+										{t("producerProfileCert.primaryProductsHint")}
 									</p>
 									<div className="flex flex-wrap gap-2">
 										{PRODUCT_CATEGORIES.map((cat) => {
@@ -443,7 +459,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="annualCapacity">
-										Annual Capacity
+										{t("producerProfileCert.annualCapacity")}
 									</label>
 									<input
 										className={inputClassName}
@@ -456,7 +472,7 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="exportExperience">
-										Export Experience
+										{t("producerProfileCert.exportExperience")}
 									</label>
 									<select
 										className={inputClassName}
@@ -465,7 +481,7 @@ export function ProfileEditView({
 										style={fieldStyle}
 										value={form.exportExperience}
 									>
-										<option value="">Select</option>
+										<option value="">{t("producerProfileCert.select")}</option>
 										{EXPORT_EXPERIENCE_OPTIONS.map((o) => (
 											<option key={o} value={o}>
 												{o}
@@ -479,24 +495,23 @@ export function ProfileEditView({
 						<div className="overflow-hidden rounded-sm" style={cardStyle}>
 							<div className="border-b px-5 py-4" style={cardHeaderBorder}>
 								<h3 className="font-bold font-serif text-[15px] text-text-dark">
-									Public business profile
+									{t("producerProfileCert.publicProfileTitle")}
 								</h3>
 								<p className="mt-0.5 font-sans text-[11px] text-text-muted">
-									Visible on your public nevali page for buyers. Optional but
-									strongly recommended.
+									{t("producerProfileCert.publicProfileSubtitle")}
 								</p>
 							</div>
 							<div className="flex flex-col gap-4 p-5">
 								<div>
 									<label className={labelClassName} htmlFor="publicTagline">
-										Headline (short)
+										{t("producerProfileCert.headline")}
 									</label>
 									<input
 										className={inputClassName}
 										id="publicTagline"
 										maxLength={200}
 										onChange={(e) => set("publicTagline")(e.target.value)}
-										placeholder="e.g. Organic argan & saffron from the Souss — family cooperative since 2012"
+										placeholder={t("producerProfileCert.headlinePlaceholder")}
 										style={fieldStyle}
 										type="text"
 										value={form.publicTagline}
@@ -507,14 +522,16 @@ export function ProfileEditView({
 										className={labelClassName}
 										htmlFor="businessDescription"
 									>
-										About your business
+										{t("producerProfileCert.aboutBusiness")}
 									</label>
 									<textarea
 										className={`${inputClassName} min-h-[120px] resize-y`}
 										id="businessDescription"
 										maxLength={8000}
 										onChange={(e) => set("businessDescription")(e.target.value)}
-										placeholder="Tell buyers your story: how you produce, your team, certifications in progress, what makes your quality different…"
+										placeholder={t(
+											"producerProfileCert.aboutBusinessPlaceholder",
+										)}
 										rows={6}
 										style={fieldStyle}
 										value={form.businessDescription}
@@ -522,14 +539,16 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="exportMarkets">
-										Target export markets
+										{t("producerProfileCert.targetExportMarkets")}
 									</label>
 									<input
 										className={inputClassName}
 										id="exportMarkets"
 										maxLength={500}
 										onChange={(e) => set("exportMarkets")(e.target.value)}
-										placeholder="e.g. European Union, UAE, UK, North America"
+										placeholder={t(
+											"producerProfileCert.exportMarketsPlaceholder",
+										)}
 										style={fieldStyle}
 										type="text"
 										value={form.exportMarkets}
@@ -537,14 +556,16 @@ export function ProfileEditView({
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="valuesHighlight">
-										Values & practices
+										{t("producerProfileCert.valuesPractices")}
 									</label>
 									<input
 										className={inputClassName}
 										id="valuesHighlight"
 										maxLength={600}
 										onChange={(e) => set("valuesHighlight")(e.target.value)}
-										placeholder="e.g. Organic certified · Women-led cooperative · HACCP in progress · Cold-pressed oils"
+										placeholder={t(
+											"producerProfileCert.valuesPracticesPlaceholder",
+										)}
 										style={fieldStyle}
 										type="text"
 										value={form.valuesHighlight}
@@ -577,7 +598,9 @@ export function ProfileEditView({
 							}}
 							type="submit"
 						>
-							{submitting ? "Saving…" : "Save changes"}
+							{submitting
+								? t("producerProfileCert.saving")
+								: t("producerProfileCert.saveChanges")}
 						</button>
 					</div>
 

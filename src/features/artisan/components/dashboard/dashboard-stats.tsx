@@ -2,6 +2,7 @@
 
 import { AlertCircle, ClipboardList, Package } from "lucide-react";
 import { useMemo } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { STAT_ICON_COLOR, StatCard } from "~/components/stat-card";
 import { useArtisanDashboardStats } from "../../hooks/use-dashboard-stats";
 import { DashboardOverviewCharts } from "./dashboard-overview-charts";
@@ -14,6 +15,7 @@ function countByStatus(
 }
 
 export function DashboardStats() {
+	const { t } = useI18n();
 	const { data: stats, isPending } = useArtisanDashboardStats();
 	const openSupportTickets = stats?.openSupportTickets ?? 0;
 	const activeCount = useMemo(
@@ -30,22 +32,22 @@ export function DashboardStats() {
 			<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
 				<StatCard
 					icon={<Package color={STAT_ICON_COLOR.neutral} size={20} />}
-					label="Live listings"
-					subline="Approved and visible in the shop catalog."
+					label={t("producerDashboard.liveListings")}
+					subline={t("producerDashboard.liveListingsSub")}
 					value={activeCount}
 					variant="neutral"
 				/>
 				<StatCard
 					icon={<ClipboardList color={STAT_ICON_COLOR.neutral} size={20} />}
-					label="In review"
-					subline="Awaiting platform approval."
+					label={t("producerDashboard.inReview")}
+					subline={t("producerDashboard.inReviewSub")}
 					value={pendingCount}
 					variant="neutral"
 				/>
 				<StatCard
 					icon={<AlertCircle color={STAT_ICON_COLOR.amber} size={20} />}
-					label="Open support tickets"
-					subline="Needs a reply from your team."
+					label={t("producerDashboard.openTickets")}
+					subline={t("producerDashboard.openTicketsSub")}
 					value={openSupportTickets}
 					variant="amber"
 				/>

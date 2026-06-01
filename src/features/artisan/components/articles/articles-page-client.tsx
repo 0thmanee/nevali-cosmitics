@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useArticles } from "../../hooks/use-articles";
 
 function statusStyle(status: string): {
@@ -33,6 +34,7 @@ function formatUpdated(d: Date): string {
 }
 
 export function ArticlesPageClient() {
+	const { t } = useI18n();
 	const [search, setSearch] = useState("");
 	const { data: articles = [], isLoading, isError } = useArticles();
 
@@ -53,7 +55,7 @@ export function ArticlesPageClient() {
 				<input
 					className="w-full rounded-sm border border-cream-dark bg-white px-3 py-2 font-sans text-sm text-text-dark placeholder:text-text-muted sm:max-w-xs"
 					onChange={(e) => setSearch(e.target.value)}
-					placeholder="Search articles…"
+					placeholder={t("producerArticlesUi.searchPlaceholder")}
 					type="search"
 					value={search}
 				/>
@@ -61,35 +63,46 @@ export function ArticlesPageClient() {
 					className="shrink-0 rounded-sm bg-forest-dark px-4 py-2 text-center font-sans font-semibold text-sm text-white transition-colors"
 					href="/artisan/articles/new"
 				>
-					New article
+					{t("producerArticlesUi.newArticle")}
 				</Link>
 			</div>
 
 			<div className="overflow-hidden rounded-xl border border-cream-dark bg-white">
 				{isLoading ? (
 					<div className="px-5 py-12 text-center font-sans text-sm text-text-muted">
-						Loading articles…
+						{t("producerArticlesUi.loading")}
 					</div>
 				) : isError ? (
 					<div className="px-5 py-12 text-center font-sans text-red-600 text-sm">
-						Failed to load articles.
+						{t("producerArticlesUi.loadError")}
 					</div>
 				) : filtered.length === 0 ? (
 					<div className="px-5 py-12 text-center font-sans text-sm text-text-muted">
 						{articles.length === 0
-							? "No articles yet. Write a short journal post for buyers on the homepage."
-							: "No articles match your search."}
+							? t("producerArticlesUi.emptyNoArticles")
+							: t("producerArticlesUi.emptyNoMatch")}
 					</div>
 				) : (
 					<div className="overflow-x-auto">
 						<table className="w-full min-w-[560px] font-sans text-sm">
 							<thead>
 								<tr className="border-cream-dark border-b bg-paper/80 text-left font-bold text-[11px] text-text-muted uppercase tracking-wide">
-									<th aria-label="Cover" className="w-14 px-4 py-3" />
-									<th className="px-4 py-3">Title</th>
-									<th className="w-[110px] px-4 py-3">Status</th>
-									<th className="w-[120px] px-4 py-3">Updated</th>
-									<th className="w-[100px] px-4 py-3 text-right">Actions</th>
+									<th
+										aria-label={t("producerArticlesUi.colCover")}
+										className="w-14 px-4 py-3"
+									/>
+									<th className="px-4 py-3">
+										{t("producerArticlesUi.colTitle")}
+									</th>
+									<th className="w-[110px] px-4 py-3">
+										{t("producerArticlesUi.colStatus")}
+									</th>
+									<th className="w-[120px] px-4 py-3">
+										{t("producerArticlesUi.colUpdated")}
+									</th>
+									<th className="w-[100px] px-4 py-3 text-right">
+										{t("producerArticlesUi.colActions")}
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -139,7 +152,9 @@ export function ArticlesPageClient() {
 														borderColor: st.border,
 													}}
 												>
-													{a.status === "PUBLISHED" ? "Live" : "Draft"}
+													{a.status === "PUBLISHED"
+														? t("producerArticlesUi.statusLive")
+														: t("producerArticlesUi.statusDraft")}
 												</span>
 											</td>
 											<td className="px-4 py-3 text-[12px] text-text-muted">
@@ -150,7 +165,7 @@ export function ArticlesPageClient() {
 													className="font-medium text-primary-dark hover:underline"
 													href={`/artisan/articles/${a.id}/edit`}
 												>
-													Edit
+													{t("producerArticlesUi.edit")}
 												</Link>
 											</td>
 										</tr>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useTrainingPrograms } from "~/features/artisan/hooks/use-training";
 import { getTrainingProgramDisplayStatus } from "~/features/artisan/utils/training";
 
@@ -12,6 +13,7 @@ const LEVEL_COLORS: Record<string, string> = {
 };
 
 export function TrainingProgressCard() {
+	const { t } = useI18n();
 	const { data: programs = [], isLoading } = useTrainingPrograms();
 
 	const inProgress = programs.filter(
@@ -32,10 +34,10 @@ export function TrainingProgressCard() {
 					style={{ borderColor: "var(--color-cream-dark)" }}
 				>
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Training Progress
+						{t("producerDashboard.trainingProgress")}
 					</h2>
 					<p className="mt-0.5 font-sans text-[12px] text-text-muted">
-						Loading…
+						{t("producerDashboard.loading")}
 					</p>
 				</div>
 			</div>
@@ -56,12 +58,14 @@ export function TrainingProgressCard() {
 			>
 				<div>
 					<h2 className="font-bold font-serif text-[15px] text-text-dark">
-						Training Progress
+						{t("producerDashboard.trainingProgress")}
 					</h2>
 					<p className="mt-0.5 font-sans text-[12px] text-text-muted">
 						{inProgress.length === 0
-							? "No programs in progress"
-							: `${inProgress.length} program${inProgress.length !== 1 ? "s" : ""} in progress`}
+							? t("producerDashboard.noProgramsInProgress")
+							: t("producerDashboard.programsInProgress", {
+									count: inProgress.length,
+								})}
 					</p>
 				</div>
 				{programs.length > 0 && (
@@ -69,21 +73,20 @@ export function TrainingProgressCard() {
 						className="font-sans font-semibold text-[12px] text-text-dark hover:underline"
 						href="/artisan/training"
 					>
-						View all
+						{t("producerDashboard.viewAll")}
 					</Link>
 				)}
 			</div>
 			{inProgress.length === 0 ? (
 				<div className="px-5 py-4">
 					<p className="font-sans text-[12px] text-text-muted">
-						Enroll in a program from the Training page to see your progress
-						here.
+						{t("producerDashboard.noProgramsHint")}
 					</p>
 					<Link
 						className="mt-2 inline-block font-sans font-semibold text-[12px] text-text-dark hover:underline"
 						href="/artisan/training"
 					>
-						Go to Training →
+						{t("producerDashboard.goToTraining")}
 					</Link>
 				</div>
 			) : (
@@ -117,8 +120,11 @@ export function TrainingProgressCard() {
 								/>
 							</div>
 							<p className="mt-1.5 font-sans text-[11px] text-text-muted">
-								{p.enrollment?.modulesCompleted ?? 0}/{p.modulesCount} modules ·{" "}
-								{p.provider}
+								{t("producerDashboard.modulesProvider", {
+									completed: p.enrollment?.modulesCompleted ?? 0,
+									total: p.modulesCount,
+									provider: p.provider,
+								})}
 							</p>
 						</Link>
 					);
