@@ -1,6 +1,11 @@
 "use server";
 
 import { getProducerOrgId } from "~/app/api/producer-context";
+import type {
+	ProducerArticlePublicCard,
+	ProducerArticlePublicView,
+	ProducerArticleRow,
+} from "./articles.types";
 import {
 	createArticleRepo,
 	deleteArticleRepo,
@@ -10,19 +15,14 @@ import {
 	listPublishedArticlesForHomeRepo,
 	updateArticleRepo,
 } from "./repo/articles.repo";
-import {
-	createProducerArticleSchema,
-	updateProducerArticleSchema,
-} from "./schemas/article.schema";
 import type {
 	CreateProducerArticleInput,
 	UpdateProducerArticleInput,
 } from "./schemas/article.schema";
-import type {
-	ProducerArticlePublicCard,
-	ProducerArticlePublicView,
-	ProducerArticleRow,
-} from "./articles.types";
+import {
+	createProducerArticleSchema,
+	updateProducerArticleSchema,
+} from "./schemas/article.schema";
 
 function publishedAtForStatus(
 	prevPublishedAt: Date | null | undefined,
@@ -44,19 +44,25 @@ export async function listPublishedArticlesForHome(
 	return listPublishedArticlesForHomeRepo(take);
 }
 
-export async function getMyArticle(id: string): Promise<ProducerArticleRow | null> {
+export async function getMyArticle(
+	id: string,
+): Promise<ProducerArticleRow | null> {
 	const orgId = await getProducerOrgId();
 	if (!orgId) return null;
 	return getArticleByIdForOrgRepo(id, orgId);
 }
 
-export async function getPublishedArticle(id: string): Promise<ProducerArticlePublicView | null> {
+export async function getPublishedArticle(
+	id: string,
+): Promise<ProducerArticlePublicView | null> {
 	const row = await getPublishedArticleByIdRepo(id);
 	if (!row?.publishedAt) return null;
 	return row as ProducerArticlePublicView;
 }
 
-export async function createArticle(data: CreateProducerArticleInput): Promise<ProducerArticleRow> {
+export async function createArticle(
+	data: CreateProducerArticleInput,
+): Promise<ProducerArticleRow> {
 	const orgId = await getProducerOrgId();
 	if (!orgId) throw new Error("You must belong to an organization.");
 	const parsed = createProducerArticleSchema.parse(data);
@@ -74,7 +80,9 @@ export async function createArticle(data: CreateProducerArticleInput): Promise<P
 	});
 }
 
-export async function updateArticle(data: UpdateProducerArticleInput): Promise<ProducerArticleRow> {
+export async function updateArticle(
+	data: UpdateProducerArticleInput,
+): Promise<ProducerArticleRow> {
 	const orgId = await getProducerOrgId();
 	if (!orgId) throw new Error("You must belong to an organization.");
 	const parsed = updateProducerArticleSchema.parse(data);

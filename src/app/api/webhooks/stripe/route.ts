@@ -1,3 +1,6 @@
+// PARKED: card payments are off by design (see src/lib/payments-config.ts). This
+// handler stays wired so card can be re-enabled later, but with no Stripe env keys
+// configured it short-circuits with 501 below and is never reached in production.
 import type Stripe from "stripe";
 import { env } from "~/env";
 import { completeShopOrderAfterStripePayment } from "~/lib/complete-shop-order-payment";

@@ -1,13 +1,15 @@
 import type { Prisma } from "@prisma/client";
 import type {
+	ProductPaymentOptionValue,
 	PublicProductImage,
 	PublicProductListRow,
 	PublicProductVariant,
-	ProductPaymentOptionValue,
 } from "~/app/api/products/schemas/products.schema";
 
 function toPaymentOption(
-	v: Prisma.ProductGetPayload<{ select: { paymentOption: true } }>["paymentOption"],
+	v: Prisma.ProductGetPayload<{
+		select: { paymentOption: true };
+	}>["paymentOption"],
 ): ProductPaymentOptionValue | null {
 	if (v === "CARD" || v === "COD" || v === "BOTH") return v;
 	return null;
@@ -38,7 +40,9 @@ function mapVariantRow(v: {
 }
 
 /** Fallback when legacy data has no variants (should not happen after migration). */
-export function syntheticListingVariants(moq: string | null): PublicProductVariant[] {
+export function syntheticListingVariants(
+	moq: string | null,
+): PublicProductVariant[] {
 	return [
 		{
 			id: "legacy-default",
@@ -63,8 +67,15 @@ export function buildPublicProductListRow(input: {
 	organizationId: string;
 	organizationName: string;
 	firstImageUrl: string | null;
-	paymentOption: Prisma.ProductGetPayload<{ select: { paymentOption: true } }>["paymentOption"];
-	gallery?: { id: string; url: string; sortOrder: number; variantId: string | null }[];
+	paymentOption: Prisma.ProductGetPayload<{
+		select: { paymentOption: true };
+	}>["paymentOption"];
+	gallery?: {
+		id: string;
+		url: string;
+		sortOrder: number;
+		variantId: string | null;
+	}[];
 	variants: Array<{
 		id: string;
 		name: string;
@@ -93,7 +104,9 @@ export function buildPublicProductListRow(input: {
 	}
 	const variants =
 		input.variants.length > 0
-			? [...input.variants].sort((a, b) => a.sortOrder - b.sortOrder).map(mapVariantRow)
+			? [...input.variants]
+					.sort((a, b) => a.sortOrder - b.sortOrder)
+					.map(mapVariantRow)
 			: syntheticListingVariants(input.moq);
 	return {
 		id: input.id,

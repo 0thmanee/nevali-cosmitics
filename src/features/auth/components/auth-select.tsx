@@ -1,37 +1,44 @@
 "use client";
 
 import React, { useState } from "react";
-import { inputCls, inputStyle, inputFocusStyle } from "./auth-layout";
+import { inputCls, inputFocusStyle, inputStyle } from "./auth-layout";
 
 type AuthSelectProps = {
-  value: string;
-  onChange: (v: string) => void;
-  options: readonly string[] | string[];
-  placeholder?: string;
+	value: string;
+	onChange: (v: string) => void;
+	options: readonly string[] | string[];
+	placeholder?: string;
 };
 
 export function AuthSelect({
-  value,
-  onChange,
-  options,
-  placeholder,
+	value,
+	onChange,
+	options,
+	placeholder,
 }: AuthSelectProps) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      className={inputCls + " appearance-none"}
-      style={focused ? inputFocusStyle : inputStyle}
-    >
-      {placeholder && <option value="">{placeholder}</option>}
-      {options.map((o) => (
-        <option key={o} value={o} style={{ background: "var(--color-paper)", color: "var(--color-ink)" }}>
-          {o}
-        </option>
-      ))}
-    </select>
-  );
+	const [focused, setFocused] = useState(false);
+	return (
+		<select
+			className={inputCls + "appearance-none"}
+			onBlur={() => setFocused(false)}
+			onChange={(e) => onChange(e.target.value)}
+			onFocus={() => setFocused(true)}
+			style={focused ? inputFocusStyle : inputStyle}
+			value={value}
+		>
+			{placeholder && <option value="">{placeholder}</option>}
+			{options.map((o) => (
+				<option
+					key={o}
+					style={{
+						background: "var(--color-paper)",
+						color: "var(--color-ink)",
+					}}
+					value={o}
+				>
+					{o}
+				</option>
+			))}
+		</select>
+	);
 }

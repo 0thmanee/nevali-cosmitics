@@ -1,5 +1,5 @@
-export { DashboardStats } from "./dashboard-stats";
+export { DashboardArticlesCard } from "./dashboard-articles-card";
 export { DashboardOverviewCharts } from "./dashboard-overview-charts";
 export { DashboardProductList } from "./dashboard-product-list";
-export { DashboardArticlesCard } from "./dashboard-articles-card";
+export { DashboardStats } from "./dashboard-stats";
 export { TrainingProgressCard } from "./training-progress-card";

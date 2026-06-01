@@ -9,7 +9,10 @@ export async function GET() {
 	}
 
 	return NextResponse.json(
-		{ error: "Sales summary reporting has been retired. Use order analytics instead." },
+		{
+			error:
+				"Sales summary reporting has been retired. Use order analytics instead.",
+		},
 		{ status: 410 },
 	);
 }

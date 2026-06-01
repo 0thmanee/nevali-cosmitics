@@ -5,9 +5,7 @@ import { redirect } from "next/navigation";
 import { getSession, redirectNonSuperadminHome } from "~/app/api/auth/actions";
 import { prisma } from "~/lib/db";
 import type { NotificationPrefs } from "~/lib/notification-prefs";
-import {
-	parseNotificationPrefs,
-} from "~/lib/notification-prefs";
+import { parseNotificationPrefs } from "~/lib/notification-prefs";
 
 /** Unread in-app alerts for the current user (buyer or partner). */
 export async function getUnreadNotificationCountAction(): Promise<number> {

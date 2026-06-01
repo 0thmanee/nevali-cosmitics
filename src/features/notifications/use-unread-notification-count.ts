@@ -3,7 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUnreadNotificationCountAction } from "~/app/api/notifications/actions";
 
-export const unreadNotificationsQueryKey = ["notifications", "unread-count"] as const;
+export const unreadNotificationsQueryKey = [
+	"notifications",
+	"unread-count",
+] as const;
 
 export function useUnreadNotificationCount() {
 	return useQuery({

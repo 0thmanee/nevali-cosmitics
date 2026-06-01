@@ -1,53 +1,53 @@
+export type { CertificationSection } from "./components/certification";
 export {
-  ProducerLayoutClient,
-  type ProducerLayoutUser,
-  type ProducerLayoutProfile,
-} from "./components/producer-layout-client";
+	CertificationBanner,
+	CertificationDocumentsSection,
+	CertificationOverview,
+	CertificationStandardsGrid,
+	CertificationView,
+	CertifiedProductsTable,
+} from "./components/certification";
 export {
-  PRODUCER_NAV_ITEMS,
-  PAGE_SUBTITLE,
-  getPageTitle,
-} from "./config";
-export {
-  ProfileView,
-  formatMemberSince,
-  ProfileHeaderCard,
-  ProfilePersonalSection,
-  ProfileBusinessSection,
-  ProfileSideCards,
-} from "./components/profile";
-export type { ProfileViewUser, ProfileViewProfile } from "./components/profile";
-export { useProducts } from "./hooks/use-products";
-export {
-  DashboardStats,
-  DashboardProductList,
-  TrainingProgressCard,
+	DashboardProductList,
+	DashboardStats,
+	TrainingProgressCard,
 } from "./components/dashboard";
 export {
-  ProductsFilterBar,
-  ProductsTable,
-  RejectedWarning,
-} from "./components/products";
+	ProducerLayoutClient,
+	type ProducerLayoutProfile,
+	type ProducerLayoutUser,
+} from "./components/producer-layout-client";
 export type {
-  ProductsFilterBarProps,
-  ProductsTab,
-  ProductsTableProps,
-  RejectedWarningProps,
+	ProductsFilterBarProps,
+	ProductsTab,
+	ProductsTableProps,
+	RejectedWarningProps,
 } from "./components/products";
 export {
-  CertificationView,
-  CertificationBanner,
-  CertificationOverview,
-  CertifiedProductsTable,
-  CertificationDocumentsSection,
-  CertificationStandardsGrid,
-} from "./components/certification";
-export type { CertificationSection } from "./components/certification";
-export { TrainingView } from "./components/training";
+	ProductsFilterBar,
+	ProductsTable,
+	RejectedWarning,
+} from "./components/products";
+export type { ProfileViewProfile, ProfileViewUser } from "./components/profile";
+export {
+	formatMemberSince,
+	ProfileBusinessSection,
+	ProfileHeaderCard,
+	ProfilePersonalSection,
+	ProfileSideCards,
+	ProfileView,
+} from "./components/profile";
 export { SupportView } from "./components/support";
+export { TrainingView } from "./components/training";
+export {
+	getPageTitle,
+	PAGE_SUBTITLE,
+	PRODUCER_NAV_ITEMS,
+} from "./config";
 export { PRODUCT_STATUS_STYLES, STATUS_DOT_COLORS } from "./constants";
+export { useProducts } from "./hooks/use-products";
 export { formatProductUpdatedAt } from "./utils/format";
 export {
-  artisanProductStatusLabel,
-  formatProductUpdatedRelative,
+	artisanProductStatusLabel,
+	formatProductUpdatedRelative,
 } from "./utils/format-product-updated-i18n";

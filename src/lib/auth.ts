@@ -3,7 +3,13 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import { organization } from "better-auth/plugins";
+import { env } from "~/env";
 import { prisma } from "~/lib/db";
+import {
+	buildPasswordResetEmailContent,
+	buildVerificationEmailContent,
+	sendTransactionalEmail,
+} from "~/lib/email";
 
 function toOrigin(raw: string | undefined | null): string | null {
 	if (!raw) return null;
@@ -20,7 +26,9 @@ function parseTrustedOrigins(): string[] {
 	const primary = toOrigin(process.env.BETTER_AUTH_URL);
 	if (primary) out.add(primary);
 
-	const vercel = toOrigin(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
+	const vercel = toOrigin(
+		process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+	);
 	if (vercel) out.add(vercel);
 
 	const extra = (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
@@ -43,7 +51,48 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
-		requireEmailVerification: false,
+		requireEmailVerification: env.REQUIRE_EMAIL_VERIFICATION,
+		sendResetPassword: async ({ user, url }) => {
+			const { text, html } = buildPasswordResetEmailContent({ resetUrl: url });
+			await sendTransactionalEmail({
+				to: user.email,
+				subject: "Reset your nevali password",
+				text,
+				html,
+			});
+		},
+	},
+	emailVerification: {
+		sendOnSignUp: true,
+		autoSignInAfterVerification: true,
+		sendVerificationEmail: async ({ user, url }) => {
+			const { text, html } = buildVerificationEmailContent({
+				verificationUrl: url,
+			});
+			await sendTransactionalEmail({
+				to: user.email,
+				subject: "Verify your email for nevali",
+				text,
+				html,
+			});
+		},
+	},
+	// Built-in rate limiting (in-memory). Stricter custom rules on the abuse-prone
+	// credential endpoints; a sane global default elsewhere. Note: in-memory counters
+	// are per-instance on serverless — add database/secondary storage if you need
+	// cross-instance limits.
+	rateLimit: {
+		// Production only — throttling local dev/tests just gets in the way.
+		enabled: process.env.NODE_ENV === "production",
+		window: 60,
+		max: 100,
+		customRules: {
+			"/sign-in/email": { window: 60, max: 5 },
+			"/sign-up/email": { window: 60, max: 5 },
+			"/forget-password": { window: 60, max: 3 },
+			"/request-password-reset": { window: 60, max: 3 },
+			"/reset-password": { window: 60, max: 5 },
+		},
 	},
 	user: {
 		additionalFields: {

@@ -11,16 +11,16 @@ import {
 } from "../../hooks/use-admin-certifications";
 import { useAdminOrganizationFilter } from "../../hooks/use-admin-organizations";
 import { AdminStatCard, STAT_ICON_COLOR } from "../admin-stat-card";
-import { RejectCertificationModal } from "./reject-certification-modal";
 import {
 	AdminPageWrapper,
 	AdminStatRow,
-	FilterTab,
+	BtnDanger,
 	BtnPrimary,
 	BtnSecondary,
-	BtnDanger,
+	FilterTab,
 	StatusBadge,
 } from "../admin-ui";
+import { RejectCertificationModal } from "./reject-certification-modal";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -133,7 +133,7 @@ function CertCard({
 						<div className="flex min-w-0 flex-col gap-1">
 							<div className="flex flex-wrap items-center gap-2">
 								<a
-									className="font-sans font-semibold text-text-dark text-sm hover:underline"
+									className="font-sans font-semibold text-sm text-text-dark hover:underline"
 									href={c.fileUrl}
 									rel="noopener noreferrer"
 									target="_blank"
@@ -168,7 +168,7 @@ function CertCard({
 									</span>
 								</div>
 
-								<span className="text-cream-dark text-[10px]">·</span>
+								<span className="text-[10px] text-cream-dark">·</span>
 								<span className="font-sans text-text-muted text-xs">
 									{formatDate(c.createdAt)}
 								</span>
@@ -176,15 +176,35 @@ function CertCard({
 								{/* Linked to */}
 								{isProduct && c.product ? (
 									<>
-										<span className="text-cream-dark text-[10px]">·</span>
+										<span className="text-[10px] text-cream-dark">·</span>
 										<div className="flex items-center gap-1">
-											<svg fill="none" height="10" viewBox="0 0 10 10" width="10">
-												<rect height="5.5" rx="1" stroke="var(--color-info-dark)" strokeWidth="1.1" width="8" x="1" y="3" />
-												<path d="M3.5 3V2.5a1.5 1.5 0 0 1 3 0V3" stroke="var(--color-info-dark)" strokeLinecap="round" strokeWidth="1.1" />
+											<svg
+												fill="none"
+												height="10"
+												viewBox="0 0 10 10"
+												width="10"
+											>
+												<rect
+													height="5.5"
+													rx="1"
+													stroke="var(--color-info-dark)"
+													strokeWidth="1.1"
+													width="8"
+													x="1"
+													y="3"
+												/>
+												<path
+													d="M3.5 3V2.5a1.5 1.5 0 0 1 3 0V3"
+													stroke="var(--color-info-dark)"
+													strokeLinecap="round"
+													strokeWidth="1.1"
+												/>
 											</svg>
 											<button
 												className="cursor-pointer border-none bg-transparent p-0 font-medium font-sans text-[var(--color-info-dark)] text-xs hover:underline"
-												onClick={() => router.push(`/admin/products/${c.product!.id}`)}
+												onClick={() =>
+													router.push(`/admin/products/${c.product!.id}`)
+												}
 												type="button"
 											>
 												{c.product.name}
@@ -193,16 +213,18 @@ function CertCard({
 									</>
 								) : (
 									<>
-										<span className="text-cream-dark text-[10px]">·</span>
-										<span className="font-sans text-text-muted text-xs">Organization-wide</span>
+										<span className="text-[10px] text-cream-dark">·</span>
+										<span className="font-sans text-text-muted text-xs">
+											Organization-wide
+										</span>
 									</>
 								)}
 
 								{/* Rejection reason */}
 								{c.status === "REJECTED" && c.rejectionReason && (
 									<>
-										<span className="text-cream-dark text-[10px]">·</span>
-										<span className="font-sans text-xs text-red-600 italic">
+										<span className="text-[10px] text-cream-dark">·</span>
+										<span className="font-sans text-red-600 text-xs italic">
 											{c.rejectionReason}
 										</span>
 									</>
@@ -215,14 +237,20 @@ function CertCard({
 					<div className="flex shrink-0 items-center gap-1.5">
 						<BtnSecondary href={c.fileUrl}>View doc</BtnSecondary>
 						{isProduct && c.product && (
-							<BtnSecondary onClick={() => router.push(`/admin/products/${c.product!.id}`)}>
+							<BtnSecondary
+								onClick={() => router.push(`/admin/products/${c.product!.id}`)}
+							>
 								View product
 							</BtnSecondary>
 						)}
 						{c.status === "PENDING" && (
 							<>
-								<BtnPrimary onClick={onApprove} disabled={isPending}>Approve</BtnPrimary>
-								<BtnDanger onClick={onReject} disabled={isPending}>Reject</BtnDanger>
+								<BtnPrimary disabled={isPending} onClick={onApprove}>
+									Approve
+								</BtnPrimary>
+								<BtnDanger disabled={isPending} onClick={onReject}>
+									Reject
+								</BtnDanger>
 							</>
 						)}
 					</div>
@@ -236,9 +264,14 @@ function CertCard({
 
 export function CertificationsList() {
 	const { selectedOrganizationId } = useAdminOrganizationFilter();
-	const [statusFilter, setStatusFilter] = useState<"PENDING" | "APPROVED" | "REJECTED" | "ALL">("ALL");
-	const [typeFilter, setTypeFilter] = useState<"ALL" | "ORGANIZATION" | "PRODUCT">("ALL");
-	const [rejectingCert, setRejectingCert] = useState<CertificationWithProductRow | null>(null);
+	const [statusFilter, setStatusFilter] = useState<
+		"PENDING" | "APPROVED" | "REJECTED" | "ALL"
+	>("ALL");
+	const [typeFilter, setTypeFilter] = useState<
+		"ALL" | "ORGANIZATION" | "PRODUCT"
+	>("ALL");
+	const [rejectingCert, setRejectingCert] =
+		useState<CertificationWithProductRow | null>(null);
 
 	const {
 		data: allCertifications = [],
@@ -274,7 +307,9 @@ export function CertificationsList() {
 	if (isLoading) {
 		return (
 			<AdminPageWrapper>
-				<p className="font-sans text-sm text-text-muted">Loading certifications…</p>
+				<p className="font-sans text-sm text-text-muted">
+					Loading certifications…
+				</p>
 			</AdminPageWrapper>
 		);
 	}
@@ -283,43 +318,98 @@ export function CertificationsList() {
 		return (
 			<AdminPageWrapper>
 				<p className="font-sans text-red-600 text-sm">
-					{error instanceof Error ? error.message : "Failed to load certifications."}
+					{error instanceof Error
+						? error.message
+						: "Failed to load certifications."}
 				</p>
 			</AdminPageWrapper>
 		);
 	}
 
-	const totalCount    = allCertifications.length;
-	const approvedCount = allCertifications.filter((c) => c.status === "APPROVED").length;
-	const pendingCount  = allCertifications.filter((c) => c.status === "PENDING").length;
-	const rejectedCount = allCertifications.filter((c) => c.status === "REJECTED").length;
-	const orgCount      = allCertifications.filter((c) => !c.productId).length;
-	const productCount  = allCertifications.filter((c) => !!c.productId).length;
+	const totalCount = allCertifications.length;
+	const approvedCount = allCertifications.filter(
+		(c) => c.status === "APPROVED",
+	).length;
+	const pendingCount = allCertifications.filter(
+		(c) => c.status === "PENDING",
+	).length;
+	const rejectedCount = allCertifications.filter(
+		(c) => c.status === "REJECTED",
+	).length;
+	const orgCount = allCertifications.filter((c) => !c.productId).length;
+	const productCount = allCertifications.filter((c) => !!c.productId).length;
 
 	const certifications = allCertifications
 		.filter((c) => statusFilter === "ALL" || c.status === statusFilter)
-		.filter((c) => typeFilter === "ALL" || (typeFilter === "ORGANIZATION" ? !c.productId : !!c.productId));
+		.filter(
+			(c) =>
+				typeFilter === "ALL" ||
+				(typeFilter === "ORGANIZATION" ? !c.productId : !!c.productId),
+		);
 
 	return (
 		<AdminPageWrapper>
 			<AdminStatRow>
-				<AdminStatCard icon={<Award      color={STAT_ICON_COLOR.neutral} size={18} strokeWidth={1.5} />} label="Total Certs"    value={totalCount}    variant="neutral" />
-				<AdminStatCard icon={<CheckCircle color={STAT_ICON_COLOR.green}   size={18} strokeWidth={1.5} />} label="Approved"       value={approvedCount} variant="green"   />
-				<AdminStatCard icon={<AlertCircle color={STAT_ICON_COLOR.amber}   size={18} strokeWidth={1.5} />} label="Pending Review" value={pendingCount}  variant="amber"   />
-				<AdminStatCard icon={<XCircle     color={STAT_ICON_COLOR.red}     size={18} strokeWidth={1.5} />} label="Rejected"       value={rejectedCount} variant="red"     />
+				<AdminStatCard
+					icon={
+						<Award
+							color={STAT_ICON_COLOR.neutral}
+							size={18}
+							strokeWidth={1.5}
+						/>
+					}
+					label="Total Certs"
+					value={totalCount}
+					variant="neutral"
+				/>
+				<AdminStatCard
+					icon={
+						<CheckCircle
+							color={STAT_ICON_COLOR.green}
+							size={18}
+							strokeWidth={1.5}
+						/>
+					}
+					label="Approved"
+					value={approvedCount}
+					variant="green"
+				/>
+				<AdminStatCard
+					icon={
+						<AlertCircle
+							color={STAT_ICON_COLOR.amber}
+							size={18}
+							strokeWidth={1.5}
+						/>
+					}
+					label="Pending Review"
+					value={pendingCount}
+					variant="amber"
+				/>
+				<AdminStatCard
+					icon={
+						<XCircle color={STAT_ICON_COLOR.red} size={18} strokeWidth={1.5} />
+					}
+					label="Rejected"
+					value={rejectedCount}
+					variant="red"
+				/>
 			</AdminStatRow>
 
 			<div className="flex flex-col gap-3">
 				{/* Filter toolbar */}
-				<div className="flex flex-wrap items-center justify-between gap-4 bg-white border border-cream-dark px-5 py-3.5">
+				<div className="flex flex-wrap items-center justify-between gap-4 border border-cream-dark bg-white px-5 py-3.5">
 					<div className="flex flex-wrap items-center gap-3">
 						<div className="flex gap-1">
 							{STATUS_TABS.map((tab) => {
 								const count =
-									tab.key === "ALL"      ? totalCount :
-									tab.key === "APPROVED" ? approvedCount :
-									tab.key === "PENDING"  ? pendingCount :
-									rejectedCount;
+									tab.key === "ALL"
+										? totalCount
+										: tab.key === "APPROVED"
+											? approvedCount
+											: tab.key === "PENDING"
+												? pendingCount
+												: rejectedCount;
 								return (
 									<FilterTab
 										active={statusFilter === tab.key}
@@ -335,9 +425,11 @@ export function CertificationsList() {
 						<div className="flex gap-1">
 							{TYPE_TABS.map((tab) => {
 								const count =
-									tab.key === "ALL"          ? totalCount :
-									tab.key === "ORGANIZATION" ? orgCount :
-									productCount;
+									tab.key === "ALL"
+										? totalCount
+										: tab.key === "ORGANIZATION"
+											? orgCount
+											: productCount;
 								return (
 									<FilterTab
 										active={typeFilter === tab.key}
@@ -351,7 +443,8 @@ export function CertificationsList() {
 						</div>
 					</div>
 					<p className="font-sans text-text-muted text-xs">
-						{certifications.length} certification{certifications.length !== 1 ? "s" : ""}
+						{certifications.length} certification
+						{certifications.length !== 1 ? "s" : ""}
 					</p>
 				</div>
 

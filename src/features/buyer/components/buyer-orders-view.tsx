@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { useFormatPrice } from "~/components/i18n/use-format-price";
 import { INTL_LOCALE_TAG } from "~/lib/i18n/config";
-import { interpolate } from "~/lib/i18n/interpolate";
 import type { Translator } from "~/lib/i18n/create-translator";
+import { interpolate } from "~/lib/i18n/interpolate";
 import { useBuyerShopOrders } from "../hooks/use-buyer-shop-orders";
 
 function buyerOrderStatusLabel(status: string, t: Translator): string {
@@ -22,11 +22,15 @@ export function BuyerOrdersView() {
 	const dateTag = INTL_LOCALE_TAG[locale] ?? INTL_LOCALE_TAG.en;
 
 	if (isLoading) {
-		return <p className="font-sans text-sm text-text-muted">{t("buyerOrders.loading")}</p>;
+		return (
+			<p className="font-sans text-sm text-text-muted">
+				{t("buyerOrders.loading")}
+			</p>
+		);
 	}
 	if (isError) {
 		return (
-			<p className="font-sans text-sm text-red-600">
+			<p className="font-sans text-red-600 text-sm">
 				{error instanceof Error ? error.message : t("buyerOrders.couldNotLoad")}
 			</p>
 		);
@@ -35,7 +39,9 @@ export function BuyerOrdersView() {
 	if (orders.length === 0) {
 		return (
 			<div className="max-w-xl space-y-4 rounded-sm border border-cream-dark bg-white p-6">
-				<p className="font-sans text-sm text-text-muted leading-relaxed">{t("buyerOrders.emptyBody")}</p>
+				<p className="font-sans text-sm text-text-muted leading-relaxed">
+					{t("buyerOrders.emptyBody")}
+				</p>
 				<Link
 					className="inline-flex rounded-sm bg-forest-mid px-5 py-2.5 font-medium font-sans text-sm text-white transition-opacity hover:opacity-90"
 					href="/products"
@@ -52,9 +58,17 @@ export function BuyerOrdersView() {
 				const totalStr = formatMad(o.totalMad);
 				const linesSummary =
 					o.lineCount === 1
-						? interpolate(t("buyerOrders.linesSummary"), { count: o.lineCount, total: totalStr })
-						: interpolate(t("buyerOrders.linesSummaryPlural"), { count: o.lineCount, total: totalStr });
-				const payment = paymentLabel(String(o.paymentMethod ?? "").toUpperCase());
+						? interpolate(t("buyerOrders.linesSummary"), {
+								count: o.lineCount,
+								total: totalStr,
+							})
+						: interpolate(t("buyerOrders.linesSummaryPlural"), {
+								count: o.lineCount,
+								total: totalStr,
+							});
+				const payment = paymentLabel(
+					String(o.paymentMethod ?? "").toUpperCase(),
+				);
 				return (
 					<li key={o.id}>
 						<Link
@@ -62,22 +76,29 @@ export function BuyerOrdersView() {
 							href={`/cart/checkout/success?orderId=${encodeURIComponent(o.id)}`}
 						>
 							<div className="flex flex-wrap items-baseline justify-between gap-2">
-								<span className="font-semibold font-sans text-sm text-text-dark">
-									{interpolate(t("buyerOrders.orderShort"), { id: o.id.slice(0, 8) })}
+								<span className="font-sans font-semibold text-sm text-text-dark">
+									{interpolate(t("buyerOrders.orderShort"), {
+										id: o.id.slice(0, 8),
+									})}
 								</span>
 								<span className="font-sans text-sm text-text-muted">
-									{new Date(o.createdAt).toLocaleString(dateTag, { dateStyle: "medium", timeStyle: "short" })}
+									{new Date(o.createdAt).toLocaleString(dateTag, {
+										dateStyle: "medium",
+										timeStyle: "short",
+									})}
 								</span>
 							</div>
-							<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-sans text-xs text-text-muted">
+							<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-sans text-text-muted text-xs">
 								<span>{buyerOrderStatusLabel(o.status, t)}</span>
 								<span>{payment}</span>
 								<span>{linesSummary}</span>
 							</div>
 							{o.previewProductNames.length > 0 ? (
-								<p className="mt-2 font-sans text-xs text-stone-500">
+								<p className="mt-2 font-sans text-stone-500 text-xs">
 									{o.previewProductNames.join(" · ")}
-									{o.lineCount > o.previewProductNames.length ? t("buyerOrders.previewEllipsis") : ""}
+									{o.lineCount > o.previewProductNames.length
+										? t("buyerOrders.previewEllipsis")
+										: ""}
 								</p>
 							) : null}
 						</Link>

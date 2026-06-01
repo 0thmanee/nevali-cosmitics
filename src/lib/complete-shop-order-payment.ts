@@ -6,6 +6,7 @@ import {
 	notifyOrganizationsOfShopOrder,
 	notifyShopOrderBuyerConfirmation,
 } from "~/lib/notifications";
+import { reportError } from "~/lib/report-error";
 
 /**
  * Idempotent: confirms a card order after Stripe reports success and sends emails once.
@@ -51,8 +52,12 @@ export async function completeShopOrderAfterStripePayment(params: {
 			paymentMethod: notification.paymentMethod,
 			lines: notification.lines,
 		});
-	} catch {
-		/* best-effort — order is confirmed in DB */
+	} catch (err) {
+		// best-effort — order is confirmed in DB; surface for observability
+		reportError(err, {
+			scope: "completeShopOrderAfterStripePayment.notify",
+			orderId: params.orderId,
+		});
 	}
 
 	return { newlyConfirmed: true };

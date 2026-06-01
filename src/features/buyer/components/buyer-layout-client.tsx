@@ -49,7 +49,7 @@ export function BuyerLayoutClient({ user, children }: Props) {
 								className="block h-4 w-auto"
 								src="/assets/logo-white.svg"
 							/>
-							<span className="mt-[3px] block font-sans font-semibold text-[var(--color-gold)] text-[9px] uppercase tracking-[0.1em]">
+							<span className="mt-[3px] block font-sans font-semibold text-[9px] text-[var(--color-gold)] uppercase tracking-[0.1em]">
 								Buyer
 							</span>
 						</div>

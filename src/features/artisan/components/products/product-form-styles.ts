@@ -13,4 +13,6 @@ export const productFormCardStyle = {
 	background: "var(--color-paper)",
 	border: "1px solid var(--color-cream-dark)",
 } as const;
-export const productFormSectionBorder = { borderColor: "var(--color-cream-dark)" } as const;
+export const productFormSectionBorder = {
+	borderColor: "var(--color-cream-dark)",
+} as const;

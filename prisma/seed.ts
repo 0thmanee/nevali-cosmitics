@@ -718,7 +718,8 @@ async function main() {
 		data: [
 			{
 				organizationId: org.id,
-				title: "How Moroccan labs document INCI lists for EU-conscious shoppers",
+				title:
+					"How Moroccan labs document INCI lists for EU-conscious shoppers",
 				tag: "Compliance",
 				excerpt:
 					"What buyers see on a label—and how we trace each ingredient to documentation for export markets.",
@@ -744,7 +745,8 @@ If you are listing on nevali, publish the INCI you intend for export markets and
 				organizationId: org.id,
 				title: "Micro-learning for beauty founders on nevali",
 				tag: "Education",
-				excerpt: "Short modules that map to real export paperwork—not generic webinars.",
+				excerpt:
+					"Short modules that map to real export paperwork—not generic webinars.",
 				body: `Training only works when it connects to the **next action** you must take: label review, MOQ planning, or a first pallet shipment.
 
 | Module style | Outcome |
@@ -764,7 +766,8 @@ Partners on nevali can track progress from the dashboard and pick up where they 
 				organizationId: org.id,
 				title: "Argan cooperatives meet modern serum science",
 				tag: "Community",
-				excerpt: "Bridging traditional harvest windows with cold-chain and stability testing.",
+				excerpt:
+					"Bridging traditional harvest windows with cold-chain and stability testing.",
 				body: `## Why harvest windows matter
 
 Cooperative harvest rhythms and lab calendars **do not always** line up.
@@ -845,8 +848,12 @@ This seed article demonstrates **Markdown** on the public journal—headings, li
 	console.log(`  Partner:   ${PARTNER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Buyer:     ${BUYER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Org:       /artisans/${ORG_SLUG}`);
-	console.log(`  Products:  ${productCount} APPROVED (with images; argan oil = homepage hero)`);
-	console.log(`  Journal:   3 published producer articles (+ 1 draft) on /journal`);
+	console.log(
+		`  Products:  ${productCount} APPROVED (with images; argan oil = homepage hero)`,
+	);
+	console.log(
+		`  Journal:   3 published producer articles (+ 1 draft) on /journal`,
+	);
 }
 
 main()

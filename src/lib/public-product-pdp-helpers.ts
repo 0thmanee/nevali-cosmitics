@@ -37,7 +37,9 @@ export function parseSkinTypeCodes(raw: string | null): string[] {
 		try {
 			const parsed = JSON.parse(t) as unknown;
 			if (Array.isArray(parsed)) {
-				return parsed.map((x) => String(x).trim().toUpperCase()).filter(Boolean);
+				return parsed
+					.map((x) => String(x).trim().toUpperCase())
+					.filter(Boolean);
 			}
 		} catch {
 			/* fall through */
@@ -50,7 +52,13 @@ export function parseSkinTypeCodes(raw: string | null): string[] {
 }
 
 export function skinTypeDisplayLabel(code: string): string {
-	return SKIN_TYPE_LABELS[code] ?? code.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+	return (
+		SKIN_TYPE_LABELS[code] ??
+		code
+			.replace(/_/g, " ")
+			.toLowerCase()
+			.replace(/\b\w/g, (c) => c.toUpperCase())
+	);
 }
 
 /** Split ingredients string into display chips (comma / semicolon / newline). */

@@ -4,6 +4,6 @@ import { AdminTrainingModuleNewView } from "~/features/admin/components/training
 type Props = { params: Promise<{ id: string }> };
 
 export default async function NewModulePage({ params }: Props) {
-  const { id: programId } = await params;
-  return <AdminTrainingModuleNewView programId={programId} />;
+	const { id: programId } = await params;
+	return <AdminTrainingModuleNewView programId={programId} />;
 }

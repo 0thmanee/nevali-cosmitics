@@ -73,6 +73,10 @@ body.font-arabic {
 }
 
 ::selection {
-	background: color-mix(in srgb, var(--color-primary-light) 28%, var(--color-paper));
+	background: color-mix(
+		in srgb,
+		var(--color-primary-light) 28%,
+		var(--color-paper)
+	);
 	color: var(--color-text-dark);
 }

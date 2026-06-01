@@ -45,7 +45,10 @@ export function productPlaceholderImageUrl(seed: string, width = 800): string {
 }
 
 /** Home “featured category” panel when no live sample product image exists. */
-export function featuredCategoryPlaceholderImage(categoryId: string, width = 900): string {
+export function featuredCategoryPlaceholderImage(
+	categoryId: string,
+	width = 900,
+): string {
 	switch (categoryId) {
 		case "argan-oils":
 			return cosmeticsPhoto("1609597876248-e5f7c84f0295", width);

@@ -5,7 +5,15 @@ import { useAdminShopOrderAnalytics } from "../hooks/use-admin-analytics";
 import { useAdminOrganizationFilter } from "../hooks/use-admin-organizations";
 import { AdminPageWrapper } from "./admin-ui";
 
-function Bar({ label, value, max }: { label: string; value: number; max: number }) {
+function Bar({
+	label,
+	value,
+	max,
+}: {
+	label: string;
+	value: number;
+	max: number;
+}) {
 	const pct = max > 0 ? Math.round((value / max) * 100) : 0;
 	return (
 		<div className="font-sans text-sm">
@@ -25,13 +33,17 @@ function Bar({ label, value, max }: { label: string; value: number; max: number 
 
 export function AdminAnalyticsView() {
 	const { selectedOrganizationId } = useAdminOrganizationFilter();
-	const { data, isPending, isError } = useAdminShopOrderAnalytics(selectedOrganizationId);
+	const { data, isPending, isError } = useAdminShopOrderAnalytics(
+		selectedOrganizationId,
+	);
 
 	if (isPending) {
 		return (
 			<AdminPageWrapper>
 				<div className="border border-cream-dark bg-white px-5 py-12 text-center">
-					<p className="font-sans text-sm text-text-muted">Loading analytics…</p>
+					<p className="font-sans text-sm text-text-muted">
+						Loading analytics…
+					</p>
 				</div>
 			</AdminPageWrapper>
 		);
@@ -40,7 +52,9 @@ export function AdminAnalyticsView() {
 		return (
 			<AdminPageWrapper>
 				<div className="border border-cream-dark bg-white px-5 py-6">
-					<p className="font-sans text-sm text-red-600">Could not load analytics.</p>
+					<p className="font-sans text-red-600 text-sm">
+						Could not load analytics.
+					</p>
 				</div>
 			</AdminPageWrapper>
 		);
@@ -52,10 +66,12 @@ export function AdminAnalyticsView() {
 		<AdminPageWrapper>
 			<div className="flex flex-col gap-3 border border-cream-dark bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
 				<div>
-					<h2 className="font-bold font-serif text-lg text-text-dark">Catalog orders</h2>
+					<h2 className="font-bold font-serif text-lg text-text-dark">
+						Catalog orders
+					</h2>
 					<p className="mt-1 font-sans text-text-muted text-xs">
-						Confirmed revenue sums line totals (MAD) from paid or COD-confirmed checkout. Filter
-						by organization using the selector in the header.
+						Confirmed revenue sums line totals (MAD) from paid or COD-confirmed
+						checkout. Filter by organization using the selector in the header.
 					</p>
 				</div>
 			</div>
@@ -66,7 +82,10 @@ export function AdminAnalyticsView() {
 					{ label: "Confirmed orders", value: data.confirmedOrdersCount },
 					{ label: "Confirmed revenue (MAD)", value: data.confirmedRevenueMad },
 				].map((item) => (
-					<div key={item.label} className="border border-cream-dark bg-white p-5">
+					<div
+						className="border border-cream-dark bg-white p-5"
+						key={item.label}
+					>
 						<p className="font-bold font-sans text-text-muted text-xs uppercase tracking-[0.1em]">
 							{item.label}
 						</p>
@@ -87,7 +106,12 @@ export function AdminAnalyticsView() {
 					) : (
 						<div className="flex flex-col gap-3">
 							{data.ordersByStatus.map((row) => (
-								<Bar key={row.status} label={row.status} max={statusMax} value={row.count} />
+								<Bar
+									key={row.status}
+									label={row.status}
+									max={statusMax}
+									value={row.count}
+								/>
 							))}
 						</div>
 					)}
@@ -98,12 +122,16 @@ export function AdminAnalyticsView() {
 					</h3>
 					<ul className="space-y-2 font-sans text-sm text-text-muted">
 						<li>
-							<span className="font-medium text-text-dark">{data.pendingPaymentCount}</span>{" "}
+							<span className="font-medium text-text-dark">
+								{data.pendingPaymentCount}
+							</span>{" "}
 							awaiting card payment
 						</li>
 						<li>
-							<span className="font-medium text-text-dark">{data.otherStatusCount}</span> other
-							status (incl. cancelled / legacy)
+							<span className="font-medium text-text-dark">
+								{data.otherStatusCount}
+							</span>{" "}
+							other status (incl. cancelled / legacy)
 						</li>
 					</ul>
 				</div>
@@ -137,7 +165,10 @@ export function AdminAnalyticsView() {
 								</tr>
 							) : (
 								data.topOrganizations.map((o) => (
-									<tr className="border-cream-dark/60 border-b last:border-0" key={o.organizationId}>
+									<tr
+										className="border-cream-dark/60 border-b last:border-0"
+										key={o.organizationId}
+									>
 										<td className="py-2.5 pr-4">
 											<Link
 												className="font-medium text-primary hover:underline"
@@ -146,7 +177,9 @@ export function AdminAnalyticsView() {
 												{o.name}
 											</Link>
 										</td>
-										<td className="py-2.5 pr-4 text-text-muted">{o.lineItems}</td>
+										<td className="py-2.5 pr-4 text-text-muted">
+											{o.lineItems}
+										</td>
 										<td className="py-2.5">{o.revenueMad}</td>
 									</tr>
 								))

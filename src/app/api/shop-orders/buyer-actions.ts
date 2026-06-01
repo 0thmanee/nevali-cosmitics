@@ -1,7 +1,7 @@
 "use server";
 
-import { getSession } from "~/app/api/auth/actions";
 import { redirect } from "next/navigation";
+import { getSession } from "~/app/api/auth/actions";
 import { listShopOrdersForBuyerRepo } from "./repo/shop-orders.repo";
 
 export async function listMyShopOrdersForBuyer() {

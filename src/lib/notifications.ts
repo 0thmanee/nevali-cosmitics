@@ -376,3 +376,128 @@ export async function notifyOrganizationsOfShopOrder(params: {
 		await sendTransactionalEmail({ to: recipients, subject, text, html });
 	}
 }
+
+/** Low-level WhatsApp text send (Infobip preferred, Meta Cloud API fallback). */
+async function sendWhatsAppTextMessage(
+	toPhone: string,
+	body: string,
+): Promise<boolean> {
+	const to = normalizePhoneForWhatsAppDigits(toPhone);
+	if (!to) return false;
+
+	const infobipBaseUrl = env.INFOBIP_BASE_URL?.trim();
+	const infobipApiKey = env.INFOBIP_API_KEY?.trim();
+	const infobipFrom = env.INFOBIP_WHATSAPP_FROM?.trim();
+	if (infobipBaseUrl && infobipApiKey && infobipFrom) {
+		const url = `${infobipBaseUrl.replace(/\/$/, "")}/whatsapp/1/message/text`;
+		try {
+			const res = await fetch(url, {
+				method: "POST",
+				headers: {
+					Authorization: `App ${infobipApiKey}`,
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify({
+					from: infobipFrom,
+					to,
+					content: { text: body },
+				}),
+			});
+			if (res.ok) return true;
+		} catch {
+			// fall through to Meta
+		}
+	}
+
+	const token = env.WHATSAPP_CLOUD_API_TOKEN?.trim();
+	const phoneNumberId = env.WHATSAPP_PHONE_NUMBER_ID?.trim();
+	if (!token || !phoneNumberId) return false;
+	try {
+		const res = await fetch(
+			`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+			{
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					messaging_product: "whatsapp",
+					recipient_type: "individual",
+					to,
+					type: "text",
+					text: { preview_url: false, body },
+				}),
+			},
+		);
+		return res.ok;
+	} catch {
+		return false;
+	}
+}
+
+export type ShopOrderStatusChangeKind = "SHIPPED" | "CANCELED" | "RETURNED";
+
+const STATUS_CHANGE_COPY: Record<
+	ShopOrderStatusChangeKind,
+	{ ar: string; en: string; emoji: string; subjectAr: string }
+> = {
+	SHIPPED: {
+		emoji: "🚚",
+		ar: "تم شحن طلبكم وهو في طريقه إليكم.",
+		en: "Your order has shipped and is on its way.",
+		subjectAr: "تم شحن طلبكم",
+	},
+	CANCELED: {
+		emoji: "❌",
+		ar: "نأسف لإبلاغكم بأنه تم إلغاء طلبكم.",
+		en: "We're sorry to let you know your order has been canceled.",
+		subjectAr: "تم إلغاء طلبكم",
+	},
+	RETURNED: {
+		emoji: "↩️",
+		ar: "تمت معالجة إرجاع طلبكم.",
+		en: "Your return has been processed.",
+		subjectAr: "تمت معالجة إرجاع طلبكم",
+	},
+};
+
+/**
+ * Buyer notification when an order's fulfillment status changes (shipped /
+ * canceled / returned). WhatsApp-first (when a phone is on file), email fallback.
+ * COD-aware: no payment or refund wording.
+ */
+export async function notifyShopOrderStatusChange(params: {
+	to: string;
+	toPhone?: string | null;
+	buyerName: string;
+	orderId: string;
+	status: ShopOrderStatusChangeKind;
+}): Promise<void> {
+	const copy = STATUS_CHANGE_COPY[params.status];
+	const shortId = params.orderId.slice(0, 8);
+
+	if (params.toPhone?.trim()) {
+		const body = [
+			`السلام عليكم ${params.buyerName}،`,
+			"",
+			`${copy.emoji} ${copy.ar}`,
+			`🔖 رقم الطلب: ${params.orderId}`,
+			"",
+			copy.en,
+			"",
+			"— nevali",
+		].join("\n");
+		const sent = await sendWhatsAppTextMessage(params.toPhone, body);
+		if (sent) return;
+	}
+
+	const to = params.to.trim();
+	if (!isValidEmail(to)) return;
+	const safeName = escapeHtml(params.buyerName);
+	const subject = `${copy.subjectAr} (${shortId}…)`;
+	const text = `السلام عليكم ${params.buyerName}،\n\n${copy.emoji} ${copy.ar}\nرقم الطلب: ${params.orderId}\n\n${copy.en}\n\n— nevali`;
+	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.7;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;direction:rtl;text-align:right;"><p>السلام عليكم ${safeName}،</p><p>${copy.emoji} <strong>${escapeHtml(copy.ar)}</strong></p><p><strong>رقم الطلب:</strong> ${escapeHtml(params.orderId)}</p><p style="color:${emailTheme.textMuted};font-size:14px;direction:ltr;text-align:left;">${escapeHtml(copy.en)}</p><p style="color:${emailTheme.textMuted};font-size:14px;">— nevali</p></body></html>`;
+	await sendTransactionalEmail({ to, subject, text, html });
+}

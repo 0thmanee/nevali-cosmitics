@@ -10,11 +10,11 @@ export const BUYER_NAV_ITEMS = [
 ] as const;
 
 export const BUYER_PAGE_SUBTITLE: Record<string, string> = {
-	"/buyer": "Optional buyer hub—shopping and checkout stay available to everyone without an account.",
+	"/buyer":
+		"Optional buyer hub—shopping and checkout stay available to everyone without an account.",
 	"/buyer/orders": "Orders you placed on the public cosmetics catalog.",
 	"/buyer/saved": "Named lists of products you want to track or compare.",
-	"/buyer/notifications":
-		"In-app notices for your orders and promotions.",
+	"/buyer/notifications": "In-app notices for your orders and promotions.",
 };
 
 export function getBuyerPageTitle(pathname: string): string {

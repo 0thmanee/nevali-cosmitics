@@ -4,6 +4,6 @@ import { AdminTrainingProgramDetailView } from "~/features/admin/components/trai
 type Props = { params: Promise<{ id: string }> };
 
 export default async function AdminTrainingProgramPage({ params }: Props) {
-  const { id } = await params;
-  return <AdminTrainingProgramDetailView programId={id} />;
+	const { id } = await params;
+	return <AdminTrainingProgramDetailView programId={id} />;
 }

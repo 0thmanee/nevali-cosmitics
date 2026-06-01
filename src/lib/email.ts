@@ -26,9 +26,20 @@ function getResendClient(): Resend | null {
 /** Default from address: Resend test domain or your verified domain via env. */
 const DEFAULT_FROM = "onboarding@resend.dev";
 
+let warnedMissingFrom = false;
+
 function getFromEmail(): string {
 	const from = env.RESEND_FROM_EMAIL;
 	if (from) return from;
+	// In production, sending from Resend's shared test domain wrecks deliverability
+	// and trust. Surface it loudly (once) so it gets fixed before launch.
+	if (env.NODE_ENV === "production" && !warnedMissingFrom) {
+		warnedMissingFrom = true;
+		console.warn(
+			"[email] RESEND_FROM_EMAIL is not set — falling back to onboarding@resend.dev. " +
+				"Set a verified sending domain (e.g. noreply@yourdomain.com) before going live.",
+		);
+	}
 	return DEFAULT_FROM;
 }
 
@@ -193,5 +204,20 @@ export function buildVerificationEmailContent(params: {
 	const safeUrl = escapeHtmlAttr(verificationUrl);
 	const text = `Verify your email for ${productName}\n\nClick the link below to verify your email:\n${verificationUrl}\n\nIf you didn't request this, you can ignore this email.`;
 	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;"><p>Click the link below to verify your email and complete your ${productName} account.</p><p><a href="${safeUrl}" style="color:${emailTheme.textMuted};font-weight:600;">Verify my email</a></p><p style="color:${emailTheme.textMuted};font-size:14px;">If you didn't request this, you can ignore this email.</p></body></html>`;
+	return { text, html };
+}
+
+/**
+ * Builds HTML and text for the password-reset email.
+ * URL is escaped for safe use in HTML.
+ */
+export function buildPasswordResetEmailContent(params: {
+	resetUrl: string;
+	productName?: string;
+}): { text: string; html: string } {
+	const { resetUrl, productName = "nevali" } = params;
+	const safeUrl = escapeHtmlAttr(resetUrl);
+	const text = `Reset your ${productName} password\n\nClick the link below to choose a new password:\n${resetUrl}\n\nThis link expires soon. If you didn't request a password reset, you can safely ignore this email.`;
+	const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;line-height:1.5;color:${emailTheme.ink};background:${emailTheme.cream};padding:24px;"><p>We received a request to reset your ${productName} password.</p><p><a href="${safeUrl}" style="color:${emailTheme.textMuted};font-weight:600;">Choose a new password</a></p><p style="color:${emailTheme.textMuted};font-size:14px;">This link expires soon. If you didn't request a password reset, you can safely ignore this email.</p></body></html>`;
 	return { text, html };
 }

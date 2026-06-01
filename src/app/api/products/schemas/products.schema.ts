@@ -24,7 +24,9 @@ export const createProductSchema = z.object({
 	moq: z.string().max(100).optional().nullable(),
 	capacity: z.string().max(100).optional().nullable(),
 	description: z.string().max(20000).optional().nullable(),
-	variants: z.array(productVariantUpsertBaseSchema.omit({ id: true })).optional(),
+	variants: z
+		.array(productVariantUpsertBaseSchema.omit({ id: true }))
+		.optional(),
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;
@@ -58,7 +60,9 @@ export const setProductImageVariantSchema = z.object({
 	variantId: z.string().cuid().nullable(),
 });
 
-export type SetProductImageVariantInput = z.infer<typeof setProductImageVariantSchema>;
+export type SetProductImageVariantInput = z.infer<
+	typeof setProductImageVariantSchema
+>;
 
 // —— Row / API response types (single source of truth) ——
 

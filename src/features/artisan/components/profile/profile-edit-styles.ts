@@ -4,7 +4,9 @@ export const cardStyle = {
 	border: "1px solid var(--color-cream-dark)",
 } as const;
 
-export const cardHeaderBorder = { borderColor: "var(--color-cream-dark)" as const };
+export const cardHeaderBorder = {
+	borderColor: "var(--color-cream-dark)" as const,
+};
 
 export const fieldStyle = {
 	background: "var(--color-paper)",

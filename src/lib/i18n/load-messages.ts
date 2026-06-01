@@ -6,8 +6,11 @@ import en from "~/messages/en.json";
 import fr from "~/messages/fr.json";
 
 export function getMessages(locale: AppLocale): Messages {
-  const base = en as unknown as Messages;
-  if (locale === "en") return base;
-  const patch = (locale === "fr" ? fr : ar) as Record<string, unknown>;
-  return deepMerge(base as unknown as Record<string, unknown>, patch) as Messages;
+	const base = en as unknown as Messages;
+	if (locale === "en") return base;
+	const patch = (locale === "fr" ? fr : ar) as Record<string, unknown>;
+	return deepMerge(
+		base as unknown as Record<string, unknown>,
+		patch,
+	) as Messages;
 }

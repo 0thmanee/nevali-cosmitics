@@ -2,7 +2,9 @@ import type { PublicProduct } from "~/components/public-product-types";
 import { pickDefaultPublicVariant } from "~/lib/public-product-helpers";
 import type { CartLine } from "./cart-types";
 
-export function cartLineBaseFromPublicProduct(product: PublicProduct): Omit<CartLine, "quantity"> {
+export function cartLineBaseFromPublicProduct(
+	product: PublicProduct,
+): Omit<CartLine, "quantity"> {
 	const v = pickDefaultPublicVariant(product.variants);
 	if (!v) {
 		throw new Error("Product has no listing variant");

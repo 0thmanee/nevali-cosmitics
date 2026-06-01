@@ -1,2 +1,2 @@
-export { SupportTicketsList } from "./support-tickets-list";
 export { SupportTicketDetail } from "./support-ticket-detail";
+export { SupportTicketsList } from "./support-tickets-list";

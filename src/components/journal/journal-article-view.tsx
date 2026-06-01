@@ -134,51 +134,58 @@ export async function JournalArticleView({ article }: Props) {
 
 					<aside className="space-y-4 lg:col-span-4 lg:pl-4">
 						<div className="rounded-sm border border-cream-dark bg-white p-5 shadow-sm">
-							<p className="font-sans text-[11px] uppercase tracking-[0.14em] text-text-muted">
+							<p className="font-sans text-[11px] text-text-muted uppercase tracking-[0.14em]">
 								Article details
 							</p>
 							<dl className="mt-4 space-y-3 font-sans text-sm">
 								<div>
-									<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+									<dt className="font-bold text-[10px] text-text-muted uppercase tracking-wide">
 										Published
 									</dt>
-									<dd className="mt-1 text-text-dark">{formatStoryDate(article.publishedAt)}</dd>
+									<dd className="mt-1 text-text-dark">
+										{formatStoryDate(article.publishedAt)}
+									</dd>
 								</div>
 								{article.tag ? (
 									<div>
-										<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+										<dt className="font-bold text-[10px] text-text-muted uppercase tracking-wide">
 											Topic
 										</dt>
 										<dd className="mt-1">
-											<span className="rounded-sm border border-cream-dark bg-paper px-2 py-1 font-semibold text-xs text-forest-dark">
+											<span className="rounded-sm border border-cream-dark bg-paper px-2 py-1 font-semibold text-forest-dark text-xs">
 												{article.tag}
 											</span>
 										</dd>
 									</div>
 								) : null}
 								<div>
-									<dt className="text-[10px] font-bold uppercase tracking-wide text-text-muted">
+									<dt className="font-bold text-[10px] text-text-muted uppercase tracking-wide">
 										By producer
 									</dt>
-									<dd className="mt-1 text-text-dark">{article.organization.name}</dd>
+									<dd className="mt-1 text-text-dark">
+										{article.organization.name}
+									</dd>
 								</div>
 							</dl>
 						</div>
 
 						<div className="rounded-sm border border-cream-dark bg-paper p-5">
-							<p className="font-serif text-lg font-bold text-text-dark">Explore more stories</p>
-							<p className="mt-2 font-sans text-sm leading-relaxed text-text-muted">
-								Find more practical reads on ingredients, compliance, and producer know-how in the journal.
+							<p className="font-bold font-serif text-lg text-text-dark">
+								Explore more stories
+							</p>
+							<p className="mt-2 font-sans text-sm text-text-muted leading-relaxed">
+								Find more practical reads on ingredients, compliance, and
+								producer know-how in the journal.
 							</p>
 							<div className="mt-4 flex flex-wrap gap-2">
 								<Link
-									className="rounded-sm bg-ink px-4 py-2 font-sans text-sm font-semibold text-white transition-opacity hover:opacity-90"
+									className="rounded-sm bg-ink px-4 py-2 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90"
 									href="/journal"
 								>
 									Back to Journal
 								</Link>
 								<Link
-									className="rounded-sm border border-cream-dark bg-white px-4 py-2 font-sans text-sm font-semibold text-text-dark transition-colors hover:bg-cream"
+									className="rounded-sm border border-cream-dark bg-white px-4 py-2 font-sans font-semibold text-sm text-text-dark transition-colors hover:bg-cream"
 									href={`/artisans/${article.organization.slug}`}
 								>
 									View Producer

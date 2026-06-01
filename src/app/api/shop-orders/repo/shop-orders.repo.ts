@@ -1,629 +1,756 @@
-import { Prisma } from "@prisma/client";
-import { prisma } from "~/lib/db";
+import type { Prisma } from "@prisma/client";
 import { paymentOptionAllowsCheckout } from "~/lib/checkout-payment";
-import { SHOP_ORDER_STATUSES, type ShopOrderStatusValue } from "~/lib/shop-order-statuses";
+import { prisma } from "~/lib/db";
+import {
+	isAllowedShopOrderTransition,
+	SHOP_ORDER_STATUSES,
+	type ShopOrderStatusValue,
+} from "~/lib/shop-order-statuses";
 
 export async function createShopOrderFromCheckout(input: {
-  buyerUserId?: string | null;
-  buyerName: string;
-  buyerEmail: string;
-  buyerPhone?: string | null;
-  addressLine1: string;
-  addressLine2?: string | null;
-  city: string;
-  postalCode: string;
-  country: string;
-  paymentMethod: "CARD" | "COD";
-  notes?: string | null;
-  lines: { productId: string; productVariantId: string; quantity: number }[];
+	buyerUserId?: string | null;
+	buyerName: string;
+	buyerEmail: string;
+	buyerPhone?: string | null;
+	addressLine1: string;
+	addressLine2?: string | null;
+	city: string;
+	postalCode: string;
+	country: string;
+	paymentMethod: "CARD" | "COD";
+	notes?: string | null;
+	lines: { productId: string; productVariantId: string; quantity: number }[];
 }): Promise<{
-  orderId: string;
-  notification: {
-    buyerName: string;
-    buyerEmail: string;
-    buyerPhone: string | null;
-    paymentMethod: "CARD" | "COD";
-    totalMad: string;
-    lines: {
-      productName: string;
-      variantName: string;
-      quantity: number;
-      unitPriceMad: string;
-      lineTotalMad: string;
-      imageUrl: string | null;
-      organizationId: string;
-      organizationName: string;
-    }[];
-  };
+	orderId: string;
+	notification: {
+		buyerName: string;
+		buyerEmail: string;
+		buyerPhone: string | null;
+		paymentMethod: "CARD" | "COD";
+		totalMad: string;
+		lines: {
+			productName: string;
+			variantName: string;
+			quantity: number;
+			unitPriceMad: string;
+			lineTotalMad: string;
+			imageUrl: string | null;
+			organizationId: string;
+			organizationName: string;
+		}[];
+	};
 }> {
-  if (input.lines.length === 0) {
-    throw new Error("Your cart is empty.");
-  }
+	if (input.lines.length === 0) {
+		throw new Error("Your cart is empty.");
+	}
 
-  const resolved: {
-    productId: string;
-    productVariantId: string;
-    variantName: string;
-    organizationId: string;
-    organizationName: string;
-    productName: string;
-    unitPrice: Prisma.Decimal;
-    imageUrl: string | null;
-    quantity: number;
-  }[] = [];
+	const resolved: {
+		productId: string;
+		productVariantId: string;
+		variantName: string;
+		organizationId: string;
+		organizationName: string;
+		productName: string;
+		unitPrice: Prisma.Decimal;
+		imageUrl: string | null;
+		quantity: number;
+		/** Variant was inventory-tracked at read time (quantityOnHand > 0). 0 = untracked / unlimited. */
+		trackStock: boolean;
+	}[] = [];
 
-  for (const line of input.lines) {
-    const variant = await prisma.productVariant.findFirst({
-      where: { id: line.productVariantId, productId: line.productId, product: { status: "APPROVED" } },
-      select: {
-        id: true,
-        name: true,
-        price: true,
-        inStock: true,
-        quantityOnHand: true,
-        product: {
-          select: {
-            id: true,
-            name: true,
-            organizationId: true,
-            paymentOption: true,
-            images: {
-              select: { url: true, sortOrder: true },
-              orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-              take: 1,
-            },
-            organization: { select: { name: true } },
-          },
-        },
-      },
-    });
-    const p = variant?.product;
-    if (!variant || !p) {
-      throw new Error(`One or more products are no longer available. Please refresh and try again.`);
-    }
-    if (!variant.inStock) {
-      throw new Error(`“${p.name}” (${variant.name}) is currently out of stock.`);
-    }
-    if (variant.quantityOnHand > 0 && line.quantity > variant.quantityOnHand) {
-      throw new Error(
-        `Only ${variant.quantityOnHand} unit(s) available for “${p.name}” (${variant.name}). Reduce the quantity and try again.`,
-      );
-    }
-    if (!paymentOptionAllowsCheckout(p.paymentOption, input.paymentMethod)) {
-      throw new Error(
-        `The selected payment method is not allowed for “${p.name}”. Update your cart or choose another method.`,
-      );
-    }
-    resolved.push({
-      productId: p.id,
-      productVariantId: variant.id,
-      variantName: variant.name,
-      organizationId: p.organizationId,
-      organizationName: p.organization.name,
-      productName: p.name,
-      unitPrice: variant.price,
-      imageUrl: p.images[0]?.url ?? null,
-      quantity: line.quantity,
-    });
-  }
+	for (const line of input.lines) {
+		const variant = await prisma.productVariant.findFirst({
+			where: {
+				id: line.productVariantId,
+				productId: line.productId,
+				product: { status: "APPROVED" },
+			},
+			select: {
+				id: true,
+				name: true,
+				price: true,
+				inStock: true,
+				quantityOnHand: true,
+				product: {
+					select: {
+						id: true,
+						name: true,
+						organizationId: true,
+						paymentOption: true,
+						images: {
+							select: { url: true, sortOrder: true },
+							orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+							take: 1,
+						},
+						organization: { select: { name: true } },
+					},
+				},
+			},
+		});
+		const p = variant?.product;
+		if (!variant || !p) {
+			throw new Error(
+				`One or more products are no longer available. Please refresh and try again.`,
+			);
+		}
+		if (!variant.inStock) {
+			throw new Error(
+				`“${p.name}” (${variant.name}) is currently out of stock.`,
+			);
+		}
+		if (variant.quantityOnHand > 0 && line.quantity > variant.quantityOnHand) {
+			throw new Error(
+				`Only ${variant.quantityOnHand} unit(s) available for “${p.name}” (${variant.name}). Reduce the quantity and try again.`,
+			);
+		}
+		if (!paymentOptionAllowsCheckout(p.paymentOption, input.paymentMethod)) {
+			throw new Error(
+				`The selected payment method is not allowed for “${p.name}”. Update your cart or choose another method.`,
+			);
+		}
+		resolved.push({
+			productId: p.id,
+			productVariantId: variant.id,
+			variantName: variant.name,
+			organizationId: p.organizationId,
+			organizationName: p.organization.name,
+			productName: p.name,
+			unitPrice: variant.price,
+			imageUrl: p.images[0]?.url ?? null,
+			quantity: line.quantity,
+			trackStock: variant.quantityOnHand > 0,
+		});
+	}
 
-  let totalMad = 0;
-  for (const l of resolved) {
-    const up = Number(l.unitPrice);
-    totalMad += (Number.isFinite(up) ? up : 0) * l.quantity;
-  }
+	let totalMad = 0;
+	for (const l of resolved) {
+		const up = Number(l.unitPrice);
+		totalMad += (Number.isFinite(up) ? up : 0) * l.quantity;
+	}
 
-  const order = await prisma.$transaction(async (tx) => {
-    return tx.shopOrder.create({
-      data: {
-        buyerUserId: input.buyerUserId?.trim() || null,
-        buyerName: input.buyerName.trim(),
-        buyerEmail: input.buyerEmail.trim().toLowerCase(),
-        buyerPhone: input.buyerPhone?.trim() || null,
-        addressLine1: input.addressLine1.trim(),
-        addressLine2: input.addressLine2?.trim() || null,
-        city: input.city.trim(),
-        postalCode: input.postalCode.trim(),
-        country: input.country.trim(),
-        paymentMethod: input.paymentMethod,
-        notes: input.notes?.trim() || null,
-        status: input.paymentMethod === "COD" ? "CONFIRMED" : "PENDING_PAYMENT",
-        lines: {
-          create: resolved.map((l) => ({
-            productId: l.productId,
-            productVariantId: l.productVariantId,
-            variantName: l.variantName,
-            organizationId: l.organizationId,
-            productName: l.productName,
-            unitPrice: l.unitPrice,
-            quantity: l.quantity,
-          })),
-        },
-      },
-      select: { id: true },
-    });
-  });
+	const order = await prisma.$transaction(async (tx) => {
+		// Authoritative oversell guard: atomically decrement tracked variants. The
+		// `gte` filter means concurrent orders racing for the last units cannot both
+		// succeed — a losing order matches 0 rows and we roll the whole tx back.
+		for (const l of resolved) {
+			if (!l.trackStock) continue; // untracked (quantityOnHand 0) → treated as unlimited
+			const dec = await tx.productVariant.updateMany({
+				where: { id: l.productVariantId, quantityOnHand: { gte: l.quantity } },
+				data: { quantityOnHand: { decrement: l.quantity } },
+			});
+			if (dec.count === 0) {
+				throw new Error(
+					`Stock for “${l.productName}” (${l.variantName}) just ran low. Please reduce the quantity and try again.`,
+				);
+			}
+			// Auto-mark sold out so the storefront stops offering it once depleted.
+			await tx.productVariant.updateMany({
+				where: { id: l.productVariantId, quantityOnHand: { lte: 0 } },
+				data: { inStock: false },
+			});
+		}
 
-  return {
-    orderId: order.id,
-    notification: {
-      buyerName: input.buyerName.trim(),
-      buyerEmail: input.buyerEmail.trim().toLowerCase(),
-      buyerPhone: input.buyerPhone?.trim() || null,
-      paymentMethod: input.paymentMethod,
-      totalMad: totalMad.toFixed(2),
-      lines: resolved.map((l) => ({
-        productName: l.productName,
-        variantName: l.variantName,
-        quantity: l.quantity,
-        unitPriceMad: l.unitPrice.toFixed(2),
-        lineTotalMad: (Number(l.unitPrice) * l.quantity).toFixed(2),
-        imageUrl: l.imageUrl,
-        organizationId: l.organizationId,
-        organizationName: l.organizationName,
-      })),
-    },
-  };
+		return tx.shopOrder.create({
+			data: {
+				buyerUserId: input.buyerUserId?.trim() || null,
+				buyerName: input.buyerName.trim(),
+				buyerEmail: input.buyerEmail.trim().toLowerCase(),
+				buyerPhone: input.buyerPhone?.trim() || null,
+				addressLine1: input.addressLine1.trim(),
+				addressLine2: input.addressLine2?.trim() || null,
+				city: input.city.trim(),
+				postalCode: input.postalCode.trim(),
+				country: input.country.trim(),
+				paymentMethod: input.paymentMethod,
+				notes: input.notes?.trim() || null,
+				status: input.paymentMethod === "COD" ? "CONFIRMED" : "PENDING_PAYMENT",
+				lines: {
+					create: resolved.map((l) => ({
+						productId: l.productId,
+						productVariantId: l.productVariantId,
+						variantName: l.variantName,
+						organizationId: l.organizationId,
+						productName: l.productName,
+						unitPrice: l.unitPrice,
+						quantity: l.quantity,
+						stockTracked: l.trackStock,
+						stockDecremented: l.trackStock,
+					})),
+				},
+			},
+			select: { id: true },
+		});
+	});
+
+	return {
+		orderId: order.id,
+		notification: {
+			buyerName: input.buyerName.trim(),
+			buyerEmail: input.buyerEmail.trim().toLowerCase(),
+			buyerPhone: input.buyerPhone?.trim() || null,
+			paymentMethod: input.paymentMethod,
+			totalMad: totalMad.toFixed(2),
+			lines: resolved.map((l) => ({
+				productName: l.productName,
+				variantName: l.variantName,
+				quantity: l.quantity,
+				unitPriceMad: l.unitPrice.toFixed(2),
+				lineTotalMad: (Number(l.unitPrice) * l.quantity).toFixed(2),
+				imageUrl: l.imageUrl,
+				organizationId: l.organizationId,
+				organizationName: l.organizationName,
+			})),
+		},
+	};
 }
 
 export async function deleteShopOrderByIdRepo(orderId: string): Promise<void> {
-  await prisma.shopOrder.delete({ where: { id: orderId } });
+	await prisma.shopOrder.delete({ where: { id: orderId } });
 }
 
 export type ShopOrderNotificationPayload = {
-  buyerName: string;
-  buyerEmail: string;
-  buyerPhone: string | null;
-  paymentMethod: "CARD" | "COD";
-  totalMad: string;
-  lines: {
-    productName: string;
-    variantName: string;
-    quantity: number;
-    unitPriceMad: string;
-    lineTotalMad: string;
-    imageUrl: string | null;
-    organizationId: string;
-    organizationName: string;
-  }[];
+	buyerName: string;
+	buyerEmail: string;
+	buyerPhone: string | null;
+	paymentMethod: "CARD" | "COD";
+	totalMad: string;
+	lines: {
+		productName: string;
+		variantName: string;
+		quantity: number;
+		unitPriceMad: string;
+		lineTotalMad: string;
+		imageUrl: string | null;
+		organizationId: string;
+		organizationName: string;
+	}[];
 };
 
 /** Build the same notification shape as checkout (for emails after Stripe confirms payment). */
 export async function buildShopOrderNotificationPayload(
-  orderId: string,
+	orderId: string,
 ): Promise<ShopOrderNotificationPayload | null> {
-  const order = await prisma.shopOrder.findUnique({
-    where: { id: orderId },
-    include: { lines: { orderBy: { id: "asc" } } },
-  });
-  if (!order) return null;
-  const orgIds = [...new Set(order.lines.map((l) => l.organizationId))];
-  const orgs =
-    orgIds.length > 0
-      ? await prisma.organization.findMany({
-          where: { id: { in: orgIds } },
-          select: { id: true, name: true },
-        })
-      : [];
-  const orgNameById = new Map(orgs.map((o) => [o.id, o.name]));
+	const order = await prisma.shopOrder.findUnique({
+		where: { id: orderId },
+		include: { lines: { orderBy: { id: "asc" } } },
+	});
+	if (!order) return null;
+	const orgIds = [...new Set(order.lines.map((l) => l.organizationId))];
+	const orgs =
+		orgIds.length > 0
+			? await prisma.organization.findMany({
+					where: { id: { in: orgIds } },
+					select: { id: true, name: true },
+				})
+			: [];
+	const orgNameById = new Map(orgs.map((o) => [o.id, o.name]));
 
-  let total = 0;
-  const lines = order.lines.map((l) => {
-    const up = Number(l.unitPrice);
-    const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
-    total += lineTot;
-    return {
-      productName: l.productName,
-      variantName: l.variantName ?? "",
-      quantity: l.quantity,
-      unitPriceMad: l.unitPrice.toFixed(2),
-      lineTotalMad: lineTot.toFixed(2),
-      imageUrl: null,
-      organizationId: l.organizationId,
-      organizationName: orgNameById.get(l.organizationId) ?? "",
-    };
-  });
+	let total = 0;
+	const lines = order.lines.map((l) => {
+		const up = Number(l.unitPrice);
+		const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
+		total += lineTot;
+		return {
+			productName: l.productName,
+			variantName: l.variantName ?? "",
+			quantity: l.quantity,
+			unitPriceMad: l.unitPrice.toFixed(2),
+			lineTotalMad: lineTot.toFixed(2),
+			imageUrl: null,
+			organizationId: l.organizationId,
+			organizationName: orgNameById.get(l.organizationId) ?? "",
+		};
+	});
 
-  return {
-    buyerName: order.buyerName,
-    buyerEmail: order.buyerEmail,
-    buyerPhone: order.buyerPhone,
-    paymentMethod: order.paymentMethod,
-    totalMad: total.toFixed(2),
-    lines,
-  };
+	return {
+		buyerName: order.buyerName,
+		buyerEmail: order.buyerEmail,
+		buyerPhone: order.buyerPhone,
+		paymentMethod: order.paymentMethod,
+		totalMad: total.toFixed(2),
+		lines,
+	};
 }
 
 /** Returns true if this call transitioned the order from PENDING_PAYMENT → CONFIRMED (idempotent). */
 export async function tryFinalizePendingShopOrderRepo(
-  orderId: string,
-  stripePaymentIntentId?: string | null,
+	orderId: string,
+	stripePaymentIntentId?: string | null,
 ): Promise<boolean> {
-  const updated = await prisma.shopOrder.updateMany({
-    where: { id: orderId, status: "PENDING_PAYMENT" },
-    data: {
-      status: "CONFIRMED",
-      ...(stripePaymentIntentId ? { stripePaymentIntentId } : {}),
-    },
-  });
-  return updated.count > 0;
+	const updated = await prisma.shopOrder.updateMany({
+		where: { id: orderId, status: "PENDING_PAYMENT" },
+		data: {
+			status: "CONFIRMED",
+			...(stripePaymentIntentId ? { stripePaymentIntentId } : {}),
+		},
+	});
+	return updated.count > 0;
 }
 
 export type AdminShopOrderLineRow = {
-  id: string;
-  productId: string;
-  productVariantId: string | null;
-  variantName: string | null;
-  organizationId: string;
-  organizationName: string;
-  productName: string;
-  unitPrice: string;
-  quantity: number;
+	id: string;
+	productId: string;
+	productVariantId: string | null;
+	variantName: string | null;
+	organizationId: string;
+	organizationName: string;
+	productName: string;
+	unitPrice: string;
+	quantity: number;
 };
 
 export type AdminShopOrderListRow = {
-  id: string;
-  buyerName: string;
-  buyerEmail: string;
-  buyerPhone: string | null;
-  addressLine1: string;
-  addressLine2: string | null;
-  city: string;
-  postalCode: string;
-  country: string;
-  paymentMethod: string;
-  status: string;
-  notes: string | null;
-  createdAt: Date;
-  lines: AdminShopOrderLineRow[];
-  totalMad: string;
+	id: string;
+	buyerName: string;
+	buyerEmail: string;
+	buyerPhone: string | null;
+	addressLine1: string;
+	addressLine2: string | null;
+	city: string;
+	postalCode: string;
+	country: string;
+	paymentMethod: string;
+	status: string;
+	notes: string | null;
+	createdAt: Date;
+	lines: AdminShopOrderLineRow[];
+	totalMad: string;
 };
 
 const shopOrderAdminInclude = {
-  lines: {
-    include: {
-      organization: { select: { name: true } },
-    },
-    orderBy: { id: "asc" as const },
-  },
+	lines: {
+		include: {
+			organization: { select: { name: true } },
+		},
+		orderBy: { id: "asc" as const },
+	},
 } satisfies Prisma.ShopOrderInclude;
 
-type ShopOrderForAdminRow = Prisma.ShopOrderGetPayload<{ include: typeof shopOrderAdminInclude }>;
+type ShopOrderForAdminRow = Prisma.ShopOrderGetPayload<{
+	include: typeof shopOrderAdminInclude;
+}>;
 
-export function mapShopOrderToAdminListRow(o: ShopOrderForAdminRow): AdminShopOrderListRow {
-  let total = 0;
-  const lines: AdminShopOrderLineRow[] = o.lines.map((l) => {
-    const up = Number(l.unitPrice);
-    const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
-    total += lineTot;
-    return {
-      id: l.id,
-      productId: l.productId,
-      productVariantId: l.productVariantId,
-      variantName: l.variantName,
-      organizationId: l.organizationId,
-      organizationName: l.organization.name,
-      productName: l.productName,
-      unitPrice: l.unitPrice.toFixed(2),
-      quantity: l.quantity,
-    };
-  });
-  return {
-    id: o.id,
-    buyerName: o.buyerName,
-    buyerEmail: o.buyerEmail,
-    buyerPhone: o.buyerPhone,
-    addressLine1: o.addressLine1,
-    addressLine2: o.addressLine2,
-    city: o.city,
-    postalCode: o.postalCode,
-    country: o.country,
-    paymentMethod: o.paymentMethod,
-    status: o.status,
-    notes: o.notes,
-    createdAt: o.createdAt,
-    lines,
-    totalMad: total.toFixed(2),
-  };
+export function mapShopOrderToAdminListRow(
+	o: ShopOrderForAdminRow,
+): AdminShopOrderListRow {
+	let total = 0;
+	const lines: AdminShopOrderLineRow[] = o.lines.map((l) => {
+		const up = Number(l.unitPrice);
+		const lineTot = (Number.isFinite(up) ? up : 0) * l.quantity;
+		total += lineTot;
+		return {
+			id: l.id,
+			productId: l.productId,
+			productVariantId: l.productVariantId,
+			variantName: l.variantName,
+			organizationId: l.organizationId,
+			organizationName: l.organization.name,
+			productName: l.productName,
+			unitPrice: l.unitPrice.toFixed(2),
+			quantity: l.quantity,
+		};
+	});
+	return {
+		id: o.id,
+		buyerName: o.buyerName,
+		buyerEmail: o.buyerEmail,
+		buyerPhone: o.buyerPhone,
+		addressLine1: o.addressLine1,
+		addressLine2: o.addressLine2,
+		city: o.city,
+		postalCode: o.postalCode,
+		country: o.country,
+		paymentMethod: o.paymentMethod,
+		status: o.status,
+		notes: o.notes,
+		createdAt: o.createdAt,
+		lines,
+		totalMad: total.toFixed(2),
+	};
 }
 
-export async function getShopOrderByIdForAdminRepo(orderId: string): Promise<AdminShopOrderListRow | null> {
-  const o = await prisma.shopOrder.findUnique({
-    where: { id: orderId },
-    include: shopOrderAdminInclude,
-  });
-  return o ? mapShopOrderToAdminListRow(o) : null;
+export async function getShopOrderByIdForAdminRepo(
+	orderId: string,
+): Promise<AdminShopOrderListRow | null> {
+	const o = await prisma.shopOrder.findUnique({
+		where: { id: orderId },
+		include: shopOrderAdminInclude,
+	});
+	return o ? mapShopOrderToAdminListRow(o) : null;
 }
 
 export async function getShopOrderByIdForProducerRepo(
-  orderId: string,
-  organizationId: string,
+	orderId: string,
+	organizationId: string,
 ): Promise<AdminShopOrderListRow | null> {
-  const o = await prisma.shopOrder.findFirst({
-    where: {
-      id: orderId,
-      lines: { some: { organizationId } },
-    },
-    include: shopOrderAdminInclude,
-  });
-  return o ? mapShopOrderToAdminListRow(o) : null;
+	const o = await prisma.shopOrder.findFirst({
+		where: {
+			id: orderId,
+			lines: { some: { organizationId } },
+		},
+		include: shopOrderAdminInclude,
+	});
+	return o ? mapShopOrderToAdminListRow(o) : null;
 }
 
 export const ADMIN_SHOP_ORDER_STATUSES = SHOP_ORDER_STATUSES;
 export type AdminShopOrderStatus = ShopOrderStatusValue;
 
+/** Statuses where stock should NOT be allocated (order canceled or returned). */
+const STOCK_RELEASED_STATUSES: ReadonlySet<string> = new Set([
+	"CANCELED",
+	"RETURNED",
+]);
+
 export async function updateShopOrderStatusForAdminRepo(params: {
-  orderId: string;
-  status: AdminShopOrderStatus;
+	orderId: string;
+	status: AdminShopOrderStatus;
 }): Promise<void> {
-  await prisma.shopOrder.update({
-    where: { id: params.orderId },
-    data: { status: params.status },
-  });
+	await prisma.$transaction(async (tx) => {
+		const order = await tx.shopOrder.findUnique({
+			where: { id: params.orderId },
+			select: {
+				status: true,
+				lines: {
+					select: {
+						id: true,
+						productVariantId: true,
+						quantity: true,
+						stockTracked: true,
+						stockDecremented: true,
+					},
+				},
+			},
+		});
+		if (!order) throw new Error("Order not found.");
+
+		if (!isAllowedShopOrderTransition(order.status, params.status)) {
+			throw new Error(
+				`Cannot change order status from ${order.status} to ${params.status}.`,
+			);
+		}
+
+		const wasReleased = STOCK_RELEASED_STATUSES.has(order.status);
+		const willRelease = STOCK_RELEASED_STATUSES.has(params.status);
+
+		if (willRelease && !wasReleased) {
+			// Cancel/return: give the allocated units back to inventory (idempotent).
+			for (const l of order.lines) {
+				if (!l.stockTracked || !l.stockDecremented || !l.productVariantId)
+					continue;
+				await tx.productVariant.update({
+					where: { id: l.productVariantId },
+					data: { quantityOnHand: { increment: l.quantity }, inStock: true },
+				});
+				await tx.shopOrderLine.update({
+					where: { id: l.id },
+					data: { stockDecremented: false },
+				});
+			}
+		} else if (!willRelease && wasReleased) {
+			// Reactivating a previously released order: re-consume the stock.
+			for (const l of order.lines) {
+				if (!l.stockTracked || l.stockDecremented || !l.productVariantId)
+					continue;
+				await tx.productVariant.update({
+					where: { id: l.productVariantId },
+					data: { quantityOnHand: { decrement: l.quantity } },
+				});
+				await tx.productVariant.updateMany({
+					where: { id: l.productVariantId, quantityOnHand: { lte: 0 } },
+					data: { inStock: false },
+				});
+				await tx.shopOrderLine.update({
+					where: { id: l.id },
+					data: { stockDecremented: true },
+				});
+			}
+		}
+
+		await tx.shopOrder.update({
+			where: { id: params.orderId },
+			data: { status: params.status },
+		});
+	});
 }
 
 export async function listShopOrdersForAdminRepo(params: {
-  organizationId?: string | null;
-  take?: number;
+	organizationId?: string | null;
+	take?: number;
 }): Promise<AdminShopOrderListRow[]> {
-  const take = params.take ?? 200;
-  const where =
-    params.organizationId != null && params.organizationId !== ""
-      ? { lines: { some: { organizationId: params.organizationId } } }
-      : {};
+	const take = params.take ?? 200;
+	const where =
+		params.organizationId != null && params.organizationId !== ""
+			? { lines: { some: { organizationId: params.organizationId } } }
+			: {};
 
-  const rows = await prisma.shopOrder.findMany({
-    where,
-    orderBy: { createdAt: "desc" },
-    take,
-    include: shopOrderAdminInclude,
-  });
+	const rows = await prisma.shopOrder.findMany({
+		where,
+		orderBy: { createdAt: "desc" },
+		take,
+		include: shopOrderAdminInclude,
+	});
 
-  return rows.map(mapShopOrderToAdminListRow);
+	return rows.map(mapShopOrderToAdminListRow);
 }
 
-export async function countShopOrdersForAdminRepo(organizationId?: string | null): Promise<number> {
-  const where =
-    organizationId != null && organizationId !== ""
-      ? { lines: { some: { organizationId } } }
-      : {};
-  return prisma.shopOrder.count({ where });
+export async function countShopOrdersForAdminRepo(
+	organizationId?: string | null,
+): Promise<number> {
+	const where =
+		organizationId != null && organizationId !== ""
+			? { lines: { some: { organizationId } } }
+			: {};
+	return prisma.shopOrder.count({ where });
 }
 
 export type ProducerProductOrderAggregateRow = {
-  productId: string;
-  productName: string;
-  ordersCount: number;
-  unitsSold: number;
-  revenueMad: string;
-  lastOrderedAt: Date | null;
+	productId: string;
+	productName: string;
+	ordersCount: number;
+	unitsSold: number;
+	revenueMad: string;
+	lastOrderedAt: Date | null;
 };
 
 export async function listProductOrderAggregatesForProducerRepo(
-  organizationId: string,
+	organizationId: string,
 ): Promise<ProducerProductOrderAggregateRow[]> {
-  const lines = await prisma.shopOrderLine.findMany({
-    where: {
-      organizationId,
-      order: { status: "CONFIRMED" },
-    },
-    select: {
-      productId: true,
-      productName: true,
-      unitPrice: true,
-      quantity: true,
-      orderId: true,
-      order: { select: { createdAt: true } },
-    },
-    orderBy: { order: { createdAt: "desc" } },
-  });
+	const lines = await prisma.shopOrderLine.findMany({
+		where: {
+			organizationId,
+			order: { status: "CONFIRMED" },
+		},
+		select: {
+			productId: true,
+			productName: true,
+			unitPrice: true,
+			quantity: true,
+			orderId: true,
+			order: { select: { createdAt: true } },
+		},
+		orderBy: { order: { createdAt: "desc" } },
+	});
 
-  const byProduct = new Map<
-    string,
-    {
-      productName: string;
-      orderIds: Set<string>;
-      unitsSold: number;
-      revenue: number;
-      lastOrderedAt: Date | null;
-    }
-  >();
+	const byProduct = new Map<
+		string,
+		{
+			productName: string;
+			orderIds: Set<string>;
+			unitsSold: number;
+			revenue: number;
+			lastOrderedAt: Date | null;
+		}
+	>();
 
-  for (const line of lines) {
-    const key = line.productId;
-    const current = byProduct.get(key) ?? {
-      productName: line.productName,
-      orderIds: new Set<string>(),
-      unitsSold: 0,
-      revenue: 0,
-      lastOrderedAt: null,
-    };
-    const unitPrice = Number(line.unitPrice);
-    current.orderIds.add(line.orderId);
-    current.unitsSold += line.quantity;
-    current.revenue += (Number.isFinite(unitPrice) ? unitPrice : 0) * line.quantity;
-    if (current.lastOrderedAt == null || line.order.createdAt > current.lastOrderedAt) {
-      current.lastOrderedAt = line.order.createdAt;
-    }
-    byProduct.set(key, current);
-  }
+	for (const line of lines) {
+		const key = line.productId;
+		const current = byProduct.get(key) ?? {
+			productName: line.productName,
+			orderIds: new Set<string>(),
+			unitsSold: 0,
+			revenue: 0,
+			lastOrderedAt: null,
+		};
+		const unitPrice = Number(line.unitPrice);
+		current.orderIds.add(line.orderId);
+		current.unitsSold += line.quantity;
+		current.revenue +=
+			(Number.isFinite(unitPrice) ? unitPrice : 0) * line.quantity;
+		if (
+			current.lastOrderedAt == null ||
+			line.order.createdAt > current.lastOrderedAt
+		) {
+			current.lastOrderedAt = line.order.createdAt;
+		}
+		byProduct.set(key, current);
+	}
 
-  return Array.from(byProduct.entries())
-    .map(([productId, v]) => ({
-      productId,
-      productName: v.productName,
-      ordersCount: v.orderIds.size,
-      unitsSold: v.unitsSold,
-      revenueMad: v.revenue.toFixed(2),
-      lastOrderedAt: v.lastOrderedAt,
-    }))
-    .sort((a, b) => b.ordersCount - a.ordersCount || b.unitsSold - a.unitsSold);
+	return Array.from(byProduct.entries())
+		.map(([productId, v]) => ({
+			productId,
+			productName: v.productName,
+			ordersCount: v.orderIds.size,
+			unitsSold: v.unitsSold,
+			revenueMad: v.revenue.toFixed(2),
+			lastOrderedAt: v.lastOrderedAt,
+		}))
+		.sort((a, b) => b.ordersCount - a.ordersCount || b.unitsSold - a.unitsSold);
 }
 
-export async function countShopOrdersForProducerRepo(organizationId: string): Promise<number> {
-  return prisma.shopOrder.count({
-    where: {
-      status: "CONFIRMED",
-      lines: { some: { organizationId } },
-    },
-  });
+export async function countShopOrdersForProducerRepo(
+	organizationId: string,
+): Promise<number> {
+	return prisma.shopOrder.count({
+		where: {
+			status: "CONFIRMED",
+			lines: { some: { organizationId } },
+		},
+	});
 }
 
 export type BuyerShopOrderListRow = {
-  id: string;
-  createdAt: Date;
-  status: string;
-  paymentMethod: string;
-  totalMad: string;
-  lineCount: number;
-  previewProductNames: string[];
+	id: string;
+	createdAt: Date;
+	status: string;
+	paymentMethod: string;
+	totalMad: string;
+	lineCount: number;
+	previewProductNames: string[];
 };
 
 /** Orders visible to a buyer account (linked user id or legacy guest rows by email). */
 export async function listShopOrdersForBuyerRepo(params: {
-  userId: string;
-  email: string;
+	userId: string;
+	email: string;
 }): Promise<BuyerShopOrderListRow[]> {
-  const email = params.email.trim().toLowerCase();
-  const orders = await prisma.shopOrder.findMany({
-    where: {
-      OR: [{ buyerUserId: params.userId }, { buyerUserId: null, buyerEmail: email }],
-    },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-    include: {
-      lines: {
-        select: { productName: true, quantity: true, unitPrice: true },
-        orderBy: { id: "asc" },
-      },
-    },
-  });
+	const email = params.email.trim().toLowerCase();
+	const orders = await prisma.shopOrder.findMany({
+		where: {
+			OR: [
+				{ buyerUserId: params.userId },
+				{ buyerUserId: null, buyerEmail: email },
+			],
+		},
+		orderBy: { createdAt: "desc" },
+		take: 50,
+		include: {
+			lines: {
+				select: { productName: true, quantity: true, unitPrice: true },
+				orderBy: { id: "asc" },
+			},
+		},
+	});
 
-  return orders.map((o) => {
-    let total = 0;
-    for (const l of o.lines) {
-      const up = Number(l.unitPrice);
-      total += (Number.isFinite(up) ? up : 0) * l.quantity;
-    }
-    return {
-      id: o.id,
-      createdAt: o.createdAt,
-      status: o.status,
-      paymentMethod: o.paymentMethod,
-      totalMad: total.toFixed(2),
-      lineCount: o.lines.length,
-      previewProductNames: o.lines.slice(0, 3).map((l) => l.productName),
-    };
-  });
+	return orders.map((o) => {
+		let total = 0;
+		for (const l of o.lines) {
+			const up = Number(l.unitPrice);
+			total += (Number.isFinite(up) ? up : 0) * l.quantity;
+		}
+		return {
+			id: o.id,
+			createdAt: o.createdAt,
+			status: o.status,
+			paymentMethod: o.paymentMethod,
+			totalMad: total.toFixed(2),
+			lineCount: o.lines.length,
+			previewProductNames: o.lines.slice(0, 3).map((l) => l.productName),
+		};
+	});
 }
 
 export type AdminShopOrderAnalytics = {
-  ordersByStatus: { status: string; count: number }[];
-  confirmedOrdersCount: number;
-  pendingPaymentCount: number;
-  otherStatusCount: number;
-  totalOrdersCount: number;
-  confirmedRevenueMad: string;
-  topOrganizations: {
-    organizationId: string;
-    name: string;
-    slug: string;
-    lineItems: number;
-    revenueMad: string;
-  }[];
+	ordersByStatus: { status: string; count: number }[];
+	confirmedOrdersCount: number;
+	pendingPaymentCount: number;
+	otherStatusCount: number;
+	totalOrdersCount: number;
+	confirmedRevenueMad: string;
+	topOrganizations: {
+		organizationId: string;
+		name: string;
+		slug: string;
+		lineItems: number;
+		revenueMad: string;
+	}[];
 };
 
 export async function getShopOrderAnalyticsForAdminRepo(params: {
-  organizationId?: string | null;
+	organizationId?: string | null;
 }): Promise<AdminShopOrderAnalytics> {
-  const orgId = params.organizationId?.trim() || null;
-  const orderScope =
-    orgId != null && orgId !== ""
-      ? { lines: { some: { organizationId: orgId } } }
-      : {};
+	const orgId = params.organizationId?.trim() || null;
+	const orderScope =
+		orgId != null && orgId !== ""
+			? { lines: { some: { organizationId: orgId } } }
+			: {};
 
-  const statusGroups = await prisma.shopOrder.groupBy({
-    by: ["status"],
-    where: orderScope,
-    _count: { id: true },
-  });
+	const statusGroups = await prisma.shopOrder.groupBy({
+		by: ["status"],
+		where: orderScope,
+		_count: { id: true },
+	});
 
-  const ordersByStatus = statusGroups
-    .map((g) => ({ status: g.status, count: g._count.id }))
-    .sort((a, b) => b.count - a.count);
+	const ordersByStatus = statusGroups
+		.map((g) => ({ status: g.status, count: g._count.id }))
+		.sort((a, b) => b.count - a.count);
 
-  let confirmedOrdersCount = 0;
-  let pendingPaymentCount = 0;
-  let otherStatusCount = 0;
-  let totalOrdersCount = 0;
-  for (const row of ordersByStatus) {
-    totalOrdersCount += row.count;
-    if (row.status === "CONFIRMED") confirmedOrdersCount = row.count;
-    else if (row.status === "PENDING_PAYMENT") pendingPaymentCount = row.count;
-    else otherStatusCount += row.count;
-  }
+	let confirmedOrdersCount = 0;
+	let pendingPaymentCount = 0;
+	let otherStatusCount = 0;
+	let totalOrdersCount = 0;
+	for (const row of ordersByStatus) {
+		totalOrdersCount += row.count;
+		if (row.status === "CONFIRMED") confirmedOrdersCount = row.count;
+		else if (row.status === "PENDING_PAYMENT") pendingPaymentCount = row.count;
+		else otherStatusCount += row.count;
+	}
 
-  const lineWhere =
-    orgId != null && orgId !== ""
-      ? {
-          order: {
-            status: "CONFIRMED" as const,
-            lines: { some: { organizationId: orgId } },
-          },
-          organizationId: orgId,
-        }
-      : {
-          order: { status: "CONFIRMED" as const },
-        };
+	const lineWhere =
+		orgId != null && orgId !== ""
+			? {
+					order: {
+						status: "CONFIRMED" as const,
+						lines: { some: { organizationId: orgId } },
+					},
+					organizationId: orgId,
+				}
+			: {
+					order: { status: "CONFIRMED" as const },
+				};
 
-  const revenueLines = await prisma.shopOrderLine.findMany({
-    where: lineWhere,
-    select: {
-      unitPrice: true,
-      quantity: true,
-      organizationId: true,
-      organization: { select: { name: true, slug: true } },
-    },
-  });
+	const revenueLines = await prisma.shopOrderLine.findMany({
+		where: lineWhere,
+		select: {
+			unitPrice: true,
+			quantity: true,
+			organizationId: true,
+			organization: { select: { name: true, slug: true } },
+		},
+	});
 
-  let confirmedRevenue = 0;
-  const byOrg = new Map<
-    string,
-    { name: string; slug: string; revenue: number; lineItems: number }
-  >();
-  for (const l of revenueLines) {
-    const up = Number(l.unitPrice);
-    const lineTotal = (Number.isFinite(up) ? up : 0) * l.quantity;
-    confirmedRevenue += lineTotal;
-    const cur = byOrg.get(l.organizationId) ?? {
-      name: l.organization.name,
-      slug: l.organization.slug,
-      revenue: 0,
-      lineItems: 0,
-    };
-    cur.revenue += lineTotal;
-    cur.lineItems += 1;
-    byOrg.set(l.organizationId, cur);
-  }
+	let confirmedRevenue = 0;
+	const byOrg = new Map<
+		string,
+		{ name: string; slug: string; revenue: number; lineItems: number }
+	>();
+	for (const l of revenueLines) {
+		const up = Number(l.unitPrice);
+		const lineTotal = (Number.isFinite(up) ? up : 0) * l.quantity;
+		confirmedRevenue += lineTotal;
+		const cur = byOrg.get(l.organizationId) ?? {
+			name: l.organization.name,
+			slug: l.organization.slug,
+			revenue: 0,
+			lineItems: 0,
+		};
+		cur.revenue += lineTotal;
+		cur.lineItems += 1;
+		byOrg.set(l.organizationId, cur);
+	}
 
-  const topOrganizations = Array.from(byOrg.entries())
-    .map(([organizationId, v]) => ({
-      organizationId,
-      name: v.name,
-      slug: v.slug,
-      lineItems: v.lineItems,
-      revenueMad: v.revenue.toFixed(2),
-    }))
-    .sort((a, b) => Number(b.revenueMad) - Number(a.revenueMad) || b.lineItems - a.lineItems)
-    .slice(0, 12);
+	const topOrganizations = Array.from(byOrg.entries())
+		.map(([organizationId, v]) => ({
+			organizationId,
+			name: v.name,
+			slug: v.slug,
+			lineItems: v.lineItems,
+			revenueMad: v.revenue.toFixed(2),
+		}))
+		.sort(
+			(a, b) =>
+				Number(b.revenueMad) - Number(a.revenueMad) ||
+				b.lineItems - a.lineItems,
+		)
+		.slice(0, 12);
 
-  return {
-    ordersByStatus,
-    confirmedOrdersCount,
-    pendingPaymentCount,
-    otherStatusCount,
-    totalOrdersCount,
-    confirmedRevenueMad: confirmedRevenue.toFixed(2),
-    topOrganizations,
-  };
+	return {
+		ordersByStatus,
+		confirmedOrdersCount,
+		pendingPaymentCount,
+		otherStatusCount,
+		totalOrdersCount,
+		confirmedRevenueMad: confirmedRevenue.toFixed(2),
+		topOrganizations,
+	};
 }

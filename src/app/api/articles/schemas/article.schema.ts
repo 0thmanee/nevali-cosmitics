@@ -25,5 +25,9 @@ export const updateProducerArticleSchema = createProducerArticleSchema.extend({
 	id: z.string().min(1),
 });
 
-export type CreateProducerArticleInput = z.infer<typeof createProducerArticleSchema>;
-export type UpdateProducerArticleInput = z.infer<typeof updateProducerArticleSchema>;
+export type CreateProducerArticleInput = z.infer<
+	typeof createProducerArticleSchema
+>;
+export type UpdateProducerArticleInput = z.infer<
+	typeof updateProducerArticleSchema
+>;

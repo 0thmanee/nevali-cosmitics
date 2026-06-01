@@ -1,3 +1,6 @@
+// PARKED: card payments are off by design (see src/lib/payments-config.ts). This
+// module is fully wired but not reachable from the COD-only storefront. Kept so card
+// checkout can be switched on later without rebuilding the Stripe integration.
 import { env } from "~/env";
 import { prisma } from "~/lib/db";
 import { getStripe } from "~/lib/stripe-server";

@@ -22,9 +22,5 @@ export function CheckoutSuccessStripeSync({ orderId, sessionId }: Props) {
 	}, [orderId, clearCart, sessionId]);
 
 	if (!note) return null;
-	return (
-		<p className="max-w-md font-sans text-amber-900 text-sm">
-			{note}
-		</p>
-	);
+	return <p className="max-w-md font-sans text-amber-900 text-sm">{note}</p>;
 }

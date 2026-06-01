@@ -5,14 +5,15 @@ import {
 	notifyOrganizationsOfShopOrder,
 	notifyShopOrderBuyerConfirmation,
 } from "~/lib/notifications";
-import {
-	createShopOrderFromCheckout,
-} from "./repo/shop-orders.repo";
+import { cardPaymentsEnabled } from "~/lib/payments-config";
+import { reportError } from "~/lib/report-error";
+import { createShopOrderFromCheckout } from "./repo/shop-orders.repo";
 import { submitShopOrderSchema } from "./schemas/shop-orders.schema";
 
 export async function submitShopOrder(raw: unknown) {
 	const parsed = submitShopOrderSchema.parse(raw);
-	if (parsed.paymentMethod !== "COD") {
+	// Card is parked (payments-config.ts): COD is the only accepted method at launch.
+	if (parsed.paymentMethod !== "COD" && !cardPaymentsEnabled) {
 		throw new Error("Only cash on delivery is available.");
 	}
 
@@ -69,8 +70,12 @@ export async function submitShopOrder(raw: unknown) {
 			paymentMethod: notification.paymentMethod,
 			lines: notification.lines,
 		});
-	} catch {
-		// Email is best-effort; order is already persisted.
+	} catch (err) {
+		// Email is best-effort; order is already persisted. Surface for observability.
+		reportError(err, {
+			scope: "submitShopOrder.notify",
+			orderId: result.orderId,
+		});
 	}
 	return { orderId: result.orderId };
 }

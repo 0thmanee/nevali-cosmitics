@@ -4,6 +4,6 @@ import { TrainingProgramDetailView } from "~/features/artisan/components/trainin
 type Props = { params: Promise<{ programId: string }> };
 
 export default async function TrainingProgramPage({ params }: Props) {
-  const { programId } = await params;
-  return <TrainingProgramDetailView programId={programId} />;
+	const { programId } = await params;
+	return <TrainingProgramDetailView programId={programId} />;
 }

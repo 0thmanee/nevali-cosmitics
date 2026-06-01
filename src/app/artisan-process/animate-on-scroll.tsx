@@ -46,7 +46,10 @@ export function AnimateOnScroll({
 		const el = ref.current;
 		if (!el) return;
 
-		if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+		if (
+			typeof window !== "undefined" &&
+			window.matchMedia("(prefers-reduced-motion: reduce)").matches
+		) {
 			setVisible(true);
 			return;
 		}
@@ -73,8 +76,8 @@ export function AnimateOnScroll({
 
 	return (
 		<div
-			ref={ref}
 			className={className}
+			ref={ref}
 			style={{
 				opacity: visible ? 1 : 0,
 				transform,

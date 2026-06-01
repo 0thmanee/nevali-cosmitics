@@ -31,3 +31,52 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck
+
+  unit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit tests
+        run: pnpm test:unit
+
+  lint:
+    name: Biome (advisory)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Advisory for now: formatting + the new code is clean, but a pre-existing
+      # backlog of a11y/nursery lint findings remains. Surfaces issues on PRs
+      # without blocking merges until that backlog is triaged. Flip to required
+      # once `pnpm check` is green.
+      - name: Biome check
+        run: pnpm check
+        continue-on-error: true

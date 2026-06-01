@@ -81,7 +81,10 @@ export const TICKET_STATUS_STYLE = {
 		label: "Resolved",
 	},
 } as const;
-export const TICKET_STATUS_LABEL_KEY: Record<keyof typeof TICKET_STATUS_STYLE, string> = {
+export const TICKET_STATUS_LABEL_KEY: Record<
+	keyof typeof TICKET_STATUS_STYLE,
+	string
+> = {
 	OPEN: "support.status.open",
 	IN_REVIEW: "support.status.inReview",
 	RESOLVED: "support.status.resolved",

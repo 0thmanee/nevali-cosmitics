@@ -4,6 +4,8 @@ import { AdminTrainingModuleEditView } from "~/features/admin/components/trainin
 type Props = { params: Promise<{ id: string; moduleId: string }> };
 
 export default async function EditModulePage({ params }: Props) {
-  const { id: programId, moduleId } = await params;
-  return <AdminTrainingModuleEditView programId={programId} moduleId={moduleId} />;
+	const { id: programId, moduleId } = await params;
+	return (
+		<AdminTrainingModuleEditView moduleId={moduleId} programId={programId} />
+	);
 }

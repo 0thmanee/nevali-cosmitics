@@ -1,5 +1,8 @@
 import { prisma } from "~/lib/db";
-import type { ProducerArticlePublicCard, ProducerArticleRow } from "../articles.types";
+import type {
+	ProducerArticlePublicCard,
+	ProducerArticleRow,
+} from "../articles.types";
 
 const articleSelect = {
 	id: true,
@@ -133,8 +136,24 @@ export async function updateArticleRepo(input: {
 	return row as ProducerArticleRow;
 }
 
-export async function deleteArticleRepo(id: string, organizationId: string): Promise<void> {
+export async function deleteArticleRepo(
+	id: string,
+	organizationId: string,
+): Promise<void> {
 	await prisma.producerArticle.deleteMany({
 		where: { id, organizationId },
 	});
+}
+
+/** Lightweight list of published article ids + publish date for sitemap generation. */
+export async function listPublishedArticlesForSitemapRepo(): Promise<
+	{ id: string; publishedAt: Date }[]
+> {
+	const rows = await prisma.producerArticle.findMany({
+		where: { status: "PUBLISHED", publishedAt: { not: null } },
+		select: { id: true, publishedAt: true },
+		orderBy: { publishedAt: "desc" },
+		take: 5000,
+	});
+	return rows.map((r) => ({ id: r.id, publishedAt: r.publishedAt as Date }));
 }

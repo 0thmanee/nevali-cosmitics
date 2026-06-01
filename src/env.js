@@ -58,6 +58,8 @@ export const env = createEnv({
 		INFOBIP_API_KEY: z.string().min(1).optional(),
 		/** Infobip WhatsApp sender number/name configured in your account. */
 		INFOBIP_WHATSAPP_FROM: z.string().min(1).optional(),
+		/** Sentry DSN for server/edge error reporting (optional; reporting no-ops when unset). */
+		SENTRY_DSN: z.string().url().optional(),
 	},
 
 	/**
@@ -72,6 +74,10 @@ export const env = createEnv({
 		NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE: z.string().max(500).optional(),
 		/** Optional: Stripe publishable key (e.g. future Elements). Hosted Checkout does not require it on the client. */
 		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
+		/** Sentry DSN for browser error reporting (optional; reporting no-ops when unset). */
+		NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+		/** Google Analytics 4 measurement id (e.g. G-XXXXXXX). Loaded only after cookie consent. */
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional(),
 	},
 
 	/**
@@ -88,8 +94,10 @@ export const env = createEnv({
 		RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
 		REQUIRE_EMAIL_VERIFICATION: process.env.REQUIRE_EMAIL_VERIFICATION,
 		RFQ_THREAD_CC_EMAIL: process.env.RFQ_THREAD_CC_EMAIL,
-		BUYER_ENTERPRISE_INQUIRY_CC_EMAIL: process.env.BUYER_ENTERPRISE_INQUIRY_CC_EMAIL,
-		NOTIFICATION_DIGEST_CRON_SECRET: process.env.NOTIFICATION_DIGEST_CRON_SECRET,
+		BUYER_ENTERPRISE_INQUIRY_CC_EMAIL:
+			process.env.BUYER_ENTERPRISE_INQUIRY_CC_EMAIL,
+		NOTIFICATION_DIGEST_CRON_SECRET:
+			process.env.NOTIFICATION_DIGEST_CRON_SECRET,
 		LEGAL_POLICY_EFFECTIVE_DATE: process.env.LEGAL_POLICY_EFFECTIVE_DATE,
 		STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 		STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
@@ -97,14 +105,19 @@ export const env = createEnv({
 		SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
 		SUPABASE_STORAGE_BUCKET: process.env.SUPABASE_STORAGE_BUCKET,
 		NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-		NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE: process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE,
-		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+		NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE:
+			process.env.NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE,
+		NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
 		CONTACT_PUBLIC_EMAIL: process.env.CONTACT_PUBLIC_EMAIL,
 		WHATSAPP_CLOUD_API_TOKEN: process.env.WHATSAPP_CLOUD_API_TOKEN,
 		WHATSAPP_PHONE_NUMBER_ID: process.env.WHATSAPP_PHONE_NUMBER_ID,
 		INFOBIP_BASE_URL: process.env.INFOBIP_BASE_URL,
 		INFOBIP_API_KEY: process.env.INFOBIP_API_KEY,
 		INFOBIP_WHATSAPP_FROM: process.env.INFOBIP_WHATSAPP_FROM,
+		SENTRY_DSN: process.env.SENTRY_DSN,
+		NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -1,28 +1,28 @@
-import Navbar from "./Navbar";
-import HeroSection from "./HeroSection";
-import NewFutureSection from "./NewFutureSection";
 import CollectionsSection from "./CollectionsSection";
-import QuoteSection from "./QuoteSection";
-import ProductsSection from "./ProductsSection";
-import StoriesSection from "./StoriesSection";
-import FeaturesSection from "./FeaturesSection";
 import FAQSection from "./FAQSection";
+import FeaturesSection from "./FeaturesSection";
 import Footer from "./Footer";
+import HeroSection from "./HeroSection";
+import Navbar from "./Navbar";
+import NewFutureSection from "./NewFutureSection";
+import ProductsSection from "./ProductsSection";
+import QuoteSection from "./QuoteSection";
+import StoriesSection from "./StoriesSection";
 
 export default function HomePage() {
-  return (
-    <main className="flex flex-col w-full min-h-screen">
-      <Navbar />
-      <div className="pt-[56px]" />
-      <HeroSection />
-      <NewFutureSection />
-      <CollectionsSection />
-      <ProductsSection />
-      <QuoteSection />
-      <StoriesSection />
-      <FeaturesSection />
-      <FAQSection />
-      <Footer />
-    </main>
-  );
+	return (
+		<main className="flex min-h-screen w-full flex-col">
+			<Navbar />
+			<div className="pt-[56px]" />
+			<HeroSection />
+			<NewFutureSection />
+			<CollectionsSection />
+			<ProductsSection />
+			<QuoteSection />
+			<StoriesSection />
+			<FeaturesSection />
+			<FAQSection />
+			<Footer />
+		</main>
+	);
 }

@@ -23,11 +23,24 @@ type Props = { mode: "create" } | { mode: "edit"; article: ProducerArticleRow };
 const MARKDOWN_SNIPPETS = [
 	{ label: "H2", snippet: "\n\n## Section title\n\n" },
 	{ label: "Quote", snippet: "\n\n> Quote text\n\n" },
-	{ label: "Bullet list", snippet: "\n\n- First point\n- Second point\n- Third point\n\n" },
-	{ label: "Numbered list", snippet: "\n\n1. First step\n2. Second step\n3. Third step\n\n" },
+	{
+		label: "Bullet list",
+		snippet: "\n\n- First point\n- Second point\n- Third point\n\n",
+	},
+	{
+		label: "Numbered list",
+		snippet: "\n\n1. First step\n2. Second step\n3. Third step\n\n",
+	},
 	{ label: "Link", snippet: "\n\n[Link label](https://example.com)\n\n" },
-	{ label: "Table", snippet: "\n\n| Ingredient | Benefit |\n| --- | --- |\n| Argan oil | Nourishes |\n| Rose water | Soothes |\n\n" },
-	{ label: "Code block", snippet: "\n\n```txt\nAdd your technical notes here\n```\n\n" },
+	{
+		label: "Table",
+		snippet:
+			"\n\n| Ingredient | Benefit |\n| --- | --- |\n| Argan oil | Nourishes |\n| Rose water | Soothes |\n\n",
+	},
+	{
+		label: "Code block",
+		snippet: "\n\n```txt\nAdd your technical notes here\n```\n\n",
+	},
 	{ label: "Divider", snippet: "\n\n---\n\n" },
 ] as const;
 
@@ -71,7 +84,9 @@ export function ArticleForm(props: Props) {
 	const [error, setError] = useState<string | null>(null);
 	const [uploadingCover, setUploadingCover] = useState(false);
 	const [uploadingInline, setUploadingInline] = useState(false);
-	const [editorView, setEditorView] = useState<"write" | "split" | "preview">("split");
+	const [editorView, setEditorView] = useState<"write" | "split" | "preview">(
+		"split",
+	);
 	const [hasRecoveredDraft, setHasRecoveredDraft] = useState(false);
 	const [lastAutosaveAt, setLastAutosaveAt] = useState<string | null>(null);
 	const [initialHydrated, setInitialHydrated] = useState(false);
@@ -88,7 +103,7 @@ export function ArticleForm(props: Props) {
 			.replace(/`[^`]+`/g, " ")
 			.replace(/!\[[^\]]*]\([^)]+\)/g, " ")
 			.replace(/\[[^\]]+]\([^)]+\)/g, "$1")
-			.replace(/[#>*_\-\|]/g, " ")
+			.replace(/[#>*_\-|]/g, " ")
 			.trim();
 		const words = plain ? plain.split(/\s+/).length : 0;
 		const minutes = Math.max(1, Math.ceil(words / 210));
@@ -112,10 +127,9 @@ export function ArticleForm(props: Props) {
 				body: initial?.body ?? "",
 				coverGradient: initial?.coverGradient ?? DEFAULT_ARTICLE_COVER,
 				coverImageUrl: initial?.coverImageUrl ?? null,
-				status:
-					((initial?.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT") as
-						| "DRAFT"
-						| "PUBLISHED"),
+				status: (initial?.status === "PUBLISHED" ? "PUBLISHED" : "DRAFT") as
+					| "DRAFT"
+					| "PUBLISHED",
 			}),
 		[initial],
 	);
@@ -356,8 +370,10 @@ export function ArticleForm(props: Props) {
 			)}
 
 			{hasRecoveredDraft && (
-				<div className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-sm text-amber-900">
-					<p className="font-semibold">Recovered unsaved draft from this browser.</p>
+				<div className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 font-sans text-amber-900 text-sm">
+					<p className="font-semibold">
+						Recovered unsaved draft from this browser.
+					</p>
 					<div className="mt-2 flex flex-wrap items-center gap-3">
 						{lastAutosaveAt ? (
 							<span className="text-[12px] text-amber-800">
@@ -365,7 +381,7 @@ export function ArticleForm(props: Props) {
 							</span>
 						) : null}
 						<button
-							className="rounded-sm border border-amber-300 bg-white px-2.5 py-1 text-[12px] font-semibold hover:bg-amber-100"
+							className="rounded-sm border border-amber-300 bg-white px-2.5 py-1 font-semibold text-[12px] hover:bg-amber-100"
 							onClick={() => clearLocalDraft(true)}
 							type="button"
 						>
@@ -517,7 +533,9 @@ export function ArticleForm(props: Props) {
 						<div className="inline-flex overflow-hidden rounded-sm border border-cream-dark bg-white">
 							<button
 								className={`px-3 py-1.5 font-sans font-semibold text-xs ${
-									editorView === "write" ? "bg-ink text-white" : "hover:bg-cream"
+									editorView === "write"
+										? "bg-ink text-white"
+										: "hover:bg-cream"
 								}`}
 								onClick={() => setEditorView("write")}
 								type="button"
@@ -525,8 +543,10 @@ export function ArticleForm(props: Props) {
 								Write
 							</button>
 							<button
-								className={`border-x border-cream-dark px-3 py-1.5 font-sans font-semibold text-xs ${
-									editorView === "split" ? "bg-ink text-white" : "hover:bg-cream"
+								className={`border-cream-dark border-x px-3 py-1.5 font-sans font-semibold text-xs ${
+									editorView === "split"
+										? "bg-ink text-white"
+										: "hover:bg-cream"
 								}`}
 								onClick={() => setEditorView("split")}
 								type="button"
@@ -535,7 +555,9 @@ export function ArticleForm(props: Props) {
 							</button>
 							<button
 								className={`px-3 py-1.5 font-sans font-semibold text-xs ${
-									editorView === "preview" ? "bg-ink text-white" : "hover:bg-cream"
+									editorView === "preview"
+										? "bg-ink text-white"
+										: "hover:bg-cream"
 								}`}
 								onClick={() => setEditorView("preview")}
 								type="button"
@@ -613,7 +635,7 @@ export function ArticleForm(props: Props) {
 					)}
 					{editorView !== "write" && (
 						<div className="min-h-[360px] rounded-sm border border-cream-dark bg-white p-4">
-							<p className="mb-3 font-sans text-[11px] font-bold uppercase tracking-wide text-text-muted">
+							<p className="mb-3 font-bold font-sans text-[11px] text-text-muted uppercase tracking-wide">
 								Live preview
 							</p>
 							{body.trim().length > 0 ? (

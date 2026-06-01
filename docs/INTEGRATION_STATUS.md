@@ -47,7 +47,7 @@ These areas use Server Actions (or route handlers) that read/write Prisma models
 
 | Topic | Notes |
 |-------|--------|
-| **Payments / checkout** | “Add to Cart” / B2B quote in the inquiry modal is a **lead / RFQ** flow, not card settlement; copy + optional **`NEXT_PUBLIC_MARKETPLACE_BILLING_NOTE`** state that explicitly. **`STRIPE_*`** env keys are reserved, not wired. |
+| **Payments / checkout** | Guest catalog checkout is **cash-on-delivery (COD) only — by design** for the Moroccan market. The single gate is **`cardPaymentsEnabled`** in `src/lib/payments-config.ts` (currently `false`). The Stripe stack (`src/lib/stripe-*.ts`, `/api/webhooks/stripe`) is **fully wired but parked** — set the `STRIPE_*` keys + flip the flag + surface a card option in the checkout UI to enable. Until then no card option is shown and `submitShopOrder` rejects non-COD. |
 | **Notification product** | **`UserNotification`** rows + **`/buyer/notifications`** and **`/artisan/notifications`** list/mark-read. | No push, per-user preferences table, or scheduled digest runner yet. |
 | **tRPC / NextAuth** | Not used; the app uses **Server Actions + Better Auth**. |
 

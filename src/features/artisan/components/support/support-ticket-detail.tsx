@@ -2,13 +2,13 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { useI18n } from "~/components/i18n/i18n-provider";
 import type { SupportTicketRow } from "~/app/api/support/schemas/support.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { useAddProducerReply } from "../../hooks/use-support";
 import {
 	getTicketStatusStyle,
-	TICKET_STATUS_LABEL_KEY,
 	TICKET_PRIORITY_STYLE,
+	TICKET_STATUS_LABEL_KEY,
 } from "./support-constants";
 
 // ── Parse conversation from the message field ─────────────────────────────────
@@ -46,13 +46,15 @@ function MessageBubble({
 }) {
 	return (
 		<div className="flex flex-col gap-1">
-			<span className="font-sans font-semibold text-text-muted text-[10px] uppercase tracking-wide">
+			<span className="font-sans font-semibold text-[10px] text-text-muted uppercase tracking-wide">
 				{segment.label}
 			</span>
 			<div
-				className="whitespace-pre-wrap rounded-sm px-4 py-3 font-sans text-text-dark text-[13px] leading-relaxed"
+				className="whitespace-pre-wrap rounded-sm px-4 py-3 font-sans text-[13px] text-text-dark leading-relaxed"
 				style={{
-					background: isFirst ? "color-mix(in srgb, var(--color-ink) 6%, transparent)" : "white",
+					background: isFirst
+						? "color-mix(in srgb, var(--color-ink) 6%, transparent)"
+						: "white",
 					border: "1px solid var(--color-cream-dark)",
 				}}
 			>
@@ -78,7 +80,10 @@ export function SupportTicketDetail({
 
 	const statusEntry = getTicketStatusStyle(ticket.status);
 	const { ...statusPillStyle } = statusEntry;
-	const statusKey = TICKET_STATUS_LABEL_KEY[ticket.status as keyof typeof TICKET_STATUS_LABEL_KEY];
+	const statusKey =
+		TICKET_STATUS_LABEL_KEY[
+			ticket.status as keyof typeof TICKET_STATUS_LABEL_KEY
+		];
 	const statusLabel = statusKey ? t(statusKey) : ticket.status;
 	const priorityColor = TICKET_PRIORITY_STYLE[
 		ticket.priority?.toUpperCase()
@@ -119,7 +124,10 @@ export function SupportTicketDetail({
 			onClick={(e) => {
 				if (e.target === e.currentTarget) onClose();
 			}}
-			style={{ background: "color-mix(in srgb, var(--color-ink) 45%, transparent)", backdropFilter: "blur(3px)" }}
+			style={{
+				background: "color-mix(in srgb, var(--color-ink) 45%, transparent)",
+				backdropFilter: "blur(3px)",
+			}}
 		>
 			{/* Drawer */}
 			<div
@@ -128,17 +136,21 @@ export function SupportTicketDetail({
 					width: "min(560px, 100vw)",
 					background: "var(--color-paper)",
 					borderLeft: "1px solid var(--color-cream-dark)",
-					boxShadow: "-8px 0 32px color-mix(in srgb, var(--color-ink) 12%, transparent)",
+					boxShadow:
+						"-8px 0 32px color-mix(in srgb, var(--color-ink) 12%, transparent)",
 				}}
 			>
 				{/* ── Header ── */}
 				<div
 					className="flex items-start justify-between gap-4 border-b px-6 py-5"
-					style={{ borderColor: "var(--color-cream-dark)", background: "white" }}
+					style={{
+						borderColor: "var(--color-cream-dark)",
+						background: "white",
+					}}
 				>
 					<div className="flex min-w-0 flex-col gap-2">
 						<div className="flex flex-wrap items-center gap-2">
-							<span className="font-mono text-text-muted text-[10px]">
+							<span className="font-mono text-[10px] text-text-muted">
 								{ticket.id.slice(0, 12)}
 							</span>
 							<span
@@ -154,23 +166,27 @@ export function SupportTicketDetail({
 								● {ticket.priority}
 							</span>
 						</div>
-						<h2 className="font-bold font-serif text-text-dark text-[17px] leading-snug">
+						<h2 className="font-bold font-serif text-[17px] text-text-dark leading-snug">
 							{ticket.subject}
 						</h2>
 						<div className="flex flex-wrap items-center gap-3">
 							<span
 								className="rounded-sm px-2 py-0.5 font-sans font-semibold text-[10px]"
-								style={{ background: "color-mix(in srgb, var(--color-ink) 7%, transparent)", color: "var(--color-text-muted)" }}
+								style={{
+									background:
+										"color-mix(in srgb, var(--color-ink) 7%, transparent)",
+									color: "var(--color-text-muted)",
+								}}
 							>
 								{ticket.category}
 							</span>
-							<span className="font-sans text-text-muted text-[11px]">
+							<span className="font-sans text-[11px] text-text-muted">
 								{t("support.opened")} {formatDate(ticket.createdAt)}
 							</span>
 						</div>
 					</div>
 					<button
-						className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-[color-mix(in srgb, var(--color-paper) 60%, var(--color-cream-dark))]"
+						className="srgb, var(--color-paper) 60%, var(--color-cream-dark))] flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-[color-mix(in"
 						onClick={onClose}
 						style={{ border: "1px solid var(--color-cream-dark)" }}
 						type="button"
@@ -196,14 +212,19 @@ export function SupportTicketDetail({
 				{/* ── Reply form ── */}
 				<div
 					className="border-t px-6 py-5"
-					style={{ borderColor: "var(--color-cream-dark)", background: "white" }}
+					style={{
+						borderColor: "var(--color-cream-dark)",
+						background: "white",
+					}}
 				>
 					{isResolved ? (
 						<div
 							className="flex items-center gap-2 rounded-sm px-4 py-3"
 							style={{
-								background: "color-mix(in srgb, var(--color-ink) 6%, transparent)",
-								border: "1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)",
+								background:
+									"color-mix(in srgb, var(--color-ink) 6%, transparent)",
+								border:
+									"1px solid color-mix(in srgb, var(--color-ink) 14%, transparent)",
 							}}
 						>
 							<svg fill="none" height="14" viewBox="0 0 14 14" width="14">
@@ -215,26 +236,28 @@ export function SupportTicketDetail({
 									strokeWidth="1.5"
 								/>
 							</svg>
-							<span className="font-sans text-text-muted text-[12px]">
+							<span className="font-sans text-[12px] text-text-muted">
 								{t("support.ticketResolvedHint")}
 							</span>
 						</div>
 					) : (
 						<form className="flex flex-col gap-3" onSubmit={handleSubmit}>
 							<textarea
-								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-text-dark text-[13px] transition-colors placeholder:text-[var(--color-text-muted)] focus:outline-none"
+								className="w-full resize-none rounded-sm border px-4 py-3 font-sans text-[13px] text-text-dark transition-colors placeholder:text-[var(--color-text-muted)] focus:outline-none"
 								onChange={(e) => setReply(e.target.value)}
 								placeholder={t("support.followUpPlaceholder")}
 								ref={textareaRef}
 								rows={3}
 								style={{
-									borderColor: reply ? "var(--color-ink)" : "var(--color-cream-dark)",
+									borderColor: reply
+										? "var(--color-ink)"
+										: "var(--color-cream-dark)",
 									background: "var(--color-paper)",
 								}}
 								value={reply}
 							/>
 							<div className="flex items-center justify-between gap-3">
-								<p className="font-sans text-text-muted text-[11px]">
+								<p className="font-sans text-[11px] text-text-muted">
 									{t("support.followUpHint")}
 								</p>
 								<button

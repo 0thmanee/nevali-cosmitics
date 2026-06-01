@@ -91,7 +91,8 @@ const PRODUCT_COPY: Record<
 	"Rhassoul volumizing shampoo": {
 		name: "شامبو الغاسول لتكثيف الشعر",
 		category: "العناية بالشعر",
-		description: "تنظيف لطيف خالٍ من السلفات مع الغاسول والبانثينول للشعر الخفيف.",
+		description:
+			"تنظيف لطيف خالٍ من السلفات مع الغاسول والبانثينول للشعر الخفيف.",
 	},
 	"Prickly pear day cream": {
 		name: "كريم نهاري بالتين الشوكي",
@@ -106,12 +107,14 @@ const PRODUCT_COPY: Record<
 	"Shea & argan body butter": {
 		name: "زبدة الجسم بالشيا والأرغان",
 		category: "العناية بالجسم",
-		description: "تركيبة غنية للمناطق الجافة مثل المرفقين والركبتين وبعد التعرض للشمس.",
+		description:
+			"تركيبة غنية للمناطق الجافة مثل المرفقين والركبتين وبعد التعرض للشمس.",
 	},
 	"Vitamin C radiance serum": {
 		name: "سيروم فيتامين C للإشراقة",
 		category: "العناية بالبشرة",
-		description: "15% فيتامين C مشتق بقاعدة مرطبة. يُستخدم صباحًا قبل واقي الشمس.",
+		description:
+			"15% فيتامين C مشتق بقاعدة مرطبة. يُستخدم صباحًا قبل واقي الشمس.",
 	},
 	"Argan lip balm — mint": {
 		name: "مرطب شفاه بالأرغان — نعناع",
@@ -159,7 +162,9 @@ async function main() {
 	console.log("→ Running base seed first...");
 	execSync("pnpm tsx prisma/seed.ts", { stdio: "inherit" });
 
-	const org = await prisma.organization.findUnique({ where: { slug: ORG_SLUG } });
+	const org = await prisma.organization.findUnique({
+		where: { slug: ORG_SLUG },
+	});
 	if (!org) throw new Error("Seed org not found after base seed run.");
 
 	await prisma.organization.update({
@@ -172,7 +177,9 @@ async function main() {
 		data: { name: "زينب بدر" },
 	});
 
-	const partner = await prisma.user.findUnique({ where: { email: PARTNER_EMAIL } });
+	const partner = await prisma.user.findUnique({
+		where: { email: PARTNER_EMAIL },
+	});
 	if (partner) {
 		await prisma.profile.updateMany({
 			where: { userId: partner.id },
@@ -182,11 +189,14 @@ async function main() {
 				entityType: "شركة حرفية",
 				region: "الدار البيضاء - سطات",
 				city: "الدار البيضاء",
-				publicTagline: "مختبر مغربي بمعايير عالمية — تركيبات قابلة للتتبع من الدار البيضاء.",
+				publicTagline:
+					"مختبر مغربي بمعايير عالمية — تركيبات قابلة للتتبع من الدار البيضاء.",
 				businessDescription:
 					"نيفالي تطور وتعبئ منتجات العناية بالبشرة والشعر والجسم بمكونات مغربية فعالة مثل الأرغان والغاسول والورد والتين الشوكي.",
-				exportMarkets: "الاتحاد الأوروبي، المملكة المتحدة، دول الخليج، أمريكا الشمالية",
-				valuesHighlight: "بحث وتطوير تقوده النساء · إنتاج متوافق مع HACCP · شفافية المكونات",
+				exportMarkets:
+					"الاتحاد الأوروبي، المملكة المتحدة، دول الخليج، أمريكا الشمالية",
+				valuesHighlight:
+					"بحث وتطوير تقوده النساء · إنتاج متوافق مع HACCP · شفافية المكونات",
 			},
 		});
 	}
@@ -227,4 +237,3 @@ main()
 	.finally(() => {
 		void prisma.$disconnect();
 	});
-

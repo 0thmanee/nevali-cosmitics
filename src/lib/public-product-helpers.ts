@@ -1,4 +1,7 @@
-import type { PublicProductImage, PublicProductVariant } from "~/app/api/products/schemas/products.schema";
+import type {
+	PublicProductImage,
+	PublicProductVariant,
+} from "~/app/api/products/schemas/products.schema";
 import { getCategoryGradient } from "~/lib/public-product-gradient";
 
 export { getCategoryGradient };

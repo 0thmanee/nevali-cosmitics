@@ -5,7 +5,10 @@ import { useMemo, useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { useCart } from "~/features/cart/cart-context";
 import { getCategoryGradient } from "~/lib/public-product-gradient";
-import { pickDefaultPublicVariant, publicVariantOrderHint } from "~/lib/public-product-helpers";
+import {
+	pickDefaultPublicVariant,
+	publicVariantOrderHint,
+} from "~/lib/public-product-helpers";
 import { ProductInquiryModal } from "./product-inquiry-modal";
 import type { PublicProduct } from "./public-product-types";
 
@@ -21,7 +24,10 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 	const [justAdded, setJustAdded] = useState(false);
 	const { addLine } = useCart();
 	const gradient = getCategoryGradient(product.category);
-	const defaultV = useMemo(() => pickDefaultPublicVariant(product.variants), [product.variants]);
+	const defaultV = useMemo(
+		() => pickDefaultPublicVariant(product.variants),
+		[product.variants],
+	);
 	const modalProduct = {
 		id: product.id,
 		name: product.name,
@@ -63,16 +69,22 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 		<>
 			<div className={className ?? "mt-auto flex flex-col gap-1.5"}>
 				<button
-					className={`flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans text-sm font-semibold shadow-sm transition-opacity disabled:cursor-default ${
+					className={`flex w-full items-center justify-center gap-2 rounded-sm py-2.5 font-sans font-semibold text-sm shadow-sm transition-opacity disabled:cursor-default ${
 						justAdded
 							? "border border-(--color-ink)/35 bg-cream text-text-dark"
-							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-ink)/55 focus-visible:ring-offset-2"
+							: "text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-(--color-ink)/55 focus-visible:ring-2 focus-visible:ring-offset-2"
 					}`}
 					onClick={handleAddToCart}
 					style={justAdded ? undefined : { background: "var(--color-ink)" }}
 					type="button"
 				>
-					<svg aria-hidden="true" fill="none" height="13" viewBox="0 0 14 14" width="13">
+					<svg
+						aria-hidden="true"
+						fill="none"
+						height="13"
+						viewBox="0 0 14 14"
+						width="13"
+					>
 						<path
 							d="M1 1h2l1.5 7h6l1.5-4.5H4"
 							stroke="currentColor"
@@ -83,15 +95,23 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 						<circle cx="6" cy="12" fill="currentColor" r="0.8" />
 						<circle cx="11" cy="12" fill="currentColor" r="0.8" />
 					</svg>
-					{justAdded ? t("publicProductCard.added") : t("publicProductCard.addToCart")}
+					{justAdded
+						? t("publicProductCard.added")
+						: t("publicProductCard.addToCart")}
 				</button>
 				<button
-					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-sans text-sm font-medium text-text-muted transition-colors hover:text-text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-ink)/35 focus-visible:ring-offset-2"
+					className="flex w-full items-center justify-center gap-1 rounded-sm py-1 font-medium font-sans text-sm text-text-muted transition-colors hover:text-text-dark focus-visible:outline-none focus-visible:ring-(--color-ink)/35 focus-visible:ring-2 focus-visible:ring-offset-2"
 					onClick={() => setModal("b2b")}
 					type="button"
 				>
 					{t("publicProductCard.wholesaleInquiryCta")}
-					<svg aria-hidden="true" fill="none" height="12" viewBox="0 0 12 12" width="12">
+					<svg
+						aria-hidden="true"
+						fill="none"
+						height="12"
+						viewBox="0 0 12 12"
+						width="12"
+					>
 						<path
 							d="M2 6h8M7 3l3 3-3 3"
 							stroke="currentColor"
@@ -104,12 +124,17 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 			</div>
 			{justAdded ? (
 				<div
-					className="mt-2 rounded-sm border border-emerald-200 bg-emerald-50 px-3 py-2 font-sans text-emerald-900 text-xs"
 					aria-live="polite"
+					className="mt-2 rounded-sm border border-emerald-200 bg-emerald-50 px-3 py-2 font-sans text-emerald-900 text-xs"
 					role="status"
 				>
-					<span className="font-semibold">{t("publicInquiryTriggers.addedToCart")}</span>{" "}
-					<Link className="font-semibold text-text-dark underline underline-offset-2" href="/cart">
+					<span className="font-semibold">
+						{t("publicInquiryTriggers.addedToCart")}
+					</span>{" "}
+					<Link
+						className="font-semibold text-text-dark underline underline-offset-2"
+						href="/cart"
+					>
 						{t("publicInquiryTriggers.viewCart")}
 					</Link>
 				</div>
@@ -122,7 +147,11 @@ export function PublicProductInquiryTriggers({ product, className }: Props) {
 			</p>
 
 			{modal ? (
-				<ProductInquiryModal mode={modal} onClose={() => setModal(null)} product={modalProduct} />
+				<ProductInquiryModal
+					mode={modal}
+					onClose={() => setModal(null)}
+					product={modalProduct}
+				/>
 			) : null}
 		</>
 	);

@@ -13,9 +13,7 @@ export function parseNotificationPrefs(
 	const o = value as Record<string, unknown>;
 	return {
 		muteOrderEmails:
-			typeof o.muteOrderEmails === "boolean"
-				? o.muteOrderEmails
-				: undefined,
+			typeof o.muteOrderEmails === "boolean" ? o.muteOrderEmails : undefined,
 	};
 }
 
