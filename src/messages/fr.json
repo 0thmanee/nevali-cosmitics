@@ -1746,7 +1746,8 @@
 		"statRejected": "Rejetés",
 		"addProduct": "Ajouter un produit",
 		"loadingProducts": "Chargement des produits…",
-		"failedToLoadProducts": "Échec du chargement des produits."
+		"failedToLoadProducts": "Échec du chargement des produits.",
+		"categoryPlaceholder": "ex. Soins du visage, Huiles botaniques"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "Produits",
@@ -1894,7 +1895,7 @@
 		"yearEstablished": "Année de création",
 		"website": "Site web (facultatif)",
 		"primaryProducts": "Produits principaux",
-		"primaryProductsHint": "Sélectionnez toutes les catégories que vous produisez",
+		"primaryProductsHint": "Ajoutez les catégories que vous produisez",
 		"annualCapacity": "Capacité annuelle",
 		"exportExperience": "Expérience à l’exportation",
 		"select": "Sélectionner",
@@ -1930,6 +1931,8 @@
 		"detailDuration": "Durée",
 		"detailLevel": "Niveau",
 		"detailProvider": "Fournisseur",
-		"enrollAndStart": "S’inscrire et commencer"
+		"enrollAndStart": "S’inscrire et commencer",
+		"add": "Ajouter",
+		"addCategoryPlaceholder": "Saisissez une catégorie puis Ajouter"
 	}
 }

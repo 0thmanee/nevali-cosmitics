@@ -1,4 +1,4 @@
-// OrigineMaroc — Prisma schema
+// nevali Cosmetics — Prisma schema
 // Better Auth (user, session, account, verification) + Organization plugin + app models
 
 generator client {
@@ -104,7 +104,7 @@ model Profile {
   exportExperience   String?
   agreeTerms         Boolean  @default(true)
   agreeMarketing     Boolean  @default(false)
-  profileImage       String?  // Supabase Storage public URL (bucket: origine-maroc)
+  profileImage       String?  // Supabase Storage public URL (bucket: nevali-cosmetics-media)
   /// Shown on the public producer page (buyers)
   publicTagline      String?
   businessDescription String? @db.Text
@@ -424,7 +424,7 @@ model TrainingProgram {
   id            String    @id @default(cuid())
   name          String
   description   String?
-  provider      String    @default("OrigineMaroc Academy")
+  provider      String    @default("Nevali Academy")
   category      String    // e.g. Export & Trade, Market Access
   durationLabel String?   // e.g. "10 modules · ~6 hours"
   level         String    // BEGINNER | INTERMEDIATE | ADVANCED

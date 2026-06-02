@@ -23,51 +23,15 @@ export const MOROCCAN_REGIONS = [
 	"Dakhla-Oued Ed-Dahab",
 ] as const;
 
-export const PRODUCT_CATEGORIES = [
-	{
-		label: "Carpets & Rugs",
-		color: "color-mix(in srgb, var(--color-ink) 72%, var(--color-text-muted))",
-	},
-	{ label: "Pottery & Ceramics", color: "var(--color-text-muted)" },
-	{
-		label: "Leather Goods",
-		color: "color-mix(in srgb, var(--color-ink) 88%, black)",
-	},
-	{
-		label: "Metal Lanterns",
-		color: "color-mix(in srgb, var(--color-ink) 65%, var(--color-text-muted))",
-	},
-	{
-		label: "Thuya Wood",
-		color: "color-mix(in srgb, var(--color-ink) 88%, black)",
-	},
-	{ label: "Caftans & Clothing", color: "var(--color-ink)" },
-	{
-		label: "Zellige & Tiles",
-		color: "color-mix(in srgb, var(--color-ink) 78%, var(--color-text-muted))",
-	},
-	{
-		label: "Jewelry & Silver",
-		color: "color-mix(in srgb, var(--color-text-muted) 85%, var(--color-ink))",
-	},
-	{
-		label: "Basketry & Weaving",
-		color: "color-mix(in srgb, var(--color-ink) 58%, var(--color-text-muted))",
-	},
-	{ label: "Babouches", color: "var(--color-text-muted)" },
-	{
-		label: "Embroidery",
-		color:
-			"color-mix(in srgb, var(--color-text-muted) 70%, var(--color-paper))",
-	},
-	{ label: "Cosmetics & Oils", color: "var(--color-ink)" },
-] as const;
 
+// Suggestions only — every producer field is free-text; producers can type any value.
 export const ENTITY_TYPES = [
-	"Individual Artisan",
-	"Artisan Cooperative",
-	"Craft Workshop (Atelier)",
+	"Cosmetics Brand",
+	"Cosmetics Laboratory",
+	"Manufacturer",
+	"Cooperative",
 	"Craft Company",
+	"Individual Producer",
 ] as const;
 
 export const EXPORT_EXPERIENCE_OPTIONS = [
@@ -75,6 +39,19 @@ export const EXPORT_EXPERIENCE_OPTIONS = [
 	"1-2 years",
 	"3-5 years",
 	"5+ years",
+] as const;
+
+/** Free-text category suggestions for cosmetics producers (not an enforced list). */
+export const COSMETICS_CATEGORY_SUGGESTIONS = [
+	"Skincare",
+	"Haircare",
+	"Body care",
+	"Makeup",
+	"Fragrance",
+	"Botanical oils",
+	"Hammam & body",
+	"Tools & accessories",
+	"Supplements",
 ] as const;
 
 export type OnboardingFormData = {

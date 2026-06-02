@@ -12,11 +12,11 @@ import { Avatar } from "~/components/avatar";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { useUploadProfileImage } from "~/features/media";
 import {
+	COSMETICS_CATEGORY_SUGGESTIONS,
 	ENTITY_TYPES,
 	EXPORT_EXPERIENCE_OPTIONS,
 	MOROCCAN_REGIONS,
 	type OnboardingFormData,
-	PRODUCT_CATEGORIES,
 	upsertProfile,
 } from "~/features/profile";
 import {
@@ -75,12 +75,24 @@ export function ProfileEditView({
 		(key: keyof OnboardingFormData) => (value: string | boolean | string[]) =>
 			setForm((prev) => ({ ...prev, [key]: value }));
 
-	const toggleCategory = (cat: string) => {
+	const [categoryInput, setCategoryInput] = useState("");
+
+	const addCategory = (raw: string) => {
+		const value = raw.trim();
+		if (!value) return;
 		setForm((f) =>
-			f.categories.includes(cat)
-				? { ...f, categories: f.categories.filter((c) => c !== cat) }
-				: { ...f, categories: [...f.categories, cat] },
+			f.categories.includes(value)
+				? f
+				: { ...f, categories: [...f.categories, value] },
 		);
+		setCategoryInput("");
+	};
+
+	const removeCategory = (cat: string) => {
+		setForm((f) => ({
+			...f,
+			categories: f.categories.filter((c) => c !== cat),
+		}));
 	};
 
 	const displayName = `${form.firstName} ${form.lastName}`.trim() || user.name;
@@ -310,22 +322,21 @@ export function ProfileEditView({
 									<label className={labelClassName} htmlFor="entityType">
 										{t("producerProfileCert.entityType")}
 									</label>
-									<select
+									<input
 										className={inputClassName}
 										id="entityType"
+										list="entity-type-suggestions"
 										onChange={(e) => set("entityType")(e.target.value)}
+										placeholder={t("producerProfileCert.selectEntityType")}
 										style={fieldStyle}
+										type="text"
 										value={form.entityType}
-									>
-										<option value="">
-											{t("producerProfileCert.selectEntityType")}
-										</option>
-										{ENTITY_TYPES.map((t) => (
-											<option key={t} value={t}>
-												{t}
-											</option>
+									/>
+									<datalist id="entity-type-suggestions">
+										{ENTITY_TYPES.map((opt) => (
+											<option key={opt} value={opt} />
 										))}
-									</select>
+									</datalist>
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="entityName">
@@ -362,22 +373,21 @@ export function ProfileEditView({
 									<label className={labelClassName} htmlFor="region">
 										{t("producerProfileCert.region")}
 									</label>
-									<select
+									<input
 										className={inputClassName}
 										id="region"
+										list="region-suggestions"
 										onChange={(e) => set("region")(e.target.value)}
+										placeholder={t("producerProfileCert.selectRegion")}
 										style={fieldStyle}
+										type="text"
 										value={form.region}
-									>
-										<option value="">
-											{t("producerProfileCert.selectRegion")}
-										</option>
+									/>
+									<datalist id="region-suggestions">
 										{MOROCCAN_REGIONS.map((r) => (
-											<option key={r} value={r}>
-												{r}
-											</option>
+											<option key={r} value={r} />
 										))}
-									</select>
+									</datalist>
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="city">
@@ -428,34 +438,62 @@ export function ProfileEditView({
 									<p className="mb-2 font-sans text-[11px] text-text-muted">
 										{t("producerProfileCert.primaryProductsHint")}
 									</p>
-									<div className="flex flex-wrap gap-2">
-										{PRODUCT_CATEGORIES.map((cat) => {
-											const selected = form.categories.includes(cat.label);
-											return (
-												<button
-													className="rounded-sm px-4 py-2 font-sans font-semibold text-[12px] transition-all"
-													key={cat.label}
-													onClick={() => toggleCategory(cat.label)}
-													style={
-														selected
-															? {
-																	background: cat.color,
-																	color: "var(--color-ink)",
-																	border: `1px solid ${cat.color}`,
-																}
-															: {
-																	background: "var(--color-paper)",
-																	color: "var(--color-text-muted)",
-																	border: "1px solid var(--color-cream-dark)",
-																}
-													}
-													type="button"
+									{form.categories.length > 0 && (
+										<div className="mb-2 flex flex-wrap gap-2">
+											{form.categories.map((cat) => (
+												<span
+													className="inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-sans font-semibold text-[12px]"
+													key={cat}
+													style={{
+														background: "var(--color-ink)",
+														color: "var(--color-paper)",
+													}}
 												>
-													{cat.label}
-												</button>
-											);
-										})}
+													{cat}
+													<button
+														aria-label={t("producerProfileCert.remove")}
+														className="leading-none opacity-70 hover:opacity-100"
+														onClick={() => removeCategory(cat)}
+														type="button"
+													>
+														×
+													</button>
+												</span>
+											))}
+										</div>
+									)}
+									<div className="flex gap-2">
+										<input
+											className={inputClassName}
+											list="cosmetics-category-suggestions"
+											onChange={(e) => setCategoryInput(e.target.value)}
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													e.preventDefault();
+													addCategory(categoryInput);
+												}
+											}}
+											placeholder={t(
+												"producerProfileCert.addCategoryPlaceholder",
+											)}
+											style={fieldStyle}
+											type="text"
+											value={categoryInput}
+										/>
+										<button
+											className="shrink-0 rounded-sm px-4 py-2 font-sans font-semibold text-[12px] text-white"
+											onClick={() => addCategory(categoryInput)}
+											style={{ background: "var(--color-ink)" }}
+											type="button"
+										>
+											{t("producerProfileCert.add")}
+										</button>
 									</div>
+									<datalist id="cosmetics-category-suggestions">
+										{COSMETICS_CATEGORY_SUGGESTIONS.map((c) => (
+											<option key={c} value={c} />
+										))}
+									</datalist>
 								</div>
 								<div>
 									<label className={labelClassName} htmlFor="annualCapacity">
@@ -474,20 +512,21 @@ export function ProfileEditView({
 									<label className={labelClassName} htmlFor="exportExperience">
 										{t("producerProfileCert.exportExperience")}
 									</label>
-									<select
+									<input
 										className={inputClassName}
 										id="exportExperience"
+										list="export-experience-suggestions"
 										onChange={(e) => set("exportExperience")(e.target.value)}
+										placeholder={t("producerProfileCert.select")}
 										style={fieldStyle}
+										type="text"
 										value={form.exportExperience}
-									>
-										<option value="">{t("producerProfileCert.select")}</option>
+									/>
+									<datalist id="export-experience-suggestions">
 										{EXPORT_EXPERIENCE_OPTIONS.map((o) => (
-											<option key={o} value={o}>
-												{o}
-											</option>
+											<option key={o} value={o} />
 										))}
-									</select>
+									</datalist>
 								</div>
 							</div>
 						</div>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
-import { PRODUCT_CATEGORIES } from "~/features/profile/config";
+import { COSMETICS_CATEGORY_SUGGESTIONS } from "~/features/profile/config";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
 import { useProduct, useUpdateProduct } from "../../hooks/use-products";
 import { ProductCertificationsSection } from "./product-certifications-section";
@@ -262,23 +262,24 @@ export function ProductEditForm({ productId }: Props) {
 								{t("producerProducts.category")}{" "}
 								<span className="text-danger">*</span>
 							</label>
-							<select
+							<input
 								className={productFormInputBase}
 								disabled={isLoading}
 								id="product-category"
+								list="cosmetics-category-suggestions"
 								onChange={(e) =>
 									setForm((p) => ({ ...p, category: e.target.value }))
 								}
+								placeholder={t("producerProducts.categoryPlaceholder")}
 								style={productFormInputStyle}
+								type="text"
 								value={form.category}
-							>
-								<option value="">{t("producerProducts.selectCategory")}</option>
-								{PRODUCT_CATEGORIES.map((c) => (
-									<option key={c.label} value={c.label}>
-										{c.label}
-									</option>
+							/>
+							<datalist id="cosmetics-category-suggestions">
+								{COSMETICS_CATEGORY_SUGGESTIONS.map((c) => (
+									<option key={c} value={c} />
 								))}
-							</select>
+							</datalist>
 						</div>
 						<div className="flex flex-col gap-1.5">
 							<label

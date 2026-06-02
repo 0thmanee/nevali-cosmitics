@@ -180,7 +180,7 @@ export type ProductAdminListRow = ProductAdminRow & {
 /** Alias for UI components (gallery, editor). */
 export type ProductImageItem = ProductImageRow;
 
-// —— Public storefront (cards + PDP; mirrors origine-maroc shape) ——
+// —— Public storefront (cards + PDP) ——
 
 /** Public catalog variant (subset for storefront / cart). */
 export type PublicProductVariant = {

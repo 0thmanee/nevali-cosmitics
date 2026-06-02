@@ -1746,7 +1746,8 @@
 		"statRejected": "مرفوض",
 		"addProduct": "إضافة منتج",
 		"loadingProducts": "جارٍ تحميل المنتجات…",
-		"failedToLoadProducts": "فشل تحميل المنتجات."
+		"failedToLoadProducts": "فشل تحميل المنتجات.",
+		"categoryPlaceholder": "مثل: العناية بالبشرة، الزيوت النباتية"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "المنتجات",
@@ -1894,7 +1895,7 @@
 		"yearEstablished": "سنة التأسيس",
 		"website": "الموقع الإلكتروني (اختياري)",
 		"primaryProducts": "المنتجات الأساسية",
-		"primaryProductsHint": "اختر جميع الفئات التي تنتجها",
+		"primaryProductsHint": "أضِف الفئات التي تنتجها",
 		"annualCapacity": "الطاقة الإنتاجية السنوية",
 		"exportExperience": "خبرة التصدير",
 		"select": "اختر",
@@ -1930,6 +1931,8 @@
 		"detailDuration": "المدة",
 		"detailLevel": "المستوى",
 		"detailProvider": "مقدّم الخدمة",
-		"enrollAndStart": "سجّل وابدأ"
+		"enrollAndStart": "سجّل وابدأ",
+		"add": "إضافة",
+		"addCategoryPlaceholder": "اكتب فئة ثم اضغط إضافة"
 	}
 }

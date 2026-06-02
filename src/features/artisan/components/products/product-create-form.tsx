@@ -12,7 +12,7 @@ import {
 } from "~/app/api/media/schemas/media.schema";
 import { addProductImage, createProduct } from "~/app/api/products/actions";
 import { useI18n } from "~/components/i18n/i18n-provider";
-import { PRODUCT_CATEGORIES } from "~/features/profile/config";
+import { COSMETICS_CATEGORY_SUGGESTIONS } from "~/features/profile/config";
 import { uploadMedia } from "~/lib/media";
 import {
 	productFormInputBase,
@@ -301,23 +301,24 @@ export function ProductCreateForm() {
 								{t("producerProducts.category")}{" "}
 								<span className="text-danger">*</span>
 							</label>
-							<select
+							<input
 								className={productFormInputBase}
 								disabled={submitting}
 								id="product-category"
+								list="cosmetics-category-suggestions"
 								onChange={(e) =>
 									setForm((p) => ({ ...p, category: e.target.value }))
 								}
+								placeholder={t("producerProducts.categoryPlaceholder")}
 								style={productFormInputStyle}
+								type="text"
 								value={form.category}
-							>
-								<option value="">{t("producerProducts.selectCategory")}</option>
-								{PRODUCT_CATEGORIES.map((c) => (
-									<option key={c.label} value={c.label}>
-										{c.label}
-									</option>
+							/>
+							<datalist id="cosmetics-category-suggestions">
+								{COSMETICS_CATEGORY_SUGGESTIONS.map((c) => (
+									<option key={c} value={c} />
 								))}
-							</select>
+							</datalist>
 						</div>
 						<div className="flex flex-col gap-1.5">
 							<label

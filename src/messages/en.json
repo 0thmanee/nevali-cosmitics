@@ -1765,7 +1765,8 @@
 		"statRejected": "Rejected",
 		"addProduct": "Add product",
 		"loadingProducts": "Loading products…",
-		"failedToLoadProducts": "Failed to load products."
+		"failedToLoadProducts": "Failed to load products.",
+		"categoryPlaceholder": "e.g. Skincare, Botanical oils"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "Products",
@@ -1913,7 +1914,7 @@
 		"yearEstablished": "Year Established",
 		"website": "Website (optional)",
 		"primaryProducts": "Primary Products",
-		"primaryProductsHint": "Select all categories you produce",
+		"primaryProductsHint": "Add the categories you produce",
 		"annualCapacity": "Annual Capacity",
 		"exportExperience": "Export Experience",
 		"select": "Select",
@@ -1949,6 +1950,8 @@
 		"detailDuration": "Duration",
 		"detailLevel": "Level",
 		"detailProvider": "Provider",
-		"enrollAndStart": "Enroll and start"
+		"enrollAndStart": "Enroll and start",
+		"add": "Add",
+		"addCategoryPlaceholder": "Type a category and press Add"
 	}
 }

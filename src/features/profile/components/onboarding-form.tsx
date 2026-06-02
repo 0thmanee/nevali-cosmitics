@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import {
+	COSMETICS_CATEGORY_SUGGESTIONS,
 	completeOnboardingAndGetRedirect,
 	ENTITY_TYPES,
 	EXPORT_EXPERIENCE_OPTIONS,
@@ -12,7 +13,6 @@ import {
 	MOROCCAN_REGIONS,
 	ONBOARDING_STEPS,
 	type OnboardingFormData,
-	PRODUCT_CATEGORIES,
 	upsertProfile,
 } from "~/features/profile";
 
@@ -26,7 +26,6 @@ const labelCls =
 	"font-sans text-[10px] font-bold tracking-[0.16em] text-text-muted uppercase";
 const inputCls =
 	"font-sans text-[14px] text-text-dark bg-transparent border-0 border-b border-[color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))] rounded-none px-0 py-2 outline-none w-full transition-colors placeholder:text-[var(--color-muted-light)] focus:border-[var(--color-ink)]";
-const selectCls = inputCls + " appearance-none cursor-pointer";
 
 function Field({
 	label,
@@ -109,12 +108,24 @@ export function OnboardingForm({
 	const [submitting, setSubmitting] = useState(false);
 	const isEdit = mode === "edit";
 
-	const toggleCategory = (cat: string) => {
+	const [categoryInput, setCategoryInput] = useState("");
+
+	const addCategory = (raw: string) => {
+		const value = raw.trim();
+		if (!value) return;
 		setForm((f) =>
-			f.categories.includes(cat)
-				? { ...f, categories: f.categories.filter((c) => c !== cat) }
-				: { ...f, categories: [...f.categories, cat] },
+			f.categories.includes(value)
+				? f
+				: { ...f, categories: [...f.categories, value] },
 		);
+		setCategoryInput("");
+	};
+
+	const removeCategory = (cat: string) => {
+		setForm((f) => ({
+			...f,
+			categories: f.categories.filter((c) => c !== cat),
+		}));
 	};
 
 	const canNext = () => {
@@ -204,18 +215,19 @@ export function OnboardingForm({
 			</Field>
 			<div className="grid grid-cols-2 gap-5">
 				<Field label={t("onboardingForm.entityType")}>
-					<select
-						className={selectCls}
+					<input
+						className={inputCls}
+						list="ob-entity-type"
 						onChange={(e) => setForm(set("entityType")(e.target.value))}
+						placeholder={t("onboardingForm.selectType")}
+						type="text"
 						value={form.entityType}
-					>
-						<option value="">{t("onboardingForm.selectType")}</option>
-						{ENTITY_TYPES.map((t) => (
-							<option key={t} value={t}>
-								{t}
-							</option>
+					/>
+					<datalist id="ob-entity-type">
+						{ENTITY_TYPES.map((opt) => (
+							<option key={opt} value={opt} />
 						))}
-					</select>
+					</datalist>
 				</Field>
 				<Field label={t("onboardingForm.entityName")}>
 					<input
@@ -236,18 +248,19 @@ export function OnboardingForm({
 			</Field>
 			<div className="grid grid-cols-2 gap-5">
 				<Field label={t("onboardingForm.region")}>
-					<select
-						className={selectCls}
+					<input
+						className={inputCls}
+						list="ob-region"
 						onChange={(e) => setForm(set("region")(e.target.value))}
+						placeholder={t("onboardingForm.selectRegion")}
+						type="text"
 						value={form.region}
-					>
-						<option value="">{t("onboardingForm.selectRegion")}</option>
+					/>
+					<datalist id="ob-region">
 						{MOROCCAN_REGIONS.map((r) => (
-							<option key={r} value={r}>
-								{r}
-							</option>
+							<option key={r} value={r} />
 						))}
-					</select>
+					</datalist>
 				</Field>
 				<Field label={t("onboardingForm.city")}>
 					<input
@@ -285,38 +298,60 @@ export function OnboardingForm({
 				<p className={labelCls + "mb-3"}>
 					{t("onboardingForm.productCategories")}
 				</p>
-				<div className="flex flex-wrap gap-2">
-					{PRODUCT_CATEGORIES.map((cat) => {
-						const selected = form.categories.includes(cat.label);
-						return (
-							<button
-								className="px-3 py-1.5 font-medium font-sans text-[11px] transition-all"
-								key={cat.label}
-								onClick={() => toggleCategory(cat.label)}
-								style={
-									selected
-										? {
-												background: "var(--color-ink)",
-												color: "var(--color-paper)",
-												border: "1.5px solid var(--color-ink)",
-												borderRadius: "2px",
-											}
-										: {
-												background: "transparent",
-												color: "var(--color-text-muted)",
-												border:
-													"1.5px solid color-mix(in srgb, var(--color-cream-dark) 75%, var(--color-paper))",
-												borderRadius: "2px",
-											}
-								}
-								type="button"
+				{form.categories.length > 0 && (
+					<div className="mb-2 flex flex-wrap gap-2">
+						{form.categories.map((cat) => (
+							<span
+								className="inline-flex items-center gap-1.5 px-3 py-1.5 font-medium font-sans text-[11px]"
+								key={cat}
+								style={{
+									background: "var(--color-ink)",
+									color: "var(--color-paper)",
+									borderRadius: "2px",
+								}}
 							>
-								{selected && "✓ "}
-								{cat.label}
-							</button>
-						);
-					})}
+								{cat}
+								<button
+									aria-label={t("producerProfileCert.remove")}
+									className="leading-none opacity-70 hover:opacity-100"
+									onClick={() => removeCategory(cat)}
+									type="button"
+								>
+									×
+								</button>
+							</span>
+						))}
+					</div>
+				)}
+				<div className="flex gap-2">
+					<input
+						className={inputCls}
+						list="ob-categories"
+						onChange={(e) => setCategoryInput(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								addCategory(categoryInput);
+							}
+						}}
+						placeholder={t("producerProfileCert.addCategoryPlaceholder")}
+						type="text"
+						value={categoryInput}
+					/>
+					<button
+						className="shrink-0 px-4 py-1.5 font-medium font-sans text-[11px] text-white"
+						onClick={() => addCategory(categoryInput)}
+						style={{ background: "var(--color-ink)", borderRadius: "2px" }}
+						type="button"
+					>
+						{t("producerProfileCert.add")}
+					</button>
 				</div>
+				<datalist id="ob-categories">
+					{COSMETICS_CATEGORY_SUGGESTIONS.map((c) => (
+						<option key={c} value={c} />
+					))}
+				</datalist>
 				{form.categories.length === 0 && (
 					<p className="mt-2 font-sans text-[11px] text-text-muted/50">
 						{t("onboardingForm.selectAtLeastOne")}
@@ -332,18 +367,19 @@ export function OnboardingForm({
 				/>
 			</Field>
 			<Field label={t("onboardingForm.exportExperience")}>
-				<select
-					className={selectCls}
+				<input
+					className={inputCls}
+					list="ob-export-experience"
 					onChange={(e) => setForm(set("exportExperience")(e.target.value))}
+					placeholder={t("onboardingForm.selectExperienceLevel")}
+					type="text"
 					value={form.exportExperience}
-				>
-					<option value="">{t("onboardingForm.selectExperienceLevel")}</option>
+				/>
+				<datalist id="ob-export-experience">
 					{EXPORT_EXPERIENCE_OPTIONS.map((o) => (
-						<option key={o} value={o}>
-							{o}
-						</option>
+						<option key={o} value={o} />
 					))}
-				</select>
+				</datalist>
 			</Field>
 		</div>
 	);
