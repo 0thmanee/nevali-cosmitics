@@ -86,7 +86,7 @@ export default async function PublicProductPage({ params }: Props) {
 	};
 
 	return (
-		<main className="flex min-h-screen w-full flex-col bg-cream pt-14">
+		<main className="flex min-h-screen w-full flex-col bg-cream pt-[68px]">
 			<script
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: static JSON-LD
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}

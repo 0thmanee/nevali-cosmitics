@@ -1,14 +1,22 @@
 /**
- * nevali seed — minimal workspace.
- * Creates only the superadmin and the Nevali workspace (organization + its
- * producer owner + profile). No products, journal articles, reviews, or buyer.
+ * nevali seed — minimal workspace + one flagship product.
+ * Creates the superadmin, the Nevali workspace (organization + its producer
+ * owner + profile), and a single fully-structured, APPROVED, homepage-featured
+ * product with all buyer-facing copy in ARABIC (three costed variants, INCI
+ * ingredients, skin types, a gallery of real argan-oil product photos, and an
+ * approved certification). No journal articles, reviews, orders, or buyer.
  * Resets all org-scoped data and every non-admin user before rebuilding.
  * Run: pnpm prisma db seed
  */
 
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Prisma, PrismaClient } from "@prisma/client";
+import {
+	Prisma,
+	PrismaClient,
+	ProductCategory,
+	ProductPaymentOption,
+} from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
 
 const connectionString = process.env.DATABASE_URL;
@@ -32,9 +40,21 @@ function cosmeticsPhoto(photoId: string, width: number): string {
 	return `https://images.unsplash.com/photo-${photoId}?q=80&auto=format&fit=crop&w=${width}`;
 }
 
+/** Brand/portrait photos (verified subset of `src/lib/cosmetics-image-placeholders.ts`). */
 const PH = {
 	hero: "1617897903246-719242758050",
 	portrait: "1573496359142-b8d87734a5a2",
+} as const;
+
+/**
+ * Real argan-oil product photos (Unsplash, hostname allow-listed in next.config).
+ * Each id was fetched and visually verified to depict an argan-oil / serum bottle.
+ */
+const ARGAN_PHOTO = {
+	labeled: "1667242003572-96caaf8ac5c4", // bottle labeled "PREMIUM MOROCCO ARGAN OIL"
+	duo: "1748639582818-391e2849beca", // two "Argan Oil" labeled serum bottles
+	dropper: "1608571424266-edeb9bbefdec", // amber dropper serum bottle
+	serumBook: "1573575154488-f88a60e170df", // clear dropper serum, lifestyle
 } as const;
 
 async function wipeCatalogAndUsersExcept(adminId: string) {
@@ -220,11 +240,133 @@ async function main() {
 		},
 	});
 
+	// ── One flagship product: fully structured, APPROVED, homepage-featured. ──────
+	// Every meaningful field is populated: typed category, multi-paragraph copy,
+	// INCI ingredients, skin types, three costed variants (full economics), a
+	// multi-image gallery (one photo pinned to a variant), and an approved
+	// product certification.
+	// All buyer-facing copy is in Arabic. `skinTypes` stays as enum CODES
+	// (DRY/NORMAL/…) — the app maps them to localized Arabic labels at render time.
+	const product = await prisma.product.create({
+		data: {
+			organizationId: org.id,
+			name: "زيت الأركان المعصور على البارد — سيروم مميّز",
+			category: "مستحضرات التجميل والزيوت", // legacy free-text category
+			cosmeticsCategory: ProductCategory.SKINCARE,
+			description: [
+				"زيت أركان مغربي أحادي المصدر، مَعصور على البارد خلال 24 ساعة من فرز اللوز ومُختبَر مخبريًا للتأكد من نقائه. سيروم خفيف سريع الامتصاص للوجه والشعر.",
+				"يُعصَر بكميات صغيرة في مشغلنا بالدار البيضاء من لوز أركان مصدره تعاونيات نسائية في منطقة سوس ماسة. بدون عطر، غير مخفّف، وقابل للتتبّع حتى موسم حصاد واحد.",
+				"طريقة الاستعمال: دفّئي 3–4 قطرات بين راحتَي اليدين واضغطيها على بشرة نظيفة صباحًا ومساءً، أو وزّعيها على منتصف الشعر وأطرافه لترويض التطاير.",
+			].join("\n\n"),
+			ingredients:
+				"زيت بذور الأركان (أركان مَعصور على البارد 100%)، توكوفيرول (فيتامين E الطبيعي)",
+			skinTypes: "DRY, NORMAL, COMBINATION, SENSITIVE",
+			moq: "12",
+			capacity: "30 مل · 50 مل · 100 مل",
+			status: "APPROVED",
+			featuredOnHome: true,
+			paymentOption: ProductPaymentOption.COD,
+			variants: {
+				create: [
+					{
+						name: "قارورة بقطّارة 30 مل",
+						unit: "قارورة",
+						sourceName: "تعاونية نساء سوس ماسة",
+						minOrderQuantity: 12,
+						minOrderNote: "يُباع بصندوق من 12 وحدة.",
+						price: new Prisma.Decimal("129.00"),
+						unitCost: new Prisma.Decimal("38.00"),
+						packagingCost: new Prisma.Decimal("9.50"),
+						handlingCost: new Prisma.Decimal("4.00"),
+						otherCost: new Prisma.Decimal("2.50"),
+						quantityOnHand: 320,
+						inStock: true,
+						sortOrder: 0,
+					},
+					{
+						name: "قارورة بقطّارة 50 مل",
+						unit: "قارورة",
+						sourceName: "تعاونية نساء سوس ماسة",
+						minOrderQuantity: 12,
+						minOrderNote: "يُباع بصندوق من 12 وحدة.",
+						price: new Prisma.Decimal("189.00"),
+						unitCost: new Prisma.Decimal("60.00"),
+						packagingCost: new Prisma.Decimal("11.00"),
+						handlingCost: new Prisma.Decimal("4.50"),
+						otherCost: new Prisma.Decimal("3.00"),
+						quantityOnHand: 210,
+						inStock: true,
+						sortOrder: 1,
+					},
+					{
+						name: "قارورة بمضخّة 100 مل",
+						unit: "قارورة",
+						sourceName: "تعاونية نساء سوس ماسة",
+						minOrderQuantity: 6,
+						minOrderNote: "حجم الصالونات / الجملة — صندوق من 6.",
+						price: new Prisma.Decimal("329.00"),
+						unitCost: new Prisma.Decimal("112.00"),
+						packagingCost: new Prisma.Decimal("16.00"),
+						handlingCost: new Prisma.Decimal("6.00"),
+						otherCost: new Prisma.Decimal("4.00"),
+						quantityOnHand: 90,
+						inStock: true,
+						sortOrder: 2,
+					},
+				],
+			},
+		},
+		include: { variants: true },
+	});
+
+	// Gallery: real argan-oil product photos. Lead is the labeled Morocco-argan
+	// bottle; the amber dropper shot is pinned to the 50 ml dropper variant.
+	const variant50 = product.variants.find((v) => v.name.includes("50 مل"));
+	await prisma.productImage.createMany({
+		data: [
+			{
+				productId: product.id,
+				url: cosmeticsPhoto(ARGAN_PHOTO.labeled, 1400),
+				sortOrder: 0,
+			},
+			{
+				productId: product.id,
+				url: cosmeticsPhoto(ARGAN_PHOTO.duo, 1400),
+				sortOrder: 1,
+			},
+			{
+				productId: product.id,
+				url: cosmeticsPhoto(ARGAN_PHOTO.dropper, 1400),
+				sortOrder: 2,
+				variantId: variant50?.id ?? null,
+			},
+			{
+				productId: product.id,
+				url: cosmeticsPhoto(ARGAN_PHOTO.serumBook, 1400),
+				sortOrder: 3,
+			},
+		],
+	});
+
+	// Approved product-level certification (separate from product approval).
+	await prisma.certification.create({
+		data: {
+			organizationId: org.id,
+			productId: product.id,
+			name: "شهادة إيكوسير كوزموس ناتشورال — زيت الأركان",
+			fileUrl: "https://example.com/certs/nevali-argan-cosmos.pdf",
+			status: "APPROVED",
+			reviewedAt: new Date(),
+		},
+	});
+
 	console.log("✓ Seed complete");
 	console.log(`  Admin:     ${ADMIN_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Producer:  ${PARTNER_EMAIL} / ${SEED_PASSWORD}`);
 	console.log(`  Workspace: ${ORG_NAME} (/artisans/${ORG_SLUG})`);
-	console.log("  No products, journal articles, reviews, or buyer seeded.");
+	console.log(
+		`  Product:   ${product.name} (APPROVED · ${product.variants.length} variants · featured)`,
+	);
 }
 
 main()
