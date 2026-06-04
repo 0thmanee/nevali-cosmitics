@@ -906,8 +906,8 @@ export function PublicProductDetailView({ product }: Props) {
 								</h2>
 								{storyParagraphs.length > 0 ? (
 									<div className="mt-8 space-y-6 font-sans text-base text-text-dark/90 leading-[1.75]">
-										{storyParagraphs.map((p, i) => (
-											<p className="whitespace-pre-wrap" key={i}>
+										{storyParagraphs.map((p) => (
+											<p className="whitespace-pre-wrap" key={p}>
 												{p}
 											</p>
 										))}
@@ -1087,10 +1087,9 @@ export function PublicProductDetailView({ product }: Props) {
 			</article>
 
 			{/* Mobile sticky order bar */}
-			<div
+			<section
 				aria-label={t("pdp.stickyOrderRegion")}
 				className="fixed inset-x-0 bottom-0 z-40 border-cream-dark border-t bg-paper/95 pt-2 pb-[max(0.65rem,env(safe-area-inset-bottom))] backdrop-blur-sm lg:hidden"
-				role="region"
 			>
 				<div className="mx-auto flex max-w-7xl items-center gap-3 px-4 sm:gap-4 sm:px-6">
 					<div className="min-w-0 flex-1">
@@ -1131,7 +1130,7 @@ export function PublicProductDetailView({ product }: Props) {
 						{anyInStock ? t("pdp.addToCart") : t("pdp.inquire")}
 					</button>
 				</div>
-			</div>
+			</section>
 
 			{modal ? (
 				<ProductInquiryModal
