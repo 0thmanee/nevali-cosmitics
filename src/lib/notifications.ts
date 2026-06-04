@@ -312,6 +312,28 @@ export async function notifyShopOrderBuyerConfirmation(params: {
 	await sendTransactionalEmail({ to, subject, text, html });
 }
 
+/** Create an in-app notification for every member of an organization. Best-effort. */
+export async function notifyOrganizationMembersInApp(
+	organizationId: string,
+	data: { kind: string; title: string; body: string; linkHref?: string | null },
+): Promise<void> {
+	const members = await prisma.member.findMany({
+		where: { organizationId },
+		select: { userId: true },
+	});
+	const userIds = [...new Set(members.map((m) => m.userId))];
+	if (userIds.length === 0) return;
+	await prisma.userNotification.createMany({
+		data: userIds.map((userId) => ({
+			userId,
+			kind: data.kind,
+			title: data.title,
+			body: data.body,
+			linkHref: data.linkHref ?? null,
+		})),
+	});
+}
+
 /** Email each partner org that has lines on a new shop order (ops / observability). */
 export async function notifyOrganizationsOfShopOrder(params: {
 	orderId: string;
@@ -348,6 +370,15 @@ export async function notifyOrganizationsOfShopOrder(params: {
 		: "";
 
 	for (const [organizationId, { organizationName, lines }] of byOrg) {
+		// In-app alert for the producer (independent of whether emails resolve).
+		const itemCount = lines.reduce((n, l) => n + l.quantity, 0);
+		await notifyOrganizationMembersInApp(organizationId, {
+			kind: "SHOP_ORDER",
+			title: "New order",
+			body: `${params.buyerName} ordered ${itemCount} item${itemCount === 1 ? "" : "s"}.`,
+			linkHref: "/artisan/orders",
+		});
+
 		const recipients = await getOrganizationMemberEmails(organizationId);
 		if (recipients.length === 0) continue;
 

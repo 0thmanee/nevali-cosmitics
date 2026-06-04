@@ -55,7 +55,14 @@
 		"programsInProgress": "{count} برنامج قيد التقدّم",
 		"noProgramsHint": "سجّل في برنامج من صفحة التدريب لرؤية تقدّمك هنا.",
 		"goToTraining": "الذهاب إلى التدريب ←",
-		"modulesProvider": "{completed}/{total} وحدة · {provider}"
+		"modulesProvider": "{completed}/{total} وحدة · {provider}",
+		"gsTitle": "ابدأ الآن",
+		"gsSubtitle": "خطوتان سريعتان لإعداد متجرك.",
+		"gsAddProduct": "أضِف أول منتج لك",
+		"gsAddProductCta": "إضافة منتج",
+		"gsWriteArticle": "شارك أول قصة لك في المجلة",
+		"gsWriteArticleCta": "كتابة مقال",
+		"gsDone": "تم"
 	},
 	"common": {
 		"home": "الرئيسية",
@@ -1420,7 +1427,9 @@
 	},
 	"artisanLayout": {
 		"brandPortal": "بوابة العلامة التجارية",
-		"logOut": "تسجيل الخروج"
+		"logOut": "تسجيل الخروج",
+		"openMenu": "فتح القائمة",
+		"closeMenu": "إغلاق القائمة"
 	},
 	"artisanPortal": {
 		"nav": {
@@ -1511,7 +1520,16 @@
 			"PENDING": "قيد الانتظار",
 			"APPROVED": "موافَق عليه",
 			"REJECTED": "مرفوض"
-		}
+		},
+		"stockIn": "متوفر",
+		"stockOut": "غير متوفر",
+		"clickToMarkIn": "اضغط للإشارة إلى توفّره",
+		"clickToMarkOut": "اضغط للإشارة إلى نفاده",
+		"thStock": "المخزون",
+		"unitsLabel": "{n} وحدة",
+		"lowStock": "مخزون منخفض",
+		"duplicate": "نسخ",
+		"duplicating": "جارٍ النسخ…"
 	},
 	"artisanProductDetail": {
 		"loading": "جارٍ تحميل المنتج…",
@@ -1528,50 +1546,55 @@
 		"moqLabel": "الحد الأدنى لكمية الطلب",
 		"capacityLabel": "السعة",
 		"rejectionReasonLabel": "سبب الرفض",
-		"economicsTitle": "الاقتصاد الداخلي للمنتج",
-		"economicsSubtitle": "التكاليف الداخلية على مستوى المتغير، والهامش لكل وحدة، وصافي الربح المحتمل المتبقي من المخزون الحالي.",
-		"totalSoldUnits": "إجمالي الوحدات المباعة",
+		"economicsTitle": "تكاليفك وأرباحك (خاص)",
+		"economicsSubtitle": "تكلفتك وربحك الخاصان لكل حجم. لا يراهما المشترون.",
+		"totalSoldUnits": "الوحدات المباعة",
 		"realizedRevenue": "الإيرادات المحققة",
-		"realizedNetProfit": "صافي الربح المحقق",
-		"remainingPotentialNet": "صافي الربح المحتمل المتبقي",
+		"realizedNetProfit": "الربح المحقق",
+		"remainingPotentialNet": "الربح المحتمل من المخزون",
 		"colVariant": "المتغير",
 		"colSource": "المصدر",
 		"colPrice": "السعر",
-		"colCogsPerItem": "تكلفة البضاعة/وحدة",
-		"colNetPerItem": "الصافي/وحدة",
+		"colCogsPerItem": "التكلفة/قطعة",
+		"colNetPerItem": "الربح/قطعة",
 		"colSold": "المباع",
-		"colRealizedNet": "الصافي المحقق",
-		"colQty": "الكمية",
-		"colPotentialNet": "الصافي المحتمل"
+		"colRealizedNet": "الربح المحقق",
+		"colQty": "المتوفر",
+		"colPotentialNet": "الربح المحتمل"
 	},
 	"productVariantsForm": {
-		"blurb": "التعبئة / وحدات SKU: لكل سطر سعره ومخزونه والحد الأدنى للطلب الخاص به. يختار المشترون متغيرًا عند الإضافة إلى السلة.",
+		"blurb": "الأحجام والأسعار: أضِف سطراً لكل حجم أو نسخة من هذا المنتج — لكلٍّ سعره ومخزونه والحد الأدنى للطلب. يختار المشتري واحداً عند الإضافة للسلة.",
 		"addVariant": "إضافة متغير",
 		"variantNumber": "المتغير {n}",
 		"removeAria": "إزالة المتغير",
-		"packagingName": "اسم التعبئة",
-		"packagingPlaceholder": "مثال: عبوة 5 لتر، كيس 1 كغ",
+		"packagingName": "الحجم / النسخة",
+		"packagingPlaceholder": "مثال: قارورة 100 مل، علبة 250 غ",
 		"unit": "الوحدة",
 		"unitPlaceholder": "قطعة، كغ، لتر، صندوق…",
 		"priceMad": "السعر (MAD)",
 		"pricePlaceholder": "مثال: 120.00",
 		"sourceName": "المصدر / المورّد",
 		"sourcePlaceholder": "مثال: تعاونية محلية، مستورد، إنتاج داخلي",
-		"internalCosts": "التكاليف الداخلية (خاصة)",
-		"unitCost": "تكلفة القطعة الأساسية (MAD)",
+		"internalCosts": "ما يكلّفك هذا (خاص — لا يراه المشترون)",
+		"unitCost": "تكلفة القطعة (درهم)",
 		"packagingCost": "تكلفة التعبئة (MAD)",
-		"handlingCost": "تكلفة المناولة / الشحن (MAD)",
+		"handlingCost": "تكلفة الشحن / المناولة (درهم)",
 		"otherCost": "تكلفة أخرى (MAD)",
-		"cogsPerItem": "تكلفة البضاعة المباعة لكل قطعة",
-		"netPerItem": "الصافي لكل قطعة",
-		"potentialNet": "الصافي المحتمل على المخزون الحالي",
-		"minOrderUnits": "الحد الأدنى للطلب (وحدات)",
-		"moqNote": "ملاحظة الحد الأدنى للطلب",
+		"cogsPerItem": "إجمالي التكلفة لكل قطعة",
+		"netPerItem": "الربح لكل قطعة",
+		"potentialNet": "الربح المحتمل من المخزون",
+		"minOrderUnits": "الحد الأدنى للطلب",
+		"moqNote": "ملاحظة الحد الأدنى للطلب (تظهر للمشترين)",
 		"moqNoteOptional": "(اختياري)",
 		"moqNotePlaceholder": "مثال: الحد الأدنى 50 لتر — وصف كامل للمشترين",
-		"qtyOnHand": "الكمية المتوفرة",
-		"qtyOnHandHint": "استخدم 0 لتجاوز الحد الأقصى الصارم؛ عندما تكون القيمة أكبر من 0، لا يمكن أن يتجاوز إتمام الشراء هذه الكمية.",
-		"inStock": "متوفر في المخزون (يمكن للمشترين إضافة هذا المتغير إلى السلة)"
+		"qtyOnHand": "الوحدات المتوفرة",
+		"qtyOnHandHint": "اتركه 0 إذا كنت لا تتتبع المخزون. أدخل رقماً لتحديد الكمية القصوى التي يمكن طلبها.",
+		"inStock": "متوفر (يمكن للمشترين إضافته للسلة)",
+		"internalCostsHint": "اختياري. املأه لرؤية ربحك لكل قطعة. لا يرى المشترون هذه الأرقام.",
+		"costsHelp": "هذه تكاليفك الخاصة. أضِفها لرؤية ربحك لكل قطعة — لا يراها المشترون.",
+		"stockHelp": "عدد الوحدات لديك. لا يمكن للمشتري طلب أكثر منها. استخدم 0 إذا كنت لا تتتبع المخزون.",
+		"minOrderHelp": "أقل كمية يجب على المشتري طلبها.",
+		"sourceHelp": "من أين تحصل عليه (مثل تعاونية، مستورد، أو صنع داخلي). خاص."
 	},
 	"catalogOrdersView": {
 		"loading": "جارٍ تحميل إحصائيات الطلبات…",
@@ -1595,7 +1618,11 @@
 		"ordersFailedLoad": "فشل تحميل الطلبات.",
 		"ordersEmpty": "لا توجد طلبات مطابقة بعد.",
 		"openOrderDetailTitle": "عرض الطلب الكامل والتواصل مع المشتري",
-		"rowCta": "عرض التفاصيل"
+		"rowCta": "عرض التفاصيل",
+		"searchPlaceholder": "ابحث بالاسم أو رقم الطلب…",
+		"filterAll": "الكل",
+		"noMatching": "لا توجد طلبات مطابقة لبحثك.",
+		"ordersEmptyHint": "تظهر الطلبات هنا عندما يشتري أحد المنتجات الخاصة بك."
 	},
 	"trainingPage": {
 		"breadcrumbTraining": "التدريب",
@@ -1672,6 +1699,17 @@
 			"PENDING": "قيد الانتظار",
 			"CANCELLED": "ملغى",
 			"RETURNED": "مُرتجع"
+		},
+		"statusDesc": {
+			"NEW": "طلب جديد وصل. أكّده لحجز المخزون والبدء في التحضير.",
+			"CONFIRMED": "لقد أكّدت هذا الطلب. اجعله \"تم الشحن\" عند مغادرته.",
+			"SHIPPED": "في طريقه إلى المشتري.",
+			"CANCELED": "تم إلغاء هذا الطلب.",
+			"RETURNED": "تم إرجاع هذا الطلب."
+		},
+		"nextStep": {
+			"NEW": "تأكيد الطلب ←",
+			"CONFIRMED": "تحديده كمشحون ←"
 		}
 	},
 	"producerProducts": {
@@ -1705,7 +1743,7 @@
 		"onlyPdfAndImagesAllowed": "يُسمح فقط بصيغة PDF والصور (JPEG، PNG، WebP).",
 		"productNameRequired": "اسم المنتج مطلوب.",
 		"categoryRequired": "الفئة مطلوبة.",
-		"variantPackagingNameRequired": "الإصدار {n}: اسم التعبئة مطلوب.",
+		"variantPackagingNameRequired": "الحجم {n}: الاسم مطلوب.",
 		"variantPriceRequired": "الإصدار {n}: السعر مطلوب.",
 		"creatingProduct": "جارٍ إنشاء المنتج…",
 		"uploadingImage": "جارٍ رفع {n} صورة…",
@@ -1747,7 +1785,13 @@
 		"addProduct": "إضافة منتج",
 		"loadingProducts": "جارٍ تحميل المنتجات…",
 		"failedToLoadProducts": "فشل تحميل المنتجات.",
-		"categoryPlaceholder": "مثل: العناية بالبشرة، الزيوت النباتية"
+		"categoryPlaceholder": "مثل: العناية بالبشرة، الزيوت النباتية",
+		"galleryUseFor": "استخدم هذه الصورة لـ",
+		"galleryAllSizes": "جميع الأحجام (افتراضي)",
+		"galleryLinkHint": "يمكنك اختيارياً إظهار صورة لحجم معيّن فقط.",
+		"draftRecovered": "تم استرجاع مسودة غير محفوظة",
+		"draftRecoveredHint": "استعدنا ما كنت تكتبه. الصور والمستندات لا تُحفظ في المسودات — أضِفها من جديد إذا لزم.",
+		"draftDiscard": "تجاهل المسودة"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "المنتجات",

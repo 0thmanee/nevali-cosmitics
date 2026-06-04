@@ -20,6 +20,7 @@ import {
 	createProductImageRepo,
 	createProductRepo,
 	deleteProductImageRepo,
+	duplicateProductForOrgRepo,
 	getProductByIdForOrgRepo,
 	getProductsByOrganizationId,
 	getProductWithImagesByOrgRepo,
@@ -27,6 +28,7 @@ import {
 	listApprovedProductsWithCertificationsByOrgRepo,
 	listProductsForAdminRepo,
 	setOrganizationHomepageHeroProductRepo,
+	setProductStockStateForOrgRepo,
 	updateProductImageVariantRepo,
 	updateProductRepo,
 	updateProductStatusRepo,
@@ -153,6 +155,25 @@ export async function clearMyHomepageHeroProduct() {
 	const orgId = await getProducerOrgId();
 	if (!orgId) throw new Error("You must belong to an organization.");
 	await clearOrganizationHomepageHeroRepo(orgId);
+}
+
+/** Quick "in stock / out of stock" toggle for all variants of one of your products. */
+export async function setMyProductStockState(
+	productId: string,
+	inStock: boolean,
+) {
+	const orgId = await getProducerOrgId();
+	if (!orgId) throw new Error("You must belong to an organization.");
+	await setProductStockStateForOrgRepo(orgId, productId, inStock);
+}
+
+/** Duplicate one of your products into a new PENDING draft (fields + variants). */
+export async function duplicateMyProduct(productId: string) {
+	const orgId = await getProducerOrgId();
+	if (!orgId) throw new Error("You must belong to an organization.");
+	const created = await duplicateProductForOrgRepo(productId, orgId);
+	if (!created) throw new Error("Product not found.");
+	return created;
 }
 
 /** Update a product (must belong to current user's organization). */

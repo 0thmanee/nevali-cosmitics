@@ -6,6 +6,7 @@ import type {
 	ProductImageItem,
 	ProductVariantRow,
 } from "~/app/api/products/schemas/products.schema";
+import { useI18n } from "~/components/i18n/i18n-provider";
 import { uploadMedia } from "~/lib/media";
 import {
 	useAddProductImage,
@@ -25,20 +26,23 @@ type Props = {
 };
 
 export function ProductGalleryEditor({ productId, images, variants }: Props) {
+	const { t } = useI18n();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const addMutation = useAddProductImage();
 	const removeMutation = useRemoveProductImage();
 	const variantMutation = useSetProductImageVariant();
 
 	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (!file) return;
+		const files = Array.from(e.target.files ?? []);
+		if (files.length === 0) return;
 		e.target.value = "";
-		try {
-			const { url } = await uploadMedia(file, "productImages");
-			addMutation.mutate({ productId, url });
-		} catch {
-			addMutation.reset();
+		for (const file of files) {
+			try {
+				const { url } = await uploadMedia(file, "productImages");
+				addMutation.mutate({ productId, url });
+			} catch {
+				addMutation.reset();
+			}
 		}
 	};
 
@@ -47,7 +51,7 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
 	};
 
 	const variantOptions = [
-		{ value: "", label: "All variants (default)" },
+		{ value: "", label: t("producerProducts.galleryAllSizes") },
 		...variants.map((v) => ({ value: v.id, label: v.name })),
 	];
 
@@ -55,11 +59,12 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
 		<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 			<div className="flex flex-wrap items-center justify-between gap-3 border-cream-dark border-b px-6 py-4">
 				<h2 className="font-bold font-serif text-[15px] text-text-dark">
-					Product images
+					{t("producerProducts.productImages")}
 				</h2>
 				<input
 					accept="image/jpeg,image/png,image/webp"
 					className="hidden"
+					multiple
 					onChange={handleFileChange}
 					ref={inputRef}
 					type="file"
@@ -71,21 +76,21 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
 					style={{ background: "var(--color-ink)", color: "white" }}
 					type="button"
 				>
-					{addMutation.isPending ? "Uploading…" : "Add image"}
+					{addMutation.isPending
+						? t("producerProducts.uploading")
+						: t("producerProducts.addImage")}
 				</button>
 			</div>
 			<div className="p-6">
 				{images.length === 0 && !addMutation.isPending ? (
 					<p className="font-sans text-sm text-text-muted">
-						No images yet. Click &quot;Add image&quot; to upload (JPEG, PNG or
-						WebP, max 5MB).
+						{t("producerProducts.noImagesYetHint")}
 					</p>
 				) : (
 					<div className="flex flex-col gap-4">
 						{variants.length > 0 ? (
 							<p className="font-sans text-[12px] text-text-muted">
-								Optionally link each image to a variant so the storefront can
-								highlight the right packaging.
+								{t("producerProducts.galleryLinkHint")}
 							</p>
 						) : null}
 						<div className="flex flex-wrap gap-4">
@@ -114,12 +119,12 @@ export function ProductGalleryEditor({ productId, images, variants }: Props) {
 											onClick={() => handleRemove(img.id)}
 											type="button"
 										>
-											Remove
+											{t("producerProducts.remove")}
 										</button>
 									</div>
 									{variants.length > 0 ? (
 										<label className="flex flex-col gap-1 font-sans font-semibold text-[10px] text-text-muted uppercase tracking-wide">
-											Show for variant
+											{t("producerProducts.galleryUseFor")}
 											<select
 												className="rounded-sm border border-cream-dark bg-white px-2 py-1.5 font-medium font-sans text-[11px] text-text-dark normal-case tracking-normal"
 												disabled={variantMutation.isPending}

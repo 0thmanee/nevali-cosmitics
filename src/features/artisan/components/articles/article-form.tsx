@@ -381,7 +381,7 @@ export function ArticleForm(props: Props) {
 	}
 
 	return (
-		<form className="flex max-w-3xl flex-col gap-6" onSubmit={onSubmit}>
+		<form className="flex flex-col gap-6" onSubmit={onSubmit}>
 			<div className="flex flex-wrap gap-2">
 				<Link
 					className="font-sans text-sm text-text-muted hover:text-text-dark"

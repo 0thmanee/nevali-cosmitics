@@ -325,7 +325,7 @@ export async function getProductsByOrganizationId(
 				select: { url: true },
 			},
 			variants: {
-				select: { price: true },
+				select: { price: true, inStock: true, quantityOnHand: true },
 				orderBy: { sortOrder: "asc" },
 			},
 		},
@@ -335,7 +335,22 @@ export async function getProductsByOrganizationId(
 		firstImageUrl: images[0]?.url ?? null,
 		fromPrice: fromPriceFromVariants(variants),
 		variantCount: variants.length,
+		anyInStock: variants.some((v) => v.inStock),
+		totalStock: variants.reduce((n, v) => n + (v.quantityOnHand ?? 0), 0),
 	}));
+}
+
+/** Set inStock on every variant of a product the org owns. Returns rows affected. */
+export async function setProductStockStateForOrgRepo(
+	organizationId: string,
+	productId: string,
+	inStock: boolean,
+): Promise<number> {
+	const res = await prisma.productVariant.updateMany({
+		where: { productId, product: { id: productId, organizationId } },
+		data: { inStock },
+	});
+	return res.count;
 }
 
 export async function getProductByIdForOrgRepo(
@@ -347,6 +362,61 @@ export async function getProductByIdForOrgRepo(
 		select: productSelect,
 	});
 	return row;
+}
+
+/** Duplicate a product (fields + variants, not images/certs) as a new PENDING draft. */
+export async function duplicateProductForOrgRepo(
+	productId: string,
+	organizationId: string,
+): Promise<{ id: string } | null> {
+	const src = await prisma.product.findFirst({
+		where: { id: productId, organizationId },
+		select: {
+			name: true,
+			category: true,
+			cosmeticsCategory: true,
+			description: true,
+			ingredients: true,
+			capacity: true,
+			moq: true,
+			paymentOption: true,
+			variants: { orderBy: { sortOrder: "asc" }, select: variantSelect },
+		},
+	});
+	if (!src) return null;
+	return prisma.product.create({
+		data: {
+			organizationId,
+			name: `${src.name} (copy)`,
+			category: src.category,
+			cosmeticsCategory: src.cosmeticsCategory,
+			description: src.description,
+			ingredients: src.ingredients,
+			capacity: src.capacity,
+			moq: src.moq,
+			paymentOption: src.paymentOption,
+			status: "PENDING",
+			featuredOnHome: false,
+			variants: {
+				create: src.variants.map((v, i) => ({
+					name: v.name,
+					unit: v.unit,
+					sourceName: v.sourceName,
+					minOrderQuantity: v.minOrderQuantity,
+					minOrderNote: v.minOrderNote,
+					price: v.price,
+					unitCost: v.unitCost,
+					packagingCost: v.packagingCost,
+					handlingCost: v.handlingCost,
+					otherCost: v.otherCost,
+					quantityOnHand: v.quantityOnHand,
+					inStock: v.inStock,
+					sortOrder: i,
+				})),
+			},
+		},
+		select: { id: true },
+	});
 }
 
 const certificationSelect = {

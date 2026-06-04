@@ -55,7 +55,14 @@
 		"programsInProgress": "{count} programs in progress",
 		"noProgramsHint": "Enroll in a program from the Training page to see your progress here.",
 		"goToTraining": "Go to Training →",
-		"modulesProvider": "{completed}/{total} modules · {provider}"
+		"modulesProvider": "{completed}/{total} modules · {provider}",
+		"gsTitle": "Get started",
+		"gsSubtitle": "A couple of quick steps to set up your shop.",
+		"gsAddProduct": "Add your first product",
+		"gsAddProductCta": "Add product",
+		"gsWriteArticle": "Share your first story in the Journal",
+		"gsWriteArticleCta": "Write a post",
+		"gsDone": "Done"
 	},
 	"common": {
 		"home": "Home",
@@ -251,6 +258,17 @@
 			"PENDING": "Pending",
 			"CANCELLED": "Cancelled",
 			"RETURNED": "Returned"
+		},
+		"statusDesc": {
+			"NEW": "New order received. Confirm it to reserve stock and start preparing.",
+			"CONFIRMED": "You confirmed this order. Mark it shipped when it leaves.",
+			"SHIPPED": "On its way to the buyer.",
+			"CANCELED": "This order was canceled.",
+			"RETURNED": "This order was returned."
+		},
+		"nextStep": {
+			"NEW": "Confirm order →",
+			"CONFIRMED": "Mark as shipped →"
 		}
 	},
 	"artisanDashboardCharts": {
@@ -274,33 +292,38 @@
 		"productFallback": "Product"
 	},
 	"productVariantsForm": {
-		"blurb": "Packaging / SKUs: each line has its own price, stock, and minimum order. Buyers pick a variant when adding to cart.",
+		"blurb": "Sizes & pricing: add one line per size or version of this product — each has its own price, stock and minimum order. Buyers pick one when adding to cart.",
 		"addVariant": "Add variant",
 		"variantNumber": "Variant {n}",
 		"removeAria": "Remove variant",
-		"packagingName": "Packaging name",
-		"packagingPlaceholder": "e.g. 5 L jug, 1 kg bag",
+		"packagingName": "Size / variant",
+		"packagingPlaceholder": "e.g. 100 ml bottle, 250 g jar",
 		"unit": "Unit",
 		"unitPlaceholder": "item, kg, L, case…",
 		"priceMad": "Price (MAD)",
 		"pricePlaceholder": "e.g. 120.00",
 		"sourceName": "Source / supplier",
 		"sourcePlaceholder": "e.g. Local cooperative, importer, in-house",
-		"internalCosts": "Internal costs (private)",
-		"unitCost": "Base item cost (MAD)",
+		"internalCosts": "What this costs you (private — buyers never see this)",
+		"unitCost": "Cost per item (MAD)",
 		"packagingCost": "Packaging cost (MAD)",
-		"handlingCost": "Handling / shipping cost (MAD)",
+		"handlingCost": "Shipping / handling cost (MAD)",
 		"otherCost": "Other cost (MAD)",
-		"cogsPerItem": "COGS per item",
-		"netPerItem": "Net per item",
-		"potentialNet": "Potential net on current stock",
-		"minOrderUnits": "Min. order (units)",
-		"moqNote": "MOQ note",
+		"cogsPerItem": "Total cost per item",
+		"netPerItem": "Profit per item",
+		"potentialNet": "Potential profit from stock",
+		"minOrderUnits": "Minimum order",
+		"moqNote": "Minimum order note (shown to buyers)",
 		"moqNoteOptional": "(optional)",
 		"moqNotePlaceholder": "e.g. Min 50 L — full description for buyers",
-		"qtyOnHand": "Quantity on hand",
-		"qtyOnHandHint": "Use 0 to skip a hard cap; when > 0, checkout cannot exceed this quantity.",
-		"inStock": "In stock (buyers can add this variant to cart)"
+		"qtyOnHand": "Units in stock",
+		"qtyOnHandHint": "Leave at 0 if you don’t track stock. Set a number to limit how many buyers can order.",
+		"inStock": "In stock (buyers can add this to cart)",
+		"internalCostsHint": "Optional. Fill in to see your profit per item. Buyers never see these numbers.",
+		"costsHelp": "Your private costs. Add them to see your profit per item — buyers never see them.",
+		"stockHelp": "How many units you have. Buyers can’t order more than this. Use 0 if you don’t track stock.",
+		"minOrderHelp": "The smallest quantity a buyer must order.",
+		"sourceHelp": "Where you get this from (e.g. a cooperative, importer, or made in-house). Private."
 	},
 	"catalogOrdersView": {
 		"loading": "Loading order stats…",
@@ -324,7 +347,11 @@
 		"ordersFailedLoad": "Failed to load orders.",
 		"ordersEmpty": "No matching orders yet.",
 		"openOrderDetailTitle": "View full order and contact the buyer",
-		"rowCta": "View details"
+		"rowCta": "View details",
+		"searchPlaceholder": "Search by buyer or order number…",
+		"filterAll": "All",
+		"noMatching": "No orders match your search.",
+		"ordersEmptyHint": "Orders appear here when a buyer checks out one of your products."
 	},
 	"artisanProductsTable": {
 		"empty": "No products found",
@@ -350,7 +377,16 @@
 			"PENDING": "Pending",
 			"APPROVED": "Approved",
 			"REJECTED": "Rejected"
-		}
+		},
+		"stockIn": "In stock",
+		"stockOut": "Out of stock",
+		"clickToMarkIn": "Click to mark in stock",
+		"clickToMarkOut": "Click to mark out of stock",
+		"thStock": "Stock",
+		"unitsLabel": "{n} units",
+		"lowStock": "Low stock",
+		"duplicate": "Duplicate",
+		"duplicating": "Duplicating…"
 	},
 	"artisanProductDetail": {
 		"loading": "Loading product…",
@@ -367,21 +403,21 @@
 		"moqLabel": "Minimum order quantity",
 		"capacityLabel": "Capacity",
 		"rejectionReasonLabel": "Rejection reason",
-		"economicsTitle": "Internal product economics",
-		"economicsSubtitle": "Variant-level internal costs, margin per item, and remaining potential net from current stock.",
-		"totalSoldUnits": "Total sold units",
-		"realizedRevenue": "Realized revenue",
-		"realizedNetProfit": "Realized net profit",
-		"remainingPotentialNet": "Remaining potential net",
+		"economicsTitle": "Your costs & profit (private)",
+		"economicsSubtitle": "Your private cost and profit for each size. Buyers never see this.",
+		"totalSoldUnits": "Units sold",
+		"realizedRevenue": "Revenue earned",
+		"realizedNetProfit": "Profit earned",
+		"remainingPotentialNet": "Potential profit from stock",
 		"colVariant": "Variant",
 		"colSource": "Source",
 		"colPrice": "Price",
-		"colCogsPerItem": "COGS/item",
-		"colNetPerItem": "Net/item",
+		"colCogsPerItem": "Cost/item",
+		"colNetPerItem": "Profit/item",
 		"colSold": "Sold",
-		"colRealizedNet": "Realized net",
-		"colQty": "Qty",
-		"colPotentialNet": "Potential net"
+		"colRealizedNet": "Profit earned",
+		"colQty": "In stock",
+		"colPotentialNet": "Potential profit"
 	},
 	"nav": {
 		"home": "Home",
@@ -1009,7 +1045,9 @@
 	},
 	"artisanLayout": {
 		"brandPortal": "Brand portal",
-		"logOut": "Log out"
+		"logOut": "Log out",
+		"openMenu": "Open menu",
+		"closeMenu": "Close menu"
 	},
 	"artisanPortal": {
 		"nav": {
@@ -1724,7 +1762,7 @@
 		"onlyPdfAndImagesAllowed": "Only PDF and images (JPEG, PNG, WebP) are allowed.",
 		"productNameRequired": "Product name is required.",
 		"categoryRequired": "Category is required.",
-		"variantPackagingNameRequired": "Variant {n}: packaging name is required.",
+		"variantPackagingNameRequired": "Size {n}: name is required.",
 		"variantPriceRequired": "Variant {n}: price is required.",
 		"creatingProduct": "Creating product…",
 		"uploadingImage": "Uploading {n} image…",
@@ -1766,7 +1804,13 @@
 		"addProduct": "Add product",
 		"loadingProducts": "Loading products…",
 		"failedToLoadProducts": "Failed to load products.",
-		"categoryPlaceholder": "e.g. Skincare, Botanical oils"
+		"categoryPlaceholder": "e.g. Skincare, Botanical oils",
+		"galleryUseFor": "Use this photo for",
+		"galleryAllSizes": "All sizes (default)",
+		"galleryLinkHint": "Optionally show a photo only for a specific size.",
+		"draftRecovered": "Recovered unsaved draft",
+		"draftRecoveredHint": "We restored what you were typing. Photos and documents aren’t kept in drafts — re-add them if needed.",
+		"draftDiscard": "Discard draft"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "Products",

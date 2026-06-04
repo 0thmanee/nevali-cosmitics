@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { COSMETICS_CATEGORY_SUGGESTIONS } from "~/features/profile/config";
 import { PRODUCT_STATUS_STYLES } from "../../constants";
+import { useFormDraft } from "../../hooks/use-form-draft";
 import { useProduct, useUpdateProduct } from "../../hooks/use-products";
 import { ProductCertificationsSection } from "./product-certifications-section";
 import {
@@ -50,6 +51,14 @@ export function ProductEditForm({ productId }: Props) {
 		emptyVariantDraft(),
 	]);
 	const [validationError, setValidationError] = useState<string | null>(null);
+	const errorRef = useRef<HTMLDivElement>(null);
+
+	// Bring the validation message into view so it isn't missed mid-form.
+	useEffect(() => {
+		if (validationError) {
+			errorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	}, [validationError]);
 
 	useEffect(() => {
 		if (product) {
@@ -67,6 +76,35 @@ export function ProductEditForm({ productId }: Props) {
 			);
 		}
 	}, [product]);
+
+	// Autosave edits (not staged files); only once the product has loaded.
+	const stripKey = ({ key: _key, ...rest }: VariantDraft) => rest;
+	const draft = useFormDraft({
+		storageKey: `nevali:product-draft:edit:${productId}`,
+		enabled: !!product,
+		current: { form, variants: variants.map(stripKey) },
+		base: product
+			? {
+					form: {
+						name: product.name,
+						category: product.category,
+						description: product.description ?? "",
+						capacity: product.capacity ?? "",
+					},
+					variants: (product.variants?.length
+						? product.variants.map(variantDraftFromServer)
+						: [emptyVariantDraft()]
+					).map(stripKey),
+				}
+			: {
+					form: { name: "", category: "", description: "", capacity: "" },
+					variants: [stripKey(emptyVariantDraft())],
+				},
+		apply: (data) => {
+			setForm(data.form);
+			setVariants(data.variants.map((v) => ({ ...emptyVariantDraft(), ...v })));
+		},
+	});
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -122,7 +160,10 @@ export function ProductEditForm({ productId }: Props) {
 				},
 			},
 			{
-				onSuccess: () => router.push(`/artisan/products/${productId}`),
+				onSuccess: () => {
+					draft.clear();
+					router.push(`/artisan/products/${productId}`);
+				},
 				onError: (err) =>
 					setValidationError(
 						err instanceof Error
@@ -169,6 +210,33 @@ export function ProductEditForm({ productId }: Props) {
 
 	return (
 		<form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+			{draft.recovered && (
+				<div
+					className="flex items-start justify-between gap-3 rounded-sm px-4 py-3"
+					style={{
+						background:
+							"color-mix(in srgb, var(--color-gold) 14%, transparent)",
+						border:
+							"1px solid color-mix(in srgb, var(--color-gold) 40%, transparent)",
+					}}
+				>
+					<div className="min-w-0">
+						<p className="font-sans font-semibold text-sm text-text-dark">
+							{t("producerProducts.draftRecovered")}
+						</p>
+						<p className="mt-0.5 font-sans text-[12px] text-text-muted">
+							{t("producerProducts.draftRecoveredHint")}
+						</p>
+					</div>
+					<button
+						className="shrink-0 font-sans font-semibold text-[12px] text-text-muted underline-offset-2 hover:text-text-dark hover:underline"
+						onClick={() => draft.discard()}
+						type="button"
+					>
+						{t("producerProducts.draftDiscard")}
+					</button>
+				</div>
+			)}
 			<div className="overflow-hidden rounded-sm shadow-sm" style={cardStyle}>
 				<div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
 					<div>
@@ -203,6 +271,7 @@ export function ProductEditForm({ productId }: Props) {
 			{validationError && (
 				<div
 					className="overflow-hidden rounded-sm px-6 py-4"
+					ref={errorRef}
 					style={{
 						...cardStyle,
 						background:

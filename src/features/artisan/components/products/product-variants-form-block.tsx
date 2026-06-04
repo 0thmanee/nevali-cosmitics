@@ -2,6 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 import type { ProductVariantRow } from "~/app/api/products/schemas/products.schema";
+import { HelpTip } from "~/components/help-tip";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { interpolate } from "~/lib/i18n/interpolate";
 import {
@@ -15,6 +16,20 @@ function newKey(): string {
 		globalThis.crypto?.randomUUID?.() ?? `k-${Date.now()}-${Math.random()}`
 	);
 }
+
+/** Free-type unit suggestions (datalist) — producers can still type any value. */
+const UNIT_SUGGESTIONS = [
+	"piece",
+	"bottle",
+	"jar",
+	"tube",
+	"box",
+	"set",
+	"ml",
+	"L",
+	"g",
+	"kg",
+] as const;
 
 export type VariantDraft = {
 	key: string;
@@ -168,6 +183,7 @@ export function ProductVariantsFormBlock({
 							<input
 								className={productFormInputBase}
 								disabled={disabled}
+								list="variant-unit-suggestions"
 								maxLength={50}
 								onChange={(e) => update(v.key, { unit: e.target.value })}
 								placeholder={t("productVariantsForm.unitPlaceholder")}
@@ -175,6 +191,11 @@ export function ProductVariantsFormBlock({
 								type="text"
 								value={v.unit}
 							/>
+							<datalist id="variant-unit-suggestions">
+								{UNIT_SUGGESTIONS.map((u) => (
+									<option key={u} value={u} />
+								))}
+							</datalist>
 						</div>
 						<div className="flex flex-col gap-1.5">
 							<label className={productFormLabelClass}>
@@ -182,6 +203,7 @@ export function ProductVariantsFormBlock({
 								<span className="text-text-muted/70">
 									{t("productVariantsForm.moqNoteOptional")}
 								</span>
+								<HelpTip text={t("productVariantsForm.sourceHelp")} />
 							</label>
 							<input
 								className={productFormInputBase}
@@ -212,8 +234,12 @@ export function ProductVariantsFormBlock({
 							/>
 						</div>
 						<div className="rounded-sm border border-cream-dark bg-white px-3 py-3 sm:col-span-2">
-							<p className="mb-2 font-bold font-sans text-[10px] text-text-muted uppercase tracking-wide">
+							<p className="font-bold font-sans text-[10px] text-text-muted uppercase tracking-wide">
 								{t("productVariantsForm.internalCosts")}
+								<HelpTip text={t("productVariantsForm.costsHelp")} />
+							</p>
+							<p className="mb-2 font-sans text-[11px] text-text-muted/80">
+								{t("productVariantsForm.internalCostsHint")}
 							</p>
 							<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 								<div className="flex flex-col gap-1.5">
@@ -324,6 +350,7 @@ export function ProductVariantsFormBlock({
 						<div className="flex flex-col gap-1.5">
 							<label className={productFormLabelClass}>
 								{t("productVariantsForm.minOrderUnits")}
+								<HelpTip text={t("productVariantsForm.minOrderHelp")} />
 							</label>
 							<input
 								className={productFormInputBase}
@@ -360,6 +387,7 @@ export function ProductVariantsFormBlock({
 						<div className="flex flex-col gap-1.5">
 							<label className={productFormLabelClass}>
 								{t("productVariantsForm.qtyOnHand")}
+								<HelpTip text={t("productVariantsForm.stockHelp")} />
 							</label>
 							<input
 								className={productFormInputBase}

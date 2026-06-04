@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useI18n } from "~/components/i18n/i18n-provider";
 import { useFormatPrice } from "~/components/i18n/use-format-price";
 import {
 	formatShopOrderListDate,
 	ShopOrderStatusBadge,
 	shopOrderLinesPreview,
+	shopOrderStatusSelectValue,
 } from "~/features/shop-orders/shop-order-ui";
 import type { AppLocale } from "~/lib/i18n/config";
 import { INTL_LOCALE_TAG } from "~/lib/i18n/config";
+import { SHOP_ORDER_STATUSES } from "~/lib/shop-order-statuses";
 import { useProducerProductOrderStats } from "../../hooks/use-producer-product-order-stats";
 import { useProducerShopOrders } from "../../hooks/use-producer-shop-orders";
 
@@ -39,6 +41,25 @@ export function CatalogOrdersView() {
 		isError: ordersError,
 		error: ordersErr,
 	} = useProducerShopOrders();
+
+	const [search, setSearch] = useState("");
+	const [statusFilter, setStatusFilter] = useState<string>("ALL");
+
+	const filteredOrders = useMemo(() => {
+		const q = search.trim().toLowerCase();
+		return shopOrders.filter((o) => {
+			if (
+				statusFilter !== "ALL" &&
+				shopOrderStatusSelectValue(o.status) !== statusFilter
+			) {
+				return false;
+			}
+			if (!q) return true;
+			return (
+				o.buyerName.toLowerCase().includes(q) || o.id.toLowerCase().includes(q)
+			);
+		});
+	}, [shopOrders, search, statusFilter]);
 
 	const totalOrders = stats.reduce((sum, row) => sum + row.ordersCount, 0);
 	const totalUnits = stats.reduce((sum, row) => sum + row.unitsSold, 0);
@@ -107,6 +128,48 @@ export function CatalogOrdersView() {
 					</p>
 				</div>
 
+				{shopOrders.length > 0 && !ordersLoading && !ordersError ? (
+					<div className="flex flex-col gap-3 border-cream-dark border-b px-5 py-3 sm:flex-row sm:items-center">
+						<input
+							className="h-9 w-full rounded-sm border border-cream-dark bg-white px-3 font-sans text-sm text-text-dark placeholder:text-text-muted/60 focus:border-forest-mid focus:outline-none sm:max-w-xs"
+							onChange={(e) => setSearch(e.target.value)}
+							placeholder={t("catalogOrdersView.searchPlaceholder")}
+							type="search"
+							value={search}
+						/>
+						<div className="flex flex-wrap gap-1.5">
+							{["ALL", ...SHOP_ORDER_STATUSES].map((s) => {
+								const active = statusFilter === s;
+								return (
+									<button
+										className="rounded-full border px-3 py-1 font-sans font-semibold text-[11px] transition-colors"
+										key={s}
+										onClick={() => setStatusFilter(s)}
+										style={
+											active
+												? {
+														background: "var(--color-ink)",
+														color: "white",
+														borderColor: "var(--color-ink)",
+													}
+												: {
+														background: "var(--color-paper)",
+														color: "var(--color-text-muted)",
+														borderColor: "var(--color-cream-dark)",
+													}
+										}
+										type="button"
+									>
+										{s === "ALL"
+											? t("catalogOrdersView.filterAll")
+											: t(`adminShopOrders.status.${s}`)}
+									</button>
+								);
+							})}
+						</div>
+					</div>
+				) : null}
+
 				{ordersLoading ? (
 					<div className="flex items-center justify-center px-5 py-12">
 						<p className="font-sans text-sm text-stone-500">
@@ -126,10 +189,19 @@ export function CatalogOrdersView() {
 						<p className="font-sans text-sm text-stone-500">
 							{t("catalogOrdersView.ordersEmpty")}
 						</p>
+						<p className="mt-1 font-sans text-[12px] text-stone-400">
+							{t("catalogOrdersView.ordersEmptyHint")}
+						</p>
+					</div>
+				) : filteredOrders.length === 0 ? (
+					<div className="px-5 py-14 text-center">
+						<p className="font-sans text-sm text-stone-500">
+							{t("catalogOrdersView.noMatching")}
+						</p>
 					</div>
 				) : (
 					<ul className="divide-y divide-cream-dark">
-						{shopOrders.map((order) => (
+						{filteredOrders.map((order) => (
 							<li key={order.id}>
 								<Link
 									className="flex flex-col gap-2 px-5 py-4 text-left transition-colors hover:bg-cream/60 focus-visible:outline-2 focus-visible:outline-forest-mid/40 focus-visible:-outline-offset-2"

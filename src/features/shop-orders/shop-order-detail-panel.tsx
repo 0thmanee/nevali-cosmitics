@@ -71,24 +71,49 @@ function ShopOrderStatusDropdown({
 		},
 	});
 
+	// Recommended next step for the common fulfillment path.
+	const NEXT_STEP: Record<string, string | undefined> = {
+		NEW: "CONFIRMED",
+		CONFIRMED: "SHIPPED",
+	};
+	const nextStatus = NEXT_STEP[selectValue];
+
 	return (
-		<select
-			aria-label={t("adminShopOrders.statusSelectAria")}
-			className="min-h-[44px] w-full min-w-[200px] max-w-full cursor-pointer rounded-sm border border-cream-dark bg-white px-3 py-2 font-medium font-sans text-sm text-text-dark shadow-sm transition-colors hover:border-forest-mid/35 disabled:cursor-wait disabled:opacity-60 sm:min-w-[240px]"
-			disabled={mutation.isPending}
-			onChange={(e) => {
-				const next = e.currentTarget.value;
-				if (next === selectValue) return;
-				mutation.mutate(next);
-			}}
-			value={selectValue}
-		>
-			{SHOP_ORDER_STATUSES.map((s) => (
-				<option key={s} value={s}>
-					{t(`adminShopOrders.status.${s}`)}
-				</option>
-			))}
-		</select>
+		<div className="flex w-full flex-col gap-2">
+			<select
+				aria-label={t("adminShopOrders.statusSelectAria")}
+				className="min-h-[44px] w-full min-w-[200px] max-w-full cursor-pointer rounded-sm border border-cream-dark bg-white px-3 py-2 font-medium font-sans text-sm text-text-dark shadow-sm transition-colors hover:border-forest-mid/35 disabled:cursor-wait disabled:opacity-60 sm:min-w-[240px]"
+				disabled={mutation.isPending}
+				onChange={(e) => {
+					const next = e.currentTarget.value;
+					if (next === selectValue) return;
+					mutation.mutate(next);
+				}}
+				value={selectValue}
+			>
+				{SHOP_ORDER_STATUSES.map((s) => (
+					<option key={s} value={s}>
+						{t(`adminShopOrders.status.${s}`)}
+					</option>
+				))}
+			</select>
+
+			<p className="font-sans text-[12px] text-text-muted leading-relaxed">
+				{t(`adminShopOrders.statusDesc.${selectValue}`)}
+			</p>
+
+			{nextStatus ? (
+				<button
+					className="inline-flex items-center justify-center rounded-sm px-4 py-2 font-sans font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+					disabled={mutation.isPending}
+					onClick={() => mutation.mutate(nextStatus)}
+					style={{ background: "var(--color-ink)" }}
+					type="button"
+				>
+					{t(`adminShopOrders.nextStep.${selectValue}`)}
+				</button>
+			) : null}
+		</div>
 	);
 }
 

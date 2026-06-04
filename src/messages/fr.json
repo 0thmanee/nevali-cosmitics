@@ -55,7 +55,14 @@
 		"programsInProgress": "{count} programmes en cours",
 		"noProgramsHint": "Inscrivez-vous à un programme depuis la page Formation pour voir votre progression ici.",
 		"goToTraining": "Aller à la formation →",
-		"modulesProvider": "{completed}/{total} modules · {provider}"
+		"modulesProvider": "{completed}/{total} modules · {provider}",
+		"gsTitle": "Commencer",
+		"gsSubtitle": "Quelques étapes rapides pour configurer votre boutique.",
+		"gsAddProduct": "Ajoutez votre premier produit",
+		"gsAddProductCta": "Ajouter un produit",
+		"gsWriteArticle": "Partagez votre première histoire dans le Journal",
+		"gsWriteArticleCta": "Écrire un article",
+		"gsDone": "Fait"
 	},
 	"common": {
 		"home": "Accueil",
@@ -1420,7 +1427,9 @@
 	},
 	"artisanLayout": {
 		"brandPortal": "Portail de la marque",
-		"logOut": "Se déconnecter"
+		"logOut": "Se déconnecter",
+		"openMenu": "Ouvrir le menu",
+		"closeMenu": "Fermer le menu"
 	},
 	"artisanPortal": {
 		"nav": {
@@ -1511,7 +1520,16 @@
 			"PENDING": "En attente",
 			"APPROVED": "Approuvé",
 			"REJECTED": "Rejeté"
-		}
+		},
+		"stockIn": "En stock",
+		"stockOut": "En rupture",
+		"clickToMarkIn": "Cliquez pour marquer en stock",
+		"clickToMarkOut": "Cliquez pour marquer en rupture",
+		"thStock": "Stock",
+		"unitsLabel": "{n} unités",
+		"lowStock": "Stock faible",
+		"duplicate": "Dupliquer",
+		"duplicating": "Duplication…"
 	},
 	"artisanProductDetail": {
 		"loading": "Chargement du produit…",
@@ -1528,50 +1546,55 @@
 		"moqLabel": "Quantité minimale de commande",
 		"capacityLabel": "Contenance",
 		"rejectionReasonLabel": "Motif du rejet",
-		"economicsTitle": "Économie interne du produit",
-		"economicsSubtitle": "Coûts internes par variante, marge par article et bénéfice net potentiel restant du stock actuel.",
-		"totalSoldUnits": "Total des unités vendues",
-		"realizedRevenue": "Chiffre d'affaires réalisé",
-		"realizedNetProfit": "Bénéfice net réalisé",
-		"remainingPotentialNet": "Bénéfice net potentiel restant",
+		"economicsTitle": "Vos coûts et profits (privé)",
+		"economicsSubtitle": "Votre coût et profit privés pour chaque taille. Les acheteurs ne voient jamais ceci.",
+		"totalSoldUnits": "Unités vendues",
+		"realizedRevenue": "Revenus réalisés",
+		"realizedNetProfit": "Profit réalisé",
+		"remainingPotentialNet": "Profit potentiel du stock",
 		"colVariant": "Variante",
 		"colSource": "Source",
 		"colPrice": "Prix",
-		"colCogsPerItem": "CMV/article",
-		"colNetPerItem": "Net/article",
+		"colCogsPerItem": "Coût/article",
+		"colNetPerItem": "Profit/article",
 		"colSold": "Vendu",
-		"colRealizedNet": "Net réalisé",
-		"colQty": "Qté",
-		"colPotentialNet": "Net potentiel"
+		"colRealizedNet": "Profit réalisé",
+		"colQty": "En stock",
+		"colPotentialNet": "Profit potentiel"
 	},
 	"productVariantsForm": {
-		"blurb": "Conditionnements / SKU : chaque ligne a son propre prix, son stock et sa commande minimale. Les acheteurs choisissent une variante lors de l'ajout au panier.",
+		"blurb": "Tailles et prix : ajoutez une ligne par taille ou version de ce produit — chacune a son prix, son stock et sa commande minimum. L’acheteur en choisit une au panier.",
 		"addVariant": "Ajouter une variante",
 		"variantNumber": "Variante {n}",
 		"removeAria": "Supprimer la variante",
-		"packagingName": "Nom du conditionnement",
-		"packagingPlaceholder": "ex. bidon de 5 L, sac de 1 kg",
+		"packagingName": "Taille / variante",
+		"packagingPlaceholder": "ex. flacon 100 ml, pot 250 g",
 		"unit": "Unité",
 		"unitPlaceholder": "pièce, kg, L, caisse…",
 		"priceMad": "Prix (MAD)",
 		"pricePlaceholder": "ex. 120.00",
 		"sourceName": "Source / fournisseur",
 		"sourcePlaceholder": "ex. coopérative locale, importateur, interne",
-		"internalCosts": "Coûts internes (privés)",
-		"unitCost": "Coût de base de l'article (MAD)",
+		"internalCosts": "Ce que cela vous coûte (privé — invisible pour les acheteurs)",
+		"unitCost": "Coût par article (MAD)",
 		"packagingCost": "Coût du conditionnement (MAD)",
-		"handlingCost": "Coût de manutention / d'expédition (MAD)",
+		"handlingCost": "Coût d’expédition / manutention (MAD)",
 		"otherCost": "Autre coût (MAD)",
-		"cogsPerItem": "Coût des marchandises vendues par article",
-		"netPerItem": "Net par article",
-		"potentialNet": "Net potentiel sur le stock actuel",
-		"minOrderUnits": "Commande min. (unités)",
-		"moqNote": "Note sur la quantité minimale",
+		"cogsPerItem": "Coût total par article",
+		"netPerItem": "Profit par article",
+		"potentialNet": "Profit potentiel du stock",
+		"minOrderUnits": "Commande minimum",
+		"moqNote": "Note de commande minimum (visible par les acheteurs)",
 		"moqNoteOptional": "(facultatif)",
 		"moqNotePlaceholder": "ex. Min 50 L — description complète pour les acheteurs",
-		"qtyOnHand": "Quantité en stock",
-		"qtyOnHandHint": "Utilisez 0 pour ignorer un plafond strict ; lorsque la valeur est supérieure à 0, la commande ne peut pas dépasser cette quantité.",
-		"inStock": "En stock (les acheteurs peuvent ajouter cette variante au panier)"
+		"qtyOnHand": "Unités en stock",
+		"qtyOnHandHint": "Laissez 0 si vous ne suivez pas le stock. Indiquez un nombre pour limiter la quantité commandable.",
+		"inStock": "En stock (les acheteurs peuvent l’ajouter au panier)",
+		"internalCostsHint": "Facultatif. Remplissez pour voir votre profit par article. Les acheteurs ne voient jamais ces chiffres.",
+		"costsHelp": "Vos coûts privés. Ajoutez-les pour voir votre profit par article — les acheteurs ne les voient pas.",
+		"stockHelp": "Combien d’unités vous avez. L’acheteur ne peut pas en commander plus. Mettez 0 si vous ne suivez pas le stock.",
+		"minOrderHelp": "La plus petite quantité qu’un acheteur doit commander.",
+		"sourceHelp": "D’où cela provient (coopérative, importateur, ou fait maison). Privé."
 	},
 	"catalogOrdersView": {
 		"loading": "Chargement des statistiques de commandes…",
@@ -1595,7 +1618,11 @@
 		"ordersFailedLoad": "Échec du chargement des commandes.",
 		"ordersEmpty": "Aucune commande correspondante pour le moment.",
 		"openOrderDetailTitle": "Voir la commande complète et contacter l'acheteur",
-		"rowCta": "Voir les détails"
+		"rowCta": "Voir les détails",
+		"searchPlaceholder": "Rechercher par acheteur ou numéro de commande…",
+		"filterAll": "Toutes",
+		"noMatching": "Aucune commande ne correspond à votre recherche.",
+		"ordersEmptyHint": "Les commandes apparaissent ici lorsqu’un acheteur achète l’un de vos produits."
 	},
 	"trainingPage": {
 		"breadcrumbTraining": "Formation",
@@ -1672,6 +1699,17 @@
 			"PENDING": "En attente",
 			"CANCELLED": "Annulée",
 			"RETURNED": "Retournée"
+		},
+		"statusDesc": {
+			"NEW": "Nouvelle commande reçue. Confirmez-la pour réserver le stock et commencer la préparation.",
+			"CONFIRMED": "Vous avez confirmé cette commande. Marquez-la comme expédiée au départ.",
+			"SHIPPED": "En route vers l’acheteur.",
+			"CANCELED": "Cette commande a été annulée.",
+			"RETURNED": "Cette commande a été retournée."
+		},
+		"nextStep": {
+			"NEW": "Confirmer la commande →",
+			"CONFIRMED": "Marquer comme expédiée →"
 		}
 	},
 	"producerProducts": {
@@ -1705,7 +1743,7 @@
 		"onlyPdfAndImagesAllowed": "Seuls les fichiers PDF et les images (JPEG, PNG, WebP) sont autorisés.",
 		"productNameRequired": "Le nom du produit est requis.",
 		"categoryRequired": "La catégorie est requise.",
-		"variantPackagingNameRequired": "Variante {n} : le nom du conditionnement est requis.",
+		"variantPackagingNameRequired": "Taille {n} : le nom est requis.",
 		"variantPriceRequired": "Variante {n} : le prix est requis.",
 		"creatingProduct": "Création du produit…",
 		"uploadingImage": "Téléversement de {n} image…",
@@ -1747,7 +1785,13 @@
 		"addProduct": "Ajouter un produit",
 		"loadingProducts": "Chargement des produits…",
 		"failedToLoadProducts": "Échec du chargement des produits.",
-		"categoryPlaceholder": "ex. Soins du visage, Huiles botaniques"
+		"categoryPlaceholder": "ex. Soins du visage, Huiles botaniques",
+		"galleryUseFor": "Utiliser cette photo pour",
+		"galleryAllSizes": "Toutes les tailles (par défaut)",
+		"galleryLinkHint": "Vous pouvez afficher une photo seulement pour une taille précise.",
+		"draftRecovered": "Brouillon non enregistré récupéré",
+		"draftRecoveredHint": "Nous avons restauré votre saisie. Les photos et documents ne sont pas conservés dans les brouillons — ajoutez-les à nouveau si besoin.",
+		"draftDiscard": "Supprimer le brouillon"
 	},
 	"producerProductPages": {
 		"breadcrumbProducts": "Produits",

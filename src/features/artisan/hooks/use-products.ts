@@ -10,11 +10,13 @@ import {
 	addProductImage,
 	clearMyHomepageHeroProduct,
 	createProduct,
+	duplicateMyProduct,
 	getMyProduct,
 	listMyCertifiedProducts,
 	listMyProducts,
 	removeProductImage,
 	setMyHomepageHeroProduct,
+	setMyProductStockState,
 	setProductImageVariant,
 	updateProduct,
 } from "~/app/api/products/actions";
@@ -109,6 +111,35 @@ export function useClearHomepageHeroProduct() {
 			queryClient.invalidateQueries({
 				queryKey: [...producerProductsQueryKey, "detail"],
 			});
+		},
+	});
+}
+
+export function useSetProductStockState() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: ({
+			productId,
+			inStock,
+		}: {
+			productId: string;
+			inStock: boolean;
+		}) => setMyProductStockState(productId, inStock),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: producerProductsQueryKey });
+			queryClient.invalidateQueries({
+				queryKey: [...producerProductsQueryKey, "detail"],
+			});
+		},
+	});
+}
+
+export function useDuplicateProduct() {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: (productId: string) => duplicateMyProduct(productId),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: producerProductsQueryKey });
 		},
 	});
 }

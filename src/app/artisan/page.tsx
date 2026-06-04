@@ -8,6 +8,7 @@ import { getProducerDashboardStats } from "~/app/api/dashboard/actions";
 import { listMyProducts } from "~/app/api/products/actions";
 import {
 	DashboardArticlesCard,
+	DashboardGettingStarted,
 	DashboardProductList,
 	DashboardStats,
 	TrainingProgressCard,
@@ -35,6 +36,7 @@ export default async function ProducerDashboard() {
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<div className="flex flex-col gap-4">
+				<DashboardGettingStarted />
 				<DashboardStats />
 				<div className="grid grid-cols-1 gap-4">
 					<DashboardProductList />

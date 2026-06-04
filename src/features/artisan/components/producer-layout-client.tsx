@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type React from "react";
+import { useEffect, useState } from "react";
 import type {
 	LayoutProfile,
 	UserDisplay,
@@ -377,6 +378,66 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 		: user.name;
 	const shortName = profile?.firstName?.trim() || displayName || user.email;
 	const entityLabel = profile?.entityName?.trim() || user.email;
+
+	const [mobileNavOpen, setMobileNavOpen] = useState(false);
+	// Close the mobile drawer whenever the route changes.
+	useEffect(() => {
+		setMobileNavOpen(false);
+	}, [pathname]);
+
+	// Shared nav list — used by both the desktop sidebar and the mobile drawer.
+	const renderNavLinks = (onNavigate?: () => void) =>
+		PRODUCER_NAV_ITEMS.map((item) => {
+			const isActive =
+				pathname === item.href ||
+				(item.href !== "/artisan" && pathname.startsWith(`${item.href}/`));
+			const Icon = ICONS[item.href] ?? (() => <IconDashboard active={false} />);
+			const badge =
+				item.href === "/artisan/support"
+					? openSupportTickets
+					: item.href === "/artisan/notifications"
+						? unreadAlerts
+						: null;
+			const showBadge = badge !== null && badge > 0;
+			return (
+				<Link
+					className={`flex w-full items-center gap-3 rounded-sm border px-3 py-2 transition-colors ${
+						isActive
+							? "border-primary/35 bg-white/70 text-primary-dark"
+							: "border-transparent bg-transparent text-primary/70 hover:bg-white/55 hover:text-primary-dark"
+					}`}
+					href={item.href}
+					key={item.href}
+					onClick={onNavigate}
+					onMouseEnter={() => router.prefetch(item.href)}
+				>
+					<span
+						className={`shrink-0 ${isActive ? "text-primary-dark" : "text-primary/60"}`}
+					>
+						{Icon(isActive)}
+					</span>
+					<span
+						className={`flex-1 font-sans text-sm leading-none ${
+							isActive ? "font-semibold text-primary-dark" : "font-normal"
+						}`}
+					>
+						{t(item.labelKey)}
+					</span>
+					{showBadge && (
+						<span
+							className={`rounded-full border px-2 py-0.5 font-bold font-sans text-[10px] leading-none ${
+								isActive
+									? "border-primary/40 bg-primary/10 text-primary-dark"
+									: "border-primary/20 bg-white/60 text-primary/80"
+							}`}
+						>
+							{badge}
+						</span>
+					)}
+				</Link>
+			);
+		});
+
 	return (
 		<div className="flex h-screen overflow-hidden bg-cream">
 			<aside className="hidden h-screen w-[248px] shrink-0 flex-col border-cream-dark border-r bg-linear-to-b from-cream via-cream-dark/45 to-primary-light/35 lg:flex">
@@ -400,57 +461,7 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 				</Link>
 
 				<nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 pt-3">
-					{PRODUCER_NAV_ITEMS.map((item) => {
-						const isActive =
-							pathname === item.href ||
-							(item.href !== "/artisan" &&
-								pathname.startsWith(item.href + "/"));
-						const Icon =
-							ICONS[item.href] ?? (() => <IconDashboard active={false} />);
-						const badge =
-							item.href === "/artisan/support"
-								? openSupportTickets
-								: item.href === "/artisan/notifications"
-									? unreadAlerts
-									: null;
-						const showBadge = badge !== null && badge > 0;
-						return (
-							<Link
-								className={`flex w-full items-center gap-3 rounded-sm border px-3 py-2 transition-colors ${
-									isActive
-										? "border-primary/35 bg-white/70 text-primary-dark"
-										: "border-transparent bg-transparent text-primary/70 hover:bg-white/55 hover:text-primary-dark"
-								}`}
-								href={item.href}
-								key={item.href}
-								onMouseEnter={() => router.prefetch(item.href)}
-							>
-								<span
-									className={`shrink-0 ${isActive ? "text-primary-dark" : "text-primary/60"}`}
-								>
-									{Icon(isActive)}
-								</span>
-								<span
-									className={`flex-1 font-sans text-sm leading-none ${
-										isActive ? "font-semibold text-primary-dark" : "font-normal"
-									}`}
-								>
-									{t(item.labelKey)}
-								</span>
-								{showBadge && (
-									<span
-										className={`rounded-full border px-2 py-0.5 font-bold font-sans text-[10px] leading-none ${
-											isActive
-												? "border-primary/40 bg-primary/10 text-primary-dark"
-												: "border-primary/20 bg-white/60 text-primary/80"
-										}`}
-									>
-										{badge}
-									</span>
-								)}
-							</Link>
-						);
-					})}
+					{renderNavLinks()}
 				</nav>
 
 				<div className="shrink-0 border-primary/20 border-t px-4 py-4">
@@ -474,17 +485,37 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 			</aside>
 
 			<div className="flex h-screen min-w-0 flex-1 flex-col">
-				<header className="z-10 flex shrink-0 items-center justify-between border-cream-dark border-b bg-paper px-6 py-3.5 lg:px-8">
-					<div>
-						<h1 className="font-bold font-serif text-[18px] text-text-dark leading-tight">
-							{title}
-						</h1>
-						<p className="mt-0.5 font-sans text-sm text-text-muted">
-							{subtitle}
-						</p>
+				<header className="z-10 flex shrink-0 items-center justify-between gap-3 border-cream-dark border-b bg-paper px-4 py-3.5 sm:px-6 lg:px-8">
+					<div className="flex min-w-0 items-center gap-3">
+						<button
+							aria-label={t("artisanLayout.openMenu")}
+							className="-ms-1 shrink-0 rounded-sm p-2 text-text-muted transition-colors hover:bg-cream hover:text-text-dark lg:hidden"
+							onClick={() => setMobileNavOpen(true)}
+							type="button"
+						>
+							<svg
+								fill="none"
+								height="20"
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeWidth="1.6"
+								viewBox="0 0 20 20"
+								width="20"
+							>
+								<path d="M3 5h14M3 10h14M3 15h14" />
+							</svg>
+						</button>
+						<div className="min-w-0">
+							<h1 className="truncate font-bold font-serif text-[18px] text-text-dark leading-tight">
+								{title}
+							</h1>
+							<p className="mt-0.5 hidden font-sans text-sm text-text-muted sm:block">
+								{subtitle}
+							</p>
+						</div>
 					</div>
 					<button
-						className="cursor-pointer font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
+						className="shrink-0 cursor-pointer font-sans text-sm text-text-muted transition-colors hover:text-text-dark"
 						onClick={() => signOut()}
 						type="button"
 					>
@@ -496,6 +527,73 @@ export function ProducerLayoutClient({ user, profile, children }: Props) {
 					<div className="px-6 pt-6 pb-8 lg:px-8">{children}</div>
 				</main>
 			</div>
+
+			{/* Mobile navigation drawer (hidden on desktop). */}
+			{mobileNavOpen && (
+				<div className="fixed inset-0 z-50 lg:hidden">
+					<button
+						aria-label={t("artisanLayout.closeMenu")}
+						className="absolute inset-0 bg-ink/30"
+						onClick={() => setMobileNavOpen(false)}
+						type="button"
+					/>
+					<aside className="absolute inset-y-0 start-0 flex w-[280px] max-w-[85vw] flex-col bg-linear-to-b from-cream via-cream-dark/45 to-primary-light/35 shadow-xl">
+						<div className="flex shrink-0 items-center justify-between px-5 pt-5 pb-4">
+							<Link
+								className="transition-opacity hover:opacity-90"
+								href="/"
+								onClick={() => setMobileNavOpen(false)}
+							>
+								{/* eslint-disable-next-line @next/next/no-img-element */}
+								<img
+									alt="nevali"
+									className="block h-8 w-auto"
+									src="/assets/logo.svg"
+								/>
+							</Link>
+							<button
+								aria-label={t("artisanLayout.closeMenu")}
+								className="rounded-sm p-2 text-primary/70 transition-colors hover:bg-white/55 hover:text-primary-dark"
+								onClick={() => setMobileNavOpen(false)}
+								type="button"
+							>
+								<svg
+									fill="none"
+									height="18"
+									stroke="currentColor"
+									strokeLinecap="round"
+									strokeWidth="1.6"
+									viewBox="0 0 18 18"
+									width="18"
+								>
+									<path d="M4 4l10 10M14 4L4 14" />
+								</svg>
+							</button>
+						</div>
+						<nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 pt-1">
+							{renderNavLinks(() => setMobileNavOpen(false))}
+						</nav>
+						<div className="shrink-0 border-primary/20 border-t px-4 py-4">
+							<div className="flex items-center gap-3">
+								<Avatar
+									className="text-primary-dark"
+									displayName={displayName}
+									imageUrl={profile?.profileImage}
+									size="sm"
+								/>
+								<div className="flex min-w-0 flex-col gap-0.5">
+									<span className="truncate font-sans font-semibold text-primary-dark text-sm leading-tight">
+										{shortName}
+									</span>
+									<span className="truncate font-sans text-[11px] text-primary/70 leading-tight">
+										{entityLabel}
+									</span>
+								</div>
+							</div>
+						</div>
+					</aside>
+				</div>
+			)}
 		</div>
 	);
 }

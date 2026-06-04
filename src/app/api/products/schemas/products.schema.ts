@@ -160,6 +160,10 @@ export type ProductListRow = ProductRow & {
 	/** Lowest variant price (MAD), for list column. */
 	fromPrice: string | null;
 	variantCount: number;
+	/** True if at least one variant is in stock (for the quick stock toggle). */
+	anyInStock: boolean;
+	/** Total units across variants (read-only list display). */
+	totalStock: number;
 };
 
 /** Approved product with first image and certifications (certified products list). */
